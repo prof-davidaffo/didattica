@@ -1,0 +1,11 @@
+- Discuti l'importanza della triade CIA e come sia possibile mantenere la disponibilità di accesso a delle informazioni online pur rispettando confidenzialità e integrità.
+- Descivi a cosa serve l'encoding e come viene utilizzato. Fai degli esempi.
+- Cosa è e a cosa serve HTTPS? Come funziona dal punto di vista tecnico?
+- A cosa serve lo XOR encoding e in quale tecnica di crittografia rientra e per quale motivo? Quando può diventare insicuro?
+- Spiega come funzionano le tecniche di hashing e come vengono impiegate, approfondendo in particolare come vengono utilizzati nell'autenticazione e quali vulerabilità hanno.
+- Spiega cosa è e come funziona una firma digitale. Cosa sono i keystore o truststore?
+- Discuti la minaccia rappresentata dai computer quantistici riguardo la sicurezza.
+- Per quale motivo non è sicuro utilizzare soltanto la concatenazione delle stringhe in una query parametrizzata? È sufficiente/necessaria la validazione degli input? Spiega a quale tipo di attacco è vulnerabile questa tecnica e fai un esempio.
+- Spiega cosa è il cross site scripting, quali conseguenze può avere e come si contrasta.
+- In cosa consiste il path traversal?
+- I controlli sull'input andrebbero fatti a livello di front end, middleware o backend? Per quale motivo? Fai un esempio di frontend bypass.
