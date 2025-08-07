@@ -16,7 +16,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
+    baseUrl: "/didattica/",
     ignorePatterns: ["private", "templates", ".obsidian","**/*[Vv]erific*.*", "**/*[Ss]oluz*.*"],
     defaultDateType: "modified",
     theme: {
