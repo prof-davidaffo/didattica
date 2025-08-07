@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en"><head><title>Estratto eserciziario IP UniGe</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Quartz 4"/><meta property="og:title" content="Estratto eserciziario IP UniGe"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Estratto eserciziario IP UniGe"/><meta name="twitter:description" content="Espressioni, lettura e assegnazione Esercizi di riscaldamento Scrivere un programma che legge due interi e ne stampa la somma."/><meta property="og:description" content="Espressioni, lettura e assegnazione Esercizi di riscaldamento Scrivere un programma che legge due interi e ne stampa la somma."/><meta property="og:image:alt" content="Espressioni, lettura e assegnazione Esercizi di riscaldamento Scrivere un programma che legge due interi e ne stampa la somma."/><meta property="twitter:domain" content="/didattica/"/><meta property="og:url" content="https://didattica/Argomenti/Algoritmi/Estratto-eserciziario-IP-UniGe"/><meta property="twitter:url" content="https://didattica/Argomenti/Algoritmi/Estratto-eserciziario-IP-UniGe"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="Espressioni, lettura e assegnazione Esercizi di riscaldamento Scrivere un programma che legge due interi e ne stampa la somma."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiL2hvbWUvZGF2aWRhZmZvL3BsYXlncm91bmQvcXVhcnR6L3F1YXJ0ei9jb21wb25lbnRzL3N0eWxlcyIsInNvdXJjZXMiOlsibWVybWFpZC5pbmxpbmUuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTs7O0FBS0Y7RUFDRTtFQUNBOzs7QUFJSjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFJSjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTs7QUFJRjtFQUNFO0VBQ0E7RUFDQSIsInNvdXJjZXNDb250ZW50IjpbIi5leHBhbmQtYnV0dG9uIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbG9hdDogcmlnaHQ7XG4gIHBhZGRpbmc6IDAuNHJlbTtcbiAgbWFyZ2luOiAwLjNyZW07XG4gIHJpZ2h0OiAwOyAvLyBOT1RFOiByaWdodCB3aWxsIGJlIHNldCBpbiBtZXJtYWlkLmlubGluZS50c1xuICBjb2xvcjogdmFyKC0tZ3JheSk7XG4gIGJvcmRlci1jb2xvcjogdmFyKC0tZGFyayk7XG4gIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgYm9yZGVyOiAxcHggc29saWQ7XG4gIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgb3BhY2l0eTogMDtcbiAgdHJhbnNpdGlvbjogMC4ycztcblxuICAmID4gc3ZnIHtcbiAgICBmaWxsOiB2YXIoLS1saWdodCk7XG4gICAgZmlsdGVyOiBjb250cmFzdCgwLjMpO1xuICB9XG5cbiAgJjpob3ZlciB7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIGJvcmRlci1jb2xvcjogdmFyKC0tc2Vjb25kYXJ5KTtcbiAgfVxuXG4gICY6Zm9jdXMge1xuICAgIG91dGxpbmU6IDA7XG4gIH1cbn1cblxucHJlIHtcbiAgJjpob3ZlciA+IC5leHBhbmQtYnV0dG9uIHtcbiAgICBvcGFjaXR5OiAxO1xuICAgIHRyYW5zaXRpb246IDAuMnM7XG4gIH1cbn1cblxuI21lcm1haWQtY29udGFpbmVyIHtcbiAgcG9zaXRpb246IGZpeGVkO1xuICBjb250YWluOiBsYXlvdXQ7XG4gIHotaW5kZXg6IDk5OTtcbiAgbGVmdDogMDtcbiAgdG9wOiAwO1xuICB3aWR0aDogMTAwdnc7XG4gIGhlaWdodDogMTAwdmg7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIGRpc3BsYXk6IG5vbmU7XG4gIGJhY2tkcm9wLWZpbHRlcjogYmx1cig0cHgpO1xuICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuNSk7XG5cbiAgJi5hY3RpdmUge1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgfVxuXG4gICYgPiAjbWVybWFpZC1zcGFjZSB7XG4gICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gICAgYm9yZGVyLXJhZGl1czogNXB4O1xuICAgIHBvc2l0aW9uOiBmaXhlZDtcbiAgICB0b3A6IDUwJTtcbiAgICBsZWZ0OiA1MCU7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGUoLTUwJSwgLTUwJSk7XG4gICAgaGVpZ2h0OiA4MHZoO1xuICAgIHdpZHRoOiA4MHZ3O1xuICAgIG92ZXJmbG93OiBoaWRkZW47XG5cbiAgICAmID4gLm1lcm1haWQtY29udGVudCB7XG4gICAgICBwYWRkaW5nOiAycmVtO1xuICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgdHJhbnNmb3JtLW9yaWdpbjogMCAwO1xuICAgICAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDAuMXMgZWFzZTtcbiAgICAgIG92ZXJmbG93OiB2aXNpYmxlO1xuICAgICAgbWluLWhlaWdodDogMjAwcHg7XG4gICAgICBtaW4td2lkdGg6IDIwMHB4O1xuXG4gICAgICBwcmUge1xuICAgICAgICBtYXJnaW46IDA7XG4gICAgICAgIGJvcmRlcjogbm9uZTtcbiAgICAgIH1cblxuICAgICAgc3ZnIHtcbiAgICAgICAgbWF4LXdpZHRoOiBub25lO1xuICAgICAgICBoZWlnaHQ6IGF1dG87XG4gICAgICB9XG4gICAgfVxuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRyb2xzIHtcbiAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgIGJvdHRvbTogMjBweDtcbiAgICAgIHJpZ2h0OiAyMHB4O1xuICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgIGdhcDogOHB4O1xuICAgICAgcGFkZGluZzogOHB4O1xuICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgIGJvcmRlci1yYWRpdXM6IDZweDtcbiAgICAgIGJveC1zaGFkb3c6IDAgMnB4IDRweCByZ2JhKDAsIDAsIDAsIDAuMSk7XG4gICAgICB6LWluZGV4OiAyO1xuXG4gICAgICAubWVybWFpZC1jb250cm9sLWJ1dHRvbiB7XG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICAgICAgICB3aWR0aDogMzJweDtcbiAgICAgICAgaGVpZ2h0OiAzMnB4O1xuICAgICAgICBwYWRkaW5nOiAwO1xuICAgICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICAgIGNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgICAgICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgICAgIGZvbnQtc2l6ZTogMTZweDtcbiAgICAgICAgZm9udC1mYW1pbHk6IHZhcigtLWJvZHlGb250KTtcbiAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuMnMgZWFzZTtcblxuICAgICAgICAmOmhvdmVyIHtcbiAgICAgICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgICB9XG5cbiAgICAgICAgJjphY3RpdmUge1xuICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgxcHgpO1xuICAgICAgICB9XG5cbiAgICAgICAgLy8gU3R5bGUgdGhlIHJlc2V0IGJ1dHRvbiBkaWZmZXJlbnRseVxuICAgICAgICAmOm50aC1jaGlsZCgyKSB7XG4gICAgICAgICAgd2lkdGg6IGF1dG87XG4gICAgICAgICAgcGFkZGluZzogMCAxMnB4O1xuICAgICAgICAgIGZvbnQtc2l6ZTogMTRweDtcbiAgICAgICAgfVxuICAgICAgfVxuICAgIH1cbiAgfVxufVxuIl19 */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https:///didattica//index.xml"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https:///didattica//Argomenti/Algoritmi/Estratto-eserciziario-IP-UniGe-og-image.webp"/><meta property="og:image:url" content="https:///didattica//Argomenti/Algoritmi/Estratto-eserciziario-IP-UniGe-og-image.webp"/><meta name="twitter:image" content="https:///didattica//Argomenti/Algoritmi/Estratto-eserciziario-IP-UniGe-og-image.webp"/><meta property="og:image:type" content="image/.webp"/></head><body data-slug="Argomenti/Algoritmi/Estratto-eserciziario-IP-UniGe"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">Quartz 4</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><p>Search</p><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-3" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../Argomenti/">Argomenti</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../Argomenti/Algoritmi/">Algoritmi</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Estratto eserciziario IP UniGe</a></div></nav><h1 class="article-title">Estratto eserciziario IP UniGe</h1><p show-comma="true" class="content-meta"><time datetime="2025-02-03T09:54:57.764Z">Feb 03, 2025</time><span>16 min read</span></p></div></div><article class="popover-hint"><h2 id="espressioni-lettura-e-assegnazione">Espressioni, lettura e assegnazione<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#espressioni-lettura-e-assegnazione" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento">Esercizi di riscaldamento<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>Scrivere un programma che legge due interi e ne stampa la somma.</li>
+<li>Come l’esercizio 1, ma con messaggi di richiesta prima di ogni input.</li>
+<li>Scrivere un programma che scambia tra loro i valori di due variabili intere lette da input.</li>
+<li>Scrivere un programma che legge due interi e ne stampa la differenza.</li>
+</ol>
+<h3 id="esercizi-di-base">Esercizi di base<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>Scrivere un programma che scambia i valori di due variabili di tipo char lette da input.</li>
+<li>Scrivere un programma che scambia in maniera circolare “verso sinistra” i valori di tre variabili float.</li>
+<li>Scrivere un programma che calcola perimetro e area di un rettangolo dopo aver letto i dati necessari.</li>
+<li>Scrivere un programma che chiede all’utente in che anno è nato e stampa quanti anni ha.</li>
+<li>Scrivere un programma che calcola perimetro e area di un triangolo.</li>
+<li>Scrivere un programma che prende in input ore e minuti e calcola il totale dei minuti.</li>
+<li>Scrivere un programma che calcola circonferenza e area di un cerchio.</li>
+<li>Scrivere un programma che calcola la media tra due numeri.</li>
+<li>Scrivere un programma che valuta delle espressioni booleane date.</li>
+</ol>
+<h3 id="esercizi-più-avanzati">Esercizi più avanzati<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="10">
+<li>Stampare due numeri letti in ordine crescente senza confrontarli.</li>
+<li>Scambiare due variabili senza usare una variabile di appoggio.</li>
+</ol>
+<hr/>
+<h2 id="scelte-condizionali">Scelte condizionali<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#scelte-condizionali" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-1">Esercizi di riscaldamento<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-1" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="12">
+<li>Leggere due caratteri e stampare “Uguali” se sono identici, altrimenti “Diversi”.</li>
+<li>Leggere tre numeri interi e stamparli in ordine crescente.</li>
+</ol>
+<h3 id="minimo-sindacale">Minimo sindacale<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#minimo-sindacale" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="14">
+<li>Stampare il valore assoluto di un numero intero.</li>
+<li>Leggere tre numeri reali e stamparli in ordine decrescente.</li>
+<li>Verificare se un numero è divisibile per 13.</li>
+<li>Verificare se tre numeri possono essere i lati di un triangolo.</li>
+<li>Effettuare una serie di divisioni e moltiplicazioni su un numero e verificare la precisione.</li>
+<li>Verificare se un anno è bisestile.</li>
+<li>Simulare una partita di forbice-carta-sasso.</li>
+<li>Stampare un messaggio in base alla temperatura letta.</li>
+<li>Stampare il nome del mese corrispondente a un numero da 1 a 12.</li>
+</ol>
+<h3 id="per-chi-non-si-accontenta">Per chi non si accontenta<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#per-chi-non-si-accontenta" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="23">
+<li>Verificare se un anno è bisestile usando la regola del calendario gregoriano.</li>
+<li>Stampare l’orario in lettere, arrotondando ai 15 minuti.</li>
+<li>Risolvere un’equazione di secondo grado.</li>
+</ol>
+<hr/>
+<h2 id="cicli">Cicli<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#cicli" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-2">Esercizi di riscaldamento<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-2" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="26">
+<li>Calcolare la media di N numeri letti da input (varianti con for, while e do-while).</li>
+<li>Leggere lettere maiuscole finché l’utente non inserisce un carattere non maiuscolo e stampare la più piccola.</li>
+<li>Calcolare il fattoriale di un numero.</li>
+<li>Stampare un carattere letto N volte.</li>
+<li>Stampare un triangolo di asterischi con base di lunghezza data.</li>
+<li>Implementare un menu interattivo con più scelte.</li>
+<li>Stampare barre verticali in base ai numeri inseriti.</li>
+<li>Stampare un numero letto in ordine inverso.</li>
+</ol>
+<h3 id="esercizi-di-base-1">Esercizi di base<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-1" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="34">
+<li>Giocare più mani di morra cinese.</li>
+<li>Stampare il numero di cifre di un numero intero.</li>
+<li>Calcolare la media di una sequenza di numeri fino a che l’utente non decide di terminare.</li>
+<li>Stampare un trapezio rettangolo con ‘x’.</li>
+<li>Stampare un rombo di asterischi.</li>
+<li>Chiedere il colore preferito e gestire l’input in modo robusto.</li>
+<li>Verificare se un numero è palindromo.</li>
+<li>Gioco di indovinare la radice quadrata.</li>
+<li>Scomporre un numero in fattori primi.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-1">Esercizi più avanzati<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-1" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="43">
+<li>Verificare se un numero è un numero di Armstrong.</li>
+<li>Contare il numero di zeri alla fine del fattoriale di un numero.</li>
+<li>Stampare un numero in notazione romana.</li>
+</ol>
+<hr/>
+<h2 id="array">Array<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#array" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-3">Esercizi di riscaldamento<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-3" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="46">
+<li>Creare e popolare un array di interi.</li>
+<li>Stampare un array di interi.</li>
+<li>Leggere un array di interi da input.</li>
+<li>Calcolare la media di un array di numeri reali.</li>
+<li>Scrivere un valore in un array in base a una formula e stamparlo.</li>
+</ol>
+<h3 id="esercizi-di-base-2">Esercizi di base<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-2" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="51">
+<li>Trovare il massimo in un array e quante volte appare.</li>
+<li>Contare numeri pari e dispari in un array.</li>
+<li>Invertire un array.</li>
+<li>Implementare il Crivello di Eratostene per trovare numeri primi.</li>
+<li>Inizializzare una matrice con zeri.</li>
+<li>Creare una tavola pitagorica e usarla per calcolare prodotti.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-2">Esercizi più avanzati<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-2" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="57">
+<li>Verificare se un array è palindromo.</li>
+<li>Contare le occorrenze di ciascun valore in un array.</li>
+<li>Trovare il secondo valore più alto in un array.</li>
+<li>Ordinare un array e copiarlo in un altro array ordinato.</li>
+<li>Ordinare un array in-place.</li>
+<li>Invertire un array in-place.</li>
+<li>Rimuovere elementi ripetuti in un array mantenendone solo uno.</li>
+<li>Implementare l’algoritmo precedente senza array ausiliari.</li>
+<li>Usare un array monodimensionale per rappresentare metà di una tavola pitagorica.</li>
+</ol>
+<hr/>
+<h2 id="array-approfondimenti"><strong>Array: approfondimenti</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#array-approfondimenti" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-4"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-4" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="66">
+<li><strong>SequentialSearch</strong>: Ricerca sequenziale di un valore intero in un array di 15 elementi.</li>
+<li><strong>BinarySearch</strong>: Ricerca binaria di un valore intero in un array ordinato di 15 elementi.</li>
+<li><strong>SelectionSort</strong>: Implementare l’algoritmo di Selection Sort su un array.</li>
+<li>Leggere 20 numeri interi e stamparli in ordine decrescente dopo averli ordinati.</li>
+<li><strong>readMatrix</strong>: Leggere una matrice di dimensioni 3×4 da input.</li>
+<li><strong>printMatrix</strong>: Stampare una matrice di dimensioni 3×4.</li>
+</ol>
+<h3 id="esercizi-di-base-3"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-3" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="72">
+<li><strong>Modifica degli esercizi 1 e 2</strong>: Contare il numero di confronti effettuati durante la ricerca sequenziale e binaria.</li>
+<li><strong>InsertionSort</strong>: Implementare l’algoritmo di Insertion Sort su un array.</li>
+<li><strong>BubbleSort</strong>: Implementare l’algoritmo di Bubble Sort su un array.</li>
+<li><strong>MatrixSum</strong>: Sommare due matrici di interi di dimensione 3×3.</li>
+<li><strong>MatrixProduct</strong>: Calcolare il prodotto di due matrici quadrate di dimensione 3×3.</li>
+<li><strong>TransposeMatrix</strong>: Calcolare la trasposta di una matrice quadrata.</li>
+<li><strong>DiagonalSum</strong>: Sommare gli elementi della diagonale principale di una matrice quadrata.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-3"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-3" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="79">
+<li><strong>MergeSort</strong>: Implementare l’algoritmo di Merge Sort per ordinare un array.</li>
+<li><strong>QuickSort</strong>: Implementare l’algoritmo di Quick Sort per ordinare un array.</li>
+<li><strong>Ricerca del valore più frequente</strong>: Determinare il valore che appare più frequentemente in un array.</li>
+<li><strong>Somma degli elementi sopra la diagonale principale</strong>: Data una matrice quadrata, calcolare la somma degli elementi sopra la diagonale principale.</li>
+<li><strong>Eliminazione di righe e colonne contenenti un valore specifico</strong>: Data una matrice, eliminare tutte le righe e colonne contenenti un certo valore.</li>
+<li><strong>Rotazione di una matrice</strong>: Ruotare una matrice quadrata di 90 gradi in senso orario.</li>
+<li><strong>Compressione di matrici sparse</strong>: Implementare un metodo per memorizzare matrici sparse in modo ottimizzato.</li>
+</ol>
+<hr/>
+<h2 id="struct"><strong>Struct</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#struct" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-5"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-5" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="86">
+<li>Dichiarare una struct <strong>Punto</strong> con due coordinate e inizializzarla.</li>
+<li>Dichiarare una struct <strong>Rettangolo</strong> e calcolarne l’area e il perimetro.</li>
+<li>Dichiarare una struct <strong>Studente</strong> con nome, matricola e voto e stamparne i dati.</li>
+<li>Dichiarare una struct <strong>Libro</strong> con titolo, autore e anno di pubblicazione e stamparne i dati.</li>
+<li>Dichiarare una struct <strong>Data</strong> con giorno, mese e anno e verificare se una data è valida.</li>
+</ol>
+<h3 id="esercizi-di-base-4"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-4" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="91">
+<li>Dichiarare una struct <strong>Tempo</strong> con ore, minuti e secondi e calcolare la differenza tra due orari.</li>
+<li>Dichiarare una struct <strong>Persona</strong> e confrontare due persone in base all’età.</li>
+<li>Dichiarare una struct <strong>Auto</strong> con modello, targa e chilometraggio e ordinarne una lista.</li>
+<li>Dichiarare una struct <strong>Complesso</strong> per numeri complessi e implementare somme e moltiplicazioni.</li>
+<li>Dichiarare una struct <strong>Poligono</strong> con vertici e calcolarne il perimetro.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-4"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-4" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="96">
+<li>Dichiarare una struct <strong>Matrice</strong> e implementare operazioni di somma, prodotto e trasposizione.</li>
+<li>Dichiarare una struct <strong>Albero binario</strong> e implementare inserimento e ricerca.</li>
+<li>Dichiarare una struct <strong>Lista concatenata</strong> e implementare aggiunta ed eliminazione di nodi.</li>
+<li>Implementare una <strong>coda</strong> con struct e array.</li>
+<li>Implementare una <strong>pila</strong> con struct e array.</li>
+</ol>
+<hr/>
+<h2 id="funzioni"><strong>Funzioni</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#funzioni" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-6"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-6" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="101">
+<li>Scrivere una funzione che calcola il massimo tra due numeri interi.</li>
+<li>Scrivere una funzione che calcola il minimo tra due numeri interi.</li>
+<li>Scrivere una funzione che verifica se un numero è pari o dispari.</li>
+<li>Scrivere una funzione che calcola il fattoriale di un numero.</li>
+<li>Scrivere una funzione che verifica se un numero è primo.</li>
+</ol>
+<h3 id="esercizi-di-base-5"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-5" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="106">
+<li>Scrivere una funzione per calcolare il MCD di due numeri.</li>
+<li>Scrivere una funzione per calcolare il minimo comune multiplo.</li>
+<li>Scrivere una funzione che calcola la potenza di un numero con esponente intero.</li>
+<li>Scrivere una funzione che inverte una stringa.</li>
+<li>Scrivere una funzione che conta le vocali in una stringa.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-5"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-5" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="111">
+<li>Implementare una funzione che ordina un array con il metodo Selection Sort.</li>
+<li>Implementare una funzione che ordina un array con il metodo QuickSort.</li>
+<li>Implementare una funzione ricorsiva per calcolare la sequenza di Fibonacci.</li>
+<li>Implementare una funzione ricorsiva per il calcolo del fattoriale.</li>
+<li>Implementare una funzione ricorsiva per la ricerca binaria.</li>
+</ol>
+<hr/>
+<h2 id="puntatori"><strong>Puntatori</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#puntatori" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-7"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-7" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="116">
+<li>Dichiarare un puntatore a intero e assegnargli un valore.</li>
+<li>Dichiarare un puntatore a float e usarlo per modificare una variabile.</li>
+<li>Dichiarare un puntatore a struct e usarlo per modificare un campo.</li>
+<li>Usare un puntatore per scambiare due variabili.</li>
+</ol>
+<h3 id="esercizi-di-base-6"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-6" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="120">
+<li>Scrivere una funzione che prende due puntatori e scambia i valori delle variabili puntate.</li>
+<li>Allocare dinamicamente un array di interi.</li>
+<li>Usare <strong>malloc</strong> per allocare memoria per una stringa.</li>
+<li>Scrivere una funzione che alloca dinamicamente una matrice.</li>
+<li>Scrivere una funzione che libera la memoria allocata dinamicamente.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-6"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-6" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="125">
+<li>Implementare una funzione che ridimensiona dinamicamente un array.</li>
+<li>Implementare una funzione per concatenare due stringhe usando solo puntatori.</li>
+<li>Implementare una funzione che inverte una stringa in-place usando solo puntatori.</li>
+<li>Implementare una funzione che trova il valore massimo in un array usando solo puntatori.</li>
+<li>Implementare una funzione che ordina un array con QuickSort usando solo puntatori.</li>
+</ol>
+<hr/>
+<h2 id="ricorsione"><strong>Ricorsione</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ricorsione" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-8"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-8" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="130">
+<li>Scrivere una funzione ricorsiva che calcola il fattoriale di un numero.</li>
+<li>Scrivere una funzione ricorsiva per calcolare la somma dei primi N numeri.</li>
+<li>Scrivere una funzione ricorsiva per trovare il massimo in un array.</li>
+<li>Scrivere una funzione ricorsiva per verificare se una stringa è palindroma.</li>
+</ol>
+<h3 id="esercizi-di-base-7"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-7" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="134">
+<li>Implementare la ricerca binaria in modo ricorsivo.</li>
+<li>Implementare la sequenza di Fibonacci in modo ricorsivo.</li>
+<li>Implementare il calcolo dell’MCD in modo ricorsivo.</li>
+<li>Implementare una funzione ricorsiva per invertire una stringa.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-7"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-7" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="138">
+<li>Implementare Merge Sort in modo ricorsivo.</li>
+<li>Implementare Quick Sort in modo ricorsivo.</li>
+<li>Implementare una funzione ricorsiva per risolvere il problema delle torri di Hanoi.</li>
+<li>Implementare una funzione ricorsiva per generare tutte le permutazioni di un array.</li>
+<li>Implementare una funzione ricorsiva per risolvere il problema del cammino minimo in un grafo.</li>
+</ol>
+<hr/>
+<h2 id="vector"><strong>Vector</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#vector" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-9"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-9" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="143">
+<li>Dichiarare un vector di interi e assegnargli dei valori.</li>
+<li>Dichiarare un vector di float e assegnargli dei valori.</li>
+<li>Stampare il contenuto di un vector di interi.</li>
+<li>Stampare il contenuto di un vector di float.</li>
+<li>Aggiungere e rimuovere elementi da un vector di interi.</li>
+</ol>
+<h3 id="esercizi-di-base-8"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-8" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="148">
+<li>Leggere un vector di interi da input e stamparlo.</li>
+<li>Trovare il massimo valore in un vector.</li>
+<li>Trovare il valore più frequente in un vector.</li>
+<li>Ordinare un vector con il metodo Bubble Sort.</li>
+<li>Ordinare un vector con il metodo QuickSort.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-8"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-8" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="153">
+<li>Implementare la ricerca binaria su un vector ordinato.</li>
+<li>Implementare una funzione che rimuove i duplicati da un vector.</li>
+<li>Implementare una funzione che trova la mediana di un vector.</li>
+<li>Implementare una funzione che calcola la somma degli elementi di un vector.</li>
+<li>Implementare una funzione che inverte un vector.</li>
+</ol>
+<hr/>
+<h2 id="librerie"><strong>Librerie</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#librerie" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-10"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-10" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="158">
+<li>Usare la libreria <code>&lt;cmath></code> per calcolare la radice quadrata di un numero.</li>
+<li>Usare la libreria <code>&lt;cmath></code> per calcolare la potenza di un numero.</li>
+<li>Usare la libreria <code>&lt;cstring></code> per copiare una stringa.</li>
+<li>Usare la libreria <code>&lt;cstring></code> per concatenare due stringhe.</li>
+<li>Usare la libreria <code>&lt;vector></code> per dichiarare un vector.</li>
+</ol>
+<h3 id="esercizi-di-base-9"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-9" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="163">
+<li>Usare <code>&lt;fstream></code> per leggere da un file e stampare il contenuto.</li>
+<li>Usare <code>&lt;fstream></code> per scrivere un file.</li>
+<li>Usare <code>&lt;sstream></code> per convertire una stringa in un numero.</li>
+<li>Usare <code>&lt;algorithm></code> per ordinare un vector.</li>
+<li>Usare <code>&lt;map></code> per contare le occorrenze di elementi in un vector.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-9"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-9" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="168">
+<li>Implementare un programma che legge e scrive su file CSV.</li>
+<li>Implementare un dizionario di parole usando <code>&lt;map></code>.</li>
+<li>Implementare un sistema di login con file di testo.</li>
+<li>Implementare un analizzatore lessicale di un testo usando <code>&lt;regex></code>.</li>
+<li>Implementare un algoritmo di compressione di stringhe usando <code>&lt;unordered_map></code>.</li>
+</ol>
+<hr/>
+<h2 id="esercizio-pac-man"><strong>Esercizio: Pac-Man</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizio-pac-man" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-11"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-11" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="173">
+<li>Disegnare la griglia di gioco con un array bidimensionale.</li>
+<li>Posizionare Pac-Man in una posizione iniziale.</li>
+<li>Posizionare i fantasmi in posizioni casuali.</li>
+<li>Stampare la griglia con Pac-Man e i fantasmi.</li>
+<li>Consentire a Pac-Man di muoversi nella griglia.</li>
+</ol>
+<h3 id="esercizi-di-base-10"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-10" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="178">
+<li>Consentire ai fantasmi di muoversi in modo casuale.</li>
+<li>Implementare un sistema di collisione tra Pac-Man e i fantasmi.</li>
+<li>Aggiungere le pillole che Pac-Man può raccogliere.</li>
+<li>Implementare il sistema di punteggio.</li>
+<li>Aggiungere una condizione di vittoria e sconfitta.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-10"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-10" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="183">
+<li>Implementare un algoritmo per far muovere i fantasmi in modo intelligente.</li>
+<li>Implementare un sistema di livelli con difficoltà crescente.</li>
+<li>Implementare un’interfaccia grafica per il gioco.</li>
+<li>Aggiungere il supporto al salvataggio delle partite.</li>
+<li>Aggiungere il supporto per il multiplayer.</li>
+</ol>
+<hr/>
+<h2 id="esercizio-matrici-dense-e-sparse"><strong>Esercizio: Matrici dense e sparse</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizio-matrici-dense-e-sparse" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-12"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-12" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="188">
+<li>Dichiarare una matrice 3x3 e inizializzarla con valori casuali.</li>
+<li>Stampare una matrice in formato leggibile.</li>
+<li>Trovare il massimo e il minimo di una matrice.</li>
+<li>Contare il numero di zeri in una matrice.</li>
+<li>Verificare se una matrice è simmetrica.</li>
+</ol>
+<h3 id="esercizi-di-base-11"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-11" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="193">
+<li>Implementare la somma tra due matrici.</li>
+<li>Implementare il prodotto tra due matrici.</li>
+<li>Implementare la trasposizione di una matrice.</li>
+<li>Convertire una matrice densa in una rappresentazione sparsa.</li>
+<li>Convertire una matrice sparsa in una rappresentazione densa.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-11"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-11" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="198">
+<li>Implementare la moltiplicazione tra matrici sparse.</li>
+<li>Implementare un algoritmo per trovare la matrice inversa.</li>
+<li>Implementare il metodo di Gauss-Jordan per la riduzione di matrici.</li>
+<li>Implementare un algoritmo per decomposizione LU.</li>
+<li>Implementare un algoritmo per risolvere sistemi lineari con matrici sparse.</li>
+</ol>
+<hr/>
+<h2 id="ricorsione-1"><strong>Ricorsione</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ricorsione-1" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-13"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-13" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="203">
+<li>Calcolare la somma dei primi N numeri in modo ricorsivo.</li>
+<li>Calcolare la sequenza di Fibonacci in modo ricorsivo.</li>
+<li>Calcolare il fattoriale in modo ricorsivo.</li>
+<li>Contare il numero di cifre di un numero in modo ricorsivo.</li>
+<li>Verificare se una stringa è palindroma in modo ricorsivo.</li>
+</ol>
+<h3 id="esercizi-di-base-12"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-12" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="208">
+<li>Implementare una funzione ricorsiva per la ricerca binaria.</li>
+<li>Implementare una funzione ricorsiva per calcolare il MCD.</li>
+<li>Implementare una funzione ricorsiva per stampare un triangolo di asterischi.</li>
+<li>Implementare una funzione ricorsiva per sommare gli elementi di un array.</li>
+<li>Implementare una funzione ricorsiva per ordinare un array con Merge Sort.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-12"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-12" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="213">
+<li>Implementare una funzione ricorsiva per risolvere il problema delle torri di Hanoi.</li>
+<li>Implementare una funzione ricorsiva per generare tutte le permutazioni di un array.</li>
+<li>Implementare una funzione ricorsiva per risolvere il problema del cammino minimo in un grafo.</li>
+<li>Implementare un algoritmo ricorsivo per calcolare il coefficiente binomiale.</li>
+<li>Implementare un algoritmo ricorsivo per risolvere equazioni differenziali semplici.
+Ecco il proseguimento dell’estrazione degli esercizi dal documento.</li>
+</ol>
+<hr/>
+<h2 id="puntatori---senza-allocazione-dinamica-di-memoria"><strong>Puntatori - senza allocazione dinamica di memoria</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#puntatori---senza-allocazione-dinamica-di-memoria" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-14"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-14" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>Dichiarare un puntatore a intero e assegnargli un valore.</li>
+<li>Dichiarare un puntatore a float e modificarne il valore attraverso il puntatore.</li>
+<li>Dichiarare un array di interi e accedervi tramite puntatori.</li>
+<li>Implementare una funzione che prende un puntatore a intero e modifica il valore della variabile puntata.</li>
+<li>Implementare una funzione che scambia il contenuto di due variabili usando puntatori.</li>
+</ol>
+<h3 id="esercizi-di-base-13"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-13" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="6">
+<li>Implementare una funzione che calcola la lunghezza di una stringa senza usare <code>&lt;cstring></code>, solo con puntatori.</li>
+<li>Implementare una funzione che conta il numero di vocali in una stringa usando solo puntatori.</li>
+<li>Implementare una funzione che trova il valore massimo in un array usando puntatori.</li>
+<li>Implementare una funzione che copia un array in un altro usando solo puntatori.</li>
+<li>Implementare una funzione che ordina un array di interi usando Bubble Sort e puntatori.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-13"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-13" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>Implementare una funzione che somma due array elemento per elemento usando solo puntatori.</li>
+<li>Implementare una funzione che verifica se due stringhe sono anagrammi usando solo puntatori.</li>
+<li>Implementare una funzione che concatena due stringhe senza usare <code>&lt;cstring></code>.</li>
+<li>Implementare una funzione che inverte una stringa senza usare array di supporto, solo puntatori.</li>
+<li>Implementare una funzione che calcola il prodotto scalare tra due vettori usando solo puntatori.</li>
+</ol>
+<hr/>
+<h2 id="puntatori---allocazione-dinamica-di-memoria"><strong>Puntatori - allocazione dinamica di memoria</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#puntatori---allocazione-dinamica-di-memoria" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-15"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-15" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="6">
+<li>Allocare dinamicamente un array di interi e riempirlo con valori letti da input.</li>
+<li>Allocare dinamicamente un array di float e calcolarne la media.</li>
+<li>Allocare e deallocare dinamicamente una stringa.</li>
+<li>Allocare dinamicamente una matrice di interi.</li>
+<li>Allocare dinamicamente una matrice di float e calcolarne la somma.</li>
+</ol>
+<h3 id="esercizi-di-base-14"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-14" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="11">
+<li>Implementare una funzione che ridimensiona un array dinamico raddoppiandone la capacità.</li>
+<li>Implementare una funzione che copia un array statico in uno dinamico.</li>
+<li>Implementare una funzione che concatena due stringhe dinamiche.</li>
+<li>Implementare una funzione che legge una stringa di lunghezza arbitraria usando allocazione dinamica.</li>
+<li>Implementare una funzione che simula una pila con allocazione dinamica.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-14"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-14" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="16">
+<li>Implementare una lista concatenata con allocazione dinamica.</li>
+<li>Implementare una coda con allocazione dinamica.</li>
+<li>Implementare una funzione che legge una matrice sparsa in modo dinamico.</li>
+<li>Implementare una funzione che calcola il determinante di una matrice usando allocazione dinamica.</li>
+<li>Implementare un algoritmo di gestione della memoria che simula un allocatore di heap.</li>
+</ol>
+<hr/>
+<h2 id="ricorsione-2"><strong>Ricorsione</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ricorsione-2" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-16"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-16" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="21">
+<li>Implementare una funzione ricorsiva per calcolare il fattoriale di un numero.</li>
+<li>Implementare una funzione ricorsiva per calcolare il massimo comune divisore.</li>
+<li>Implementare una funzione ricorsiva per verificare se una stringa è palindroma.</li>
+<li>Implementare una funzione ricorsiva per contare il numero di cifre di un intero.</li>
+<li>Implementare una funzione ricorsiva per calcolare la somma dei primi N numeri naturali.</li>
+</ol>
+<h3 id="esercizi-di-base-15"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-15" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="26">
+<li>Implementare una funzione ricorsiva per trovare il numero massimo in un array.</li>
+<li>Implementare una funzione ricorsiva per invertire una stringa.</li>
+<li>Implementare una funzione ricorsiva per ordinare un array con Merge Sort.</li>
+<li>Implementare una funzione ricorsiva per risolvere il problema delle torri di Hanoi.</li>
+<li>Implementare una funzione ricorsiva per generare tutte le permutazioni di un array.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-15"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-15" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="31">
+<li>Implementare un algoritmo ricorsivo per risolvere equazioni di secondo grado.</li>
+<li>Implementare una funzione ricorsiva per trovare il cammino minimo in un grafo.</li>
+<li>Implementare un algoritmo ricorsivo per risolvere il problema dello zaino (Knapsack Problem).</li>
+<li>Implementare un algoritmo ricorsivo per il calcolo del coefficiente binomiale.</li>
+<li>Implementare un algoritmo ricorsivo per trovare la soluzione di Sudoku.</li>
+</ol>
+<hr/>
+<h2 id="esercizi-di-riepilogo"><strong>Esercizi di riepilogo</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riepilogo" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="esercizi-di-riscaldamento-17"><strong>Esercizi di riscaldamento</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-riscaldamento-17" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="36">
+<li>Scrivere un programma che legge un numero intero e stampa la sua rappresentazione in binario.</li>
+<li>Scrivere un programma che legge una stringa e ne stampa la lunghezza.</li>
+<li>Scrivere un programma che legge un array di interi e stampa la somma degli elementi.</li>
+<li>Scrivere un programma che legge due numeri interi e ne calcola il massimo comune divisore.</li>
+<li>Scrivere un programma che verifica se una stringa è palindroma.</li>
+</ol>
+<h3 id="esercizi-di-base-16"><strong>Esercizi di base</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-di-base-16" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="41">
+<li>Implementare una funzione che ordina un array con il metodo Selection Sort.</li>
+<li>Implementare una funzione che ordina un array con il metodo Quick Sort.</li>
+<li>Implementare una funzione che trova il numero più frequente in un array.</li>
+<li>Implementare una funzione che calcola la somma di una matrice.</li>
+<li>Implementare una funzione che verifica se due matrici sono uguali.</li>
+</ol>
+<h3 id="esercizi-più-avanzati-16"><strong>Esercizi più avanzati</strong><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizi-più-avanzati-16" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol start="46">
+<li>Implementare una funzione che calcola il determinante di una matrice quadrata.</li>
+<li>Implementare una funzione che trova la trasposta di una matrice.</li>
+<li>Implementare un algoritmo per risolvere sistemi di equazioni lineari.</li>
+<li>Implementare una funzione che risolve il problema del commesso viaggiatore con Programmazione Dinamica.</li>
+<li>Implementare una funzione che implementa l’algoritmo di Dijkstra per trovare il cammino minimo in un grafo.</li>
+</ol></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-1" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#espressioni-lettura-e-assegnazione" data-for="espressioni-lettura-e-assegnazione">Espressioni, lettura e assegnazione</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento" data-for="esercizi-di-riscaldamento">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base" data-for="esercizi-di-base">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati" data-for="esercizi-più-avanzati">Esercizi più avanzati</a></li><li class="depth-0"><a href="#scelte-condizionali" data-for="scelte-condizionali">Scelte condizionali</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-1" data-for="esercizi-di-riscaldamento-1">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#minimo-sindacale" data-for="minimo-sindacale">Minimo sindacale</a></li><li class="depth-1"><a href="#per-chi-non-si-accontenta" data-for="per-chi-non-si-accontenta">Per chi non si accontenta</a></li><li class="depth-0"><a href="#cicli" data-for="cicli">Cicli</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-2" data-for="esercizi-di-riscaldamento-2">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-1" data-for="esercizi-di-base-1">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-1" data-for="esercizi-più-avanzati-1">Esercizi più avanzati</a></li><li class="depth-0"><a href="#array" data-for="array">Array</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-3" data-for="esercizi-di-riscaldamento-3">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-2" data-for="esercizi-di-base-2">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-2" data-for="esercizi-più-avanzati-2">Esercizi più avanzati</a></li><li class="depth-0"><a href="#array-approfondimenti" data-for="array-approfondimenti">Array: approfondimenti</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-4" data-for="esercizi-di-riscaldamento-4">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-3" data-for="esercizi-di-base-3">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-3" data-for="esercizi-più-avanzati-3">Esercizi più avanzati</a></li><li class="depth-0"><a href="#struct" data-for="struct">Struct</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-5" data-for="esercizi-di-riscaldamento-5">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-4" data-for="esercizi-di-base-4">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-4" data-for="esercizi-più-avanzati-4">Esercizi più avanzati</a></li><li class="depth-0"><a href="#funzioni" data-for="funzioni">Funzioni</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-6" data-for="esercizi-di-riscaldamento-6">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-5" data-for="esercizi-di-base-5">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-5" data-for="esercizi-più-avanzati-5">Esercizi più avanzati</a></li><li class="depth-0"><a href="#puntatori" data-for="puntatori">Puntatori</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-7" data-for="esercizi-di-riscaldamento-7">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-6" data-for="esercizi-di-base-6">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-6" data-for="esercizi-più-avanzati-6">Esercizi più avanzati</a></li><li class="depth-0"><a href="#ricorsione" data-for="ricorsione">Ricorsione</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-8" data-for="esercizi-di-riscaldamento-8">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-7" data-for="esercizi-di-base-7">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-7" data-for="esercizi-più-avanzati-7">Esercizi più avanzati</a></li><li class="depth-0"><a href="#vector" data-for="vector">Vector</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-9" data-for="esercizi-di-riscaldamento-9">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-8" data-for="esercizi-di-base-8">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-8" data-for="esercizi-più-avanzati-8">Esercizi più avanzati</a></li><li class="depth-0"><a href="#librerie" data-for="librerie">Librerie</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-10" data-for="esercizi-di-riscaldamento-10">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-9" data-for="esercizi-di-base-9">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-9" data-for="esercizi-più-avanzati-9">Esercizi più avanzati</a></li><li class="depth-0"><a href="#esercizio-pac-man" data-for="esercizio-pac-man">Esercizio: Pac-Man</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-11" data-for="esercizi-di-riscaldamento-11">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-10" data-for="esercizi-di-base-10">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-10" data-for="esercizi-più-avanzati-10">Esercizi più avanzati</a></li><li class="depth-0"><a href="#esercizio-matrici-dense-e-sparse" data-for="esercizio-matrici-dense-e-sparse">Esercizio: Matrici dense e sparse</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-12" data-for="esercizi-di-riscaldamento-12">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-11" data-for="esercizi-di-base-11">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-11" data-for="esercizi-più-avanzati-11">Esercizi più avanzati</a></li><li class="depth-0"><a href="#ricorsione-1" data-for="ricorsione-1">Ricorsione</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-13" data-for="esercizi-di-riscaldamento-13">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-12" data-for="esercizi-di-base-12">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-12" data-for="esercizi-più-avanzati-12">Esercizi più avanzati</a></li><li class="depth-0"><a href="#puntatori---senza-allocazione-dinamica-di-memoria" data-for="puntatori---senza-allocazione-dinamica-di-memoria">Puntatori - senza allocazione dinamica di memoria</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-14" data-for="esercizi-di-riscaldamento-14">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-13" data-for="esercizi-di-base-13">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-13" data-for="esercizi-più-avanzati-13">Esercizi più avanzati</a></li><li class="depth-0"><a href="#puntatori---allocazione-dinamica-di-memoria" data-for="puntatori---allocazione-dinamica-di-memoria">Puntatori - allocazione dinamica di memoria</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-15" data-for="esercizi-di-riscaldamento-15">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-14" data-for="esercizi-di-base-14">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-14" data-for="esercizi-più-avanzati-14">Esercizi più avanzati</a></li><li class="depth-0"><a href="#ricorsione-2" data-for="ricorsione-2">Ricorsione</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-16" data-for="esercizi-di-riscaldamento-16">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-15" data-for="esercizi-di-base-15">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-15" data-for="esercizi-più-avanzati-15">Esercizi più avanzati</a></li><li class="depth-0"><a href="#esercizi-di-riepilogo" data-for="esercizi-di-riepilogo">Esercizi di riepilogo</a></li><li class="depth-1"><a href="#esercizi-di-riscaldamento-17" data-for="esercizi-di-riscaldamento-17">Esercizi di riscaldamento</a></li><li class="depth-1"><a href="#esercizi-di-base-16" data-for="esercizi-di-base-16">Esercizi di base</a></li><li class="depth-1"><a href="#esercizi-più-avanzati-16" data-for="esercizi-più-avanzati-16">Esercizi più avanzati</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.1</a> © 2025</p><ul><li><a href="https://github.com/jackyzha0/quartz">GitHub</a></li><li><a href="https://discord.gg/cRFFHYye7t">Discord Community</a></li></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

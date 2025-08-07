@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+      <title>Quartz 4</title>
+      <link>https:///didattica/</link>
+      <description>Last 10 notes on Quartz 4</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
+      <item>
+    <title>React</title>
+    <link>https:///didattica/Argomenti/Web-application/React</link>
+    <guid>https:///didattica/Argomenti/Web-application/React</guid>
+    <description><![CDATA[ www.youtube.com/watch 📘 Corso Completo di React con TypeScript Introduzione al Corso In questo corso imparerai tutto ciò che serve per costruire applicazioni moderne con React, da zero fino ad argomenti avanzati, tra cui: Routing State Management React Query Ottimizzazione delle performance Autenti... ]]></description>
+    <pubDate>Thu, 31 Jul 2025 13:13:19 GMT</pubDate>
+  </item><item>
+    <title>Generics</title>
+    <link>https:///didattica/Argomenti/OOP/Generics</link>
+    <guid>https:///didattica/Argomenti/OOP/Generics</guid>
+    <description><![CDATA[ www.w3schools.com/java/java_generics.asp Java Generics Generics permettono di scrivere classi, interfacce e metodi parametrizzati con tipi, rendendo il codice più riutilizzabile, sicuro e leggibile. ]]></description>
+    <pubDate>Wed, 30 Jul 2025 10:25:47 GMT</pubDate>
+  </item><item>
+    <title>Appunti su circuiti elettrici</title>
+    <link>https:///didattica/Argomenti/Circuiti-elettrici/Appunti-su-circuiti-elettrici</link>
+    <guid>https:///didattica/Argomenti/Circuiti-elettrici/Appunti-su-circuiti-elettrici</guid>
+    <description><![CDATA[ Fonti: www.youtube.com/@StepbyStepFisica www.youmath.it/lezioni/fisica/elettricita/4920-leggi-di-kirchhoff.html Introduzione ⚡ Potenziale e superfici equipotenziali Il potenziale è come l’altezza o profondità creata dalle cariche elettriche. ]]></description>
+    <pubDate>Fri, 11 Jul 2025 10:15:09 GMT</pubDate>
+  </item><item>
+    <title>Sets</title>
+    <link>https:///didattica/Argomenti/OOP/Sets</link>
+    <guid>https:///didattica/Argomenti/OOP/Sets</guid>
+    <description><![CDATA[ Set and HashSet in Java - Full Tutorial Set È un’interfaccia che rappresenta una collezione di elementi unici (cioè nessun duplicato). ]]></description>
+    <pubDate>Thu, 10 Jul 2025 10:23:30 GMT</pubDate>
+  </item><item>
+    <title>Maps</title>
+    <link>https:///didattica/Argomenti/OOP/Maps</link>
+    <guid>https:///didattica/Argomenti/OOP/Maps</guid>
+    <description><![CDATA[ Map and HashMap in Java - Full Tutorial Che cos’è una Map in Java? In Java, una Map è una struttura dati che associa una chiave (key) a un valore (value). ]]></description>
+    <pubDate>Thu, 10 Jul 2025 09:09:19 GMT</pubDate>
+  </item><item>
+    <title>Classi astratte e interfacce (Java)</title>
+    <link>https:///didattica/Argomenti/OOP/Classi-astratte-e-interfacce-(Java)</link>
+    <guid>https:///didattica/Argomenti/OOP/Classi-astratte-e-interfacce-(Java)</guid>
+    <description><![CDATA[ Abstract Classes and Methods in Java Explained in 7 Minutes Classi astratte Sono classi che possono contenere sia metodi astratti sia metodi concreti. ]]></description>
+    <pubDate>Thu, 10 Jul 2025 08:15:28 GMT</pubDate>
+  </item><item>
+    <title>Ruoli delle variabili</title>
+    <link>https:///didattica/Argomenti/Algoritmi/Ruoli-delle-variabili</link>
+    <guid>https:///didattica/Argomenti/Algoritmi/Ruoli-delle-variabili</guid>
+    <description><![CDATA[ Gli studi sui ruoli delle variabili sono di Jorma Sajaniemi e colleghi. ]]></description>
+    <pubDate>Mon, 07 Jul 2025 10:01:02 GMT</pubDate>
+  </item><item>
+    <title>Esercizi di programmazione per livello e tipologia</title>
+    <link>https:///didattica/Argomenti/Algoritmi/Esercizi-di-programmazione-per-livello-e-tipologia</link>
+    <guid>https:///didattica/Argomenti/Algoritmi/Esercizi-di-programmazione-per-livello-e-tipologia</guid>
+    <description><![CDATA[ Eserciziari per prendere spunto Eserciziario IP UniGe Esercizi Giacomin Università Brescia Esercizi sui fondamenti Livello base Operazioni aritmetiche di base su due numeri Scrivere un programma che legge due numeri interi e ne stampa la somma, la differenza, il prodotto, il quoziente e il modulo. ]]></description>
+    <pubDate>Mon, 07 Jul 2025 09:51:20 GMT</pubDate>
+  </item><item>
+    <title>Proprietà e teoremi dell&#039;Algebra di Boole</title>
+    <link>https:///didattica/Argomenti/Bool/Propriet%C3%A0-e-teoremi-dell'Algebra-di-Boole</link>
+    <guid>https:///didattica/Argomenti/Bool/Propriet%C3%A0-e-teoremi-dell'Algebra-di-Boole</guid>
+    <description><![CDATA[ Transclude of Dispensa-sull&#039;algebra-di-Boole-e-circuiti-logici#teoremi-e-proprietà-dellalgebra-di-boole. ]]></description>
+    <pubDate>Wed, 02 Jul 2025 10:14:44 GMT</pubDate>
+  </item><item>
+    <title>Dispensa sull&#039;algebra di Boole e circuiti logici</title>
+    <link>https:///didattica/Argomenti/Bool/Dispensa-sull'algebra-di-Boole-e-circuiti-logici</link>
+    <guid>https:///didattica/Argomenti/Bool/Dispensa-sull'algebra-di-Boole-e-circuiti-logici</guid>
+    <description><![CDATA[  Autore Prof. ]]></description>
+    <pubDate>Wed, 02 Jul 2025 10:13:05 GMT</pubDate>
+  </item>
+    </channel>
+  </rss>

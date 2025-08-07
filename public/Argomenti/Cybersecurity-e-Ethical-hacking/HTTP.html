@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en"><head><title>HTTP</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Quartz 4"/><meta property="og:title" content="HTTP"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="HTTP"/><meta name="twitter:description" content="Comprensione delle Transazioni HTTP Panoramica di HTTP HTTP (Hypertext Transfer Protocol) è il protocollo primario utilizzato per la trasmissione di pagine web e file associati su Internet."/><meta property="og:description" content="Comprensione delle Transazioni HTTP Panoramica di HTTP HTTP (Hypertext Transfer Protocol) è il protocollo primario utilizzato per la trasmissione di pagine web e file associati su Internet."/><meta property="og:image:alt" content="Comprensione delle Transazioni HTTP Panoramica di HTTP HTTP (Hypertext Transfer Protocol) è il protocollo primario utilizzato per la trasmissione di pagine web e file associati su Internet."/><meta property="twitter:domain" content="/didattica/"/><meta property="og:url" content="https://didattica/Argomenti/Cybersecurity-e-Ethical-hacking/HTTP"/><meta property="twitter:url" content="https://didattica/Argomenti/Cybersecurity-e-Ethical-hacking/HTTP"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="Comprensione delle Transazioni HTTP Panoramica di HTTP HTTP (Hypertext Transfer Protocol) è il protocollo primario utilizzato per la trasmissione di pagine web e file associati su Internet."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiL2hvbWUvZGF2aWRhZmZvL3BsYXlncm91bmQvcXVhcnR6L3F1YXJ0ei9jb21wb25lbnRzL3N0eWxlcyIsInNvdXJjZXMiOlsibWVybWFpZC5pbmxpbmUuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTs7O0FBS0Y7RUFDRTtFQUNBOzs7QUFJSjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFJSjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTs7QUFJRjtFQUNFO0VBQ0E7RUFDQSIsInNvdXJjZXNDb250ZW50IjpbIi5leHBhbmQtYnV0dG9uIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbG9hdDogcmlnaHQ7XG4gIHBhZGRpbmc6IDAuNHJlbTtcbiAgbWFyZ2luOiAwLjNyZW07XG4gIHJpZ2h0OiAwOyAvLyBOT1RFOiByaWdodCB3aWxsIGJlIHNldCBpbiBtZXJtYWlkLmlubGluZS50c1xuICBjb2xvcjogdmFyKC0tZ3JheSk7XG4gIGJvcmRlci1jb2xvcjogdmFyKC0tZGFyayk7XG4gIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgYm9yZGVyOiAxcHggc29saWQ7XG4gIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgb3BhY2l0eTogMDtcbiAgdHJhbnNpdGlvbjogMC4ycztcblxuICAmID4gc3ZnIHtcbiAgICBmaWxsOiB2YXIoLS1saWdodCk7XG4gICAgZmlsdGVyOiBjb250cmFzdCgwLjMpO1xuICB9XG5cbiAgJjpob3ZlciB7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIGJvcmRlci1jb2xvcjogdmFyKC0tc2Vjb25kYXJ5KTtcbiAgfVxuXG4gICY6Zm9jdXMge1xuICAgIG91dGxpbmU6IDA7XG4gIH1cbn1cblxucHJlIHtcbiAgJjpob3ZlciA+IC5leHBhbmQtYnV0dG9uIHtcbiAgICBvcGFjaXR5OiAxO1xuICAgIHRyYW5zaXRpb246IDAuMnM7XG4gIH1cbn1cblxuI21lcm1haWQtY29udGFpbmVyIHtcbiAgcG9zaXRpb246IGZpeGVkO1xuICBjb250YWluOiBsYXlvdXQ7XG4gIHotaW5kZXg6IDk5OTtcbiAgbGVmdDogMDtcbiAgdG9wOiAwO1xuICB3aWR0aDogMTAwdnc7XG4gIGhlaWdodDogMTAwdmg7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIGRpc3BsYXk6IG5vbmU7XG4gIGJhY2tkcm9wLWZpbHRlcjogYmx1cig0cHgpO1xuICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuNSk7XG5cbiAgJi5hY3RpdmUge1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgfVxuXG4gICYgPiAjbWVybWFpZC1zcGFjZSB7XG4gICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gICAgYm9yZGVyLXJhZGl1czogNXB4O1xuICAgIHBvc2l0aW9uOiBmaXhlZDtcbiAgICB0b3A6IDUwJTtcbiAgICBsZWZ0OiA1MCU7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGUoLTUwJSwgLTUwJSk7XG4gICAgaGVpZ2h0OiA4MHZoO1xuICAgIHdpZHRoOiA4MHZ3O1xuICAgIG92ZXJmbG93OiBoaWRkZW47XG5cbiAgICAmID4gLm1lcm1haWQtY29udGVudCB7XG4gICAgICBwYWRkaW5nOiAycmVtO1xuICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgdHJhbnNmb3JtLW9yaWdpbjogMCAwO1xuICAgICAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDAuMXMgZWFzZTtcbiAgICAgIG92ZXJmbG93OiB2aXNpYmxlO1xuICAgICAgbWluLWhlaWdodDogMjAwcHg7XG4gICAgICBtaW4td2lkdGg6IDIwMHB4O1xuXG4gICAgICBwcmUge1xuICAgICAgICBtYXJnaW46IDA7XG4gICAgICAgIGJvcmRlcjogbm9uZTtcbiAgICAgIH1cblxuICAgICAgc3ZnIHtcbiAgICAgICAgbWF4LXdpZHRoOiBub25lO1xuICAgICAgICBoZWlnaHQ6IGF1dG87XG4gICAgICB9XG4gICAgfVxuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRyb2xzIHtcbiAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgIGJvdHRvbTogMjBweDtcbiAgICAgIHJpZ2h0OiAyMHB4O1xuICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgIGdhcDogOHB4O1xuICAgICAgcGFkZGluZzogOHB4O1xuICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgIGJvcmRlci1yYWRpdXM6IDZweDtcbiAgICAgIGJveC1zaGFkb3c6IDAgMnB4IDRweCByZ2JhKDAsIDAsIDAsIDAuMSk7XG4gICAgICB6LWluZGV4OiAyO1xuXG4gICAgICAubWVybWFpZC1jb250cm9sLWJ1dHRvbiB7XG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICAgICAgICB3aWR0aDogMzJweDtcbiAgICAgICAgaGVpZ2h0OiAzMnB4O1xuICAgICAgICBwYWRkaW5nOiAwO1xuICAgICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICAgIGNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgICAgICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgICAgIGZvbnQtc2l6ZTogMTZweDtcbiAgICAgICAgZm9udC1mYW1pbHk6IHZhcigtLWJvZHlGb250KTtcbiAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuMnMgZWFzZTtcblxuICAgICAgICAmOmhvdmVyIHtcbiAgICAgICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgICB9XG5cbiAgICAgICAgJjphY3RpdmUge1xuICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgxcHgpO1xuICAgICAgICB9XG5cbiAgICAgICAgLy8gU3R5bGUgdGhlIHJlc2V0IGJ1dHRvbiBkaWZmZXJlbnRseVxuICAgICAgICAmOm50aC1jaGlsZCgyKSB7XG4gICAgICAgICAgd2lkdGg6IGF1dG87XG4gICAgICAgICAgcGFkZGluZzogMCAxMnB4O1xuICAgICAgICAgIGZvbnQtc2l6ZTogMTRweDtcbiAgICAgICAgfVxuICAgICAgfVxuICAgIH1cbiAgfVxufVxuIl19 */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https:///didattica//index.xml"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https:///didattica//Argomenti/Cybersecurity-e-Ethical-hacking/HTTP-og-image.webp"/><meta property="og:image:url" content="https:///didattica//Argomenti/Cybersecurity-e-Ethical-hacking/HTTP-og-image.webp"/><meta name="twitter:image" content="https:///didattica//Argomenti/Cybersecurity-e-Ethical-hacking/HTTP-og-image.webp"/><meta property="og:image:type" content="image/.webp"/></head><body data-slug="Argomenti/Cybersecurity-e-Ethical-hacking/HTTP"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">Quartz 4</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><p>Search</p><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-44"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-44" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../Argomenti/">Argomenti</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../Argomenti/Cybersecurity-e-Ethical-hacking/">Cybersecurity e Ethical hacking</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>HTTP</a></div></nav><h1 class="article-title">HTTP</h1><p show-comma="true" class="content-meta"><time datetime="2025-05-13T14:10:53.565Z">May 13, 2025</time><span>16 min read</span></p></div></div><article class="popover-hint"><h2 id="comprensione-delle-transazioni-http">Comprensione delle Transazioni HTTP<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#comprensione-delle-transazioni-http" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="panoramica-di-http">Panoramica di HTTP<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#panoramica-di-http" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>HTTP (Hypertext Transfer Protocol) è il protocollo primario utilizzato per la trasmissione di pagine web e file associati su Internet. Le transazioni HTTP coinvolgono un client (solitamente un browser web) che invia richieste a un server per ottenere o inviare informazioni. Queste transazioni seguono un formato generale che comprende tre parti principali: la linea di richiesta o risposta, una sezione di intestazione e il corpo dell’entità.</p>
+<h3 id="il-processo-di-transazione-http">Il Processo di Transazione HTTP<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#il-processo-di-transazione-http" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li><strong>Iniziazione della Transazione da Parte del Cliente</strong>:
+Il client avvia una transazione contattando il server e inviando una richiesta di documento. Per esempio, una richiesta GET può includere parametri nell’URL, che saranno registrati nei log di accesso al web del server.</li>
+</ol>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="http" data-theme="github-light github-dark"><code data-language="http" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">   GET /index.html?param=value HTTP/1.0</span></span></code></pre></figure>
+<ol start="2">
+<li><strong>Invio delle Intestazioni Opzionali</strong>:
+Dopo la richiesta iniziale, il client può inviare informazioni di intestazione opzionali per informare il server sulla sua configurazione e sui formati di documento che accetta. Queste intestazioni aiutano il server a personalizzare la risposta in base alle capacità e preferenze del client.</li>
+</ol>
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="http" data-theme="github-light github-dark"><code data-language="http" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">   User-Agent: Mozilla/4.06</span></span>
+<span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">   Accept: image/gif, image/jpeg</span></span></code></pre></figure>
+<ol start="3">
+<li><strong>Richieste POST e Dati Forniti dall’Utente</strong>:
+In una richiesta POST, i dati forniti dall’utente seguono le intestazioni opzionali e non sono inclusi nell’URL della POST. Questo metodo è comunemente utilizzato per l’invio di formulari o per il trasferimento di dati sensibili che non dovrebbero essere esposti nell’URL.</li>
+</ol>
+<h3 id="esercitazioni-pratiche-con-webgoat-e-owasp-zap">Esercitazioni Pratiche con WebGoat e OWASP ZAP<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercitazioni-pratiche-con-webgoat-e-owasp-zap" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Per comprendere meglio come funzionano le transazioni HTTP e per mettere in pratica le conoscenze acquisite, si può utilizzare WebGoat, una piattaforma di apprendimento interattiva focalizzata sulla sicurezza delle applicazioni web. WebGoat offre la possibilità di interagire con componenti web reali attraverso esercizi che mostrano come le richieste HTTP sono costruite e gestite.</p>
+<p><strong>OWASP Zed Attack Proxy (ZAP)</strong> è un altro strumento essenziale per coloro che desiderano esplorare ulteriormente la sicurezza delle applicazioni web. ZAP permette di intercettare e modificare le richieste e le risposte tra il browser e il server, offrendo un’opportunità unica per vedere in tempo reale come le informazioni vengono scambiate attraverso il web.</p>
+<p>Questi strumenti sono particolarmente utili per:</p>
+<ul>
+<li>Visualizzare i parametri della richiesta HTTP.</li>
+<li>Esaminare i cookie della richiesta HTTP.</li>
+<li>Analizzare il codice sorgente Java delle applicazioni web.</li>
+</ul>
+<p>Utilizzare queste piattaforme può aiutare a sviluppare una comprensione pratica delle vulnerabilità comuni nel web e delle tecniche per mitigarle.</p>
+<h2 id="esercizio-pratico-gestione-di-una-richiesta-http">Esercizio Pratico: Gestione di una Richiesta HTTP<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizio-pratico-gestione-di-una-richiesta-http" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Questo esercizio illustra le basi della gestione di una richiesta HTTP attraverso un semplice esempio di interazione con un server web. Seguendo le istruzioni sottostanti, potrai vedere come un server elabora i dati inviati da un utente e come risponde modificando questi dati.</p>
+<h3 id="istruzioni-per-lesercizio">Istruzioni per l’Esercizio<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#istruzioni-per-lesercizio" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>
+<p><strong>Inserisci il tuo nome nel campo di input sottostante.</strong></p>
+<ul>
+<li>Trova il campo di input dove è richiesto di inserire il tuo nome.</li>
+</ul>
+</li>
+<li>
+<p><strong>Premi il pulsante “Go!” per inviare la richiesta.</strong></p>
+<ul>
+<li>Una volta inserito il tuo nome, clicca sul pulsante “Go!” per inviare la tua richiesta al server.</li>
+</ul>
+</li>
+<li>
+<p><strong>Osserva la risposta del server.</strong></p>
+<ul>
+<li>Il server riceverà il tuo nome, lo inverterà e ti mostrerà il risultato. Per esempio, se inserisci “Davide”, il server risponderà con “edivaD”.</li>
+</ul>
+</li>
+</ol>
+<h3 id="obiettivo-dellesercizio">Obiettivo dell’Esercizio<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#obiettivo-dellesercizio" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>L’obiettivo di questo esercizio è dimostrare come un server web gestisce le richieste HTTP inviate dai clienti. In particolare, vedrai come i dati vengono ricevuti dal server, come possono essere elaborati e infine come vengono inviati indietro al client sotto forma di risposta. Questo processo illustra un aspetto fondamentale delle interazioni tra client e server nel contesto del web.</p>
+<p>Questo tipo di esercizio aiuta a comprendere meglio la dinamica delle richieste e delle risposte HTTP, nonché le basi della programmazione lato server.</p>
+<h2 id="il-quiz">Il Quiz<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#il-quiz" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="domanda-del-quiz">Domanda del Quiz<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#domanda-del-quiz" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Qual è il tipo di comando HTTP utilizzato da WebGoat per questa lezione? Un POST o un GET?</p>
+<h3 id="contesto-e-risposta">Contesto e Risposta<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#contesto-e-risposta" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Per rispondere correttamente a questa domanda, è importante considerare il tipo di azione che viene eseguita quando l’utente inserisce il suo nome e preme il pulsante “Go!“. L’azione descritta implica l’invio di dati (il nome dell’utente) al server per essere elaborati (in questo caso, invertiti) e quindi restituiti al client.</p>
+<p>In base a questa descrizione, il tipo di comando HTTP più appropriato per trasmettere dati che devono essere elaborati in questo modo è tipicamente un <strong>POST</strong>. I comandi POST sono usati per inviare dati al server, ad esempio, quando si compila un modulo su una pagina web. I dati inviati tramite POST non sono visibili nell’URL, rendendolo più sicuro per la trasmissione di informazioni sensibili o private.</p>
+<p>Pertanto, la risposta corretta è: <strong>POST</strong>.</p>
+<h2 id="cosè-un-http-proxy">Cos’è un HTTP Proxy<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#cosè-un-http-proxy" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="definizione-e-utilizzo">Definizione e Utilizzo<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#definizione-e-utilizzo" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Un proxy HTTP è un’applicazione intermedia che agisce come intermediario tra un client HTTP e le risorse del backend. I client HTTP possono essere browser o applicazioni come curl, SOAP UI, Postman, ecc. Generalmente, i proxy vengono utilizzati per il routing e per ottenere accesso a internet quando non esiste una connessione diretta a internet dal client stesso. I proxy HTTP sono quindi ideali anche per testare le applicazioni. Utilizzando i record di log del proxy, è possibile vedere ciò che è stato effettivamente inviato dal client al server, permettendo di controllare le intestazioni di richiesta e risposta e i payload in formati come XML, JSON, o altri.</p>
+<h3 id="funzionamento-di-un-http-proxy">Funzionamento di un HTTP Proxy<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#funzionamento-di-un-http-proxy" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Un HTTP Proxy riceve richieste da un client e le inoltra. Tipicamente, registra anche queste transazioni. Funziona come un “uomo nel mezzo” (man-in-the-middle), ed è efficace sia con che senza HTTPS, a condizione che il client o il browser si fidi del certificato del proxy HTTP.</p>
+<h3 id="capacità-del-proxy-zap">Capacità del Proxy ZAP<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#capacità-del-proxy-zap" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Con ZAP (Zed Attack Proxy), è possibile registrare il traffico, ispezionarlo, modificare le richieste e le risposte inviate e ricevute dal browser e ottenere rapporti su una serie di vulnerabilità conosciute che ZAP rileva attraverso l’ispezione del traffico. La segnalazione passiva e attiva delle questioni di sicurezza è solitamente utilizzata nelle pipeline di Continuous Delivery che impiegano una versione di ZAP senza interfaccia grafica. Qui, useremo ZAP in modo interattivo, principalmente per visualizzare e modificare le richieste per individuare vulnerabilità e risolvere compiti. ZAP dispone di un’interfaccia grafica, ma ora include anche un HUD (Heads-On-Display), che stabilisce una connessione via web socket tra il browser e il proxy ZAP.</p>
+<p>Questo strumento è particolarmente utile per gli sviluppatori e i professionisti della sicurezza informatica, che possono sfruttare le sue funzionalità per migliorare la sicurezza delle applicazioni web attraverso un’analisi dettagliata del traffico di rete.</p>
+<h2 id="strumenti-per-sviluppatori-di-google-chrome">Strumenti per Sviluppatori di Google Chrome<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#strumenti-per-sviluppatori-di-google-chrome" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="introduzione-agli-strumenti-per-sviluppatori">Introduzione agli Strumenti per Sviluppatori<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#introduzione-agli-strumenti-per-sviluppatori" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Gli strumenti per sviluppatori di Google Chrome sono una suite di utility integrate nel browser che permettono agli sviluppatori di analizzare, testare e modificare pagine web in tempo reale. Anche se questa introduzione si concentra sugli strumenti disponibili in Google Chrome, quasi tutti i moderni browser offrono un insieme simile di strumenti. Puoi comunque utilizzare il browser di tua scelta, come Firefox o Safari, anche se alcuni passaggi di questo tutorial potrebbero differire.</p>
+<h3 id="scopo-del-tutorial">Scopo del Tutorial<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#scopo-del-tutorial" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Questo tutorial è volto a fornire le conoscenze essenziali per completare specifiche assegnazioni utilizzando gli strumenti per sviluppatori. Non è inteso come una guida completa a tutte le funzionalità di questi strumenti. Se sei già familiare con queste utility, puoi saltare queste lezioni.</p>
+<h3 id="come-accedere-agli-strumenti-per-sviluppatori">Come Accedere agli Strumenti per Sviluppatori<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#come-accedere-agli-strumenti-per-sviluppatori" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Per aprire gli strumenti per sviluppatori in Google Chrome, hai diverse opzioni:</p>
+<ol>
+<li>
+<p><strong>Clic Destro e Ispeziona</strong>:</p>
+<ul>
+<li>Fai clic destro in qualsiasi punto della finestra del browser e seleziona l’opzione “Ispeziona”.</li>
+</ul>
+</li>
+<li>
+<p><strong>Menu del Browser</strong>:</p>
+<ul>
+<li>Vai al menu del browser (tre puntini nell’angolo in alto a destra), poi vai a “Altri strumenti” e seleziona l’opzione “Strumenti per sviluppatori”.</li>
+</ul>
+</li>
+<li>
+<p><strong>Scorciatoia da Tastiera</strong>:</p>
+<ul>
+<li>Utilizza la combinazione di tasti Ctrl + Shift + I.</li>
+</ul>
+</li>
+</ol>
+<h3 id="utilizzo-degli-strumenti-per-sviluppatori">Utilizzo degli Strumenti per Sviluppatori<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#utilizzo-degli-strumenti-per-sviluppatori" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Una volta aperti gli strumenti per sviluppatori, avrai accesso a diverse funzionalità, tra cui:</p>
+<ul>
+<li><strong>Console</strong>: permette di eseguire comandi JavaScript direttamente nel browser e di visualizzare messaggi di log, errori e avvisi.</li>
+<li><strong>Sources (Sorgenti)</strong>: mostra i file sorgente della pagina web, consentendo di esaminare e modificare il codice HTML, CSS e JavaScript.</li>
+<li><strong>Network (Rete)</strong>: registra le richieste e le risposte tra il browser e i server web, utile per analizzare il flusso di dati e le prestazioni.</li>
+</ul>
+<p>Questi strumenti sono indispensabili per comprendere meglio il funzionamento interno delle pagine web, identificare e risolvere problemi di codice, ottimizzare le prestazioni e garantire una buona esperienza utente.</p>
+<h2 id="la-scheda-elements-degli-strumenti-per-sviluppatori-di-google-chrome">La Scheda “Elements” degli Strumenti per Sviluppatori di Google Chrome<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#la-scheda-elements-degli-strumenti-per-sviluppatori-di-google-chrome" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="panoramica-della-scheda-elements">Panoramica della Scheda “Elements”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#panoramica-della-scheda-elements" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>La scheda “Elements” (Elementi) degli strumenti per sviluppatori di Google Chrome è uno strumento potente che permette di esaminare e modificare il codice HTML e CSS di una pagina web in tempo reale. Questa funzionalità è particolarmente utile per sviluppatori web, designer e chiunque voglia sperimentare con la struttura e lo stile di una pagina.</p>
+<h3 id="funzionalità-del-codice-html">Funzionalità del Codice HTML<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#funzionalità-del-codice-html" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>
+<p><strong>Esplorazione del Codice HTML</strong>:</p>
+<ul>
+<li>Passando il mouse su una riga di codice HTML nella scheda “Elements”, vedrai che la parte corrispondente del sito web si illumina di blu. Questo indica che la linea di HTML specifica definisce quella sezione del sito.</li>
+</ul>
+</li>
+<li>
+<p><strong>Modifica degli Elementi HTML</strong>:</p>
+<ul>
+<li>Cliccando all’interno di un elemento HTML, come un tag di paragrafo (<code>&lt;p></code>), è possibile modificare direttamente il contenuto visibile della pagina web. Dopo aver apportato le modifiche e premuto invio, Chrome aggiornerà il sito per mostrare le modifiche effettuate.</li>
+</ul>
+</li>
+<li>
+<p><strong>Personalizzazione di Tag, Classi e ID</strong>:</p>
+<ul>
+<li>Oltre a modificare il contenuto, puoi anche cambiare il tipo di tag HTML usato, modificare o aggiungere classi e ID agli elementi, e molto altro ancora. Questo permette una personalizzazione dettagliata e specifica di ogni elemento della pagina.</li>
+</ul>
+</li>
+</ol>
+<h3 id="funzionalità-del-codice-css">Funzionalità del Codice CSS<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#funzionalità-del-codice-css" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>
+<p><strong>Accesso alle Informazioni CSS</strong>:</p>
+<ul>
+<li>Sotto la fonte HTML nella scheda “Elements”, troverai le informazioni relative al CSS utilizzato per stilizzare il sito. Questo include i fogli di stile collegati e i blocchi di stile incorporati.</li>
+</ul>
+</li>
+<li>
+<p><strong>Modifica del CSS</strong>:</p>
+<ul>
+<li>Come per l’HTML, anche il CSS può essere modificato direttamente dalla scheda “Elements”. Puoi cambiare i valori specifici o disattivare singoli stili per vedere come influenzano la presentazione del sito.</li>
+</ul>
+</li>
+</ol>
+<h3 id="vantaggi-delluso-della-scheda-elements">Vantaggi dell’Uso della Scheda “Elements”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#vantaggi-delluso-della-scheda-elements" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>L’utilizzo della scheda “Elements” offre numerosi vantaggi:</p>
+<ul>
+<li><strong>Apprendimento interattivo</strong>: Permette agli utenti di vedere immediatamente l’effetto delle modifiche al codice sulla presentazione della pagina, facilitando l’apprendimento del web design e dello sviluppo front-end.</li>
+<li><strong>Debugging rapido</strong>: Gli sviluppatori possono rapidamente identificare e correggere problemi con la struttura o lo stile di una pagina.</li>
+<li><strong>Esperimentazione visiva</strong>: Designer e sviluppatori possono sperimentare con variazioni di layout e stili senza la necessità di modificare i file sorgente originali, rendendo il processo creativo più fluido e meno rischioso.</li>
+</ul>
+<p>Utilizzare la scheda “Elements” per manipolare HTML e CSS è uno strumento essenziale per chiunque lavori nella creazione o manutenzione di siti web, offrendo una potente piattaforma per ottimizzare e perfezionare l’esperienza utente finale.</p>
+<h2 id="la-scheda-console-degli-strumenti-per-sviluppatori-di-google-chrome">La Scheda “Console” degli Strumenti per Sviluppatori di Google Chrome<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#la-scheda-console-degli-strumenti-per-sviluppatori-di-google-chrome" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="panoramica-della-scheda-console">Panoramica della Scheda “Console”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#panoramica-della-scheda-console" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>La scheda “Console” negli strumenti per sviluppatori di Google Chrome è un potente ambiente di interazione che permette agli sviluppatori di visualizzare output, diagnosticare problemi e eseguire codice JavaScript in tempo reale direttamente nel browser. Questa scheda è essenziale per il testing e il debugging del codice JavaScript.</p>
+<h3 id="visualizzazione-di-output-e-errori">Visualizzazione di Output e Errori<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#visualizzazione-di-output-e-errori" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>
+<p><strong>Messaggi di Output</strong>:</p>
+<ul>
+<li>Nella console, puoi vedere tutto ciò che un file JavaScript caricato potrebbe avere stampato. Questo include messaggi di log, avvisi e errori.</li>
+</ul>
+</li>
+<li>
+<p><strong>Errori in Rosso</strong>:</p>
+<ul>
+<li>Se vedi dei messaggi in rosso, significa che ci sono degli errori. Non preoccuparti se vedi questi messaggi; mentre indicano problemi, molti di essi potrebbero essersi già risolti automaticamente.</li>
+</ul>
+</li>
+</ol>
+<h3 id="esecuzione-di-codice-javascript">Esecuzione di Codice JavaScript<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esecuzione-di-codice-javascript" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>
+<p><strong>Pulizia della Console</strong>:</p>
+<ul>
+<li>Puoi iniziare pulendo la console utilizzando la scorciatoia da tastiera <code>CTRL+L</code>. Questo comando cancella tutti i messaggi precedentemente visualizzati, offrendo una vista pulita per nuove operazioni.</li>
+</ul>
+</li>
+<li>
+<p><strong>Esecuzione di Comandi JavaScript</strong>:</p>
+<ul>
+<li>Per eseguire il tuo codice JavaScript, clicca all’interno della console e scrivi un comando, ad esempio:
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="javascript" data-theme="github-light github-dark"><code data-language="javascript" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">console.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">log</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">&quot;Hello WebGoat!&quot;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">);</span></span></code></pre></figure>
+</li>
+<li>Premi invio. Dovresti vedere “Hello WebGoat” apparire nella tua console.</li>
+</ul>
+</li>
+<li>
+<p><strong>Operazioni Aritmetiche</strong>:</p>
+<ul>
+<li>La console permette anche di eseguire alcune operazioni aritmetiche di base. Se digiti, per esempio, <code>1+3</code> e premi invio, la console mostrerà <code>4</code>.</li>
+</ul>
+</li>
+</ol>
+<h3 id="note-sulluso-della-console">Note sull’Uso della Console<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#note-sulluso-della-console" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>Messaggi ‘undefined’</strong>:
+<ul>
+<li>Potresti vedere la parola <code>undefined</code> apparire nella console dopo l’esecuzione di alcuni comandi. Questo è normale e indica semplicemente che la funzione JavaScript chiamata non ha restituito alcun valore, quindi il risultato è <code>undefined</code>. Puoi ignorare tranquillamente questo messaggio.</li>
+</ul>
+</li>
+</ul>
+<p>La scheda “Console” è uno strumento indispensabile per lo sviluppo web, offrendo un accesso diretto e immediato al motore JavaScript del browser. È particolarmente utile per test rapidi, esplorazione di snippet di codice o semplicemente per l’apprendimento di JavaScript.</p>
+<h2 id="esercizio-pratico-utilizzo-della-console-per-eseguire-javascript">Esercizio Pratico: Utilizzo della Console per Eseguire JavaScript<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizio-pratico-utilizzo-della-console-per-eseguire-javascript" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Questo esercizio ti guiderà nell’uso della scheda “Console” degli strumenti per sviluppatori di Google Chrome per eseguire una funzione JavaScript e osservare la risposta generata.</p>
+<h3 id="passaggi-per-lesercizio">Passaggi per l’Esercizio<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#passaggi-per-lesercizio" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>
+<p><strong>Apri gli Strumenti per Sviluppatori</strong>:</p>
+<ul>
+<li>Assicurati che gli strumenti per sviluppatori siano aperti nel tuo browser. Puoi aprire la console come descritto in precedenza, cliccando con il tasto destro e selezionando “Ispeziona”, dal menu del browser oppure usando la scorciatoia da tastiera <code>CTRL+Shift+I</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Accedi alla Scheda Console</strong>:</p>
+<ul>
+<li>Seleziona la scheda “Console” all’interno degli strumenti per sviluppatori per accedere all’ambiente di comando.</li>
+</ul>
+</li>
+<li>
+<p><strong>Esegui la Funzione JavaScript</strong>:</p>
+<ul>
+<li>Nella console, digita il seguente comando per eseguire la funzione:
+<figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="javascript" data-theme="github-light github-dark"><code data-language="javascript" data-theme="github-light github-dark" style="display:grid;"><span data-line><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">webgoat.customjs.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;">phoneHome</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">()</span></span></code></pre></figure>
+</li>
+<li>Premi <code>Enter</code> per inviare il comando.</li>
+</ul>
+</li>
+<li>
+<p><strong>Osserva la Risposta</strong>:</p>
+<ul>
+<li>Dopo l’esecuzione, dovresti vedere una risposta nella console. La risposta sarà un oggetto JSON che contiene diversi valori, tra cui un numero casuale generato ogni volta che la funzione viene chiamata.</li>
+</ul>
+</li>
+</ol>
+<h3 id="cosa-fare-con-il-risultato">Cosa Fare con il Risultato<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#cosa-fare-con-il-risultato" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>Copia il Numero Casuale</strong>:
+<ul>
+<li>Cerca nel risultato della risposta l’elemento che contiene il numero casuale, solitamente indicato dopo <code>&quot;output&quot;:&quot;phone home response is…&quot;</code>.</li>
+<li>Copia questo numero casuale.</li>
+</ul>
+</li>
+</ul>
+<ol start="5">
+<li><strong>Incolla il Numero nel Campo di Testo Sottostante</strong>:
+<ul>
+<li>Incolla il numero casuale che hai copiato nel campo di testo indicato qui sotto o nella piattaforma di apprendimento che stai utilizzando per completare l’esercizio.</li>
+</ul>
+</li>
+</ol>
+<h3 id="nota-importante">Nota Importante<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#nota-importante" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>Aggiornamenti Frequenti</strong>:
+<ul>
+<li>Assicurati di avere il numero più recente, poiché è generato casualmente ogni volta che la funzione viene chiamata. Se necessario, ripeti l’esecuzione della funzione per ottenere un nuovo numero.</li>
+</ul>
+</li>
+</ul>
+<p>Questo esercizio dimostra non solo come utilizzare la console per eseguire il codice JavaScript, ma anche come interagire con le funzioni personalizzate all’interno di un’applicazione web, un’abilità fondamentale nello sviluppo e nel testing del software.</p>
+<h2 id="esplorazione-delle-schede-sources-e-network-degli-strumenti-per-sviluppatori-di-google-chrome">Esplorazione delle Schede “Sources” e “Network” degli Strumenti per Sviluppatori di Google Chrome<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esplorazione-delle-schede-sources-e-network-degli-strumenti-per-sviluppatori-di-google-chrome" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="scheda-sources">Scheda “Sources”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#scheda-sources" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h4 id="funzionalità-principali">Funzionalità Principali<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#funzionalità-principali" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>La scheda “Sources” (Sorgenti) permette di esaminare il sistema di file e visualizzare tutti i file HTML, CSS e JavaScript utilizzati per creare il sito web. Questa scheda è essenziale per chi desidera comprendere la struttura e il codice sottostante di una pagina web.</p>
+<h4 id="come-usare-la-scheda-sources">Come Usare la Scheda “Sources”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#come-usare-la-scheda-sources" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ol>
+<li><strong>Visualizzazione dei File</strong>:
+<ul>
+<li>Clicca su un file per visualizzarne il contenuto. Potrai vedere il codice sorgente completo, che include HTML, CSS, e JavaScript.</li>
+</ul>
+</li>
+<li><strong>Navigazione nel Sistema dei File</strong>:
+<ul>
+<li>Esplora la struttura delle cartelle per trovare altri file e risorse collegati alla pagina web.</li>
+</ul>
+</li>
+</ol>
+<h3 id="scheda-network">Scheda “Network”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#scheda-network" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<h4 id="funzionalità-principali-1">Funzionalità Principali<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#funzionalità-principali-1" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>La scheda “Network” (Rete) offre una visione dettagliata delle richieste HTTP e delle risposte eseguite dal sito web. Questa funzionalità è cruciale per analizzare come i dati vengono scambiati tra il client e il server.</p>
+<h4 id="come-usare-la-scheda-network">Come Usare la Scheda “Network”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#come-usare-la-scheda-network" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<ol>
+<li>
+<p><strong>Visualizzazione delle Richieste e Risposte HTTP</strong>:</p>
+<ul>
+<li>Clicca sulla scheda “Network” per vedere un elenco di tutte le richieste e risposte HTTP.</li>
+</ul>
+</li>
+<li>
+<p><strong>Informazioni Dettagliate su una Richiesta</strong>:</p>
+<ul>
+<li>Clicca su una richiesta specifica per ottenere informazioni più dettagliate, come l’intestazione della richiesta, il corpo della risposta, i cookie utilizzati, e molto altro.</li>
+</ul>
+</li>
+<li>
+<p><strong>Analisi della Timeline</strong>:</p>
+<ul>
+<li>La “Timeline” sopra i punti blu mostra quando sono state effettuate queste richieste e risposte.</li>
+<li>Puoi anche visualizzare le richieste effettuate in un determinato lasso di tempo cliccando e trascinando sulla timeline. La finestra sottostante mostrerà solo le richieste e le risposte effettuate in quel periodo.</li>
+</ul>
+</li>
+</ol>
+<h3 id="utilità-delle-schede-sources-e-network">Utilità delle Schede “Sources” e “Network”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#utilità-delle-schede-sources-e-network" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Queste schede sono strumenti indispensabili per gli sviluppatori web, in quanto permettono di:</p>
+<ul>
+<li><strong>Debugging del Codice</strong>: Identificare e risolvere problemi nel codice HTML, CSS e JavaScript.</li>
+<li><strong>Ottimizzazione delle Prestazioni</strong>: Analizzare le richieste e le risposte per migliorare i tempi di caricamento e l’efficienza della pagina.</li>
+<li><strong>Sicurezza</strong>: Verificare come i dati vengono trasmessi e assicurarsi che le informazioni sensibili siano gestite correttamente.</li>
+</ul>
+<p>L’uso combinato delle schede “Sources” e “Network” fornisce una comprensione completa delle dinamiche tecniche e del flusso di dati di una pagina web, essenziale per lo sviluppo e il mantenimento di siti web robusti e performanti.</p>
+<h2 id="esercizio-pratico-lavorare-con-la-scheda-network">Esercizio Pratico: Lavorare con la Scheda “Network”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizio-pratico-lavorare-con-la-scheda-network" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Questo esercizio ti guiderà attraverso il processo di identificazione e analisi di una specifica richiesta HTTP utilizzando la scheda “Network” degli strumenti per sviluppatori di Google Chrome. L’obiettivo è trovare un numero casuale generato da una richiesta e utilizzarlo come richiesto nell’assegnazione.</p>
+<h3 id="passaggi-per-completare-lesercizio">Passaggi per Completare l’Esercizio<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#passaggi-per-completare-lesercizio" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ol>
+<li>
+<p><strong>Apri gli Strumenti per Sviluppatori e la Scheda “Network”</strong>:</p>
+<ul>
+<li>Assicurati che gli strumenti per sviluppatori siano aperti nel tuo browser e che la scheda “Network” sia selezionata. Puoi aprire gli strumenti per sviluppatori facendo clic destro e selezionando “Ispeziona”, oppure usando la scorciatoia da tastiera <code>Ctrl+Shift+I</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Genera la Richiesta HTTP</strong>:</p>
+<ul>
+<li>Trova e clicca il primo pulsante disponibile nella pagina web. Questo azionerà una richiesta HTTP che sarà visibile nella scheda “Network”.</li>
+</ul>
+</li>
+<li>
+<p><strong>Trova la Richiesta Specifica</strong>:</p>
+<ul>
+<li>Osserva le richieste che appaiono nella scheda “Network”. Dovrai trovare la richiesta specifica che contiene il campo <code>networkNum</code>. Questo potrebbe richiedere di cliccare su diverse richieste per esaminare i dettagli.</li>
+</ul>
+</li>
+<li>
+<p><strong>Copia il Numero Casuale</strong>:</p>
+<ul>
+<li>Una volta individuata la richiesta corretta, cerca il campo <code>networkNum</code> nei dettagli della richiesta. Copia il numero visualizzato subito dopo questo campo.</li>
+</ul>
+</li>
+<li>
+<p><strong>Inserisci il Numero nell’Input Field</strong>:</p>
+<ul>
+<li>Torna alla pagina web o alla piattaforma di apprendimento dove stai completando l’assegnazione. Incolla il numero che hai copiato nel campo di input previsto.</li>
+</ul>
+</li>
+<li>
+<p><strong>Conferma il Numero</strong>:</p>
+<ul>
+<li>Clicca sul pulsante di verifica (“check button”) per sottomettere il numero e completare l’assegnazione.</li>
+</ul>
+</li>
+</ol>
+<h3 id="punti-da-ricordare">Punti da Ricordare<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#punti-da-ricordare" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<ul>
+<li><strong>Aggiornamenti Frequenti</strong>: La richiesta HTTP potrebbe essere generata ogni volta che clicchi il pulsante, quindi il numero può cambiare. Assicurati di usare il numero più recente.</li>
+<li><strong>Precisione</strong>: Assicurati di copiare correttamente il numero per evitare errori nel completamento dell’assegnazione.</li>
+</ul>
+<p>Questo esercizio è un ottimo modo per praticare il monitoraggio del traffico di rete e migliorare le tue abilità nell’analisi delle richieste e delle risposte HTTP, competenze cruciali per lo sviluppo web e la sicurezza informatica.</p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-14" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-0"><a href="#comprensione-delle-transazioni-http" data-for="comprensione-delle-transazioni-http">Comprensione delle Transazioni HTTP</a></li><li class="depth-1"><a href="#panoramica-di-http" data-for="panoramica-di-http">Panoramica di HTTP</a></li><li class="depth-1"><a href="#il-processo-di-transazione-http" data-for="il-processo-di-transazione-http">Il Processo di Transazione HTTP</a></li><li class="depth-1"><a href="#esercitazioni-pratiche-con-webgoat-e-owasp-zap" data-for="esercitazioni-pratiche-con-webgoat-e-owasp-zap">Esercitazioni Pratiche con WebGoat e OWASP ZAP</a></li><li class="depth-0"><a href="#esercizio-pratico-gestione-di-una-richiesta-http" data-for="esercizio-pratico-gestione-di-una-richiesta-http">Esercizio Pratico: Gestione di una Richiesta HTTP</a></li><li class="depth-1"><a href="#istruzioni-per-lesercizio" data-for="istruzioni-per-lesercizio">Istruzioni per l’Esercizio</a></li><li class="depth-1"><a href="#obiettivo-dellesercizio" data-for="obiettivo-dellesercizio">Obiettivo dell’Esercizio</a></li><li class="depth-0"><a href="#il-quiz" data-for="il-quiz">Il Quiz</a></li><li class="depth-1"><a href="#domanda-del-quiz" data-for="domanda-del-quiz">Domanda del Quiz</a></li><li class="depth-1"><a href="#contesto-e-risposta" data-for="contesto-e-risposta">Contesto e Risposta</a></li><li class="depth-0"><a href="#cosè-un-http-proxy" data-for="cosè-un-http-proxy">Cos’è un HTTP Proxy</a></li><li class="depth-1"><a href="#definizione-e-utilizzo" data-for="definizione-e-utilizzo">Definizione e Utilizzo</a></li><li class="depth-1"><a href="#funzionamento-di-un-http-proxy" data-for="funzionamento-di-un-http-proxy">Funzionamento di un HTTP Proxy</a></li><li class="depth-1"><a href="#capacità-del-proxy-zap" data-for="capacità-del-proxy-zap">Capacità del Proxy ZAP</a></li><li class="depth-0"><a href="#strumenti-per-sviluppatori-di-google-chrome" data-for="strumenti-per-sviluppatori-di-google-chrome">Strumenti per Sviluppatori di Google Chrome</a></li><li class="depth-1"><a href="#introduzione-agli-strumenti-per-sviluppatori" data-for="introduzione-agli-strumenti-per-sviluppatori">Introduzione agli Strumenti per Sviluppatori</a></li><li class="depth-1"><a href="#scopo-del-tutorial" data-for="scopo-del-tutorial">Scopo del Tutorial</a></li><li class="depth-1"><a href="#come-accedere-agli-strumenti-per-sviluppatori" data-for="come-accedere-agli-strumenti-per-sviluppatori">Come Accedere agli Strumenti per Sviluppatori</a></li><li class="depth-1"><a href="#utilizzo-degli-strumenti-per-sviluppatori" data-for="utilizzo-degli-strumenti-per-sviluppatori">Utilizzo degli Strumenti per Sviluppatori</a></li><li class="depth-0"><a href="#la-scheda-elements-degli-strumenti-per-sviluppatori-di-google-chrome" data-for="la-scheda-elements-degli-strumenti-per-sviluppatori-di-google-chrome">La Scheda “Elements” degli Strumenti per Sviluppatori di Google Chrome</a></li><li class="depth-1"><a href="#panoramica-della-scheda-elements" data-for="panoramica-della-scheda-elements">Panoramica della Scheda “Elements”</a></li><li class="depth-1"><a href="#funzionalità-del-codice-html" data-for="funzionalità-del-codice-html">Funzionalità del Codice HTML</a></li><li class="depth-1"><a href="#funzionalità-del-codice-css" data-for="funzionalità-del-codice-css">Funzionalità del Codice CSS</a></li><li class="depth-1"><a href="#vantaggi-delluso-della-scheda-elements" data-for="vantaggi-delluso-della-scheda-elements">Vantaggi dell’Uso della Scheda “Elements”</a></li><li class="depth-0"><a href="#la-scheda-console-degli-strumenti-per-sviluppatori-di-google-chrome" data-for="la-scheda-console-degli-strumenti-per-sviluppatori-di-google-chrome">La Scheda “Console” degli Strumenti per Sviluppatori di Google Chrome</a></li><li class="depth-1"><a href="#panoramica-della-scheda-console" data-for="panoramica-della-scheda-console">Panoramica della Scheda “Console”</a></li><li class="depth-1"><a href="#visualizzazione-di-output-e-errori" data-for="visualizzazione-di-output-e-errori">Visualizzazione di Output e Errori</a></li><li class="depth-1"><a href="#esecuzione-di-codice-javascript" data-for="esecuzione-di-codice-javascript">Esecuzione di Codice JavaScript</a></li><li class="depth-1"><a href="#note-sulluso-della-console" data-for="note-sulluso-della-console">Note sull’Uso della Console</a></li><li class="depth-0"><a href="#esercizio-pratico-utilizzo-della-console-per-eseguire-javascript" data-for="esercizio-pratico-utilizzo-della-console-per-eseguire-javascript">Esercizio Pratico: Utilizzo della Console per Eseguire JavaScript</a></li><li class="depth-1"><a href="#passaggi-per-lesercizio" data-for="passaggi-per-lesercizio">Passaggi per l’Esercizio</a></li><li class="depth-1"><a href="#cosa-fare-con-il-risultato" data-for="cosa-fare-con-il-risultato">Cosa Fare con il Risultato</a></li><li class="depth-1"><a href="#nota-importante" data-for="nota-importante">Nota Importante</a></li><li class="depth-0"><a href="#esplorazione-delle-schede-sources-e-network-degli-strumenti-per-sviluppatori-di-google-chrome" data-for="esplorazione-delle-schede-sources-e-network-degli-strumenti-per-sviluppatori-di-google-chrome">Esplorazione delle Schede “Sources” e “Network” degli Strumenti per Sviluppatori di Google Chrome</a></li><li class="depth-1"><a href="#scheda-sources" data-for="scheda-sources">Scheda “Sources”</a></li><li class="depth-1"><a href="#scheda-network" data-for="scheda-network">Scheda “Network”</a></li><li class="depth-1"><a href="#utilità-delle-schede-sources-e-network" data-for="utilità-delle-schede-sources-e-network">Utilità delle Schede “Sources” e “Network”</a></li><li class="depth-0"><a href="#esercizio-pratico-lavorare-con-la-scheda-network" data-for="esercizio-pratico-lavorare-con-la-scheda-network">Esercizio Pratico: Lavorare con la Scheda “Network”</a></li><li class="depth-1"><a href="#passaggi-per-completare-lesercizio" data-for="passaggi-per-completare-lesercizio">Passaggi per Completare l’Esercizio</a></li><li class="depth-1"><a href="#punti-da-ricordare" data-for="punti-da-ricordare">Punti da Ricordare</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.1</a> © 2025</p><ul><li><a href="https://github.com/jackyzha0/quartz">GitHub</a></li><li><a href="https://discord.gg/cRFFHYye7t">Discord Community</a></li></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

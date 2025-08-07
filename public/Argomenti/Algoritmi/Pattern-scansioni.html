@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en"><head><title>Pattern scansioni</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;family=IBM Plex Mono:wght@400;600&amp;display=swap"/><link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="og:site_name" content="Quartz 4"/><meta property="og:title" content="Pattern scansioni"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Pattern scansioni"/><meta name="twitter:description" content="Un pattern (uno “schema”) può essere definito come “una soluzione progettuale generale ad un problema ricorrente” [3]."/><meta property="og:description" content="Un pattern (uno “schema”) può essere definito come “una soluzione progettuale generale ad un problema ricorrente” [3]."/><meta property="og:image:alt" content="Un pattern (uno “schema”) può essere definito come “una soluzione progettuale generale ad un problema ricorrente” [3]."/><meta property="twitter:domain" content="/didattica/"/><meta property="og:url" content="https://didattica/Argomenti/Algoritmi/Pattern-scansioni"/><meta property="twitter:url" content="https://didattica/Argomenti/Algoritmi/Pattern-scansioni"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="Un pattern (uno “schema”) può essere definito come “una soluzione progettuale generale ad un problema ricorrente” [3]."/><meta name="generator" content="Quartz"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><style>.expand-button {
+  position: absolute;
+  display: flex;
+  float: right;
+  padding: 0.4rem;
+  margin: 0.3rem;
+  right: 0;
+  color: var(--gray);
+  border-color: var(--dark);
+  background-color: var(--light);
+  border: 1px solid;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.expand-button > svg {
+  fill: var(--light);
+  filter: contrast(0.3);
+}
+.expand-button:hover {
+  cursor: pointer;
+  border-color: var(--secondary);
+}
+.expand-button:focus {
+  outline: 0;
+}
+
+pre:hover > .expand-button {
+  opacity: 1;
+  transition: 0.2s;
+}
+
+#mermaid-container {
+  position: fixed;
+  contain: layout;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: none;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+}
+#mermaid-container.active {
+  display: inline-block;
+}
+#mermaid-container > #mermaid-space {
+  border: 1px solid var(--lightgray);
+  background-color: var(--light);
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+}
+#mermaid-container > #mermaid-space > .mermaid-content {
+  padding: 2rem;
+  position: relative;
+  transform-origin: 0 0;
+  transition: transform 0.1s ease;
+  overflow: visible;
+  min-height: 200px;
+  min-width: 200px;
+}
+#mermaid-container > #mermaid-space > .mermaid-content pre {
+  margin: 0;
+  border: none;
+}
+#mermaid-container > #mermaid-space > .mermaid-content svg {
+  max-width: none;
+  height: auto;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light);
+  border: 1px solid var(--lightgray);
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  color: var(--dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: var(--bodyFont);
+  transition: all 0.2s ease;
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:hover {
+  background: var(--lightgray);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:active {
+  transform: translateY(1px);
+}
+#mermaid-container > #mermaid-space > .mermaid-controls .mermaid-control-button:nth-child(2) {
+  width: auto;
+  padding: 0 12px;
+  font-size: 14px;
+}
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiL2hvbWUvZGF2aWRhZmZvL3BsYXlncm91bmQvcXVhcnR6L3F1YXJ0ei9jb21wb25lbnRzL3N0eWxlcyIsInNvdXJjZXMiOlsibWVybWFpZC5pbmxpbmUuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTs7QUFHRjtFQUNFO0VBQ0E7O0FBR0Y7RUFDRTs7O0FBS0Y7RUFDRTtFQUNBOzs7QUFJSjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTs7QUFHRjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBOztBQUdGO0VBQ0U7RUFDQTs7QUFJSjtFQUNFO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7O0FBRUE7RUFDRTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBO0VBQ0E7RUFDQTtFQUNBOztBQUVBO0VBQ0U7O0FBR0Y7RUFDRTs7QUFJRjtFQUNFO0VBQ0E7RUFDQSIsInNvdXJjZXNDb250ZW50IjpbIi5leHBhbmQtYnV0dG9uIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbG9hdDogcmlnaHQ7XG4gIHBhZGRpbmc6IDAuNHJlbTtcbiAgbWFyZ2luOiAwLjNyZW07XG4gIHJpZ2h0OiAwOyAvLyBOT1RFOiByaWdodCB3aWxsIGJlIHNldCBpbiBtZXJtYWlkLmlubGluZS50c1xuICBjb2xvcjogdmFyKC0tZ3JheSk7XG4gIGJvcmRlci1jb2xvcjogdmFyKC0tZGFyayk7XG4gIGJhY2tncm91bmQtY29sb3I6IHZhcigtLWxpZ2h0KTtcbiAgYm9yZGVyOiAxcHggc29saWQ7XG4gIGJvcmRlci1yYWRpdXM6IDVweDtcbiAgb3BhY2l0eTogMDtcbiAgdHJhbnNpdGlvbjogMC4ycztcblxuICAmID4gc3ZnIHtcbiAgICBmaWxsOiB2YXIoLS1saWdodCk7XG4gICAgZmlsdGVyOiBjb250cmFzdCgwLjMpO1xuICB9XG5cbiAgJjpob3ZlciB7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIGJvcmRlci1jb2xvcjogdmFyKC0tc2Vjb25kYXJ5KTtcbiAgfVxuXG4gICY6Zm9jdXMge1xuICAgIG91dGxpbmU6IDA7XG4gIH1cbn1cblxucHJlIHtcbiAgJjpob3ZlciA+IC5leHBhbmQtYnV0dG9uIHtcbiAgICBvcGFjaXR5OiAxO1xuICAgIHRyYW5zaXRpb246IDAuMnM7XG4gIH1cbn1cblxuI21lcm1haWQtY29udGFpbmVyIHtcbiAgcG9zaXRpb246IGZpeGVkO1xuICBjb250YWluOiBsYXlvdXQ7XG4gIHotaW5kZXg6IDk5OTtcbiAgbGVmdDogMDtcbiAgdG9wOiAwO1xuICB3aWR0aDogMTAwdnc7XG4gIGhlaWdodDogMTAwdmg7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIGRpc3BsYXk6IG5vbmU7XG4gIGJhY2tkcm9wLWZpbHRlcjogYmx1cig0cHgpO1xuICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuNSk7XG5cbiAgJi5hY3RpdmUge1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgfVxuXG4gICYgPiAjbWVybWFpZC1zcGFjZSB7XG4gICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB2YXIoLS1saWdodCk7XG4gICAgYm9yZGVyLXJhZGl1czogNXB4O1xuICAgIHBvc2l0aW9uOiBmaXhlZDtcbiAgICB0b3A6IDUwJTtcbiAgICBsZWZ0OiA1MCU7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGUoLTUwJSwgLTUwJSk7XG4gICAgaGVpZ2h0OiA4MHZoO1xuICAgIHdpZHRoOiA4MHZ3O1xuICAgIG92ZXJmbG93OiBoaWRkZW47XG5cbiAgICAmID4gLm1lcm1haWQtY29udGVudCB7XG4gICAgICBwYWRkaW5nOiAycmVtO1xuICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgdHJhbnNmb3JtLW9yaWdpbjogMCAwO1xuICAgICAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDAuMXMgZWFzZTtcbiAgICAgIG92ZXJmbG93OiB2aXNpYmxlO1xuICAgICAgbWluLWhlaWdodDogMjAwcHg7XG4gICAgICBtaW4td2lkdGg6IDIwMHB4O1xuXG4gICAgICBwcmUge1xuICAgICAgICBtYXJnaW46IDA7XG4gICAgICAgIGJvcmRlcjogbm9uZTtcbiAgICAgIH1cblxuICAgICAgc3ZnIHtcbiAgICAgICAgbWF4LXdpZHRoOiBub25lO1xuICAgICAgICBoZWlnaHQ6IGF1dG87XG4gICAgICB9XG4gICAgfVxuXG4gICAgJiA+IC5tZXJtYWlkLWNvbnRyb2xzIHtcbiAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgIGJvdHRvbTogMjBweDtcbiAgICAgIHJpZ2h0OiAyMHB4O1xuICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgIGdhcDogOHB4O1xuICAgICAgcGFkZGluZzogOHB4O1xuICAgICAgYmFja2dyb3VuZDogdmFyKC0tbGlnaHQpO1xuICAgICAgYm9yZGVyOiAxcHggc29saWQgdmFyKC0tbGlnaHRncmF5KTtcbiAgICAgIGJvcmRlci1yYWRpdXM6IDZweDtcbiAgICAgIGJveC1zaGFkb3c6IDAgMnB4IDRweCByZ2JhKDAsIDAsIDAsIDAuMSk7XG4gICAgICB6LWluZGV4OiAyO1xuXG4gICAgICAubWVybWFpZC1jb250cm9sLWJ1dHRvbiB7XG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICAgICAgICB3aWR0aDogMzJweDtcbiAgICAgICAgaGVpZ2h0OiAzMnB4O1xuICAgICAgICBwYWRkaW5nOiAwO1xuICAgICAgICBib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodCk7XG4gICAgICAgIGNvbG9yOiB2YXIoLS1kYXJrKTtcbiAgICAgICAgYm9yZGVyLXJhZGl1czogNHB4O1xuICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgICAgIGZvbnQtc2l6ZTogMTZweDtcbiAgICAgICAgZm9udC1mYW1pbHk6IHZhcigtLWJvZHlGb250KTtcbiAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuMnMgZWFzZTtcblxuICAgICAgICAmOmhvdmVyIHtcbiAgICAgICAgICBiYWNrZ3JvdW5kOiB2YXIoLS1saWdodGdyYXkpO1xuICAgICAgICB9XG5cbiAgICAgICAgJjphY3RpdmUge1xuICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgxcHgpO1xuICAgICAgICB9XG5cbiAgICAgICAgLy8gU3R5bGUgdGhlIHJlc2V0IGJ1dHRvbiBkaWZmZXJlbnRseVxuICAgICAgICAmOm50aC1jaGlsZCgyKSB7XG4gICAgICAgICAgd2lkdGg6IGF1dG87XG4gICAgICAgICAgcGFkZGluZzogMCAxMnB4O1xuICAgICAgICAgIGZvbnQtc2l6ZTogMTRweDtcbiAgICAgICAgfVxuICAgICAgfVxuICAgIH1cbiAgfVxufVxuIl19 */</style><link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../../static/contentIndex.json").then(data => data.json())</script><link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https:///didattica//index.xml"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image" content="https:///didattica//Argomenti/Algoritmi/Pattern-scansioni-og-image.webp"/><meta property="og:image:url" content="https:///didattica//Argomenti/Algoritmi/Pattern-scansioni-og-image.webp"/><meta name="twitter:image" content="https:///didattica//Argomenti/Algoritmi/Pattern-scansioni-og-image.webp"/><meta property="og:image:type" content="image/.webp"/></head><body data-slug="Argomenti/Algoritmi/Pattern-scansioni"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href="../..">Quartz 4</a></h2><div class="spacer mobile-only"></div><div class="flex-component" style="flex-direction: row; flex-wrap: nowrap; gap: 1rem;"><div style="flex-grow: 1; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><div class="search"><button class="search-button"><p>Search</p><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></button><div class="search-container"><div class="search-space"><input autocomplete="off" class="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div class="search-layout" data-preview="true"></div></div></div></div></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></button></div><div style="flex-grow: 0; flex-shrink: 1; flex-basis: auto; order: 0; align-self: center; justify-self: center;"><button class="readermode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="readerIcon" fill="currentColor" stroke="currentColor" stroke-width="0.2" stroke-linecap="round" stroke-linejoin="round" width="64px" height="64px" viewBox="0 0 24 24" aria-label="Reader mode"><title>Reader mode</title><g transform="translate(-1.8, -1.8) scale(1.15, 1.2)"><path d="M8.9891247,2.5 C10.1384702,2.5 11.2209868,2.96705384 12.0049645,3.76669482 C12.7883914,2.96705384 13.8709081,2.5 15.0202536,2.5 L18.7549359,2.5 C19.1691495,2.5 19.5049359,2.83578644 19.5049359,3.25 L19.5046891,4.004 L21.2546891,4.00457396 C21.6343849,4.00457396 21.9481801,4.28672784 21.9978425,4.6528034 L22.0046891,4.75457396 L22.0046891,20.25 C22.0046891,20.6296958 21.7225353,20.943491 21.3564597,20.9931534 L21.2546891,21 L2.75468914,21 C2.37499337,21 2.06119817,20.7178461 2.01153575,20.3517706 L2.00468914,20.25 L2.00468914,4.75457396 C2.00468914,4.37487819 2.28684302,4.061083 2.65291858,4.01142057 L2.75468914,4.00457396 L4.50368914,4.004 L4.50444233,3.25 C4.50444233,2.87030423 4.78659621,2.55650904 5.15267177,2.50684662 L5.25444233,2.5 L8.9891247,2.5 Z M4.50368914,5.504 L3.50468914,5.504 L3.50468914,19.5 L10.9478955,19.4998273 C10.4513189,18.9207296 9.73864328,18.5588115 8.96709342,18.5065584 L8.77307039,18.5 L5.25444233,18.5 C4.87474657,18.5 4.56095137,18.2178461 4.51128895,17.8517706 L4.50444233,17.75 L4.50368914,5.504 Z M19.5049359,17.75 C19.5049359,18.1642136 19.1691495,18.5 18.7549359,18.5 L15.2363079,18.5 C14.3910149,18.5 13.5994408,18.8724714 13.0614828,19.4998273 L20.5046891,19.5 L20.5046891,5.504 L19.5046891,5.504 L19.5049359,17.75 Z M18.0059359,3.999 L15.0202536,4 L14.8259077,4.00692283 C13.9889509,4.06666544 13.2254227,4.50975805 12.7549359,5.212 L12.7549359,17.777 L12.7782651,17.7601316 C13.4923805,17.2719483 14.3447024,17 15.2363079,17 L18.0059359,16.999 L18.0056891,4.798 L18.0033792,4.75457396 L18.0056891,4.71 L18.0059359,3.999 Z M8.9891247,4 L6.00368914,3.999 L6.00599909,4.75457396 L6.00599909,4.75457396 L6.00368914,4.783 L6.00368914,16.999 L8.77307039,17 C9.57551536,17 10.3461406,17.2202781 11.0128313,17.6202194 L11.2536891,17.776 L11.2536891,5.211 C10.8200889,4.56369974 10.1361548,4.13636104 9.37521067,4.02745763 L9.18347055,4.00692283 L8.9891247,4 Z"></path></g></svg></button></div></div><div class="explorer" data-behavior="link" data-collapsed="collapsed" data-savestate="true" data-data-fns="{&quot;order&quot;:[&quot;filter&quot;,&quot;map&quot;,&quot;sort&quot;],&quot;sortFn&quot;:&quot;(a,b)=>!a.isFolder&amp;&amp;!b.isFolder||a.isFolder&amp;&amp;b.isFolder?a.displayName.localeCompare(b.displayName,void 0,{numeric:!0,sensitivity:\&quot;base\&quot;}):!a.isFolder&amp;&amp;b.isFolder?1:-1&quot;,&quot;filterFn&quot;:&quot;node=>node.slugSegment!==\&quot;tags\&quot;&quot;,&quot;mapFn&quot;:&quot;node=>node&quot;}"><button type="button" class="explorer-toggle mobile-explorer hide-until-loaded" data-mobile="true" aria-controls="explorer-12"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button><button type="button" class="title-button explorer-toggle desktop-explorer" data-mobile="false" aria-expanded="true"><h2>Explorer</h2><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-12" class="explorer-content" aria-expanded="false" role="group"><ul class="explorer-ul overflow" id="list-0"><li class="overflow-end"></li></ul></div><template id="template-file"><li><a href="#"></a></li></template><template id="template-folder"><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div><button class="folder-button"><span class="folder-title"></span></button></div></div><div class="folder-outer"><ul class="content"></ul></div></li></template></div></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="../../">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../Argomenti/">Argomenti</a><p> ❯ </p></div><div class="breadcrumb-element"><a href="../../Argomenti/Algoritmi/">Algoritmi</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>Pattern scansioni</a></div></nav><h1 class="article-title">Pattern scansioni</h1><p show-comma="true" class="content-meta"><time datetime="2025-06-09T07:59:43.553Z">Jun 09, 2025</time><span>9 min read</span></p></div></div><article class="popover-hint"><p>Un <em>pattern</em> (uno “schema”) può essere definito come <em>“una soluzione progettuale generale ad un problema ricorrente”</em> [3].</p>
+<p>Un <em>pattern elementare</em> è un pattern adatto ai novizi per aiutarli ad apprendere concetti fondamentali di programmazione [4].</p>
+<p>Gli studenti, tramite la lettura, il tracciamento, il completamento, o la risoluzione di svariate istanze di diversi e variegati problemi accomunati da uno schema risolutivo comune, possono imparare questi pattern e applicarli poi in contesti nuovi ma risolubili con lo stesso schema di soluzione.</p>
+<p>Non si tratta tanto di insegnare il pattern in astratto, quanto di farlo osservare (e “nominarlo”) esplicitamente in istanze concrete di sua applicazione.</p>
+<h2 id="scansioni-lineari">Scansioni lineari<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#scansioni-lineari" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>Si tratta di scansioni in cui processiamo <em>tutti</em> gli elementi di una collezione, avendo modo di sapere a priori (possibilmente in tempo costante) quanti elementi ci sono o quando siamo arrivati alla fine.</p>
+<p>Dunque possono essere utilizzati su collezioni iterabili (es. <code>for e in s: print(e)</code>) o su collezioni indicizzabili (es. <code>for i in range(len(s)): print(s[i])</code></p>
+<h3 id="scansione-linearesemplice">Scansione lineare <em>semplice</em><a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#scansione-linearesemplice" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Si tratta di scansioni in cui le singole iterazioni forniscono parti del risultato.</p>
+<p>Con iteratore</p>
+<pre><code>per (ogni) e in c:
+   processa e
+</code></pre>
+<p>Con indici</p>
+<pre><code>per i che varia tra i valori estremi degli indici di c: # (es tra 0 e len(c))
+   processa c[i]
+   incrementa o decrementa i
+</code></pre>
+<p>Con indici e while</p>
+<pre><code>i = uno dei valori estremi di c
+finché i minore di uno dei valori estremi degli indici di c: # (es tra 0 e len(c))
+   processa c[i]
+   incrementa o decrementa i
+</code></pre>
+<p><em>Esempio.</em> Scrivere una funzione che <em>stampa a video</em>, su linee separate, tutti gli elementi di una collezione</p>
+<pre><code>#con iteratore
+def stampa_it(c):
+  for e in c:
+    print(e)
+
+l = [1, 3, 5]
+stampa_it(l)
+t = ('M', 'F', 'X')
+stampa_it(t)
+d = {'Michael', 'Stefano', 'Simone', 'Elisa'}
+stampa_it(d) #notare che non è ordinato ma posso enumerarlo e quindi iterarlo
+
+#con indice
+def stampa_in(c):
+  for i in range(len(c)):
+    print(c[i])
+
+stampa_in(l)
+stampa_in(t)
+#stampa_in(d) #insiemi non sono ordinati e non indicizzabili
+</code></pre>
+<p><em>Esempio.</em> Scrivere una funzione che <em>stampa a video</em>, su linee separate, <strong>le lettere</strong> di una stringa passata come parametro in ordine inverso.</p>
+<pre><code>def inversione(s):
+  for i in range(len(s), 0, -1): # i varia tra len(s) (compreso) e 0 (escluso): [len(s), 0[
+    print(s[i-1]) #mentre gli indici del vettore variano tra ]len(s), 0], per questo devo fare i-1
+
+inversione('ciao')
+</code></pre>
+<p><em>Esempio.</em> Scrivere una funzione Python che <em>stampa a video</em>, su linee separate, <strong>le vocali</strong> di una stringa passata come parametro.</p>
+<pre><code>def stampa_vocale(s):
+  vocali = 'aeiouAEIOU'
+  for l in s:
+    if l in vocali:
+      print(l)
+
+stampa_vocale('ciao')
+</code></pre>
+<p>Python permette di iterare sugli elementi di una stringa con il costrutto for (<code>for c in s</code>).<br/>
+In alternativa possiamo accedere a ciascun carattere con il suo indice</p>
+<pre><code>def stampa_vocale(s):
+  vocali = 'aeiouAEIOU'
+  for i in range(len(s)): #range(len(s)) indica [0, len(s)[
+    if s[i] in vocali:
+      print(s[i])
+
+stampa_vocale('ciao')
+</code></pre>
+<h3 id="scansione-lineare-con-accumulo">Scansione lineare con accumulo<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#scansione-lineare-con-accumulo" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Si tratta di una scansione in cui iterare serve a preparare approssimazioni successive del risultato.</p>
+<pre><code>accumulatore = elemento neutro #(es. 0 se somma, 1 se prodotto, collezione vuota se collezione, stringa vuota, True o False...)
+per ogni e in c:
+   se e soddisfa un requisito: #(potrebbe anche non servire)
+      accumulatore += valore da accumulare
+output di accumulatore
+</code></pre>
+<p>(Banale costruire la versione con indici, lavorando su <code>c[i]</code> invece che su <code>e</code>)</p>
+<p><em>Esempio.</em> Scrivere una funzione che <strong>restituisce la lunghezza di una sequenza</strong>, senza utilizzare il metodo <em>built-in</em> di Python <code>len()</code>.</p>
+<pre><code>def lunghezza(seq):
+  accumulatore = 0
+  for e in seq:
+    accumulatore += 1
+  return accumulatore
+
+print(lunghezza('ciao'))
+</code></pre>
+<p><em>Esempio.</em> Scrivere una funzione che <em>stampa a video</em> <strong>il numero di vocali</strong> di una stringa passata come parametro.</p>
+<pre><code>def stampa_n_vocali(s):
+  vocali = 'aeiouAEIOU' # si potrebbe voler considerare anche le vocali accentate
+  n_vocali = 0
+  for l in s:
+    if l in vocali:
+      n_vocali += 1
+  print('Ci sono ' + str(n_vocali) + ' vocali nella stringa ' + s)
+
+stampa_n_vocali('ciao')
+</code></pre>
+<p><em>Esempio.</em> Scrivere una funzione Python che <em>restituisce</em> <strong>una stringa contenente le vocali</strong> di una stringa passata come parametro.</p>
+<pre><code>def vocali(s):
+  vocali='aeiouAEIOU'
+  vocali_in_s = ''
+  for lettera in s:
+    if lettera in vocali:
+      vocali_in_s = vocali_in_s + lettera
+  return vocali_in_s
+
+print(vocali('ciao'))
+</code></pre>
+<h2 id="ricerca-lineare">Ricerca Lineare<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ricerca-lineare" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h3 id="ricerca-lineare-certa">Ricerca lineare certa<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ricerca-lineare-certa" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Cerchiamo un elemento <code>e</code> (per esempio in una successione di numeri, oppure in una sequenza o collezione <code>c</code>) che soddisfa un certo requisito. Ci fermiamo quando lo troviamo.</p>
+<p>Con iteratore</p>
+<pre><code>per (ogni) e in c:
+   se e soddisfa il requisito:
+      azione in caso di ritrovamento
+      esci dal ciclo
+</code></pre>
+<p>Con indici</p>
+<pre><code>per i tra gli indici estremi di c:
+  se c[i] soddisfa il requisito:
+     azione in caso di ritrovamento
+     esci dal ciclo
+  incrementa i
+</code></pre>
+<p>Con while</p>
+<pre><code>i = 0
+finché i &lt; lunghezza(c):
+   se c[i] soddisfa il requisito:
+     azione in caso di ritrovamento
+     esci dal ciclo
+   incrementa i
+</code></pre>
+<p>Con while, unendo le condizioni</p>
+<pre><code>i = 0
+finché i &lt; lunghezza(c) e c[i] non soddisfa il requisito:
+   incrementa i
+azione in caso di ritrovamento
+</code></pre>
+<p>Per quest’ultimo caso, si assume che il linguaggio di programmazione usi la valutazione lazy (“a corto circuito”) delle espressioni booleane: es. se il primo degli operandi di un AND è falso, non si valuta il secondo (e si restituisce False); allo stesso modo se il primo degli operandi di un OR è vero, non si valuta il secondo (e si restituisce True).<br/>
+Senza questa assuzione, nel caso in cui <code>i == lunghezza(c)</code>, continuando a valutare l’espressione nel “finché”, si prova ad accedere a <code>c[i]</code>, che sarà fuori dal range della collezione (i cui indici vadano da <code>0</code> a <code>lunghezza(c)-1</code>)</p>
+<p><em>Esempio.</em> Definire una funzione Python che <strong>restituisce <code>True</code> se un elemento</strong> (fornito come parametro) <strong>si trova in una collezione</strong> (fornita come parametro). Servirsi di un ciclo che processa gli elementi della collezione, fornendo una strategia per l’uscita dal ciclo nel caso l’elemento obiettivo della ricerca venga trovato prima del termine della scansione.</p>
+<pre><code>def ricerca_lineare(elem , seq):
+  for e in seq:
+    if e == elem:
+      return True
+</code></pre>
+<h3 id="ricerca-lineare-incerta">Ricerca lineare incerta<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#ricerca-lineare-incerta" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Cerchiamo un elemento <code>e</code> (per esempio in una successione di numeri, oppure in una sequenza o collezione <code>c</code>) che soddisfa un certo requisito. Dobbiamo gestire il caso particolare in cui l’elemento non sia presente.</p>
+<p>Con iteratore</p>
+<pre><code>per (ogni) e in c:
+   se e soddisfa il requisito: 
+      azione in caso di ritrovamento
+      esci dal ciclo
+azione in caso di *mancato* ritrovamento
+</code></pre>
+<p>Con indici</p>
+<pre><code>per i tra gli indici estremi di c:
+  se c[i] soddisfa il requisito:
+     azione in caso di ritrovamento
+     esci dal ciclo
+  incrementa i
+azione in caso di *mancato* ritrovamento
+</code></pre>
+<p>Con while</p>
+<pre><code>i = 0
+finché i &lt; lunghezza(c):
+   se c[i] soddisfa il requisito:
+     azione in caso di ritrovamento
+     esci dal ciclo
+   incrementa i
+azione in caso di *mancato* ritrovamento
+</code></pre>
+<p>Con while, unendo le condizioni</p>
+<pre><code>i = 0
+finché i &lt; lunghezza(c) e c[i] non soddisfa il requisito:
+   incrementa i
+se i != lunghezza(c): 
+   azione in caso di ritrovamento
+altrimenti:
+   azione in caso di *mancato* ritrovamento
+</code></pre>
+<p>NB: Si assume la valutazione “lazy”…</p>
+<p><em>Esempio.</em> Modificare la soluzione precedente in modo da gestire il caso in cui l’obiettivo della ricerca <strong>non venga trovato</strong> nella collezione, trattandolo come un caso particolare.</p>
+<pre><code>def ricerca_lineare(elem, seq):
+  for e in seq:
+    if e == elem:
+      return True
+  return False
+</code></pre>
+<p>Analogamente, una possibile soluzione che utilizza il costrutto <code>while</code> sarà così definita:</p>
+<pre><code>def ricerca_lineare_while(elem, seq):
+  i = 0
+  while i &lt; len(seq):
+    if seq[i] == elem:
+      return True
+    i += 1
+  return False
+</code></pre>
+<p>O, più compattamente:</p>
+<pre><code>def ricerca_lineare_while(elem, seq):
+  i = 0
+  while i &lt; len(seq) and seq[i] != elem:
+    i += 1
+  return i != len(seq)
+</code></pre>
+<p><em>Esempio.</em> Scrivere una funzione che restituisce <code>True</code> se il numero <code>n</code> passato come parametro è <strong>primo</strong>, e <code>False</code> altrimenti.<br/>
+Si tratta dell’algoritmo “ovvio”, e corrisponde alla ricerca di un divisore per <code>n</code> tra i numeri minori di <code>n</code>.</p>
+<pre><code>def primo(n): #supponiamo n>1
+  for i in range(2,n): #in realtà basta arrivare a sqrt(n)
+    if n % i == 0: # n è divisibile per i
+      return False #trovato un divisore diverso da 1 e se stesso
+  return True #non ho trovato divisori
+</code></pre>
+<h2 id="scansioni-e-ricerche-interattive">Scansioni e ricerche “interattive”<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#scansioni-e-ricerche-interattive" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<p>In questi casi la lunghezza della collezione non è conosciuta a priori, e l’utente fornisce gli elementi uno alla volta</p>
+<h3 id="scansione-lineare-semplice-o-con-accumulo-fino-allarrivo-di-una-sentinella">Scansione lineare (semplice o con accumulo) fino all’arrivo di una sentinella<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#scansione-lineare-semplice-o-con-accumulo-fino-allarrivo-di-una-sentinella" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Vogliamo leggere e processare tutti i valori inseriti uno alla volta dall’utente, finché non viene inserito uno specifico valore, che chiamiamo <em>sentinella</em>.</p>
+<pre><code>leggi valore
+finché valore != sentinella:
+  processa valore
+  leggi valore
+</code></pre>
+<p><em>Esempio.</em> Scrivere un programma che richiede in input i voti (da 1 a 10) di uno studente, li stampa (scansione semplice), li somma (scansione con accumulo) e termina quando l’utente inserisce il numero 0.</p>
+<pre><code>somma = 0
+voto = int(input(&quot;Inserisci un voto (intero, da 1 a 10): &quot;))
+while voto!= 0:
+  print(voto)
+  somma += voto
+  voto = int(input(&quot;Inserisci un voto (intero, da 1 a 10): &quot;))
+</code></pre>
+<h3 id="lettura-in-input-fino-a-che-non-si-riceve-il-valore-desiderato">Lettura in input fino a che non si riceve il valore desiderato<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#lettura-in-input-fino-a-che-non-si-riceve-il-valore-desiderato" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h3>
+<p>Chiedo in input all’utente un valore con specifici vincoli e lo richiedo finché non ottengo un valore “valido”.</p>
+<pre><code>leggi valore
+finché valore non valido:
+  stampa &quot;Non valido&quot;
+  leggi valore
+</code></pre>
+<p><em>Esempio.</em> Scrivere un programma che chiede all’utente di inserire un voto. Il programma verifica che sia compreso tra 1 e 10 (estremi inclusi): se non lo è, richiede nuovamente l’inserimento e continua così finché non viene inserito un voto “valido”.</p>
+<pre><code>  voto = float(input(&quot;Inserisci un voto (da 1 a 10): &quot;))
+  while (voto &lt; 1 or voto > 10):
+    print(&quot;Il voto deve essere compreso tra 1 e 10&quot;)
+    voto = float(input(&quot;Inserisci un voto (da 1 a 10): &quot;))
+</code></pre>
+<h4 id="alternative">Alternative<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#alternative" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h4>
+<p>Se non si vuole duplicare il codice dell’input, al posto della prima lettura (quella fuori dal while) si può assegnare a <code>valore</code> un valore sicuramente non valido (es. <code>voto = 0</code> nell’ultimo esempio; adattabile anche al penultimo), di modo che il ciclo <code>while</code> venga eseguito sicuramente almeno la prima volta.<br/>
+Nei linguaggi che lo permettono (non Python) è possibile in alternativa usare il costrutto <code>do... while</code>.</p>
+<p>Un’altra possibilità è quella di usare le eccezioni.</p>
+<p><em>Esempio.</em> Scrivere un programma che chiede all’utente di inserire un intero, e continua a chiederlo finché non lo ottiene.</p>
+<pre><code>x = None
+while x is None:
+    try:
+        x = int(input('Dammi un intero: '))
+    except ValueError:
+        print('Volevo un intero, e tu non me lo hai dato.')
+print(&quot;Grazie di avermi dato l'intero&quot;, x)
+</code></pre>
+<h1 id="esercizio">Esercizio<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#esercizio" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<ul>
+<li>Per ogni pattern, individuare un esempio (diverso da quelli già presentati e possibilmente non troppo ovvio) di applicazione del pattern, e scrivere il codice Python corrispondente.</li>
+</ul>
+<h1 id="riferimenti-bibliografici">Riferimenti Bibliografici<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#riferimenti-bibliografici" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h1>
+<ol>
+<li><a href="http://www.cs.uni.edu/~wallingf/patterns/loops.html" class="external">Owen Astrachan &amp; Eugene Wallingford - Loop Patterns<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="http://pythontutor.com/visualize.html" class="external">Philip Guo - Python Tutor<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://it.wikipedia.org/wiki/Design_pattern" class="external">Wikipdia - Design pattern<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+<li><a href="https://doi.org/10.1145/384266.299673" class="external">Michael J. Clancy and Marcia C. Linn. 1999. Patterns and pedagogy. SIGCSE Bull. 31, 1<svg aria-hidden="true" class="external-icon" style="max-width:0.8em;max-height:0.8em;" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
+</ol>
+<p><em>Grazie a Simone Martini e Stefano Pio Zingaro per i contributi al miglioramento di questa pagina</em></p></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div class="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false,&quot;enableRadial&quot;:false}"></div><button class="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+                s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+                c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+                C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+                c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+                v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+                s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+                C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+                S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+                s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+                s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></button></div><div class="global-graph-outer"><div class="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.2,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true,&quot;enableRadial&quot;:true}"></div></div></div><div class="toc desktop-only"><button type="button" class="toc-header" aria-controls="toc-4" aria-expanded="true"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><ul id="list-1" class="toc-content overflow"><li class="depth-1"><a href="#scansioni-lineari" data-for="scansioni-lineari">Scansioni lineari</a></li><li class="depth-2"><a href="#scansione-linearesemplice" data-for="scansione-linearesemplice">Scansione lineare semplice</a></li><li class="depth-2"><a href="#scansione-lineare-con-accumulo" data-for="scansione-lineare-con-accumulo">Scansione lineare con accumulo</a></li><li class="depth-1"><a href="#ricerca-lineare" data-for="ricerca-lineare">Ricerca Lineare</a></li><li class="depth-2"><a href="#ricerca-lineare-certa" data-for="ricerca-lineare-certa">Ricerca lineare certa</a></li><li class="depth-2"><a href="#ricerca-lineare-incerta" data-for="ricerca-lineare-incerta">Ricerca lineare incerta</a></li><li class="depth-1"><a href="#scansioni-e-ricerche-interattive" data-for="scansioni-e-ricerche-interattive">Scansioni e ricerche “interattive”</a></li><li class="depth-2"><a href="#scansione-lineare-semplice-o-con-accumulo-fino-allarrivo-di-una-sentinella" data-for="scansione-lineare-semplice-o-con-accumulo-fino-allarrivo-di-una-sentinella">Scansione lineare (semplice o con accumulo) fino all’arrivo di una sentinella</a></li><li class="depth-2"><a href="#lettura-in-input-fino-a-che-non-si-riceve-il-valore-desiderato" data-for="lettura-in-input-fino-a-che-non-si-riceve-il-valore-desiderato">Lettura in input fino a che non si riceve il valore desiderato</a></li><li class="depth-0"><a href="#esercizio" data-for="esercizio">Esercizio</a></li><li class="depth-0"><a href="#riferimenti-bibliografici" data-for="riferimenti-bibliografici">Riferimenti Bibliografici</a></li><li class="overflow-end"></li></ul></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.5.1</a> © 2025</p><ul><li><a href="https://github.com/jackyzha0/quartz">GitHub</a></li><li><a href="https://discord.gg/cRFFHYye7t">Discord Community</a></li></ul></footer></div></div></body><script type="application/javascript">function n(){let t=this.parentElement;t.classList.toggle("is-collapsed");let e=t.getElementsByClassName("callout-content")[0];if(!e)return;let l=t.classList.contains("is-collapsed");e.style.gridTemplateRows=l?"0fr":"1fr"}function c(){let t=document.getElementsByClassName("callout is-collapsible");for(let e of t){let l=e.getElementsByClassName("callout-title")[0],s=e.getElementsByClassName("callout-content")[0];if(!l||!s)continue;l.addEventListener("click",n),window.addCleanup(()=>l.removeEventListener("click",n));let o=e.classList.contains("is-collapsed");s.style.gridTemplateRows=o?"0fr":"1fr"}}document.addEventListener("nav",c);
+</script><script type="module">function f(i,e){if(!i)return;function r(o){o.target===this&&(o.preventDefault(),o.stopPropagation(),e())}function t(o){o.key.startsWith("Esc")&&(o.preventDefault(),e())}i?.addEventListener("click",r),window.addCleanup(()=>i?.removeEventListener("click",r)),document.addEventListener("keydown",t),window.addCleanup(()=>document.removeEventListener("keydown",t))}function y(i){for(;i.firstChild;)i.removeChild(i.firstChild)}var h=class{constructor(e,r){this.container=e;this.content=r;this.setupEventListeners(),this.setupNavigationControls(),this.resetTransform()}isDragging=!1;startPan={x:0,y:0};currentPan={x:0,y:0};scale=1;MIN_SCALE=.5;MAX_SCALE=3;cleanups=[];setupEventListeners(){let e=this.onMouseDown.bind(this),r=this.onMouseMove.bind(this),t=this.onMouseUp.bind(this),o=this.resetTransform.bind(this);this.container.addEventListener("mousedown",e),document.addEventListener("mousemove",r),document.addEventListener("mouseup",t),window.addEventListener("resize",o),this.cleanups.push(()=>this.container.removeEventListener("mousedown",e),()=>document.removeEventListener("mousemove",r),()=>document.removeEventListener("mouseup",t),()=>window.removeEventListener("resize",o))}cleanup(){for(let e of this.cleanups)e()}setupNavigationControls(){let e=document.createElement("div");e.className="mermaid-controls";let r=this.createButton("+",()=>this.zoom(.1)),t=this.createButton("-",()=>this.zoom(-.1)),o=this.createButton("Reset",()=>this.resetTransform());e.appendChild(t),e.appendChild(o),e.appendChild(r),this.container.appendChild(e)}createButton(e,r){let t=document.createElement("button");return t.textContent=e,t.className="mermaid-control-button",t.addEventListener("click",r),window.addCleanup(()=>t.removeEventListener("click",r)),t}onMouseDown(e){e.button===0&&(this.isDragging=!0,this.startPan={x:e.clientX-this.currentPan.x,y:e.clientY-this.currentPan.y},this.container.style.cursor="grabbing")}onMouseMove(e){this.isDragging&&(e.preventDefault(),this.currentPan={x:e.clientX-this.startPan.x,y:e.clientY-this.startPan.y},this.updateTransform())}onMouseUp(){this.isDragging=!1,this.container.style.cursor="grab"}zoom(e){let r=Math.min(Math.max(this.scale+e,this.MIN_SCALE),this.MAX_SCALE),t=this.content.getBoundingClientRect(),o=t.width/2,n=t.height/2,c=r-this.scale;this.currentPan.x-=o*c,this.currentPan.y-=n*c,this.scale=r,this.updateTransform()}updateTransform(){this.content.style.transform=`translate(${this.currentPan.x}px, ${this.currentPan.y}px) scale(${this.scale})`}resetTransform(){this.scale=1;let e=this.content.querySelector("svg");this.currentPan={x:e.getBoundingClientRect().width/2,y:e.getBoundingClientRect().height/2},this.updateTransform()}},C=["--secondary","--tertiary","--gray","--light","--lightgray","--highlight","--dark","--darkgray","--codeFont"],E;document.addEventListener("nav",async()=>{let e=document.querySelector(".center").querySelectorAll("code.mermaid");if(e.length===0)return;E||=await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.esm.min.mjs");let r=E.default,t=new WeakMap;for(let n of e)t.set(n,n.innerText);async function o(){for(let s of e){s.removeAttribute("data-processed");let a=t.get(s);a&&(s.innerHTML=a)}let n=C.reduce((s,a)=>(s[a]=window.getComputedStyle(document.documentElement).getPropertyValue(a),s),{}),c=document.documentElement.getAttribute("saved-theme")==="dark";r.initialize({startOnLoad:!1,securityLevel:"loose",theme:c?"dark":"base",themeVariables:{fontFamily:n["--codeFont"],primaryColor:n["--light"],primaryTextColor:n["--darkgray"],primaryBorderColor:n["--tertiary"],lineColor:n["--darkgray"],secondaryColor:n["--secondary"],tertiaryColor:n["--tertiary"],clusterBkg:n["--light"],edgeLabelBackground:n["--highlight"]}}),await r.run({nodes:e})}await o(),document.addEventListener("themechange",o),window.addCleanup(()=>document.removeEventListener("themechange",o));for(let n=0;n<e.length;n++){let v=function(){let g=l.querySelector("#mermaid-space"),m=l.querySelector(".mermaid-content");if(!m)return;y(m);let w=c.querySelector("svg").cloneNode(!0);m.appendChild(w),l.classList.add("active"),g.style.cursor="grab",u=new h(g,m)},M=function(){l.classList.remove("active"),u?.cleanup(),u=null},c=e[n],s=c.parentElement,a=s.querySelector(".clipboard-button"),d=s.querySelector(".expand-button"),p=window.getComputedStyle(a),L=a.offsetWidth+parseFloat(p.marginLeft||"0")+parseFloat(p.marginRight||"0");d.style.right=`calc(${L}px + 0.3rem)`,s.prepend(d);let l=s.querySelector("#mermaid-container");if(!l)return;let u=null;d.addEventListener("click",v),f(l,M),window.addCleanup(()=>{u?.cleanup(),d.removeEventListener("click",v)})}});
+</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>
