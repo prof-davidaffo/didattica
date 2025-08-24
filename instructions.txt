@@ -1,0 +1,6 @@
+# Install npm modules
+npm i
+# Build (remove serve if you don't want preview http://localhost:8080/)
+npx quartz build --serve
+# push changes to github
+npx quartz sync
