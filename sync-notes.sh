@@ -1,13 +1,10 @@
 #!/bin/bash
 
 # Percorso assoluto della cartella sorgente con le note originali
-SOURCE="/home/davidaffo/Documents/Obsidian Vault/Scuola/Didattica/Argomenti"
+SOURCE="$HOME/Documents/Obsidian Vault/Scuola/Didattica/Argomenti"
 
 # Cartella di destinazione relativa alla root del progetto Quartz
 DEST="content/Argomenti"
-
-# Pattern da escludere (verifiche, soluzioni, correzioni)
-EXCLUDE_PATTERN="*[Vv]erific*|*[Ss]oluz*|*[Cc]orrezion*|*[Cc]orrett*"
 
 # Crea la cartella di destinazione se non esiste
 mkdir -p "$DEST"
@@ -30,6 +27,7 @@ rsync -av --update --delete \
   --exclude='*Correzion*' \
   --exclude='*corrett*' \
   --exclude='*Corrett*' \
+  --exclude='*_NOSYNC*' \
   "$SOURCE/" "$DEST/"
 
 echo "✅ Sincronizzazione completata."
