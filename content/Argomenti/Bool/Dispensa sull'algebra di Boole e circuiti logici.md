@@ -1,4 +1,4 @@
-> [!NOTE] Autore
+ > [!NOTE] Autore
 > Prof. Davide Daffonchio
 
 ## Indice
@@ -89,11 +89,14 @@ La comprensione delle proposizioni semplici e composte, insieme all'uso degli op
       
 Questi simboli alternativi, specialmente per AND e OR, sono comunemente usati nella matematica e nell'ingegneria per rappresentare le operazioni logiche in modo più compatto, specialmente quando si lavora con espressioni algebriche o nella progettazione di circuiti. Da adesso in avanti useremo questa convenzione.
 <div style="page-break-after: always;"></div>
+
 ## Introduzione alle Proposizioni Composte Complesse
+
 ### Definizione
 Una proposizione composta complessa è un'affermazione che si forma combinando due o più proposizioni semplici attraverso l'uso di operatori logici. La complessità di una proposizione composta può variare significativamente: può spaziare da una semplice combinazione di due proposizioni a intricate espressioni che includono diverse proposizioni e operatori annidati.
 A differenza delle proposizioni semplici, che esprimono affermazioni dirette e non divisibili, le proposizioni composte complesse combinano multiple proposizioni semplici e operatori logici per formare affermazioni che possono esprimere concetti più dettagliati e situazioni più sfumate. Queste strutture consentono di modellare e analizzare situazioni del mondo reale in termini binari di vero e falso, rendendole strumenti potenti nella matematica, nell'informatica, nella filosofia, e in molte altre discipline.
 Nella programmazione, per esempio, consentono di implementare controlli logici avanzati. Nell'ambito della progettazione di circuiti elettronici, sono utilizzate per definire il comportamento di circuiti logici complessi. In matematica e logica, facilitano la costruzione di dimostrazioni formali e l'analisi di argomentazioni.
+
 ### Struttura e Interpretazione
 La struttura di una proposizione composta complessa è determinata dall'ordine e dalla combinazione degli operatori logici utilizzati. La precedenza degli operatori stabilisce quale parte dell'espressione deve essere valutata per prima.
 Quando si tratta di proposizioni composte più complesse, la costruzione delle loro tabelle di verità richiede un approccio sistematico. Queste proposizioni possono includere diverse combinazioni di operatori logici e proposizioni semplici. La chiave per analizzarle efficacemente è comprendere e applicare le regole di precedenza degli operatori.
