@@ -161,6 +161,7 @@ Ecco la tabella di verità per l'espressione, che illustra come vengono calcolat
 | 0   | 0   | 0   | 1             | 0               | 0                   |
 
 Nella tabella, i valori `1` e `0` rappresentano rispettivamente il vero e il falso. La colonna $\overline C$ mostra il risultato della negazione di $C$. La colonna $B \overline C$ calcola la congiunzione di $B$ e $\overline C$, evidenziando la precedenza dell'operatore AND su OR e della negazione ( $\overline C$) su AND. Infine, la colonna $A + (B \overline C)$ mostra il valore di verità dell'intera espressione, combinando $A$ con il risultato di $B \overline C$ tramite l'operatore OR, che riflette correttamente le regole di precedenza degli operatori nella valutazione dell'espressione.
+
 <div style="page-break-after: always;"></div>
 ## Porte logiche e circuiti logici
 Le porte logiche sono i componenti fondamentali dei circuiti elettronici digitali, usati per eseguire operazioni logiche di base su segnali binari. Ogni tipo di porta logica corrisponde a un operatore logico fondamentale e può essere utilizzato per costruire circuiti logici complessi che eseguono funzioni di elaborazione dell'informazione.
@@ -194,10 +195,20 @@ I circuiti logici utilizzano combinazioni di queste porte per eseguire funzioni 
 - **Elaborazione dei Dati**: I circuiti logici sono impiegati in tutte le forme di elaborazione dei dati digitali, dai microprocessori ai computer.
 - **Memoria**: Le porte logiche sono usate per costruire circuiti di memoria che immagazzinano informazioni binarie.
 - **Controllo**: Utilizzate in sistemi di controllo per automazione e robotica, dove le decisioni logiche determinano il comportamento del sistema.
+
 <div style="page-break-after: always;"></div>
 ### Esempio di espressioni logiche
+
 ![[circuiti.png]]
+
 ![[esercizio_circuiti.png|400x400]]
+
+### Esercizi su tabelle di verità
+
+> [!exercise] Esercizi
+> 1. $A+\overline{AB}+CD$
+>2. $A+B\cdot(A+C+\overline D)$
+>3. $A+\overline{A+\overline B+C}\cdot BC$
 
 ### Applicazione della logica booleana e dei circuiti logici in contesti reali
 #### Utilizzo dello XOR in crittografia

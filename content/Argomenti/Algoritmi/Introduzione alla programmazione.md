@@ -3,12 +3,6 @@
 > Alcuni esercizi sono presi da "Introduzione alla programmazione - eserciziario" dei docenti dell'università di Genova e altri sono stati trovati in rete.
 > 
 > Questo documento è stato creato con il supporto di un'intelligenza artificiale per facilitare la raccolta e l'organizzazione delle informazioni. L'autore ha verificato e integrato le informazioni per garantire accuratezza e coerenza, ma si raccomanda di consultare fonti aggiuntive e di considerare eventuali aggiornamenti successivi alla stesura. L'uso del contenuto è a scopo informativo e didattico.
-> 
-> Ultimo Aggiornamento: 29-04-2025
-
-> [!warning] Stato di revisione
-> Tutti i capitoli sono stati revisionati
-
 ## Indice
 ```table-of-contents
 ```
