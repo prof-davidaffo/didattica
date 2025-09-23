@@ -199,7 +199,10 @@ I circuiti logici utilizzano combinazioni di queste porte per eseguire funzioni 
 <div style="page-break-after: always;"></div>
 ### Esempio di espressioni logiche
 
+#### Esempio 1
+
 ![[circuiti.png]]
+#### Esempio 2
 
 ![[esercizio_circuiti.png|400x400]]
 
