@@ -6,6 +6,19 @@
 ## Indice
 ```table-of-contents
 ```
+## Siti consigliati e utilizzati
+Per poter programmare senza avere i programmi installati sul proprio PC, possiamo usare Replit. Replit ha un limite di 3 progetti gratuiti (bisogna registrare un account), quindi dovete scaricarli sul vostro PC quando non volete più lavorarci per fare spazio. Replit include un ambiente di programmazione completo, che vi permette anche di gestire i file all'interno della shell e di compilare manualmente il codice.
+https://replit.com/
+
+Per visualizzare graficamente cosa succede durante l'esecuzione del codice, usiamo Python Tutor. Nonostante il nome, funziona anche con C++ e altri linguaggi di programmazione.
+https://pythontutor.com/
+
+## Capitolo 0: Comandi da terminale di Linux
+Per lavorare in modo efficiente in ambienti di programmazione, è utile conoscere i comandi di base per utilizzare il terminale per interagire con l'ambiente Linux (lo stesso che trovate su Replit con la shell).
+Di seguito una tabella con i comandi principali:
+
+![[Comandi di base linux]]
+
 ## Capitolo 1: Introduzione alla Programmazione
 
 ### Cos'è la Programmazione?  
