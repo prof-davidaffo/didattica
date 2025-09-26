@@ -1,5 +1,3 @@
-Ecco una possibile esercitazione di laboratorio integrata:
-
 **Esercitazione di laboratorio: Processi in Linux**
 
 **Obiettivo:**
