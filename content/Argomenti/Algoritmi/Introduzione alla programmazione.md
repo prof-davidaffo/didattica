@@ -7,11 +7,11 @@
 ```table-of-contents
 ```
 ## Siti consigliati e utilizzati
-Per poter programmare senza avere i programmi installati sul proprio PC, possiamo usare Replit. Replit ha un limite di 3 progetti gratuiti (bisogna registrare un account), quindi dovete scaricarli sul vostro PC quando non volete più lavorarci per fare spazio. Replit include un ambiente di programmazione completo, che vi permette anche di gestire i file all'interno della shell e di compilare manualmente il codice.
-https://replit.com/
+Per programmare senza dover installare nulla sul proprio computer, è possibile utilizzare **GitHub Codespaces**. Per farlo è necessario creare un account su GitHub. Dopo la registrazione, si può aprire un nuovo progetto (anche vuoto) e si avvierà una versione online di **Visual Studio Code**, uno degli ambienti di sviluppo più completi e gratuiti disponibili, che può essere scaricato e installato anche sul PC in versione desktop.  Include un terminale in ambiente linux che potete utilizzare per interagire con i file e compilare manualmente.
+[https://github.com/codespaces](https://github.com/codespaces)
 
-Per visualizzare graficamente cosa succede durante l'esecuzione del codice, usiamo Python Tutor. Nonostante il nome, funziona anche con C++ e altri linguaggi di programmazione.
-https://pythontutor.com/
+Per visualizzare in modo grafico cosa accade durante l’esecuzione di un programma, si può utilizzare **Python Tutor**. Nonostante il nome, questo strumento supporta anche C++, Java, JavaScript e altri linguaggi oltre a Python.  
+[https://pythontutor.com/](https://pythontutor.com/)
 
 ## Capitolo 0: Comandi da terminale di Linux
 Per lavorare in modo efficiente in ambienti di programmazione, è utile conoscere i comandi di base per utilizzare il terminale per interagire con l'ambiente Linux (lo stesso che trovate su Replit con la shell).
