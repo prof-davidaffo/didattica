@@ -23,8 +23,8 @@ Le **tabelle di verità** sono strumenti essenziali nell'algebra booleana per de
 
 Per combinare le proposizioni, si usano vari operatori logici. Ecco i più comuni:
 
-1. **AND (Congiunzione) `∧`**: Indica che entrambe le proposizioni devono essere vere affinché l'intera proposizione composta sia vera. Simbolo comunemente usato: ∧. **Esempio**: Se consideriamo due proposizioni, $A$: "Piove" e $B$: "È nuvoloso", l'operatore AND combina le due proposizioni nella forma $A ∧ B$: "Piove ed è nuvoloso". Questa proposizione composta è vera solo se sia $A$ che $B$ sono vere allo stesso tempo.
-   
+1. **AND (Congiunzione) `∧`**: Indica che entrambe le proposizioni devono essere vere affinché l'intera proposizione composta sia vera. Simbolo comunemente usato: ∧. **Esempio**: Se consideriamo due proposizioni, $A$: "Piove" e $B$: "È freddo", l'operatore AND combina le due proposizioni nella forma $A ∧ B$: "Piove ed è freddo". Questa proposizione composta è vera solo se sia $A$ che $B$ sono vere allo stesso tempo.
+   Ad esempio se piovesse ma ci fosse caldo, la proposizione composta non sarebbe vera.
    La congiunzione tra due proposizioni è vera solo se entrambe le proposizioni sono vere.
 
 | A | B  | A ∧ B |
@@ -34,17 +34,16 @@ Per combinare le proposizioni, si usano vari operatori logici. Ecco i più comun
 | 0                  | 1                   | 0                 |
 | 0                  | 0                   | 0                 |
 
-   
-2. **OR (Disgiunzione) `∨`**: Indica che almeno una delle proposizioni deve essere vera affinché l'intera proposizione composta sia vera. Simbolo comunemente usato: ∨. **Esempio**: Utilizzando le stesse proposizioni $A$ e $B$, l'operatore OR le combina nella forma $A ∨ B$: "Piove o è nuvoloso". Questa proposizione composta è vera se almeno una tra $A$ e $B$ è vera. Quindi, anche se non piove ma è nuvoloso, o viceversa, la proposizione composta risulta vera.
+2. **OR (Disgiunzione) `∨`**: Indica che almeno una delle proposizioni deve essere vera affinché l'intera proposizione composta sia vera. Simbolo comunemente usato: ∨. **Esempio**: Utilizzando le stesse proposizioni $A$ e $B$, l'operatore OR le combina nella forma $A ∨ B$: "Piove o è freddo". Questa proposizione composta è vera se almeno una tra $A$ e $B$ è vera. Quindi, anche se non piove ma è freddo, o viceversa, la proposizione composta risulta vera.
    
    La disgiunzione tra due proposizioni è vera se almeno una delle due proposizioni è vera.
 
-| A | B  | A ∨ B |
-|--------------------|---------------------|-------------------|
-| 1                  | 1                   | 1                 |
-| 1                  | 0                   | 1                 |
-| 0                  | 1                   | 1                 |
-| 0                  | 0                   | 0                 |
+| A   | B   | A ∨ B |
+| --- | --- | ----- |
+| 1   | 1   | 1     |
+| 1   | 0   | 1     |
+| 0   | 1   | 1     |
+| 0   | 0   | 0     |
 
    
 3. **NOT (Negazione) `¬`**: Inverte il valore di verità di una proposizione. Se applicato a una proposizione vera, la rende falsa, e viceversa. Simbolo comunemente usato: ¬. **Esempio**: Prendendo la proposizione $A$: "Piove", l'operatore NOT la inverte nella forma $¬A$: "Non piove". Se la proposizione originale $A$ è vera (cioè, piove), allora $¬A$ è falsa, e viceversa.
@@ -57,7 +56,7 @@ Per combinare le proposizioni, si usano vari operatori logici. Ecco i più comun
 | 0                | 1              |
 
    
-4. **XOR (Disgiunzione Esclusiva) ⊕:** Valuta l'esclusività tra due proposizioni. Se una proposizione è vera e l'altra è falsa, allora l'XOR restituisce vero; se entrambe sono vere o entrambe sono false, restituisce falso. È l'operatore logico che esprime l'idea di "o l'una o l'altra, ma non entrambe". Simbolo comunemente usato: ⊕. **Esempio**: Per le proposizioni $A$ e $B$, l'operatore XOR le combina nella forma $A ⊕ B$: "Piove o è nuvoloso, ma non entrambi". Questa proposizione composta è vera solo se esattamente una tra $A$ e $B$ è vera. Se sia $A$ che $B$ sono vere (cioè, piove ed è nuvoloso allo stesso tempo) o se entrambe sono false (non piove e non è nuvoloso), allora la proposizione composta risulta falsa.
+4. **XOR (Disgiunzione Esclusiva) ⊕:** Valuta l'esclusività tra due proposizioni. Se una proposizione è vera e l'altra è falsa, allora l'XOR restituisce vero; se entrambe sono vere o entrambe sono false, restituisce falso. È l'operatore logico che esprime l'idea di "o l'una o l'altra, ma non entrambe". Simbolo comunemente usato: ⊕. **Esempio**: Per le proposizioni $A$ e $B$, l'operatore XOR le combina nella forma $A ⊕ B$: "Piove o è freddo, ma non entrambi". Questa proposizione composta è vera solo se esattamente una tra $A$ e $B$ è vera. Se sia $A$ che $B$ sono vere (cioè, piove ed è freddo allo stesso tempo) o se entrambe sono false (non piove e non è freddo), allora la proposizione composta risulta falsa.
    La disgiunzione esclusiva tra due proposizioni è vera solo se esattamente una delle due proposizioni è vera.
 
 | A | B | A XOR B |
@@ -88,8 +87,6 @@ La comprensione delle proposizioni semplici e composte, insieme all'uso degli op
     - **Simbolo Standard**: ⊕
       
 Questi simboli alternativi, specialmente per AND e OR, sono comunemente usati nella matematica e nell'ingegneria per rappresentare le operazioni logiche in modo più compatto, specialmente quando si lavora con espressioni algebriche o nella progettazione di circuiti. Da adesso in avanti useremo questa convenzione.
-<div style="page-break-after: always;"></div>
-
 ## Introduzione alle Proposizioni Composte Complesse
 
 ### Definizione
@@ -151,18 +148,16 @@ Ecco la tabella di verità per l'espressione, che illustra come vengono calcolat
 
 | $A$ | $B$ | $C$ | $\overline C$ | $B \overline C$ | $A + B \overline C$ |
 | --- | --- | --- | ------------- | --------------- | ------------------- |
-| 1   | 1   | 1   | 0             | 0               | 1                   |
-| 1   | 1   | 0   | 1             | 1               | 1                   |
-| 1   | 0   | 1   | 0             | 0               | 1                   |
-| 1   | 0   | 0   | 1             | 0               | 1                   |
-| 0   | 1   | 1   | 0             | 0               | 0                   |
-| 0   | 1   | 0   | 1             | 1               | 1                   |
-| 0   | 0   | 1   | 0             | 0               | 0                   |
 | 0   | 0   | 0   | 1             | 0               | 0                   |
+| 0   | 0   | 1   | 0             | 0               | 0                   |
+| 0   | 1   | 0   | 1             | 1               | 1                   |
+| 0   | 1   | 1   | 0             | 0               | 0                   |
+| 1   | 0   | 0   | 1             | 0               | 1                   |
+| 1   | 0   | 1   | 0             | 0               | 1                   |
+| 1   | 1   | 0   | 1             | 1               | 1                   |
+| 1   | 1   | 1   | 0             | 0               | 1                   |
 
 Nella tabella, i valori `1` e `0` rappresentano rispettivamente il vero e il falso. La colonna $\overline C$ mostra il risultato della negazione di $C$. La colonna $B \overline C$ calcola la congiunzione di $B$ e $\overline C$, evidenziando la precedenza dell'operatore AND su OR e della negazione ( $\overline C$) su AND. Infine, la colonna $A + (B \overline C)$ mostra il valore di verità dell'intera espressione, combinando $A$ con il risultato di $B \overline C$ tramite l'operatore OR, che riflette correttamente le regole di precedenza degli operatori nella valutazione dell'espressione.
-
-<div style="page-break-after: always;"></div>
 ## Porte logiche e circuiti logici
 Le porte logiche sono i componenti fondamentali dei circuiti elettronici digitali, usati per eseguire operazioni logiche di base su segnali binari. Ogni tipo di porta logica corrisponde a un operatore logico fondamentale e può essere utilizzato per costruire circuiti logici complessi che eseguono funzioni di elaborazione dell'informazione.
 
@@ -195,8 +190,11 @@ I circuiti logici utilizzano combinazioni di queste porte per eseguire funzioni 
 - **Elaborazione dei Dati**: I circuiti logici sono impiegati in tutte le forme di elaborazione dei dati digitali, dai microprocessori ai computer.
 - **Memoria**: Le porte logiche sono usate per costruire circuiti di memoria che immagazzinano informazioni binarie.
 - **Controllo**: Utilizzate in sistemi di controllo per automazione e robotica, dove le decisioni logiche determinano il comportamento del sistema.
+##### Nandgame
+Con questo sito possiamo partire da un semplice Relè e costruire tutte le porte logiche e un itero computer!
 
-<div style="page-break-after: always;"></div>
+www.nandgame.com
+
 ### Esempio di espressioni logiche
 
 #### Esempio 1
