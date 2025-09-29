@@ -210,6 +210,8 @@ www.nandgame.com
 > 1. $A+\overline{AB}+CD$
 >2. $A+B\cdot(A+C+\overline D)$
 >3. $A+\overline{A+\overline B+C}\cdot BC$
+>4. $\overline A \cdot (A+B)+\overline C+BC$
+>5. $C+B \cdot \overline{A+B} \cdot \overline{\overline A \cdot \overline C}+B$
 
 ### Applicazione della logica booleana e dei circuiti logici in contesti reali
 #### Utilizzo dello XOR in crittografia
