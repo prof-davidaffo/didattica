@@ -212,6 +212,22 @@ www.nandgame.com
 >3. $A+\overline{A+\overline B+C}\cdot BC$
 >4. $\overline A \cdot (A+B)+\overline C+BC$
 >5. $C+B \cdot \overline{A+B} \cdot \overline{\overline A \cdot \overline C}+B$
+>6. $(\overline{A+B\cdot\overline C})\cdot(A+\overline B)$
+>7. $(\overline A+B)\cdot(\overline{B+C}+A)$
+>8. $A\cdot\overline{B+\overline C}+\overline A\cdot C$
+>9. $\overline{A\cdot B}+C\cdot\overline{B+\overline A}$
+>10. $(A+\overline B)\cdot(\overline{A+C}+B)+\overline C$
+>11. $\overline{A+\overline B}\cdot(B+C)+\overline{C\cdot A}$
+>12. $A+\overline{B\cdot(C+\overline A)}\cdot\overline C$
+>13. $(\overline A+\overline B)\cdot(C+\overline{A+B})+B$
+>14. $\overline{A+\overline B+C}\cdot(B+\overline C)$
+>15. $\overline{A\cdot(\overline B+C)}+B\cdot\overline C$
+>16. $(A+B)\cdot\overline{A+C}+\overline{B\cdot C}$
+>17. $\overline A\cdot(B+\overline C)+\overline{B\cdot C}$
+>18. $(A+\overline B+\overline C)\cdot\overline{A+B}+C$
+>19. $\overline{(A+B)\cdot C}+A\cdot\overline B$
+>20. $(\overline A+B\cdot\overline C)\cdot(\overline{B+C}+C)$
+
 
 ### Applicazione della logica booleana e dei circuiti logici in contesti reali
 #### Utilizzo dello XOR in crittografia
