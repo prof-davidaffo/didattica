@@ -889,24 +889,32 @@ Il `break` (che posso anche usare per interrompere manualmente un ciclo) è nece
 > Nel codice precedente, prova a rimuovere i break e guarda cosa succede.
 
 #### Operatore ternario
-L'operatore ternario è un costrutto che permette di esprimere una scelta condizionale in una singola espressione. La sua sintassi è la seguente:
-
+L’operatore ternario è una forma compatta dell’istruzione condizionale `if-else`, che permette di scegliere tra due espressioni in base al risultato di una condizione logica.
+La sintassi è:
 ```cpp
 condizione ? espressione_se_vera : espressione_se_falsa;
 ```
-
-In pratica, la **condizione** viene valutata: se risulta vera, viene eseguita e restituita l'**espressione_se_vera**; altrimenti, viene eseguita e restituita l'**espressione_se_falsa**.
-##### Vantaggi e utilizzi
-
-- **Compattezza:** consente di scrivere in modo più sintetico delle semplici strutture condizionali, evitando blocchi `if-else` più lunghi.
-- **Espressività:** essendo un'espressione, può essere usata direttamente in assegnazioni o in altre espressioni complesse. Ad esempio:
-
+Quando la **condizione** è vera, viene valutata e restituita l’**espressione_se_vera**; se invece è falsa, viene valutata e restituita l’**espressione_se_falsa**.
+##### Esempio di utilizzo
 ```cpp
+int x = -7;
 int absValue = (x >= 0) ? x : -x;
 ```
-
-Questo codice assegna a `absValue` il valore assoluto di `x` senza dover ricorrere a una struttura `if-else`.
-
+In questo esempio, se `x` è maggiore o uguale a zero, `absValue` assume il valore di `x`; altrimenti, ne assume l’opposto.
+##### Equivalente con if-else
+```cpp
+int x = -7;
+int absValue;
+if (x >= 0) {
+    absValue = x;
+} else {
+    absValue = -x;
+}
+```
+##### Vantaggi e utilizzi
+* **Sintesi:** consente di scrivere in una sola riga ciò che normalmente richiede un blocco `if-else`.
+* **Flessibilità:** può essere inserito direttamente in espressioni o assegnazioni.
+L’operatore ternario è ideale per condizioni semplici e chiare; se le condizioni o le espressioni diventano complesse, è preferibile usare un `if-else` tradizionale per mantenere leggibilità e chiarezza del codice.
 ##### Considerazioni
 
 - **Leggibilità:** per condizioni troppo complesse o annidate, l'uso dell'operatore ternario può ridurre la chiarezza del codice. In questi casi, è preferibile utilizzare le strutture condizionali tradizionali.
