@@ -1163,7 +1163,7 @@ Questo esercizio permette di sperimentare con l'algebra booleana e anche di capi
    Scrivi un programma che chiede all’utente di inserire due numeri interi `a` e `b`.  
    Stampa:  
    >- "Entrambi positivi" se entrambi i numeri sono maggiori di zero.  
-   >- "Uno positivo" se solo uno è maggiore di zero.  
+   >- "Almeno un positivo" se almeno uno è maggiore di zero.  
    >- "Entrambi negativi o zero" altrimenti.  
    **Obiettivo**: Combinare operatori logici `&&` e `||`.
    >
@@ -3175,7 +3175,7 @@ Le modalità di apertura possono essere combinate con l'operatore `|` per defini
 **Esempio di combinazione**:
 
 ```cpp
-ofstream outputFile("dati.txt", ios::out | ios::app); // Scrive in append
+fstream outputFile("dati.txt", ios::out | ios::app); // Scrive in append
 ```
 
 ---
@@ -3317,22 +3317,22 @@ ofstream outputFile("dati.txt", ios::out | ios::app); // Scrive in append
 
 #### Tabella Riassuntiva
 
-|**Metodo/Funzione**|**Descrizione**|
-|---|---|
-|`open()`|Apre un file con un percorso specifico.|
-|`close()`|Chiude il file.|
-|`is_open()`|Verifica se il file è aperto.|
-|`operator>>`|Legge dati dal file.|
-|`getline()`|Legge una riga intera dal file.|
-|`get()`|Legge un carattere dal file.|
-|`operator<<`|Scrive dati nel file.|
-|`eof()`|Controlla se è stato raggiunto il fine file.|
-|`fail()`|Verifica se un'operazione sul file è fallita.|
-|`clear()`|Resetta lo stato dello stream.|
-|`tellg()`|Restituisce la posizione corrente di lettura.|
-|`tellp()`|Restituisce la posizione corrente di scrittura.|
-|`seekg()`|Sposta il puntatore di lettura.|
-|`seekp()`|Sposta il puntatore di scrittura.|
+| **Metodo/Funzione** | **Descrizione**                                 |
+| ------------------- | ----------------------------------------------- |
+| `open()`            | Apre un file con un percorso specifico.         |
+| `close()`           | Chiude il file.                                 |
+| `is_open()`         | Verifica se il file è aperto.                   |
+| `operator>>`        | Legge dati dal file.                            |
+| `getline()`         | Legge una riga intera dal file.                 |
+| `get()`             | Legge un carattere dal file.                    |
+| `operator<<`        | Scrive dati nel file.                           |
+| `eof()`             | Controlla se è stato raggiunto il fine file.    |
+| `fail()`            | Verifica se un'operazione sul file è fallita.   |
+| `clear()`           | Resetta lo stato dello stream.                  |
+| `tellg()`           | Restituisce la posizione corrente di lettura.   |
+| `tellp()`           | Restituisce la posizione corrente di scrittura. |
+| `seekg()`           | Sposta il puntatore di lettura.                 |
+| `seekp()`           | Sposta il puntatore di scrittura.               |
 ### Esercizi
 
 > [!exercise] Esercizi
