@@ -454,6 +454,163 @@ Questo è uno schema completo di un sommatore a 4 bit che usa solo porte element
 
 ![[1ad6471b63cd2b6c56d9303f7935b843_MD5.jpeg]]
 In questo circuito manca il riporto finale che va in overflow.
+####   Sottrattori binari
+
+In analogia a quanto visto per il sommatore, è possibile realizzare una rete combinatoria che effettua una sottrazione tra due numeri binari. Anche in questo caso, tenendo presenti le regole della sottrazione binaria, dobbiamo preparare due blocchi fondamentali:  
+• il **semisottrattore binario (HS)**, senza prestito in ingresso  
+• il **sottrattore binario (FS)**, con prestito in ingresso
+
+#####   Circuito semisottrattore HS
+
+Il semisottrattore è il blocco elementare che realizza la differenza di due bit: deve rispettare la seguente tabella della verità:
+
+![[6efc97de7ad51c9fc3c7c7e1472e24c1_MD5.jpeg]]
+
+In questo caso, invece di usare i teoremi dell’algebra di Boole, semplifichiamo la funzione con le **mappe di Karnaugh**, ottenendo le variabili di uscita seguenti:
+
+![[fc5e973cfbe317ab605e2d2d7f95a498_MD5.jpeg]]
+
+La differenza si ottiene facendo l’operazione di **XOR (OR esclusivo)** come nel caso del sommatore, mentre il prestito è un **AND logico** tra la variabile B e la variabile A negata.
+
+![[8c102219a46729d55520da477206af34_MD5.jpeg]]
+
+#####   Circuito sottrattore FS
+
+Lo schema completo di un sottrattore è il seguente:
+
+![[706ca81ccb2b0057ad8a2d7ff75fe783_MD5.jpeg]]
+
+Dove:  
+Aₙ e Bₙ sono i bit da sottrarre  
+Pₙ è il prestito da richiedere  
+Dₙ è la differenza binaria  
+Pₙ₋₁ è il prestito da fornire
+
+Il circuito logico che esegue la sottrazione è ottenuto in due fasi:
+
+1. con un HS si sottraggono Aₙ e Bₙ
+    
+2. con un secondo HS si toglie il riporto Pₙ₋₁  
+    I riporti in uscita convergono verso una porta OR.  
+    In modo analogo al sommatore, non si verifica mai che a questa porta si presentino due 1 simultaneamente.
+    
+
+Per eseguire la sottrazione binaria di due numeri di n bit, bisogna disporre di **n blocchi elementari** collegati in cascata. Il primo blocco, meno significativo, può essere un HS; gli altri saranno FS.
+
+Bisogna dire che, in caso di calcoli complessi, i sottrattori sono poco usati: si preferisce effettuare l’operazione tramite una **addizione con complementazione**.
+
+In tal caso, la sottrazione viene effettuata aggiungendo al minuendo il **complemento a uno del sottraendo**. Il sottrattore risulta simile a un sommatore in cui uno dei due numeri è complementato.
+
+![[ebd31e412d0091b89a91f851d20d5d6f_MD5.jpeg]]
+
+L’eventuale riporto ottenuto dalla somma dei bit significativi deve essere aggiunto alla somma dei bit meno significativi.  
+Il riporto si ha solo nel caso in cui il minuendo è maggiore del sottraendo e mai nel caso opposto.
+
+**Caso A** – minuendo maggiore del sottraendo  
+![[1482b9ef70a223cdb7cf5c5bc6f39a9e_MD5.jpeg]]
+
+**Caso B** – minuendo minore del sottraendo  
+![[b9f4127311d9c62864e7d9d96ffffe29_MD5.jpeg]]
+
+Nel secondo caso, il risultato è negativo (poiché minuendo < sottraendo). Per ottenere il modulo, basta complementare nuovamente a 1 il risultato.  
+Esempio: 1100 → complemento a 1 = 0011 → (3)₁₀
+
+Il circuito deve quindi essere in grado di complementare un addendo e di tener conto del riporto causato dalla somma dei due bit più significativi.  
+Partendo da un sommatore semplice, un circuito capace di eseguire la sottrazione con il metodo del **complemento ad 1** può essere schematizzato così:
+
+![[49d000ab4f74955cd67ef59a85240cd7_MD5.jpeg]]
+
+L’uscita C₃ costituisce il riporto ottenuto dalla somma di A₃ e B₃, mentre C₀ è l’ingresso da sommare con A₀ e B₀.
+
+![[ba6e7d8daf9eea442b6586d2433f879c_MD5.jpeg]]
+
+Per permettere al circuito di funzionare sia da sommatore che da sottrattore, occorre aggiungere un **comando** che:
+
+- complementi o meno uno dei due nibble;
+    
+- abiliti o meno la somma dell’ultimo riporto con i bit meno significativi.
+    
+
+L’operazione di complementazione a 1 su un singolo bit può essere eseguita da una **porta XOR**.
+
+Quando la variabile X = 1, la variabile A viene complementata; quando X = 0, A resta invariata.  
+La variabile X applicata a ogni singolo bit del sottraendo B è determinata dalla posizione del selettore P.
+
+L’eventuale bit di riporto C₃ deve coincidere con il riporto in ingresso Cᵢ.  
+Il dispositivo è quindi costituito da **4 full-adder**, non da 3 FA e 1 HA.
+
+![[1e1845e2fbb1989509866ffbae4a01d3_MD5.jpeg]]
+
+Nel caso in cui l’operazione sia una sottrazione (P=1) e il risultato negativo (C₃=0), deve essere eseguita una **complementazione finale**.  
+Questo può essere effettuato con la stessa struttura di porte prevista sull’operando B.
+
+![[417de07d8b8d11e63b863d5c090143c6_MD5.jpeg]]
+
+Come visto nei sistemi digitali, i numeri interi relativi si rappresentano con il **complemento a 2**, utilizzando il bit più pesante come **bit di segno**:  
+0 → numero positivo  
+1 → numero negativo
+
+Esempio per un sistema a 4 bit:
+
+![[d23276f5237eed75bd9a1277ae89f675_MD5.jpeg]]
+
+I circuiti sommatori sono indispensabili anche in questo caso. Il circuito seguente permette di eseguire il **complemento a 2** di un numero a 4 bit.  
+Se A₀ = 1 si ha la complementazione a 2 dei bit in ingresso X; se A₀ = 0 il numero rimane invariato.
+
+![[b7a973de578dc6120275f9df90a609f6_MD5.jpeg]]
+
+Esempio:  
+Numero +5 = 0101  
+Dopo la complementazione (A₀ = 1):  
+![[45a68b168e41b903f565a931e896e286_MD5.jpeg]]  
+Risultato: 1011 = -5
+
+Nel sistema binario a complemento a 2, la differenza tra due numeri positivi si ottiene complementando a 2 il sottraendo e sommando il risultato al minuendo.
+
+Il circuito può anche essere usato per ricavare il **modulo** di un numero in ingresso: se il numero è negativo, il bit X₃ pilota l’ingresso di complementazione A₀.  
+Esempio: per calcolare |1101₍C2₎| → A₀ = X₃
+
+![[5567723d08e1b5714e520cd6bf2f2f03_MD5.jpeg]]
+
+Infatti 1101₍C2₎ = -3 → |−3| = 3 = 0011₍C2₎
+
+Per effettuare l’operazione A ± |B| con A positivo e B positivo in complemento a 2, in un sistema a 4 bit, possiamo collegare i dispositivi precedenti così:
+
+![[2120a628f152cfb8100b913b1c6fb2e8_MD5.jpeg]]
+
+Una volta implementata la sottrazione, abbiamo di fatto realizzato una **unità aritmetico-logica (ALU)**, poiché la moltiplicazione è una somma ripetuta e la divisione una sottrazione ripetuta.
+
+#### Display a 7 segmenti
+
+La realizzazione di dispositivi numerici digitali si accompagna alla necessità di **visualizzare variabili e risultati**. Nel caso dei circuiti **sommatori e sottrattori**, si può ricorrere ai **display a 7 segmenti**, realizzati con **LED (Light Emitting Diode)** o **LCD (Liquid Crystal Display)**.  
+In entrambi i casi, i segmenti vengono identificati secondo lo schema seguente:
+
+![[bc24221097e172fd59d7fb8c5c30b814_MD5.jpeg]]
+
+I display a 7 segmenti devono essere pilotati da un **decoder**, che effettua la conversione da **codice BCD (Binary Coded Decimal)** a rappresentazione decimale.  
+Il codice BCD è un **codice a 4 bit**, in cui le prime dieci combinazioni binarie rappresentano le cifre decimali da 0 a 9, secondo la seguente corrispondenza:
+
+![[2e20921723442222be6a205e83dd625e_MD5.jpeg]]
+
+Nel codice BCD, le combinazioni 1010, 1011, 1100, 1101 e 1111 sono **inutilizzate o ridondanti**.
+
+Se indichiamo con **D** il bit più significativo (MSB – _Most Significant Bit_) e con **A** il meno significativo (LSB – _Least Significant Bit_), il collegamento ai segmenti risulta il seguente:
+
+![[54121a7c798a8787470c6df305956bc9_MD5.jpeg]]
+
+La struttura interna del **decoder BCD → 7 segmenti** può essere ricavata costruendo una **mappa di Karnaugh** per ciascuna delle sette variabili di uscita (_a, b, c, d, e, f, g_).  
+Da queste mappe si ottengono espressioni logiche semplificate, come mostrato in figura:
+
+![[c2ba2ff8c8817860fc64c4acf6a2acb6_MD5.jpeg]]
+
+Durante la semplificazione, i cinque numeri inutilizzati del codice BCD possono essere considerati **condizioni di indifferenza** (_don’t care conditions_).
+
+Se invece si desidera mantenere la codifica in **binario puro**, allora anche le combinazioni precedentemente escluse sono ammesse, ma l’uscita dovrà essere interpretata secondo una **codifica esadecimale**, da:
+
+(0)₁₀ = (0000)₂ = (0)ₕ  
+a  
+(15)₁₀ = (1111)₂ = (F)ₕ
+
 ## Minimizzazioni
 ### Minimizzazioni algebriche
 #### Introduzione
