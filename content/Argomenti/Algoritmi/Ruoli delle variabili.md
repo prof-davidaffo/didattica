@@ -1,8 +1,3 @@
-
-> [!NOTE] Crediti
-> Testo redatto dai docenti dell'Università degli Studi di Bologna
-> https://csed-unibo.github.io/#!index.md
-
 Gli studi sui ruoli delle variabili sono di [Jorma Sajaniemi](http://saja.kapsi.fi/) e colleghi.  
 Questa pagina (redatta dai docenti dell'Università degli Studi di Bologna) è ispirata al materiale presente [qui](http://saja.kapsi.fi/var_roles/).
 
