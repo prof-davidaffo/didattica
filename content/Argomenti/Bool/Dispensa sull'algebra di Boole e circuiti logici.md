@@ -1,25 +1,27 @@
  > [!NOTE] Autore
 > Prof. Davide Daffonchio
+> Alcuni appunti e immagini dei circuiti reali sono tratti da [edutecnica.it]()
 
 ## Indice
 ```table-of-contents
 ```
-## Introduzione di base
+## Capitolo 1: Tabelle di verità e circuiti logici
+###  Introduzione di base
 
 L'algebra booleana, fondamentale in matematica, informatica, elettronica e in molte altre discipline, si basa sul concetto di valori di verità assoluti: vero (`1`) o falso (`0`). Questa sezione introduttiva esplora le proposizioni semplici e composte, offrendo una base per comprendere come queste possano essere combinate tra loro.
 
-### Proposizioni Semplici
+####  Proposizioni Semplici
 
 Una **proposizione semplice** è un'affermazione che può essere chiaramente identificata come vera o falsa. Non contiene altre proposizioni al suo interno e rappresenta l'unità fondamentale dell'algebra booleana. Ad esempio, l'affermazione "Piove" è una proposizione semplice perché può essere soltanto vera o falsa.
 
-### Proposizioni Composte
+####  Proposizioni Composte
 
 Una **proposizione composta** si forma combinando due o più proposizioni semplici tramite **operatori logici**. Queste proposizioni mostrano relazioni più complesse e il loro valore di verità dipende dai valori delle proposizioni semplici che le compongono. Esempi di proposizioni composte includono affermazioni come "Piove e fa freddo" o "Fa caldo o è nuvoloso", dove "e" e "o" sono operatori logici.
 
-### Tabelle di Verità
+####  Tabelle di Verità
 Le **tabelle di verità** sono strumenti essenziali nell'algebra booleana per determinare il valore di verità di proposizioni composte in base a tutti i possibili valori delle proposizioni semplici. Per ogni operatore logico, si può costruire una tabella di verità che mostra il risultato della combinazione di valori di verità.
 
-### Operatori Logici Fondamentali
+####  Operatori Logici Fondamentali
 
 Per combinare le proposizioni, si usano vari operatori logici. Ecco i più comuni:
 
@@ -68,7 +70,7 @@ Per combinare le proposizioni, si usano vari operatori logici. Ecco i più comun
 
 La comprensione delle proposizioni semplici e composte, insieme all'uso degli operatori logici, costituisce la base dell'algebra booleana. Questo framework concettuale permette di analizzare e costruire ragionamenti complessi, essenziale non solo in ambito accademico ma anche in molte applicazioni pratiche, dalla programmazione alla progettazione di circuiti elettronici.
 
-### Rappresentazioni alternative degli operatori logici
+####  Rappresentazioni alternative degli operatori logici
  Gli operatori logici di base possono essere rappresentati in vari modi, inclusi i simboli standard usati nell'algebra booleana e nella progettazione dei circuiti. Un modo alternativo, spesso utilizzato in contesti accademici e nei testi, fa uso di notazioni più "verbali" o simboli matematici comuni. Ecco come si possono rappresentare gli operatori logici di base in questo modo alternativo:
  
 1. **AND (Congiunzione)**    
@@ -87,18 +89,18 @@ La comprensione delle proposizioni semplici e composte, insieme all'uso degli op
     - **Simbolo Standard**: ⊕
       
 Questi simboli alternativi, specialmente per AND e OR, sono comunemente usati nella matematica e nell'ingegneria per rappresentare le operazioni logiche in modo più compatto, specialmente quando si lavora con espressioni algebriche o nella progettazione di circuiti. Da adesso in avanti useremo questa convenzione.
-## Introduzione alle Proposizioni Composte Complesse
+###  Introduzione alle Proposizioni Composte Complesse
 
-### Definizione
+####  Definizione
 Una proposizione composta complessa è un'affermazione che si forma combinando due o più proposizioni semplici attraverso l'uso di operatori logici. La complessità di una proposizione composta può variare significativamente: può spaziare da una semplice combinazione di due proposizioni a intricate espressioni che includono diverse proposizioni e operatori annidati.
 A differenza delle proposizioni semplici, che esprimono affermazioni dirette e non divisibili, le proposizioni composte complesse combinano multiple proposizioni semplici e operatori logici per formare affermazioni che possono esprimere concetti più dettagliati e situazioni più sfumate. Queste strutture consentono di modellare e analizzare situazioni del mondo reale in termini binari di vero e falso, rendendole strumenti potenti nella matematica, nell'informatica, nella filosofia, e in molte altre discipline.
 Nella programmazione, per esempio, consentono di implementare controlli logici avanzati. Nell'ambito della progettazione di circuiti elettronici, sono utilizzate per definire il comportamento di circuiti logici complessi. In matematica e logica, facilitano la costruzione di dimostrazioni formali e l'analisi di argomentazioni.
 
-### Struttura e Interpretazione
+####  Struttura e Interpretazione
 La struttura di una proposizione composta complessa è determinata dall'ordine e dalla combinazione degli operatori logici utilizzati. La precedenza degli operatori stabilisce quale parte dell'espressione deve essere valutata per prima.
 Quando si tratta di proposizioni composte più complesse, la costruzione delle loro tabelle di verità richiede un approccio sistematico. Queste proposizioni possono includere diverse combinazioni di operatori logici e proposizioni semplici. La chiave per analizzarle efficacemente è comprendere e applicare le regole di precedenza degli operatori.
 
-### Regole di Precedenza degli Operatori
+####  Regole di Precedenza degli Operatori
 Le regole di precedenza degli operatori determinano l'ordine in cui vengono valutati gli operatori in una proposizione composta. Ecco l'ordine dalla più alta alla più bassa precedenza:
 
 1. **NOT**: Ha la precedenza più alta perché modifica direttamente il valore di verità della proposizione a cui è applicato.
@@ -111,7 +113,7 @@ Le regole di precedenza degli operatori determinano l'ordine in cui vengono valu
 
 5. **Parentesi**: Come in matematica, le parentesi possono essere utilizzate per alterare l'ordine di valutazione standard. Qualsiasi operazione racchiusa tra parentesi ha la precedenza su quelle esterne.
 
-### Schematizzazione dei Passaggi per la Costruzione di Tabelle di Verità
+####  Schematizzazione dei Passaggi per la Costruzione di Tabelle di Verità
 Per costruire la tabella di verità di una proposizione composta in modo efficiente, devo seguire in ordine i seguenti passaggi:
 
 1. **Identificare tutte le proposizioni semplici** coinvolte e gli operatori. Assegnare a ogni proposizione semplice una lettera (ad es., A, B, C).
@@ -128,7 +130,7 @@ Per costruire la tabella di verità di una proposizione composta in modo efficie
 
 7. **Determinare il valore di verità della proposizione composta**, basandosi sui valori calcolati per i suoi sotto-componenti.
 
-### Esempio di Applicazione
+####  Esempio di Applicazione
 Per illustrare l'applicazione delle regole di precedenza degli operatori in una proposizione composta complessa, consideriamo l'esempio seguente:
 
 $$A + B  \overline C$$
@@ -158,10 +160,10 @@ Ecco la tabella di verità per l'espressione, che illustra come vengono calcolat
 | 1   | 1   | 1   | 0             | 0               | 1                   |
 
 Nella tabella, i valori `1` e `0` rappresentano rispettivamente il vero e il falso. La colonna $\overline C$ mostra il risultato della negazione di $C$. La colonna $B \overline C$ calcola la congiunzione di $B$ e $\overline C$, evidenziando la precedenza dell'operatore AND su OR e della negazione ( $\overline C$) su AND. Infine, la colonna $A + (B \overline C)$ mostra il valore di verità dell'intera espressione, combinando $A$ con il risultato di $B \overline C$ tramite l'operatore OR, che riflette correttamente le regole di precedenza degli operatori nella valutazione dell'espressione.
-## Porte logiche e circuiti logici
+###  Porte logiche e circuiti logici
 Le porte logiche sono i componenti fondamentali dei circuiti elettronici digitali, usati per eseguire operazioni logiche di base su segnali binari. Ogni tipo di porta logica corrisponde a un operatore logico fondamentale e può essere utilizzato per costruire circuiti logici complessi che eseguono funzioni di elaborazione dell'informazione.
 
-##### Tipi di Porte Logiche
+######  Tipi di Porte Logiche
 
 1. **AND Gate**: Realizza l'operazione di congiunzione logica. Produce un output alto (`1`) solo se tutti gli input sono alti (`1`).
    ![[Pasted image 20240221162621.png]]
@@ -184,27 +186,27 @@ Le porte logiche sono i componenti fondamentali dei circuiti elettronici digital
 7. **XNOR Gate**: L'inverso della porta XOR. Produce un output alto (`1`) solo se tutti gli input sono uguali.
    ![[Pasted image 20240221162844.png]]
 
-##### Costruzione di Circuiti Logici
+######  Costruzione di Circuiti Logici
 I circuiti logici utilizzano combinazioni di queste porte per eseguire funzioni complesse. Per esempio, un circuito sommatore può essere costruito usando porte XOR, AND e OR per sommare due bit e produrre una somma e un eventuale riporto. Questi circuiti formano la base della logica computazionale utilizzata nei computer e in altri dispositivi elettronici digitali.
-##### Applicazioni Pratiche
+######  Applicazioni Pratiche
 - **Elaborazione dei Dati**: I circuiti logici sono impiegati in tutte le forme di elaborazione dei dati digitali, dai microprocessori ai computer.
 - **Memoria**: Le porte logiche sono usate per costruire circuiti di memoria che immagazzinano informazioni binarie.
 - **Controllo**: Utilizzate in sistemi di controllo per automazione e robotica, dove le decisioni logiche determinano il comportamento del sistema.
-##### Nandgame
+######  Nandgame
 Con questo sito possiamo partire da un semplice Relè e costruire tutte le porte logiche e un itero computer!
 
 www.nandgame.com
 
-### Esempio di espressioni logiche
+####  Esempio di espressioni logiche
 
-#### Esempio 1
+#####  Esempio 1
 
 ![[circuiti.png]]
-#### Esempio 2
+#####  Esempio 2
 
 ![[esercizio_circuiti.png|400x400]]
 
-### Esercizi su tabelle di verità
+####  Esercizi su tabelle di verità
 
 > [!exercise] Esercizi
 > 1. $A+\overline{AB}+CD$
@@ -228,8 +230,163 @@ www.nandgame.com
 >19. $\overline{(A+B)\cdot C}+A\cdot\overline B$
 >20. $(\overline A+B\cdot\overline C)\cdot(\overline{B+C}+C)$
 
+## Capitolo 2: Minimizzazioni
+### Minimizzazioni algebriche
+#### Introduzione
+La **minimizzazione** è un processo che mi permette di **ottimizzare i circuiti logici** in termini di costi, spazio e prestazioni.
+Questo processo consiste nel trovare un circuito che abbia una tabella di verità **equivalente** a quello che sto minimizzando che sia però ottimizzato al massimo in termini di dimensioni (in pratica ottenere una espressione logica equivalente semplificata che utilizzi meno porte logiche).
 
-### Applicazione della logica booleana e dei circuiti logici in contesti reali
+Ad esempio l'espressione $Y =\overline A \cdot(A+B)+\overline C+BC$
+può essere semplificata in $Y = B+\overline C$.
+
+Questo perché entrambe le espressioni hanno la stessa tabella di verità:
+
+$Y =\overline A \cdot(A+B)+\overline C+BC$
+
+| A   | B   | C   | ¬A  | A+B | ¬A⋅(A+B) | ¬C  | ¬A⋅(A+B)+¬C | BC  | $Y$ |
+| --- | --- | --- | --- | --- | -------- | --- | ----------- | --- | --- |
+| 0   | 0   | 0   | 1   | 0   | 0        | 1   | 1           | 0   | 1   |
+| 0   | 0   | 1   | 1   | 0   | 0        | 0   | 0           | 0   | 0   |
+| 0   | 1   | 0   | 1   | 1   | 1        | 1   | 1           | 0   | 1   |
+| 0   | 1   | 1   | 1   | 1   | 1        | 0   | 1           | 1   | 1   |
+| 1   | 0   | 0   | 0   | 1   | 0        | 1   | 1           | 0   | 1   |
+| 1   | 0   | 1   | 0   | 1   | 0        | 0   | 0           | 0   | 0   |
+| 1   | 1   | 0   | 0   | 1   | 0        | 1   | 1           | 0   | 1   |
+| 1   | 1   | 1   | 0   | 1   | 0        | 0   | 0           | 1   | 1   |
+$Y = B+\overline C$
+
+| B   | C   | ¬C  | B+¬C |
+| --- | --- | --- | ---- |
+| 0   | 0   | 1   | 1    |
+| 0   | 1   | 0   | 0    |
+| 1   | 0   | 1   | 1    |
+| 1   | 1   | 0   | 1    |
+| 0   | 0   | 1   | 1    |
+| 0   | 1   | 0   | 0    |
+| 1   | 0   | 1   | 1    |
+| 1   | 1   | 0   | 1    |
+Come notiamo, il secondo circuito, pur essendo equivalente al primo, utilizza un ingresso in meno e molte meno porte logiche.
+
+Ma come ottengo la seconda espressione?
+
+Posso semplificare una qualunque espressione logica grazie ai **teoremi e alle proprietà dell'algebra di Boole**.
+#### Teoremi e proprietà dell'algebra di Boole
+Questo insieme di proprietà e teoremi di base posso utilizzarlo per minimizzare una qualunque espressione logica.
+
+- **Proprietà Commutativa**  
+  - $A + B = B + A$  
+  - $A \cdot B = B \cdot A$
+
+- **Proprietà Associativa**  
+  - $(A + B) + C = A + (B + C)$  
+  - $(A \cdot B) \cdot C = A \cdot (B \cdot C)$
+
+- **Proprietà Distributiva**  
+  - $AB+AC=A(B+C)$
+  - $(A+B)(A+C) = A+BC$
+    
+    *Dimostrazione:*
+    $AA + AC + AB + BC = AA + A(B + C) + BC$
+	$ma \quad AA = A \quad quindi$
+	$A + A(B + C) + BC \quad cioè$
+	$A \left[ 1 + (B + C) \right] + BC$
+	$ma \quad 1 + (B + C) = 1 \quad quindi$
+	$(A + B)(A + C) = A + BC$
+
+
+- **Teorema dell'Annullamento (elemento assorbente)**  
+  - $A \cdot 0 = 0$  
+  - $A + 1 = 1$
+
+- **Teorema dell'Identità (elemento neutro)** 
+  - $A \cdot 1 = A$  
+  - $A + 0 = A$
+
+- **Teorema dei Complementi**  
+  - $A \cdot \overline{A} = 0$  
+  - $A + \overline{A} = 1$
+
+- **Teorema dell'Idempotenza**  
+  - $A \cdot A = A$  
+  - $A + A = A$
+
+- **Primo Teorema dell'Assorbimento**  
+  - $A + AB = A$
+  - $A\cdot(A+B)=A$
+    
+    *Dimostrazione:*
+    $A + AB = A(1 + B) = A \cdot 1 = A$
+	$mentre$
+	$A(A + B) = AA + AB =$
+	$= A + AB = A(1 + B) = A \cdot 1 = A$
+
+- **Secondo Teorema dell'Assorbimento**  
+  - $A+\overline AB=A+B$
+    
+    *Dimostrazione:*
+    $A + B = A + B(A + \overline{A}) = A + AB + \overline{A}B$
+	$= A(1 + B) + \overline{A}B = A + \overline{A}B$
+
+
+- **Teorema dell'Involuzione (o della doppia negazione)**  
+  - $\overline{\overline{A}} = A$
+
+- **Teoremi di De Morgan**  
+  - $\overline{A \cdot B} = \overline{A} + \overline{B}$  
+  - $\overline{A + B} = \overline{A} \cdot \overline{B}$
+#### Esempio
+Proviamo ad applicare i teoremi per minimizzare l'espressione che abbiamo visto nell'esempio prima, ovvero dimostrare che $\overline A \cdot(A+B)+\overline C+BC = B+\overline C$, mostrando per ogni passaggio i teoremi e le proprietà utilizzate.
+
+$\overline A \cdot (A+B)+\overline C+BC =$
+$= \overline AA+\overline AB+\overline C+BC =$ *svolta moltiplicazione*
+$= \overline AB+\overline C+BC=$ *per il teorema dei complementi*
+$= \overline AB+\overline C+B=$ *per il secondo teorema dell'assorbimento*
+$=B+\overline C$ *per il primo teorema dell'assorbimento*
+### Mappe di Karnough
+Le mappe di Karnough (o **Karnaugh maps**, K-map) sono uno strumento grafico per la semplificazione delle espressioni booleane. Ogni mappa è una tabella che rappresenta visivamente tutte le combinazioni possibili dei valori delle variabili di ingresso.  
+La disposizione delle celle segue l’ordine del **Gray code**, in modo che celle adiacenti differiscano per una sola variabile, facilitando l’individuazione di gruppi di 1 adiacenti.
+Sono particolarmente comode in quanto sono più veloci da utilizzare rispetto alle classiche minimizzazioni algebriche, ma solo se:
+- Conosco a priori i valori di verità dell'espressione o li posso facilmente calcolare
+- Non ho espressioni troppo complesse (di solito fino a 4 proposizioni)
+#### Procedura operativa per l’uso delle mappe di Karnough
+1. **Identificare le variabili**
+   Conta quante variabili ha la funzione booleana e assegna un simbolo a ciascuna (es. A, B, C...).
+2. **Disegnare la mappa**
+   Costruisci una tabella con 2^n celle. Usa intestazioni in **Gray code** per garantire che celle adiacenti differiscano per una sola variabile.
+3. **Compilare la mappa**
+   Inserisci in ciascuna cella il valore della funzione:
+   * 1 se la funzione è vera in quella combinazione
+   * 0 se è falsa
+   * **X** se la combinazione è “non importa” (**don’t care**), cioè può essere considerata sia 0 sia 1 a seconda della comodità nella minimizzazione.
+4. **Individuare i raggruppamenti di 1**
+   * Cerca gruppi di 1 adiacenti in potenze di 2 (1, 2, 4, 8...).
+   * Puoi includere le celle con X nei gruppi, trattandole come 1 se servono a ottenere gruppi più grandi e una forma più semplice.
+   * Ogni gruppo deve essere **il più grande possibile**.
+   * I gruppi possono sovrapporsi: uno stesso 1 (o X) può appartenere a più gruppi.
+   * Puoi raggruppare celle ai bordi opposti della mappa (adiacenza toroidale).
+5. **Scrivere i prodotti semplificati**
+   Per ciascun gruppo:
+   * Individua quali variabili **rimangono costanti** nel gruppo.
+   * Se una variabile ha valore 1 costante, si scrive con la lettera normale (es. A).
+   * Se una variabile ha valore 0 costante, si scrive negata (es. ¬A).
+   * Le variabili che cambiano non si scrivono.
+   * Combina le variabili costanti con l’operazione AND (·).
+6. **Combinare i prodotti**
+   Somma (OR, indicato con +) tutti i prodotti ottenuti dai gruppi per formare l’espressione minimizzata.
+#### Esempi
+*Fonte immagini: https://www.youtube.com/watch?v=qx90H7Kqh9w - Elisabetta Vannucchi*
+##### 2 variabili
+![[mappe_k_2.png]]
+##### 3 variabili
+![[mappe_k_3.png]]
+##### 4 variabili
+![[mappe_k_4.png]]
+![[mappe_k_4p2.png]]
+
+> [!warning] Nota
+> Alcune forme che ottengo in realtà non sono davvero minimizzate, posso ancora fare dei raccoglimenti per utilizzare meno porte logiche.
+
+## Capitolo 3: Applicazione della logica booleana e dei circuiti logici in contesti reali
 #### Utilizzo dello XOR in crittografia
 ##### Introduzione
 
@@ -610,159 +767,3 @@ Se invece si desidera mantenere la codifica in **binario puro**, allora anche le
 (0)₁₀ = (0000)₂ = (0)ₕ  
 a  
 (15)₁₀ = (1111)₂ = (F)ₕ
-
-## Minimizzazioni
-### Minimizzazioni algebriche
-#### Introduzione
-La **minimizzazione** è un processo che mi permette di **ottimizzare i circuiti logici** in termini di costi, spazio e prestazioni.
-Questo processo consiste nel trovare un circuito che abbia una tabella di verità **equivalente** a quello che sto minimizzando che sia però ottimizzato al massimo in termini di dimensioni (in pratica ottenere una espressione logica equivalente semplificata che utilizzi meno porte logiche).
-
-Ad esempio l'espressione $Y =\overline A \cdot(A+B)+\overline C+BC$
-può essere semplificata in $Y = B+\overline C$.
-
-Questo perché entrambe le espressioni hanno la stessa tabella di verità:
-
-$Y =\overline A \cdot(A+B)+\overline C+BC$
-
-| A   | B   | C   | ¬A  | A+B | ¬A⋅(A+B) | ¬C  | ¬A⋅(A+B)+¬C | BC  | $Y$ |
-| --- | --- | --- | --- | --- | -------- | --- | ----------- | --- | --- |
-| 0   | 0   | 0   | 1   | 0   | 0        | 1   | 1           | 0   | 1   |
-| 0   | 0   | 1   | 1   | 0   | 0        | 0   | 0           | 0   | 0   |
-| 0   | 1   | 0   | 1   | 1   | 1        | 1   | 1           | 0   | 1   |
-| 0   | 1   | 1   | 1   | 1   | 1        | 0   | 1           | 1   | 1   |
-| 1   | 0   | 0   | 0   | 1   | 0        | 1   | 1           | 0   | 1   |
-| 1   | 0   | 1   | 0   | 1   | 0        | 0   | 0           | 0   | 0   |
-| 1   | 1   | 0   | 0   | 1   | 0        | 1   | 1           | 0   | 1   |
-| 1   | 1   | 1   | 0   | 1   | 0        | 0   | 0           | 1   | 1   |
-$Y = B+\overline C$
-
-| B   | C   | ¬C  | B+¬C |
-| --- | --- | --- | ---- |
-| 0   | 0   | 1   | 1    |
-| 0   | 1   | 0   | 0    |
-| 1   | 0   | 1   | 1    |
-| 1   | 1   | 0   | 1    |
-| 0   | 0   | 1   | 1    |
-| 0   | 1   | 0   | 0    |
-| 1   | 0   | 1   | 1    |
-| 1   | 1   | 0   | 1    |
-Come notiamo, il secondo circuito, pur essendo equivalente al primo, utilizza un ingresso in meno e molte meno porte logiche.
-
-Ma come ottengo la seconda espressione?
-
-Posso semplificare una qualunque espressione logica grazie ai **teoremi e alle proprietà dell'algebra di Boole**.
-#### Teoremi e proprietà dell'algebra di Boole
-Questo insieme di proprietà e teoremi di base posso utilizzarlo per minimizzare una qualunque espressione logica.
-
-- **Proprietà Commutativa**  
-  - $A + B = B + A$  
-  - $A \cdot B = B \cdot A$
-
-- **Proprietà Associativa**  
-  - $(A + B) + C = A + (B + C)$  
-  - $(A \cdot B) \cdot C = A \cdot (B \cdot C)$
-
-- **Proprietà Distributiva**  
-  - $AB+AC=A(B+C)$
-  - $(A+B)(A+C) = A+BC$
-    
-    *Dimostrazione:*
-    $AA + AC + AB + BC = AA + A(B + C) + BC$
-	$ma \quad AA = A \quad quindi$
-	$A + A(B + C) + BC \quad cioè$
-	$A \left[ 1 + (B + C) \right] + BC$
-	$ma \quad 1 + (B + C) = 1 \quad quindi$
-	$(A + B)(A + C) = A + BC$
-
-
-- **Teorema dell'Annullamento (elemento assorbente)**  
-  - $A \cdot 0 = 0$  
-  - $A + 1 = 1$
-
-- **Teorema dell'Identità (elemento neutro)** 
-  - $A \cdot 1 = A$  
-  - $A + 0 = A$
-
-- **Teorema dei Complementi**  
-  - $A \cdot \overline{A} = 0$  
-  - $A + \overline{A} = 1$
-
-- **Teorema dell'Idempotenza**  
-  - $A \cdot A = A$  
-  - $A + A = A$
-
-- **Primo Teorema dell'Assorbimento**  
-  - $A + AB = A$
-  - $A\cdot(A+B)=A$
-    
-    *Dimostrazione:*
-    $A + AB = A(1 + B) = A \cdot 1 = A$
-	$mentre$
-	$A(A + B) = AA + AB =$
-	$= A + AB = A(1 + B) = A \cdot 1 = A$
-
-- **Secondo Teorema dell'Assorbimento**  
-  - $A+\overline AB=A+B$
-    
-    *Dimostrazione:*
-    $A + B = A + B(A + \overline{A}) = A + AB + \overline{A}B$
-	$= A(1 + B) + \overline{A}B = A + \overline{A}B$
-
-
-- **Teorema dell'Involuzione (o della doppia negazione)**  
-  - $\overline{\overline{A}} = A$
-
-- **Teoremi di De Morgan**  
-  - $\overline{A \cdot B} = \overline{A} + \overline{B}$  
-  - $\overline{A + B} = \overline{A} \cdot \overline{B}$
-#### Esempio
-Proviamo ad applicare i teoremi per minimizzare l'espressione che abbiamo visto nell'esempio prima, ovvero dimostrare che $\overline A \cdot(A+B)+\overline C+BC = B+\overline C$, mostrando per ogni passaggio i teoremi e le proprietà utilizzate.
-
-$\overline A \cdot (A+B)+\overline C+BC =$
-$= \overline AA+\overline AB+\overline C+BC =$ *svolta moltiplicazione*
-$= \overline AB+\overline C+BC=$ *per il teorema dei complementi*
-$= \overline AB+\overline C+B=$ *per il secondo teorema dell'assorbimento*
-$=B+\overline C$ *per il primo teorema dell'assorbimento*
-### Mappe di Karnough
-Le mappe di Karnough (o **Karnaugh maps**, K-map) sono uno strumento grafico per la semplificazione delle espressioni booleane. Ogni mappa è una tabella che rappresenta visivamente tutte le combinazioni possibili dei valori delle variabili di ingresso.  
-La disposizione delle celle segue l’ordine del **Gray code**, in modo che celle adiacenti differiscano per una sola variabile, facilitando l’individuazione di gruppi di 1 adiacenti.
-Sono particolarmente comode in quanto sono più veloci da utilizzare rispetto alle classiche minimizzazioni algebriche, ma solo se:
-- Conosco a priori i valori di verità dell'espressione o li posso facilmente calcolare
-- Non ho espressioni troppo complesse (di solito fino a 4 proposizioni)
-#### Procedura operativa per l’uso delle mappe di Karnough
-1. **Identificare le variabili**
-   Conta quante variabili ha la funzione booleana e assegna un simbolo a ciascuna (es. A, B, C...).
-2. **Disegnare la mappa**
-   Costruisci una tabella con 2^n celle. Usa intestazioni in **Gray code** per garantire che celle adiacenti differiscano per una sola variabile.
-3. **Compilare la mappa**
-   Inserisci in ciascuna cella il valore della funzione:
-   * 1 se la funzione è vera in quella combinazione
-   * 0 se è falsa
-   * **X** se la combinazione è “non importa” (**don’t care**), cioè può essere considerata sia 0 sia 1 a seconda della comodità nella minimizzazione.
-4. **Individuare i raggruppamenti di 1**
-   * Cerca gruppi di 1 adiacenti in potenze di 2 (1, 2, 4, 8...).
-   * Puoi includere le celle con X nei gruppi, trattandole come 1 se servono a ottenere gruppi più grandi e una forma più semplice.
-   * Ogni gruppo deve essere **il più grande possibile**.
-   * I gruppi possono sovrapporsi: uno stesso 1 (o X) può appartenere a più gruppi.
-   * Puoi raggruppare celle ai bordi opposti della mappa (adiacenza toroidale).
-5. **Scrivere i prodotti semplificati**
-   Per ciascun gruppo:
-   * Individua quali variabili **rimangono costanti** nel gruppo.
-   * Se una variabile ha valore 1 costante, si scrive con la lettera normale (es. A).
-   * Se una variabile ha valore 0 costante, si scrive negata (es. ¬A).
-   * Le variabili che cambiano non si scrivono.
-   * Combina le variabili costanti con l’operazione AND (·).
-6. **Combinare i prodotti**
-   Somma (OR, indicato con +) tutti i prodotti ottenuti dai gruppi per formare l’espressione minimizzata.
-#### Esempi
-*Fonte immagini: https://www.youtube.com/watch?v=qx90H7Kqh9w - Elisabetta Vannucchi*
-##### 2 variabili
-![[mappe_k_2.png]]
-##### 3 variabili
-![[mappe_k_3.png]]
-##### 4 variabili
-![[mappe_k_4.png]]
-![[mappe_k_4p2.png]]
-
-> [!warning] Nota
-> Alcune forme che ottengo in realtà non sono davvero minimizzate, posso ancora fare dei raccoglimenti per utilizzare meno porte logiche.
