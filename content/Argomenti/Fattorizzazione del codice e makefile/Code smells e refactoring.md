@@ -897,10 +897,8 @@ int main() {
     return 0;
 }
 ```
-- **Rimosso `futureFeature` dalla struct `User`**: Questo campo era stato aggiunto in previsione di requisiti futuri ma non viene utilizzato nella versione corrente del software, portando ad allocazioni di memoria inutili e complessità.
-- **Rimossa la funzione `updateUserFeature`**: Questa funzione era speculativa e progettata per gestire una funzionalità non utilizzata. Eliminandola, semplifichiamo il codice e ci concentriamo sulle funzionalità attualmente necessarie.
 
-Questo processo di rifattorizzazione elimina la generalità speculativa rimuovendo codice e funzionalità inutilizzati, rendendo il codice più semplice e più facile da mantenere.
+Risulta in una serie di if-else if molto lunga, e lo stesso problema lo avremmo comunque con uno switch.
 #### Refactoring per Ridurre Troppi If/Else e Switch
 
 Un approccio efficace può essere l'utilizzo di un array di stringhe per rappresentare le attività di ciascun giorno, riducendo così la necessità di molteplici `if`/`else`.
@@ -934,6 +932,25 @@ int main() {
 ```
 
 In questo refactoring, il codice è stato semplificato utilizzando un array per mappare i giorni della settimana alle loro rispettive attività. Questo rende il programma più conciso e facilmente modificabile, eliminando la lunga serie di `if`/`else`.
+Ovviamente per linguaggi di programmazione ad alto livello come Python, abbiamo soluzioni più ad alto livello e scalabili come i dizionari:
+
+```python
+def gestisci_giorno(giorno):
+    attivita = {
+        1: "Lunedì: Pianificazione settimanale",
+        2: "Martedì: Riunioni interne",
+        3: "Mercoledì: Lavoro su progetti",
+        4: "Giovedì: Formazione",
+        5: "Venerdì: Report settimanale",
+        6: "Sabato: Giorno libero",
+        7: "Domenica: Giorno libero"
+    }
+
+    print(attivita.get(giorno, "Errore: giorno non valido"))
+
+gestisci_giorno(3)
+
+```
 ### Violazione del Principio KISS
 
 **Definizione:** La violazione del principio KISS ("Keep It Simple, Stupid") si verifica quando il codice diventa innecessariamente complicato o sofisticato, perdendo in semplicità e chiarezza. Questo può succedere quando si introducono soluzioni o ottimizzazioni non necessarie, strutture complesse, o si cerca di anticipare bisogni futuri che potrebbero non materializzarsi mai.

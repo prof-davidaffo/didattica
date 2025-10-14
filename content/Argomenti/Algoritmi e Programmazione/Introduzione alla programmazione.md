@@ -1184,13 +1184,13 @@ for (inizializzazione; condizione; incremento) {
 }
 ```
 
-**Esempio**: Stampare i numeri da 1 a 5.  
+**Esempio**: Stampare i numeri da 0 a 5.  
 ```cpp
 #include <iostream>
 using namespace std;
 
 int main() {
-    for (int i = 1; i <= 5; i++) {
+    for (int i = 0; i <= 5; i++) {
         cout << i << " ";
     }
     cout<<endl;
@@ -2978,6 +2978,8 @@ int main() {
     return 0;
 }
 ```
+
+Posso anche dare un delimitatore diverso dalla riga a `getline`. Ad esempio, se i dati fossero separati da `;` posso usare `getline(file_input, stringa, ';')`.
 
 ---
 
