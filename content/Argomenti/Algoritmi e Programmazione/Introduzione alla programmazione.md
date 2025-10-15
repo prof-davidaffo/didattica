@@ -6,13 +6,14 @@
 ## Indice
 ```table-of-contents
 ```
-## Siti consigliati e utilizzati
+## Siti e appunti consigliati e utilizzati
 Per programmare senza dover installare nulla sul proprio computer, è possibile utilizzare **GitHub Codespaces**. Per farlo è necessario creare un account su GitHub. Dopo la registrazione, si può aprire un nuovo progetto (anche vuoto) e si avvierà una versione online di **Visual Studio Code**, uno degli ambienti di sviluppo più completi e gratuiti disponibili, che può essere scaricato e installato anche sul PC in versione desktop.  Include un terminale in ambiente linux che potete utilizzare per interagire con i file e compilare manualmente.
 [https://github.com/codespaces](https://github.com/codespaces)
 
 Per visualizzare in modo grafico cosa accade durante l’esecuzione di un programma, si può utilizzare **Python Tutor**. Nonostante il nome, questo strumento supporta anche C++, Java, JavaScript e altri linguaggi oltre a Python.  
 [https://pythontutor.com/](https://pythontutor.com/)
 
+Durante il corso ci capiterà di incontrare schemi ricorrenti noti come i [[Ruoli delle variabili]] e i [[Pattern delle scansioni]]. Potete fare riferimento ai due appunti dedicati per individuarli e approfondirli quando compaiono negli esempi o negli esercizi.
 ## Capitolo 0: Comandi da terminale di Linux
 Per lavorare in modo efficiente in ambienti di programmazione, è utile conoscere i comandi di base per utilizzare il terminale per interagire con l'ambiente Linux (lo stesso che trovate su Replit o Github codespaces con la shell).
 Di seguito una tabella con i comandi principali:
@@ -1144,7 +1145,7 @@ Questo esercizio permette di sperimentare con l'algebra booleana e anche di capi
 > • non è vero che tre è maggiore di due e minore di uno
 > • tre minore di meno cinque implica sette maggiore di zero
 
-### Esercizi su strutture condizionali
+#### Esercizi su strutture condizionali
 
 > [!exercise] Esercizi
 > 1. **Positivo, Negativo o Zero**  
@@ -1173,96 +1174,183 @@ Questo esercizio permette di sperimentare con l'algebra booleana e anche di capi
    **Obiettivo**: Usare `switch` con casi numerici e un caso `default`.
 
 ### Cicli e Iterazioni  
-I cicli servono per ripetere blocchi di codice, e sono l'unico modo che ho per ripetere del codice (in quanto i salti incondizionati sono fortemente sconsigliati). Ne ho di 3 di tipo diverso in base al mio obiettivo:
-#### Il ciclo `for`  
-Il ciclo `for` è usato per ripetere un blocco di codice un **numero specifico di volte**.  
-
-**Sintassi**:  
+Nella programmazione, **i cicli** (o **strutture iterative**) sono costrutti fondamentali che consentono di ripetere automaticamente un blocco di istruzioni più volte, senza dover riscrivere il codice. Questo permette di creare programmi più compatti, flessibili e leggibili.
+#### I cicli come alternativa al `goto`
+In passato, la ripetizione di istruzioni era affidata all'uso di **salti incondizionati** (`goto`). Tuttavia, questa tecnica è oggi **fortemente sconsigliata** poiché compromette la chiarezza del codice e rende difficile seguirne il flusso logico. L'uso eccessivo di `goto` genera quello che viene definito *spaghetti code*: codice intricato e difficile da manutenere.
+Per evitare questi problemi, i linguaggi moderni mettono a disposizione **strutture iterative controllate**, che consentono di gestire le ripetizioni in modo chiaro e strutturato. I principali tipi di cicli sono:
+* **Cicli determinati**, quando il numero di iterazioni è noto a priori.
+* **Cicli indeterminati**, quando il numero di iterazioni dipende da condizioni che possono variare durante l'esecuzione.
+---
+#### Cicli Determinati
+Un ciclo è detto **determinato** quando **il numero di ripetizioni è noto prima dell'inizio dell’esecuzione del ciclo**. In questi casi si usa tipicamente il **ciclo `for`**, che consente di specificare esplicitamente tutte le informazioni necessarie al controllo del ciclo: inizializzazione, condizione, e aggiornamento.
+##### Sintassi del ciclo `for`
 ```cpp
-for (inizializzazione; condizione; incremento) {
+for (inizializzazione; condizione; aggiornamento) {
     // Blocco di codice da ripetere
 }
 ```
-
-**Esempio**: Stampare i numeri da 0 a 5.  
+* **Inizializzazione**: viene eseguita una sola volta all’inizio del ciclo.
+* **Condizione**: viene valutata all’inizio di ogni iterazione; se è falsa, il ciclo termina.
+* **Aggiornamento**: viene eseguito alla fine di ogni iterazione.
+##### Esempio: stampare i numeri da 0 a 5
 ```cpp
 #include <iostream>
 using namespace std;
-
 int main() {
     for (int i = 0; i <= 5; i++) {
         cout << i << " ";
     }
-    cout<<endl;
+    cout << endl;
     return 0;
 }
 ```
-
+##### Quando usare un ciclo determinato
+Il ciclo `for` è adatto quando:
+* si conosce il numero esatto di iterazioni,
+* il numero di ripetizioni può essere determinato tramite una variabile o un'espressione calcolabile prima dell'inizio del ciclo,
+* si lavora con strutture indicizzate (come array o stringhe).
+##### Personalizzazione del ciclo `for`
+La sintassi del ciclo `for` consente **grande flessibilità**: anche se spesso si usa la forma standard con incremento (`i++`) e un limite superiore (`i <= n`), **non è obbligatorio** seguire questo schema.
+Vediamo alcuni esempi per chiarire:
+###### 1. Conteggio decrescente
+È possibile usare un **decremento** anziché un incremento:
+```cpp
+for (int i = 10; i >= 1; i--) {
+    cout << i << " ";
+}
+```
+> 🔎 In questo caso la condizione (`i >= 1`) è un **limite minimo**, e l’aggiornamento è un **decremento** (`i--`).
 ---
+###### 2. Incrementi personalizzati
+Si può aumentare il valore della variabile di controllo con passi diversi da 1:
+```cpp
+for (int i = 0; i <= 100; i += 10) {
+    cout << i << " ";
+}
+```
+> 🔎 In questo esempio l’incremento è di 10 ad ogni iterazione (`i += 10`).
+---
+###### 3. Condizione basata su espressioni più complesse
+La condizione non deve necessariamente essere un confronto contro un valore fisso: può anche dipendere da espressioni o funzioni.
+```cpp
+for (int i = 1; i * i <= 100; i++) {
+    cout << "Quadrato: " << i * i << endl;
+}
+```
+> 🔎 Il ciclo continua finché il **quadrato** di `i` è minore o uguale a 100.
+---
+###### Per concludere
+Le tre sezioni del ciclo `for` (inizializzazione; condizione; aggiornamento) **non sono rigide**, ma possono essere adattate liberamente alle esigenze del problema. È importante imparare a riconoscere quando conviene usare schemi diversi da quelli più comuni.
+> 💡 **Nota**: in casi estremi, è anche possibile **omettere** una o più parti del `for`, ma solo se strettamente necessario. Ad esempio:
+```cpp
+for ( ;; ) {
+    cout << "ciao" << endl;
+}
+```
+Stampa ciao all'infinito.
+##### Esercizi di base sul ciclo `for`
+> [!exercise] Esercizi
+> 
+> 1. **Stampa di numeri interi**  
+>     Scrivi un programma che stampa i numeri da 1 a 10, uno per riga. 
+>     
+> 2. **Numeri pari da 2 a 20**  
+>     Scrivi un programma che stampa tutti i numeri pari compresi tra 2 e 20. 
+>     
+> 3. **Somma dei primi `n` numeri**  
+>     Chiedi all’utente un numero intero positivo `n` e calcola la somma dei numeri da 1 a `n`. 
+>     
+> 4. **Tabellina**  
+>     Chiedi all’utente un numero intero e stampane la tabellina da 1 a 10.
+>     
+> 5. **Fattoriale**  
+>     Chiedi all’utente un numero intero positivo `n` e calcola `n!` (fattoriale). 
+> 6. **Conteggio decrescente**  
+>     Scrivi un programma che stampa i numeri da 10 a 1 in ordine decrescente. 
+>     
+> 7. **Quadrati**  
+>     Scrivi un programma che stampa il quadrato dei numeri da 1 a 10.  
+>     
+>     
+> 8. **Multipli di 3**  
+>     Stampa tutti i numeri tra 1 e 50 che sono multipli di 3.  
+>     
+> 9. **Conta numeri positivi**  
+>     Chiedi all’utente di inserire 5 numeri interi e stampa quanti sono positivi. 
+>     
+> 10. **Scaletta di asterischi**  
+>     Stampa 5 righe dove ogni riga contiene un numero crescente di asterischi (da 1 a 5).  
+>     **Output previsto**:  
+>     `*`  
+>     `**`  
+>     `***`  
+>     `****`  
+>     `*****`  
+>     
 
-#### Il ciclo `while`  
-Il ciclo `while` ripete un blocco di codice **finché** una condizione è vera. In questo caso, a differenza del ciclo for, non so effettivamente quante volte verrà eseguito il blocco di codice.
-
-**Sintassi**:  
+#### Cicli Indeterminati
+Un ciclo è detto **indeterminato** quando **non si conosce a priori quante volte sarà ripetuto**. In questi casi, il numero di iterazioni dipende da condizioni valutate **durante l’esecuzione** del programma, ad esempio in base a un input dell’utente o a un evento esterno.
+I cicli indeterminati si implementano con le strutture `while` e `do-while`.
+#### Il ciclo `while`
+Il ciclo `while` **valuta la condizione prima** di ogni iterazione. Se la condizione è falsa sin dall’inizio, **il ciclo non viene eseguito nemmeno una volta**.
+#### Sintassi
 ```cpp
 while (condizione) {
     // Blocco di codice da ripetere
 }
 ```
-
-**Esempio**: Chiedere all'utente di inserire il numero 5 finché non lo inserisce.  
+##### Esempio: chiedere il numero 5 finché non viene inserito
 ```cpp
 #include <iostream>
 using namespace std;
-
 int main() {
     int numero = 3;
-    while(numero != 5){
-    cout<<"Finche non inserisci il numero 5 io continuo a chiedertelo"<<endl;
-    cin>>numero;
+    while (numero != 5) {
+        cout << "Inserisci il numero 5: ";
+        cin >> numero;
     }
-    cout<<"Finalmente!"<<endl;
+    cout << "Finalmente!" << endl;
     return 0;
 }
 ```
-
-
 > [!warning] Nota
 > In questo esempio ho inizializzato la variabile numero a 3 per essere sicuro di entrare nel ciclo (poiché alla prima iterazione `3 != 5` è vero). Se non inizializzo la variabile, alcuni linguaggi di programmazione la inizializzano automaticamente a 0, altri a 1, altri con numeri completamente casuali a seconda dell'indirizzo di memoria. Prova con diversi linguaggi di programmazione e prova a stampare una variabile non inizializzata per vedere cosa succede!
-
----
-
-#### Il ciclo `do-while`  
-Il ciclo `do-while` è simile al `while`, ma garantisce che il blocco di codice venga eseguito **almeno una volta**.  
-
-**Sintassi**:  
+#### Il ciclo `do-while`
+Il ciclo `do-while` esegue il blocco **almeno una volta**, poiché la condizione viene valutata **dopo** l’esecuzione del blocco.
+#### Sintassi
 ```cpp
 do {
     // Blocco di codice da ripetere
 } while (condizione);
 ```
-
-**Esempio**:  
+#### Esempio: inserire un numero fino a che non è uguale a 5
 ```cpp
 #include <iostream>
 using namespace std;
-
 int main() {
     int numero;
-    do{
-    cout<<"Finche non inserisci il numero 5 io continuo a chiedertelo"<<endl;
-    cin>>numero;
-    }while(numero != 5);
-    cout<<"Finalmente!"<<endl;
+    do {
+        cout << "Inserisci il numero 5: ";
+        cin >> numero;
+    } while (numero != 5);
+    cout << "Finalmente!" << endl;
     return 0;
 }
 ```
+> [!warning] Nota
+> Come puoi notare, l'esempio è simile a prima, ma questa volta non necessito di inizializzare la variabile. Perché?
+##### Quando usare `while` e `do-while`
+* Usa `while` quando **la condizione deve essere verificata prima** dell’esecuzione (può anche non entrare mai nel ciclo).
+* Usa `do-while` quando **il codice deve essere eseguito almeno una volta** prima del controllo (es. richiesta di input, accesso a un menu).
+---
+#### Per riassumere
 
-
-> [!exercise] Esercizio
-> In questo caso non ho bisogno di inizializzare la variabile. Perché?
-
-#### Quale uso?
+| Struttura  | Controllo della condizione | Esecuzione minima | Adatto a...                          |
+| ---------- | -------------------------- | ----------------- | ------------------------------------ |
+| `for`      | Prima                      | 0                 | Iterazioni note (cicli determinati)  |
+| `while`    | Prima                      | 0                 | Condizioni dinamiche (indeterminati) |
+| `do-while` | Dopo                       | 1                 | Input utente, almeno un’esecuzione   |
+##### Quale uso?
 Il ciclo `for` serve quando conosco a priori quante interazioni farò (che può dipendere da un numero assoluto, da una variabile, dal risultato di una espressione o di una formula ecc...).
 I cicli `do-while` e `while` servono quando non conosco a priori il numero di interazioni (e dunque la condizione dipende dalle azioni dell'utente), in particolare:
 - `while` nei casi in cui non devo fare neanche una interazione se la condizione non è rispettata, poiché viene controllata prima del blocco di codice.
@@ -1302,7 +1390,7 @@ int main() {
 > Riesci a usare la variabile scelta dopo che sei uscito dal ciclo? Come mai? Approfondisci sugli "scopes" delle variabili per avere una risposta.
 
 **Il comando `continue`**  
-`continue` interrompe l'iterazione corrente e salta direttamente alla successiva. È utile quando voglio ignorare il resto del blocco di codice per una determinata condizione, ma continuare il ciclo.eseguibile
+`continue` interrompe l'iterazione corrente e salta direttamente alla successiva. È utile quando voglio ignorare il resto del blocco di codice per una determinata condizione, ma continuare il ciclo.
 
 **Esempio**: Stampare solo numeri dispari.
 
@@ -1323,29 +1411,19 @@ int main() {
 
 ---
 
-**Confronto tra `break` e `continue`**
-
-- `break` **esce completamente** dal ciclo.
-- `continue` **salta solo l'iterazione corrente**, ma il ciclo continua.
-
-### Esercizi sui cicli
+#### Esercizi sui cicli
 
 > [!exercise] Esercizi
 > 1. **Somma dei numeri positivi**  
-   Scrivi un programma che chiede all’utente di inserire numeri interi uno alla volta. Il programma termina quando l'utente inserisce un numero negativo e stampa la somma di tutti i numeri positivi inseriti.  
-   **Obiettivo**: Utilizzare un ciclo `while` con una condizione logica.
+   Scrivi un programma che chiede all’utente di inserire numeri interi uno alla volta. Il programma termina quando l'utente inserisce un numero negativo e stampa la somma di tutti i numeri positivi inseriti. 
 >2. **Tabelline** 
->    Scrivi un programma che chiede all’utente di inserire un numero intero e stampa la sua tabellina (moltiplicazione da 1 a 10). 
->    **Obiettivo**: Usare un ciclo `for` per iterazioni fisse.
+>    Scrivi un programma che chiede all’utente di inserire un numero intero e stampa la sua tabellina (moltiplicazione da 1 a 10).
 >3. **Indovina il numero**  
-   Scrivi un programma che genera un numero casuale tra 1 e 100. L'utente deve indovinarlo inserendo numeri finché non trova quello corretto. Dopo ogni tentativo, il programma deve dire se il numero inserito è più alto o più basso di quello da indovinare.  
-   **Obiettivo**: Usare un ciclo `do-while` con una condizione e operatori logici.
+   Scrivi un programma che genera un numero casuale tra 1 e 100. L'utente deve indovinarlo inserendo numeri finché non trova quello corretto. Dopo ogni tentativo, il programma deve dire se il numero inserito è più alto o più basso di quello da indovinare. 
 >4. **Numero primo**  
-   Scrivi un programma che chiede all'utente di inserire un numero intero e verifica se è un numero primo.  
-   **Obiettivo**: Usare cicli annidati e condizioni logiche.
+   Scrivi un programma che chiede all'utente di inserire un numero intero e verifica se è un numero primo. 
 >5. **Fibonacci**  
-   Scrivi un programma che calcola e stampa i primi `n` numeri della sequenza di Fibonacci. `n` è dato in input dall’utente.  
-   **Obiettivo**: Utilizzare un ciclo `for` per una sequenza iterativa.
+   Scrivi un programma che calcola e stampa i primi `n` numeri della sequenza di Fibonacci. `n` è dato in input dall’utente. 
 
 ---
 

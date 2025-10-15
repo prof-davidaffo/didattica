@@ -1,3 +1,8 @@
+
+> [!NOTE] Crediti
+> Testo redatto dai docenti dell'Università degli Studi di Bologna
+> https://csed-unibo.github.io/#!index.md
+
 Un _pattern_ (uno "schema") può essere definito come _"una soluzione progettuale generale ad un problema ricorrente"_ [3].
 
 Un _pattern elementare_ è un pattern adatto ai novizi per aiutarli ad apprendere concetti fondamentali di programmazione [4].
