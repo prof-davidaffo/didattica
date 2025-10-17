@@ -3416,202 +3416,163 @@ fstream outputFile("dati.txt", ios::out | ios::app); // Scrive in append
 ### Esercizi
 
 > [!exercise] Esercizi
+>
 > 1. **Calcolo della media da un file**
-> 
-> Scrivi un programma che legge un file chiamato `numeri.txt` contenente una lista di numeri interi e calcola la loro media.
-> 
-> **Requisiti**:
-> 
-> - Leggere i numeri da un file.
-> - Calcolare e stampare la media.
-> 
-> **Esempio di file `numeri.txt`**:
-> 
->```
-10 20 30 40 50
->```
+>    Scrivi un programma che legge un file chiamato `numeri.txt` contenente una lista di numeri interi e calcola la loro media.
+>    **Requisiti**:
+>
+> * Leggere i numeri da un file.
+> * Calcolare e stampare la media.
+>   **Esempio di file `numeri.txt`**:
+>
+> ```
+> 10 20 30 40 50
+> ```
+>
 > **Output atteso**:
-> 
+>
 > ```
 > La media è: 30
 > ```
-> 
-> ---
-> 
->2. **Conteggio delle parole**
-> 
-> Scrivi un programma che legge un file chiamato `testo.txt` e conta il numero totale di parole nel file.
-> 
-> **Requisiti**:
-> 
-> - Utilizza l'operatore `>>` per leggere parola per parola.
-> - Stampa il numero totale di parole.
-> 
-> **Esempio di file `testo.txt`**:
-> 
+>
+> 2. **Conteggio delle parole**
+>    Scrivi un programma che legge un file chiamato `testo.txt` e conta il numero totale di parole nel file.
+>    **Requisiti**:
+>
+> * Utilizza l'operatore `>>` per leggere parola per parola.
+> * Stampa il numero totale di parole.
+>   **Esempio di file `testo.txt`**:
+>
 > ```
 > Benvenuto al corso di programmazione in C++.
 > ```
-> 
+>
 > **Output atteso**:
-> 
+>
 > ```
 > Numero totale di parole: 6
 > ```
-> 
-> ---
-> 
+>
 > 3. **Analisi di frequenza delle parole**
-> 
-> Scrivi un programma che legge un file chiamato `testo.txt` e stampa il numero di volte che ogni parola appare.
-> 
-> **Requisiti**:
-> 
-> - Utilizza un array di struct per memorizzare ogni parola e il suo conteggio.
-> - Gestisce il caso in cui la stessa parola appaia più volte.
-> 
-> **Esempio di file `testo.txt`**:
-> 
+>    Scrivi un programma che legge un file chiamato `testo.txt` e stampa il numero di volte che ogni parola appare.
+>    **Requisiti**:
+>
+> * Utilizza un array di struct per memorizzare ogni parola e il suo conteggio.
+> * Gestisce il caso in cui la stessa parola appaia più volte.
+>   **Esempio di file `testo.txt`**:
+>
 > ```
 > C++ è potente. C++ è divertente.
 > ```
-> 
+>
 > **Output atteso**:
-> 
+>
 > ```
 > C++: 2
 > è: 2
 > potente: 1
 > divertente: 1
 > ```
-> 
-> ---
-> 
+>
 > 4. **Gestione di un elenco di studenti**
-> 
-> Scrivi un programma che legge un file `studenti.txt` contenente i dati di più studenti (nome, cognome, età) e permette di:
-> 
-> 1. Visualizzare tutti gli studenti.
-> 2. Aggiungere un nuovo studente.
-> 3. Salvare i dati aggiornati nel file.
-> 
-> **Requisiti**:
-> 
-> - Utilizza una `struct` per rappresentare ogni studente.
-> - Carica i dati dal file all'avvio e li salva al termine.
-> 
-> **Esempio di file `studenti.txt`**:
-> 
+>    Scrivi un programma che legge un file `studenti.txt` contenente i dati di più studenti (nome, cognome, età) e permette di:
+> 5. Visualizzare tutti gli studenti.
+> 6. Aggiungere un nuovo studente.
+> 7. Salvare i dati aggiornati nel file.
+>    **Requisiti**:
+>
+> * Utilizza una `struct` per rappresentare ogni studente.
+> * Carica i dati dal file all'avvio e li salva al termine.
+>   **Esempio di file `studenti.txt`**:
+>
 > ```
 > Mario Rossi 18
 > Luisa Verdi 20
 > Giovanni Bianchi 22
 > ```
-> 
+>
 > **Esempio di interazione**:
-> 
+>
 > ```
 > 1. Visualizza studenti
 > 2. Aggiungi studente
 > 3. Esci
 > Scegli un'opzione: 1
-> 
 > Mario Rossi, Età: 18
 > Luisa Verdi, Età: 20
 > Giovanni Bianchi, Età: 22
-> 
 > Scegli un'opzione: 2
 > Inserisci nome: Anna
 > Inserisci cognome: Neri
 > Inserisci età: 19
 > ```
-> 
-> ---
-> 
-> 5. **Ricerca di un prodotto in un inventario**
-> 
-> Scrivi un programma che legge un file `inventario.txt` contenente informazioni sui prodotti di un negozio (nome, quantità, prezzo unitario) e permette di:
-> 
-> 1. Cercare un prodotto per nome e visualizzarne i dettagli.
-> 2. Calcolare il valore totale dell'inventario.
-> 
-> **Requisiti**:
-> 
-> - Utilizza una `struct` per rappresentare i prodotti.
-> - Gestisce sia la ricerca che il calcolo del valore totale.
-> 
-> **Esempio di file `inventario.txt`**:
-> 
+>
+> 4. **Ricerca di un prodotto in un inventario**
+>    Scrivi un programma che legge un file `inventario.txt` contenente informazioni sui prodotti di un negozio (nome, quantità, prezzo unitario) e permette di:
+> 5. Cercare un prodotto per nome e visualizzarne i dettagli.
+> 6. Calcolare il valore totale dell'inventario.
+>    **Requisiti**:
+>
+> * Utilizza una `struct` per rappresentare i prodotti.
+> * Gestisce sia la ricerca che il calcolo del valore totale.
+>   **Esempio di file `inventario.txt`**:
+>
 > ```
 > Laptop 5 899.99
 > Smartphone 10 499.99
 > Tablet 7 299.99
 > ```
-> 
+>
 > **Esempio di interazione**:
-> 
+>
 > ```
 > 1. Cerca prodotto
 > 2. Calcola valore totale
 > 3. Esci
 > Scegli un'opzione: 1
-> 
 > Inserisci il nome del prodotto: Smartphone
 > Dettagli: Smartphone, Quantità: 10, Prezzo unitario: 499.99
-> 
 > Scegli un'opzione: 2
 > Valore totale dell'inventario: 14999.60
 > ```
-> 
-> ---
-> 
-> 
-> 6. **Trasforma in maiuscolo**
-> 
-> Scrivi un programma che legge un file `originale.txt` e crea un nuovo file `modificato.txt` con tutte le lettere convertite in maiuscolo.
-> 
-> **Requisiti**:
-> 
-> - Utilizza la funzione `toupper()` per convertire i caratteri.
-> - Copia il contenuto riga per riga.
-> 
-> **Esempio di file `originale.txt`**:
-> 
+>
+> 4. **Trasforma in maiuscolo**
+>    Scrivi un programma che legge un file `originale.txt` e crea un nuovo file `modificato.txt` con tutte le lettere convertite in maiuscolo.
+>    **Requisiti**:
+>
+> * Utilizza la funzione `toupper()` per convertire i caratteri.
+> * Copia il contenuto riga per riga.
+>   **Esempio di file `originale.txt`**:
+>
 > ```
 > C++ è fantastico.
 > Adoro programmare in C++.
 > ```
-> 
+>
 > **File `modificato.txt`**:
-> 
+>
 > ```
 > C++ È FANTASTICO.
 > ADORO PROGRAMMARE IN C++.
 > ```
-> 
-> ---
-> 
+>
 > 7. **Crittografia di un file**
-> 
-> Scrivi un programma che legge un file `testo.txt`, applica una semplice crittografia sostituendo ogni carattere con il successivo nella tabella ASCII, e salva il risultato in un file `crittografato.txt`.
-> 
-> **Requisiti**:
-> 
-> - Gestisce la lettura e scrittura carattere per carattere.
-> - Permette di crittografare e decrittografare il file.
-> 
-> **Esempio di file `testo.txt`**:
-> 
+>    Scrivi un programma che legge un file `testo.txt`, applica una semplice crittografia sostituendo ogni carattere con il successivo nella tabella ASCII, e salva il risultato in un file `crittografato.txt`.
+>    **Requisiti**:
+>
+> * Gestisce la lettura e scrittura carattere per carattere.
+> * Permette di crittografare e decrittografare il file.
+>   **Esempio di file `testo.txt`**:
+>
 > ```
 > Ciao, mondo!
 > ```
-> 
+>
 > **File `crittografato.txt`**:
-> 
+>
 > ```
 > Djbp-!nppep"
 > ```
-> 
 
 
 ## Capitolo 7: Gestione della Memoria dinamica e puntatori
