@@ -1107,3 +1107,53 @@ int main() {
 
 ```
 ## Input/Output da file
+#### Pianta posti cinema (simulazione verifica)
+##### Obiettivo
+Scrivere un programma C++ che legga da file la pianta di una sala cinema, la memorizzi in una matrice di `struct`, calcoli semplici statistiche e cerchi di assegnare un blocco di posti adiacenti richiesto dall’utente, aggiornando il file e scrivendo un report in console. Si raccomanda sempre di formattare e modularizzare il codice seguendo i principi di buona programmazione.
+##### Formato file di input
+* File `map.txt`:
+1. Prima riga: due interi `R C` (righe e colonne della sala).
+2. Seguono `R` righe, ognuna con esattamente `C` caratteri tra `'.'`, `'X'`, `'#'` che rappresentano lo stato iniziale dei posti.
+```
+8 12
+....XX...#..
+...#.....##.
+..X.....##..
+.....#......
+###.........
+....##..X...
+......#.....
+..X.....#...
+```
+##### Requisiti funzionali
+1. Lettura e validazione
+* Leggere `R` e `C`, controllare che rientrino nei limiti massimi.
+* Caricare la sala in `hall[R][C]` popolando `state` per ogni posto.
+* Validare che ogni riga contenga esattamente `C` caratteri validi (`.`, `X`, `#`); se il file non è valido, produrre un messaggio d’errore su console e terminare con codice di uscita non zero.
+1. Statistiche iniziali
+* Calcolare e scrivere sulla console:
+  * Numero totale di posti, numero di liberi (`.`), occupati (`X`), inutilizzabili (`#`).
+  * La riga con il blocco libero contiguo più lungo e la sua lunghezza (se più righe hanno la stessa lunghezza massima, scegliere la con indice più piccolo).
+1. Assegnazione richiesta
+- Far inserire all'utente la fila desiderata e quanti posti contigui vuole prenotare
+* Cercare nella riga desiderata un blocco di posti contigui liberi indicati (`.`) che non contenga `'#'` o `'X'`.
+* Se esiste, assegnarlo marcando quei posti come `'X'` e indicare sulla console che l’assegnazione è riuscita, specificando gli indici dei posti assegnati come intervallo.
+* Se non esiste, indicare che l’assegnazione è fallita perché non c’è un blocco sufficiente in quella riga.
+4. Salvataggio pianta aggiornata
+* Scrivere su `map.txt` la matrice aggiornata con lo stesso formato delle `R` righe da `C` caratteri senza altri testi.
+##### Output atteso
+  * dimensioni sala.
+  * Statistiche iniziali.
+  * Esito dell’assegnazione (riuscita o fallita) con dettagli.
+  * Riepilogo finale dei posti liberi dopo l’eventuale assegnazione.
+* `map.txt` con la pianta aggiornata riga per riga.
+* Esempio sintetico di output su console:
+```
+Sala: 8 righe x 12 colonne
+Posti totali: 96
+Liberi: 66  Occupati: 18  Inutilizzabili: 12
+Blocco libero massimo: riga 4, lunghezza 5
+Richiesta: riga 5, posti adiacenti 4
+Assegnazione riuscita: riga 5, colonne [3-6]
+Liberi dopo assegnazione: 62
+```
