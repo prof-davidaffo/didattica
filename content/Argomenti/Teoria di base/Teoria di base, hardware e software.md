@@ -1,540 +1,558 @@
-> [!NOTE] Crediti
-> Autore: Davide Daffonchio
-> 
-> Questo documento è stato creato con il supporto di un'intelligenza artificiale per facilitare la raccolta e l'organizzazione delle informazioni. L'autore ha verificato e integrato le informazioni per garantire accuratezza e coerenza, ma si raccomanda di consultare fonti aggiuntive e di considerare eventuali aggiornamenti successivi alla stesura. L'uso del contenuto è a scopo informativo e didattico.
-> 
-> Ultimo Aggiornamento: 07-10-2024
-## Indice
-```table-of-contents
-```
-## 1. Cos'è un Computer e a Cosa Serve
+> [!NOTE] Autore
+> Prof. Davide Daffonchio
 
-### 1.1 Definizione di Computer
-Un computer, o calcolatore, è un dispositivo elettronico programmabile capace di eseguire operazioni logiche e matematiche complesse in modo automatico. È costituito da una serie di componenti hardware e software che lavorano insieme per elaborare dati e informazioni. La sua funzione principale è quella di ricevere dati in ingresso, elaborarli attraverso una serie di istruzioni predefinite e fornire un risultato o output.
+[Link presentazione](https://docs.google.com/presentation/d/1aBNYJZ9HyPZonN_9MnN7NLFhceVMKJPE/edit?usp=drive_link&ouid=103341316635969317945&rtpof=true&sd=true)
+## 1. Che cos’è un computer e a cosa serve
+### 1.1 Che cos’è un computer
+Un computer è una macchina progettata per ricevere informazioni, elaborarle secondo istruzioni precise e restituire un risultato. Possiamo immaginarlo come uno strumento intelligente capace di “pensare in automatico”, cioè di seguire una sequenza di comandi per compiere operazioni anche molto complesse, senza bisogno di intervento umano continuo.
+In parole semplici, un computer **prende dei dati in ingresso** (input), **li elabora** secondo un programma (processo) e **restituisce un risultato** (output). Questo meccanismo è alla base di tutto ciò che un computer fa, dal risolvere calcoli matematici al mostrare un video su uno schermo.
+I computer sono presenti ovunque: nei telefoni, nelle auto, nei frigoriferi, nelle aziende, negli ospedali… sono strumenti fondamentali nella vita quotidiana e nel mondo del lavoro.
 
-### 1.2 Scopi e Funzioni di un Computer
-I computer sono progettati per svolgere una vasta gamma di compiti, che possono variare da operazioni semplici, come la scrittura di documenti, fino a calcoli scientifici complessi. Alcune delle principali funzioni e scopi includono:
+---
+### 1.2 A cosa serve un computer
+I computer possono svolgere tantissimi compiti diversi. Vediamo alcuni dei principali:
+* **Elaborare dati**: sono in grado di gestire grandi quantità di informazioni in pochissimo tempo. Questo è utile in moltissimi ambiti, come la scienza, l’economia, la medicina o l’ingegneria.
+* **Automatizzare compiti**: molte attività ripetitive, come il controllo di magazzino o il funzionamento di una catena di montaggio, possono essere eseguite dai computer in modo automatico, veloce e preciso.
+* **Comunicare**: grazie ai computer possiamo inviare email, fare videochiamate, navigare su internet, scambiare file e restare in contatto con il mondo.
+* **Intrattenere**: film, musica, videogiochi, social network… il computer è anche uno strumento per il tempo libero.
+* **Creare**: scrivere testi, comporre musica, disegnare, montare video… grazie a programmi specifici, i computer aiutano anche chi lavora nella creatività.
+Insomma, il computer è una macchina estremamente versatile, che può adattarsi a moltissime situazioni.
+---
+### 1.3 Com’è fatto un computer
+Per funzionare, un computer ha bisogno di due elementi fondamentali:
+* **Hardware**: è la parte fisica del computer, cioè tutti i componenti che si possono toccare. Alcuni esempi sono il monitor, la tastiera, il mouse, la CPU, la memoria e il disco.
+* **Software**: è l’insieme dei programmi che dicono al computer cosa deve fare. Senza il software, l’hardware sarebbe solo un insieme di pezzi inutili. Il sistema operativo (come Windows, macOS o Linux) è il software che gestisce tutto, ma ci sono anche i programmi che usiamo ogni giorno: Word, Excel, Chrome, Spotify…
+Quando accendiamo un computer e apriamo un documento, tutto funziona perché:
+* usiamo una **periferica di input** (tastiera o mouse) per dare un comando,
+* il **software** interpreta il comando e lo fa eseguire,
+* l’**hardware** (come il monitor) mostra il risultato: ecco il documento aperto.
+Tutti questi elementi lavorano insieme, in modo coordinato, per far sì che il computer faccia esattamente quello che vogliamo.
+---
+### 1.4 Un’idea semplice per ricordare
+Per capire davvero cosa fa un computer, basta ricordare questo schema:
+**Input → Elaborazione → Output**
+cioè:
+* **inserisco** qualcosa (un dato, un comando),
+* il computer **lo elabora** secondo delle istruzioni,
+* e **restituisce** un risultato visibile o utilizzabile.
+Questa è la base di ogni attività informatica, semplice o complessa che sia.
+---
+## 2. L’architettura di Von Neumann
+### 2.1 Cos’è l’architettura di Von Neumann
+Per capire meglio come funziona un computer, possiamo immaginarlo come una macchina organizzata secondo un certo schema. Uno dei modelli più importanti per spiegare questa organizzazione si chiama **architettura di Von Neumann**, dal nome dello scienziato che l’ha ideata negli anni ’40: **John Von Neumann**.
+Questo modello ha definito una struttura base che è ancora oggi alla base del funzionamento della maggior parte dei computer, nonostante siano passati decenni. È un po’ come se Von Neumann avesse inventato il “progetto” di riferimento che tutti i computer seguono, anche quelli moderni.
 
-- **Elaborazione dei Dati**: I computer possono processare grandi quantità di dati in modo rapido ed efficiente, rendendoli strumenti indispensabili in settori come la ricerca scientifica, l'economia e l'ingegneria.
-  
-- **Automazione dei Processi**: Sono utilizzati per automatizzare processi ripetitivi, come la gestione di magazzini, la produzione industriale e l'elaborazione di transazioni finanziarie.
+---
+### 2.2 Come è organizzato un computer secondo questo modello
+Secondo l’architettura di Von Neumann, un computer è formato da **quattro componenti principali**, che lavorano insieme per eseguire istruzioni e elaborare dati.
+Vediamoli in modo semplice:
+1. **CPU (Unità Centrale di Elaborazione)**
+   È il “cervello” del computer. È il componente che esegue davvero le istruzioni e fa i calcoli. Al suo interno ci sono due parti importanti:
+   * **Unità di controllo**: legge le istruzioni e decide cosa fare.
+   * **Unità aritmetico-logica (ALU)**: si occupa dei calcoli matematici e delle operazioni logiche.
+2. **Memoria**
+   È dove il computer conserva temporaneamente i dati e le istruzioni da eseguire. È un po’ come la “lavagna” dove la CPU legge e scrive continuamente mentre lavora. Importante: nella memoria ci sono **sia i dati** (come i numeri) **sia le istruzioni** (cioè i comandi da seguire). Questo è un tratto caratteristico del modello di Von Neumann.
+3. **Dispositivi di input/output (I/O)**
+   Sono le “porte” attraverso cui il computer comunica con il mondo esterno:
+   * Input: tastiera, mouse, scanner…
+   * Output: monitor, stampante, altoparlanti…
+4. **Bus di sistema**
+   È il “sistema di trasporto” che collega tutte le parti del computer. I dati, le istruzioni e i segnali di controllo viaggiano lungo questi canali per raggiungere la CPU, la memoria o i dispositivi I/O. Possiamo immaginarlo come una rete stradale interna al computer.
+---
+### 2.3 Perché è così importante questo modello?
+L’architettura di Von Neumann ha rappresentato un enorme passo avanti perché ha reso possibile costruire computer **programmabili**, cioè in grado di eseguire diversi compiti semplicemente cambiando le istruzioni nella memoria, **senza modificare l’hardware**.
+Questa flessibilità è ciò che rende i computer moderni così potenti: uno stesso dispositivo può eseguire un videogioco, scrivere un testo o analizzare dati scientifici… basta usare programmi diversi.
+Anche se oggi i computer sono molto più veloci e complessi, la loro **struttura di base** segue ancora questo schema. Per questo motivo, l’architettura di Von Neumann è ancora oggi studiata e considerata fondamentale per comprendere come funziona un sistema informatico.
 
-- **Comunicazione**: Consentono la trasmissione e la ricezione di informazioni su reti locali e globali, facilitando la comunicazione attraverso e-mail, chat, videoconferenze e altri strumenti digitali.
+---
+## 3. La CPU – Unità Centrale di Elaborazione
+### 3.1 Cos’è la CPU
+La **CPU**, o **Unità Centrale di Elaborazione**, è il componente principale del computer. Si può immaginare come il **cervello** del sistema: è qui che avviene tutto il lavoro “intelligente”.
+Ogni volta che il computer deve eseguire un programma, fare un calcolo, o reagire a un comando dell’utente, la CPU è coinvolta. Riceve istruzioni, le interpreta, esegue operazioni e controlla che tutto il resto del sistema funzioni correttamente.
+Senza CPU, un computer non potrebbe fare nulla: avrebbe componenti pronti ma nessuno che li coordina.
 
-- **Intrattenimento**: I computer sono ampiamente utilizzati per giochi, film, musica e altre forme di intrattenimento digitale.
-
-- **Supporto alla Creatività**: Forniscono strumenti per la creazione di contenuti digitali, come grafica, musica, video e scrittura.
-
-### 1.3 Componenti di Base di un Computer
-Un computer è composto principalmente da due categorie di componenti:
-
-- **Hardware**: Include tutti i componenti fisici del computer, come il processore (CPU), la memoria (RAM), il disco rigido (Hard Disk o SSD), la scheda madre e i dispositivi di input/output (tastiera, mouse, monitor).
-
-- **Software**: Rappresenta l'insieme dei programmi e delle applicazioni che istruiscono l'hardware su come eseguire determinati compiti. Questo include i sistemi operativi (come Windows, macOS, Linux) e i software applicativi (come word processor, fogli di calcolo, browser).
-## 2. Architettura di Von Neumann
-
-### 2.1 Cos'è l'Architettura di Von Neumann
-L'architettura di Von Neumann è un modello teorico che descrive la struttura di base di un computer. È stata proposta dal matematico John von Neumann negli anni '40 ed è alla base della maggior parte dei computer moderni. Questo modello definisce come un computer deve essere organizzato e come deve elaborare le informazioni.
-
-### 2.2 Componenti Principali dell'Architettura di Von Neumann
-L'architettura di Von Neumann prevede che un computer sia composto da quattro componenti principali:
-
-1. **Unità Centrale di Elaborazione (CPU)**: È il cervello del computer, dove vengono eseguite le istruzioni dei programmi. La CPU è divisa a sua volta in:
-   - **Unità di Controllo (Control Unit)**: Coordina e gestisce l'esecuzione delle istruzioni.
-   - **Unità Aritmetico-Logica (ALU)**: Esegue operazioni matematiche e logiche.
-
-2. **Memoria**: È il luogo in cui vengono archiviati sia i dati che le istruzioni del programma. La stessa memoria viene utilizzata sia per i dati che per le istruzioni, consentendo alla CPU di accedervi rapidamente.
-
-3. **Dispositivi di Input/Output (I/O)**: Permettono al computer di comunicare con l'esterno. I dispositivi di input includono tastiera e mouse, mentre i dispositivi di output includono monitor e stampanti.
-
-4. **Bus di Sistema**: Un insieme di canali che permette il trasferimento di dati e istruzioni tra la CPU, la memoria e i dispositivi di I/O.
-
-### 2.3 Importanza dell'Architettura di Von Neumann
-L'architettura di Von Neumann è fondamentale perché definisce un modello standard per la costruzione e il funzionamento dei computer. Nonostante i progressi tecnologici, la struttura di base di tutti i moderni computer segue ancora i principi di questo modello.
-## 3. La CPU: Unità Centrale di Elaborazione
-
-### 3.1 Cos'è la CPU
-La CPU (Central Processing Unit), o Unità Centrale di Elaborazione, è il componente principale del computer responsabile dell'esecuzione delle istruzioni dei programmi. È spesso considerata il "cervello" del computer, poiché coordina tutte le operazioni del sistema, eseguendo calcoli e gestendo il flusso di dati tra i diversi componenti.
-
-### 3.2 Componenti Principali della CPU
-La CPU è costituita da diverse unità interne che collaborano per eseguire le istruzioni:
-
-1. **Unità di Controllo (Control Unit)**: Dirige il flusso di dati e comandi tra la CPU e gli altri componenti del computer. Interpreta le istruzioni dei programmi e le trasforma in segnali di controllo che guidano le operazioni dell'intero sistema.
-
-2. **Unità Aritmetico-Logica (ALU - Arithmetic Logic Unit)**: È responsabile dell'esecuzione delle operazioni matematiche (come addizioni e sottrazioni) e logiche (come AND, OR e confronti) sui dati.
-
-3. **Registri**: Piccole unità di memoria interne alla CPU utilizzate per memorizzare temporaneamente dati e istruzioni durante l'elaborazione. I registri permettono un accesso estremamente rapido alle informazioni necessarie per le operazioni della CPU.
-
-4. **Cache**: Memoria ad alta velocità situata all'interno o vicino alla CPU che immagazzina temporaneamente i dati e le istruzioni usati più di frequente. La cache riduce i tempi di accesso alla memoria principale, migliorando le prestazioni complessive del sistema.
-
-### 3.3 Come Funziona la CPU
-Il funzionamento della CPU può essere suddiviso in tre fasi principali, che formano il **ciclo di esecuzione delle istruzioni**:
-
-1. **Fetch (Prelievo)**: La CPU preleva un'istruzione dalla memoria principale (RAM) e la carica in un registro interno.
-
-2. **Decode (Decodifica)**: L'istruzione prelevata viene decodificata dall'unità di controllo, che la trasforma in una serie di segnali di controllo per le operazioni che devono essere eseguite.
-
-3. **Execute (Esecuzione)**: L'ALU esegue l'operazione specificata dall'istruzione (ad esempio, un calcolo matematico o un'operazione logica). Il risultato dell'operazione viene quindi memorizzato nei registri o inviato alla memoria.
-
-### 3.4 Frequenza e Prestazioni della CPU
-Le prestazioni di una CPU sono determinate da diversi fattori, tra cui:
-
-- **Frequenza di Clock**: Misurata in Hertz (Hz), indica il numero di operazioni che la CPU può eseguire in un secondo. Una frequenza più alta generalmente corrisponde a una maggiore velocità di elaborazione.
-
-- **Numero di Core**: Una CPU può avere più core, ossia unità di elaborazione indipendenti. Più core consentono al computer di eseguire più istruzioni contemporaneamente, migliorando le prestazioni in attività parallele o multitasking.
-
-- **Architettura**: L'architettura della CPU determina come vengono organizzate le unità interne e come vengono gestite le istruzioni. I progressi nell'architettura possono migliorare l'efficienza e le prestazioni anche a parità di frequenza di clock.
-
-### 3.5 Evoluzione delle CPU
-Le CPU sono evolute notevolmente nel corso del tempo, passando da processori a singolo core a processori multi-core con tecnologie avanzate come l'hyper-threading e l'architettura a 64 bit. Questi sviluppi hanno permesso di migliorare drasticamente le prestazioni e la capacità di elaborazione dei computer moderni.
-### 3.6 La Cache della CPU
-
-La **cache** è una memoria estremamente veloce integrata nella CPU o posizionata nelle sue immediate vicinanze, progettata per migliorare le prestazioni riducendo i tempi di accesso ai dati e alle istruzioni. La cache agisce come un'interfaccia tra la CPU e la memoria principale (RAM), immagazzinando temporaneamente le informazioni più frequentemente utilizzate, in modo che la CPU possa accedervi rapidamente senza dover attendere il recupero dalla RAM, che è relativamente più lenta.
-
-#### 3.6.1 Livelli di Cache
-La cache della CPU è generalmente organizzata in più livelli, ciascuno con caratteristiche specifiche:
-
-1. **Cache L1 (Livello 1)**:
-   - È il livello di cache più piccolo e più veloce, direttamente integrato nel core della CPU.
-   - Tipicamente suddivisa in due parti: una per le istruzioni (Instruction Cache) e una per i dati (Data Cache).
-   - Ha una capacità che varia solitamente tra 32 KB e 128 KB per core.
-   - La latenza (il tempo necessario per accedere ai dati) è molto bassa, solitamente di pochi cicli di clock.
-
-2. **Cache L2 (Livello 2)**:
-   - Più grande rispetto alla cache L1, ma leggermente più lenta.
-   - La capacità può variare da 256 KB a diversi MB per core.
-   - In alcune architetture moderne, la cache L2 è condivisa tra più core all'interno della stessa CPU.
-   - Serve come ulteriore livello di buffer per ridurre il carico sulla cache L1.
-
-3. **Cache L3 (Livello 3)**:
-   - Generalmente condivisa tra tutti i core della CPU.
-   - Più grande ma anche più lenta rispetto ai livelli L1 e L2, con capacità che possono raggiungere decine di MB.
-   - Agisce come una riserva di dati e istruzioni che non possono essere contenuti nelle cache L1 e L2.
-
-4. **Cache L4 (Livello 4)**:
-   - Presente solo in alcune architetture specifiche.
-   - Può essere posizionata all'esterno della CPU ma comunque molto vicina, spesso implementata sulla scheda madre.
-   - Serve come un ulteriore strato di buffer per dati e istruzioni di grandi dimensioni o meno frequentemente utilizzati.
-
+---
+### 3.2 Com’è fatta la CPU
+Anche se all’esterno può sembrare solo un piccolo chip, **all’interno della CPU ci sono diverse parti**, ciascuna con un compito ben preciso. Vediamole in modo semplice:
+* **Unità di Controllo**
+  Questa parte si occupa di leggere le istruzioni dalla memoria e decidere cosa deve succedere. Possiamo immaginarla come un “direttore d’orchestra” che dice agli altri componenti cosa devono fare.
+* **Unità Aritmetico-Logica (ALU)**
+  È la parte che si occupa dei **calcoli matematici** (come addizioni, moltiplicazioni...) e delle **operazioni logiche** (come confrontare numeri, controllare condizioni ecc.). È il “braccio operativo” della CPU.
+* **Registri**
+  Sono piccolissime aree di memoria interna molto veloce. Servono a memorizzare temporaneamente i dati su cui la CPU sta lavorando in quel momento. È come avere un taccuino a portata di mano.
+* **Cache**
+  È una memoria molto veloce che conserva i dati e le istruzioni usati più frequentemente, così la CPU può recuperarli più in fretta, senza andare a cercarli nella RAM, che è più lenta.
+---
+### 3.3 Come lavora la CPU: il ciclo delle istruzioni
+Il funzionamento della CPU segue sempre lo stesso **ciclo**, chiamato **ciclo di esecuzione delle istruzioni**. È composto da tre fasi fondamentali:
+1. **Fetch (prelievo)**
+   La CPU preleva dalla memoria un’istruzione da eseguire.
+2. **Decode (decodifica)**
+   L’istruzione viene interpretata: la CPU capisce cosa deve fare.
+3. **Execute (esecuzione)**
+   L’istruzione viene eseguita. Questo può significare fare un calcolo, spostare dei dati o inviare un comando ad altri componenti.
+Questo ciclo si ripete milioni (o miliardi) di volte al secondo.
+---
+### 3.4 Cosa determina la potenza della CPU?
+Le prestazioni di una CPU dipendono da vari fattori. I principali sono:
+* **Frequenza di clock**
+  Indica quante operazioni può eseguire la CPU in un secondo. Si misura in GHz (gigahertz). Più è alta, più la CPU è veloce (a parità di condizioni).
+* **Numero di core**
+  I **core** sono come cervelli all’interno della CPU. Una CPU con più core può svolgere più operazioni contemporaneamente (multitasking). Oggi i processori hanno spesso 4, 6, 8 o più core.
+* **Architettura**
+  Indica il modo in cui la CPU è progettata internamente. Architetture più moderne riescono a eseguire più operazioni con meno energia e in meno tempo.
+---
+### 3.5 L’evoluzione della CPU
+Nel tempo, le CPU si sono evolute moltissimo. I primi computer avevano un solo core e lavoravano a frequenze basse. Oggi, anche un computer portatile economico ha una CPU multicore, con velocità molto elevate e consumi ridotti.
+Sono state introdotte tecnologie come:
+* **Hyper-threading**, per gestire più processi per ogni core;
+* **CPU a 64 bit**, che possono gestire grandi quantità di memoria;
+* **Cache sempre più grandi e veloci**, per ridurre i tempi di attesa.
+---
+### 3.6 Un approfondimento utile: la cache
+La **cache** è una memoria molto veloce che si trova all’interno (o molto vicino) alla CPU. Serve per **velocizzare l’accesso ai dati più usati**, evitando che la CPU debba cercarli ogni volta nella RAM.
+La cache è organizzata su **più livelli**:
+* **Cache L1**: la più veloce e vicina al core, ma anche la più piccola.
+* **Cache L2**: un po’ più grande, ma leggermente più lenta.
+* **Cache L3**: condivisa tra tutti i core, è la più grande ma anche la più lenta (rispetto alle altre due).
+Tutti questi livelli permettono alla CPU di lavorare più rapidamente, riducendo i tempi morti.
 #### 3.6.2 Funzionamento della Cache
 Il funzionamento della cache si basa su un principio chiamato **località spaziale e temporale**:
-
 - **Località Temporale**: Se un dato o un'istruzione è stato utilizzato recentemente, è probabile che venga utilizzato di nuovo a breve. La cache conserva queste informazioni per un accesso rapido.
-
 - **Località Spaziale**: Se un dato o un'istruzione è stato utilizzato, è probabile che i dati circostanti vengano utilizzati presto. Per questo motivo, la cache carica blocchi di dati (noti come *cache lines*) dalla memoria principale, non solo i dati specifici richiesti.
-
 #### 3.6.3 Politiche di Gestione della Cache
 La gestione della cache implica diverse politiche per ottimizzare l'uso dello spazio disponibile:
-
 - **Politiche di Sostituzione**: Determinano quali dati devono essere rimossi dalla cache quando è necessario fare spazio per nuovi dati. Una delle più comuni è la politica LRU (Least Recently Used), che rimuove i dati utilizzati meno di recente.
-
 - **Politiche di Scrittura**:
   - **Write-Through**: Ogni volta che la cache viene aggiornata, il dato viene scritto contemporaneamente anche nella memoria principale.
   - **Write-Back**: I dati vengono scritti nella memoria principale solo quando devono essere rimossi dalla cache, riducendo il traffico verso la memoria.
-
 #### 3.6.4 Importanza della Cache nelle Prestazioni
 Una cache ben progettata può migliorare drasticamente le prestazioni della CPU, poiché riduce la necessità di attendere l'accesso ai dati dalla memoria principale. Questo consente alla CPU di eseguire le istruzioni più rapidamente e di gestire meglio operazioni complesse o processi multitasking.
-## 4. La RAM: Memoria ad Accesso Casuale
 
-### 4.1 Cos'è la RAM
-La **RAM (Random Access Memory)**, o memoria ad accesso casuale, è un tipo di memoria volatile utilizzata dai computer per immagazzinare temporaneamente i dati e le istruzioni necessari per l'esecuzione dei programmi in corso. A differenza della memoria permanente (come l'hard disk o l'SSD), la RAM perde tutte le informazioni immagazzinate quando il computer viene spento. Questo succede perché la RAM memorizza i dati esclusivamente con l'elettricità, questo la rende estremamente più veloce di una memoria permanente.
+---
+## 4. La RAM – Memoria ad Accesso Casuale
+### 4.1 Cos’è la RAM
+La **RAM** (Random Access Memory), in italiano **memoria ad accesso casuale**, è uno dei componenti fondamentali di un computer. Possiamo immaginarla come un **blocco di appunti temporanei**, dove il computer scrive e legge continuamente mentre lavora.
+È una **memoria veloce**, usata per **tenere pronti i dati e le istruzioni** che la CPU deve usare in quel momento. Ma c’è una caratteristica importante da ricordare: **la RAM è una memoria volatile**, cioè **perde tutto il suo contenuto quando il computer si spegne**.
 
-### 4.2 Funzione della RAM
-La RAM svolge un ruolo fondamentale nelle prestazioni complessive del sistema. Agisce come una sorta di spazio di lavoro temporaneo per la CPU, permettendo un accesso rapido ai dati necessari per eseguire le operazioni. Più RAM è disponibile, maggiore è la quantità di dati e programmi che possono essere gestiti simultaneamente, riducendo la necessità di accedere frequentemente alla memoria di massa, che è molto più lenta.
-
+---
+### 4.2 A cosa serve la RAM
+Ogni volta che accendiamo il computer, il sistema operativo e i programmi che utilizziamo vengono caricati dalla memoria permanente (come l’hard disk o l’SSD) **alla RAM**. Questo perché la RAM è molto più veloce e permette alla CPU di accedere ai dati quasi immediatamente.
+Quindi:
+* più **RAM** ha un computer, più **dati e programmi può gestire allo stesso tempo**;
+* con **poca RAM**, il sistema diventa lento, perché deve continuamente spostare dati avanti e indietro tra RAM e memoria permanente.
+Un esempio semplice: quando apriamo molti programmi insieme (ad esempio un browser, un programma di scrittura e la posta elettronica), la RAM li tiene “aperti” tutti in memoria per consentirci di passare rapidamente da uno all’altro.
+---
 ### 4.3 Tipi di RAM
-Esistono vari tipi di RAM utilizzati nei computer:
+Esistono diversi tipi di RAM. I principali sono:
+* **DRAM (Dynamic RAM)**
+  È il tipo più comune, usato come memoria principale nei computer. Ha bisogno di essere “rinfrescata” continuamente per mantenere i dati. È economica ma più lenta rispetto ad altri tipi.
+* **SRAM (Static RAM)**
+  È più veloce della DRAM e non ha bisogno di essere rinfrescata, ma è anche più costosa. Viene usata soprattutto **all’interno della CPU**, come memoria **cache**.
+* **DDR RAM (Double Data Rate)**
+  È l’evoluzione della DRAM e si trova nella maggior parte dei computer. Le versioni più recenti sono **DDR3, DDR4 e DDR5**: ogni nuova versione è più veloce, più efficiente e consuma meno energia.
+---
+### 4.4 Caratteristiche principali della RAM
+Quando si parla di RAM, ci sono tre caratteristiche importanti da tenere in considerazione:
+* **Capacità**
+  Misurata in **gigabyte (GB)**, indica quanti dati la RAM può contenere. Oggi, un computer moderno ha in genere almeno **8 GB** di RAM, ma per usi più intensivi (come giochi, grafica o video editing) si usano anche 16 GB, 32 GB o più.
+* **Velocità**
+  Misurata in **megahertz (MHz)** o **megatransfer al secondo (MT/s)**, indica quanto velocemente la RAM può trasferire i dati. Una RAM più veloce aiuta il sistema a essere più reattivo.
+* **Latenza**
+  Indica **quanto tempo impiega la RAM a rispondere** a una richiesta della CPU. Minore è la latenza, migliori sono le prestazioni.
+---
+### 4.5 Come funziona la RAM nel sistema
+Immaginiamo questo scenario: accendiamo il computer, clicchiamo sull’icona di un programma (es. un browser). Ecco cosa succede:
+1. Il sistema **copia il programma dalla memoria permanente (es. SSD) alla RAM**.
+2. La **CPU legge dalla RAM** le istruzioni da eseguire.
+3. Mentre usiamo il programma, i dati su cui lavoriamo (es. una pagina web, un video, un documento) **restano in RAM** per essere sempre pronti all’uso.
+4. Quando chiudiamo il programma, lo spazio in RAM viene **liberato**.
+In questo modo, tutto risulta veloce e fluido… a patto che ci sia abbastanza RAM a disposizione.
+#### 4.5.1 Perché la RAM è una memoria volatile?
+La RAM è chiamata **memoria volatile** perché **funziona solo quando il computer è acceso**. Appena si spegne l’alimentazione, **tutte le informazioni contenute nella RAM vengono cancellate**.
+Ma perché è fatta così?
+Il motivo sta nel modo in cui è costruita:
+* La RAM è progettata per essere **estremamente veloce**, così la CPU può accedere rapidamente ai dati.
+* Per ottenere questa velocità, si utilizzano **circuiti elettronici che mantengono l’informazione solo finché ricevono energia elettrica**.
+* Appena l’alimentazione si interrompe (ad esempio spegnendo il computer), quei circuiti si azzerano e i dati vengono persi.
+Quindi **la volatilità è una conseguenza della sua progettazione**: si sacrifica la permanenza dei dati in cambio della **massima velocità** di accesso.
+---
+#### 4.5.2 Che vantaggi porta il fatto che la RAM sia volatile?
+Anche se a prima vista può sembrare uno svantaggio, in realtà la **volatilità è un vantaggio per le prestazioni** del computer:
+1. **Massima velocità**
+   La RAM è **molto più veloce** rispetto a qualsiasi memoria permanente (come gli SSD o gli hard disk), proprio perché non deve preoccuparsi di conservare a lungo i dati. Questo rende il lavoro del computer fluido e reattivo.
+2. **Perfetta per i dati temporanei**
+   La RAM è ideale per contenere dati **che servono solo durante l’uso del computer**, come:
+   * programmi aperti,
+   * file temporanei,
+   * dati in corso di elaborazione.
+   Una volta terminato il lavoro o spento il computer, non c’è bisogno di conservarli, quindi la perdita dei dati non è un problema.
+3. **Gestione dinamica della memoria**
+   La volatilità permette al sistema operativo di **cancellare facilmente dati vecchi** e riutilizzare lo spazio per nuovi compiti, ottimizzando l’uso della memoria.
+---
+#### 4.5.3 E gli svantaggi?
+L’unico svantaggio vero è che **non si possono salvare dati importanti nella RAM**, perché si perdono al riavvio.
+Per questo:
+* i file veri e propri vanno **salvati su memorie permanenti** (come SSD, HDD o chiavette USB),
+* la RAM viene **usata solo come memoria “di lavoro”**, temporanea e velocissima.
 
-1. **DRAM (Dynamic RAM)**:
-   - È il tipo di RAM più comune utilizzato nei computer.
-   - I dati vengono immagazzinati in condensatori che richiedono un refresh continuo per mantenere le informazioni, da cui il termine "dinamica".
-   - Viene utilizzata come memoria principale nei computer.
+---
+### 4.6 Perché la RAM è importante per le prestazioni
+La RAM è essenziale per la **velocità generale del computer**. Se è insufficiente:
+* il sistema sarà costretto a usare la **memoria virtuale**, cioè una parte dell’hard disk che finge di essere RAM;
+* ma il disco è molto più **lento** della RAM, quindi il computer rallenterà visibilmente.
+Ecco perché avere **abbastanza RAM** è importante soprattutto quando si usano molti programmi contemporaneamente, o applicazioni pesanti come giochi, software di grafica o video editing.
+---
+### 4.7 Memoria virtuale: una "RAM di emergenza"
+Quando la RAM si riempie, il sistema operativo può usare una parte dell’hard disk o dell’SSD come se fosse RAM: questa è la **memoria virtuale**.
+È una soluzione utile, ma **molto più lenta** rispetto alla RAM reale. Il computer continuerà a funzionare, ma con prestazioni inferiori. Tuttavia mi permette di darmi il tempo di liberare la RAM prima di perdere quello su cui stavo lavorando a causa di un crash del sistema.
+## 5. La ROM – Memoria di sola lettura
+### 5.1 Cos’è la ROM
+Dopo aver parlato della **RAM**, una memoria veloce ma temporanea, vediamo ora la **ROM**, che è un tipo di memoria completamente diversa.
+La **ROM** (Read-Only Memory) è una memoria **permanente**, cioè **mantiene i dati anche quando il computer è spento**. Come dice il nome, è una **memoria “di sola lettura”**, perché i dati al suo interno **non possono essere modificati facilmente**.
+È come un libro già stampato: si può leggere ogni volta che serve, ma non si può cambiare il testo (se non con tecniche specifiche).
+Attenzione, non va confusa con la memoria secondaria, che ha tutt'altra funzione.
 
-2. **SRAM (Static RAM)**:
-   - Più veloce e costosa rispetto alla DRAM.
-   - Non richiede il refresh continuo dei dati, rendendola più veloce.
-   - Viene solitamente utilizzata come memoria cache nella CPU.
+---
+### 5.2 A cosa serve la ROM
+La ROM ha un compito molto importante nel computer: **contiene le istruzioni fondamentali che servono ad avviare il sistema**. Quando premiamo il pulsante di accensione:
+* la **CPU non sa ancora cosa fare**,
+* allora legge dalla ROM un programma chiamato **firmware** (di solito il BIOS o UEFI),
+* questo programma fa un controllo dell’hardware e **avvia il sistema operativo** (caricato poi dalla memoria permanente).
+Senza ROM, il computer **non saprebbe nemmeno come accendersi correttamente**.
+Oltre al BIOS/UEFI dei PC, la ROM è usata anche in:
+* stampanti,
+* router,
+* console da gioco,
+* altri dispositivi elettronici,
+  per conservare istruzioni di base che **non devono cambiare**.
+---
+### 5.3 Che differenza c’è tra ROM e RAM?
+È importante non confondere RAM e ROM, perché hanno **funzioni e caratteristiche molto diverse**:
 
-3. **DDR (Double Data Rate) RAM**:
-   - Evoluzione della DRAM, in grado di trasferire dati due volte per ciclo di clock, raddoppiando la velocità di trasferimento.
-   - Le versioni più recenti, come DDR3, DDR4 e DDR5, offrono capacità e velocità sempre maggiori, oltre a un consumo energetico ridotto.
+| **RAM**                                        | **ROM**                                          |
+| ---------------------------------------------- | ------------------------------------------------ |
+| Volatile: perde i dati allo spegnimento        | Permanente: conserva i dati anche senza corrente |
+| Lettura e scrittura continua                   | Soprattutto lettura, modifica difficile          |
+| Serve per il lavoro “in tempo reale” della CPU | Serve per contenere istruzioni fisse e iniziali  |
+| Veloce e temporanea                            | Più lenta, ma stabile nel tempo                  |
+In pratica:
+* la **RAM** è una **lavagna temporanea**, dove si scrivono e cancellano continuamente informazioni durante l’uso del computer;
+* la **ROM** è una **bacheca fissa**, dove sono scritte le istruzioni “di fabbrica” che non cambiano spesso.
 
-### 4.4 Caratteristiche della RAM
-Le principali caratteristiche tecniche della RAM includono:
+---
+### 5.4 La ROM oggi: è ancora "solo lettura"?
+Nel tempo, sono nati diversi **tipi di ROM** che, pur essendo nati per contenere dati permanenti, **possono essere aggiornati** in casi specifici. Questi tipi includono:
+* **EPROM** (Erasable Programmable ROM): può essere cancellata con raggi UV e riscritta.
+* **EEPROM** (Electrically Erasable Programmable ROM): può essere riscritta elettricamente, anche senza rimuoverla dal computer.
+* **Flash ROM**: è la tecnologia usata oggi per memorie che devono essere **aggiornabili ma stabili**, come il firmware UEFI. È simile a quella delle chiavette USB o degli SSD, ma pensata per mantenere stabilità nel tempo.
+Quindi, anche se il nome dice “di sola lettura”, oggi la ROM **può essere aggiornata**, ma in modo **controllato e raro** (ad esempio, quando si aggiorna il BIOS della scheda madre).
+---
+### 5.5 Perché è importante la ROM?
+La ROM è fondamentale perché:
+* **dà al computer le istruzioni minime per partire**,
+* funziona **subito all’accensione**, senza bisogno del sistema operativo,
+* è **stabile**: non si cancella, non si danneggia facilmente, e non perde i dati.
+Senza ROM, il computer **non saprebbe da dove iniziare**.
+## 6. La Memoria Secondaria
+### 6.1 Cos’è la memoria secondaria
+Dopo aver visto la **RAM**, che è una memoria temporanea e veloce, e la **ROM**, che contiene istruzioni permanenti, è importante parlare di un altro tipo di memoria fondamentale nei computer: la **memoria secondaria** (chiamata anche **memoria di massa**).
+Si tratta di una **memoria non volatile**, cioè che **mantiene i dati anche quando il computer è spento**. La usiamo per **salvare tutto ciò che vogliamo conservare nel tempo**: il sistema operativo, i programmi, i documenti, le foto, i video, i giochi… tutto quello che resta sul computer anche dopo un riavvio.
+La memoria secondaria ha tre caratteristiche importanti:
+* **è permanente** (non perde i dati),
+* **ha una grande capacità** (può contenere molti gigabyte o terabyte),
+* **è più lenta** rispetto alla RAM.
+---
+### 6.2 Tipi di memoria secondaria
+Esistono diversi tipi di memoria secondaria, ognuno con caratteristiche e usi specifici. Vediamoli in modo semplice.
 
-1. **Capacità**:
-   - Misurata in gigabyte (GB), indica la quantità di dati che la RAM può contenere. Una maggiore capacità permette di eseguire più applicazioni simultaneamente senza rallentamenti.
+---
+#### 6.2.1 Hard Disk (HDD)
+È il tipo più tradizionale di memoria di massa.
+* Funziona con **dischi magnetici** che girano a grande velocità, mentre una testina legge e scrive i dati.
+* Ha una **grande capacità** (anche diversi terabyte) ed è **più economico** rispetto ad altre soluzioni.
+* Tuttavia, è **più lento** e più delicato, perché ha **parti meccaniche in movimento**.
+Vantaggi: tanta memoria a basso costo.
+Svantaggi: più lento, più fragile in caso di urti.
 
-2. **Velocità (frequenza)**:
-   - Misurata in megahertz (MHz), indica la velocità con cui la RAM può leggere e scrivere dati. Una RAM più veloce migliora le prestazioni complessive del sistema.
+---
+#### 6.2.2 Unità a Stato Solido (SSD)
+Gli **SSD** sono dispositivi di archiviazione **senza parti meccaniche**: usano **memoria flash**, simile a quella delle chiavette USB.
+* Sono **molto più veloci** degli HDD.
+* Permettono al sistema operativo e ad altri programmi pesanti di avviarsi in pochi secondi.
+* Sono **più resistenti agli urti**, ma hanno un costo maggiore (anche se oggi più accessibile).
+Vantaggi: altissima velocità, silenziosi, resistenti.
+Svantaggi: costo per GB più alto, numero limitato di scritture per ogni cella di memoria.
 
-3. **Latenza**:
-   - Rappresenta il tempo necessario affinché la RAM risponda a una richiesta di dati. Una latenza più bassa indica un accesso più rapido ai dati.
+##### Approfondimento: come funzionano gli SSD e perché hanno scritture limitate
+Gli SSD memorizzano i dati in celle elettroniche di memoria flash, senza parti meccaniche. Questo li rende molto più veloci degli hard disk tradizionali: i file vengono letti e scritti quasi istantaneamente, e l’avvio del sistema è rapidissimo.
+Ogni cella di memoria flash può essere scritta e cancellata un numero limitato di volte. Questo succede per motivi fisici:
+Scrivere un dato su una cella flash significa applicare una piccola scarica elettrica che modifica la carica interna della cella.
+Ogni volta che si scrive o si cancella, la cella si consuma un po’.
+Dopo un certo numero di cicli di scrittura/cancellazione (che può variare da qualche migliaio a diversi milioni), la cella diventa instabile o inutilizzabile.
+Per questo si dice che gli SSD hanno una durata “a cicli”, anche se nella pratica durano anni per l’uso normale.
+Per questo motivo si dice che gli SSD hanno scritture limitate, ma non è un vero problema nell’uso quotidiano. Gli SSD moderni usano tecniche speciali per distribuire le scritture in modo uniforme e durano molti anni anche con un uso normale.
 
-### 4.5 Funzionamento della RAM nel Sistema
-Quando avvii un programma o apri un file, il sistema operativo carica i dati necessari dalla memoria permanente (come un hard disk) alla RAM. Questo consente alla CPU di accedere rapidamente alle informazioni richieste, evitando i lunghi tempi di attesa associati al recupero diretto dei dati dalla memoria di massa. Una volta che i dati non sono più necessari, vengono rimossi dalla RAM per fare spazio a nuove informazioni.
+---
+#### 6.2.3 Unità Ibride (SSHD)
+Le unità **ibride** combinano la tecnologia di un HDD con una piccola parte di memoria SSD.
+* I dati usati più spesso vengono memorizzati nella parte SSD per essere letti più velocemente.
+* I dati meno usati restano nell’HDD.
+Sono un compromesso tra **velocità** e **capienza**, a un prezzo intermedio.
+---
+#### 6.2.4 Supporti ottici (CD, DVD, Blu-ray)
+Sono sempre meno usati, ma un tempo molto diffusi.
+* Funzionano con un **raggio laser** che legge o scrive dati su un disco.
+* Sono utili per **archiviare dati**, installare software o vedere film.
+Vantaggi: economici, buoni per archiviazione a lungo termine.
+Svantaggi: capacità limitata, facilmente graffiabili, lenti rispetto agli standard moderni.
 
-### 4.6 Importanza della RAM nelle Prestazioni
-La quantità e la velocità della RAM influiscono direttamente sulle prestazioni del computer. Una RAM insufficiente può portare a rallentamenti, poiché il sistema deve utilizzare file di paging su disco, che sono molto più lenti rispetto all'accesso diretto alla RAM. Questo è particolarmente evidente quando si eseguono più applicazioni contemporaneamente o quando si gestiscono programmi che richiedono molta memoria, come software di editing video o videogiochi.
+---
+#### 6.2.5 Chiavette USB e schede di memoria
+Sono dispositivi **portatili**, basati su memoria flash.
+* Possono contenere da pochi GB fino a 1 TB o più.
+* Sono molto usati per **trasportare file** tra dispositivi.
+Vantaggi: portabilità, facilità d’uso.
+Svantaggi: più lenti degli SSD interni, possono danneggiarsi o perdersi facilmente.
 
-### 4.7 RAM e Memoria Virtuale
-Quando la RAM disponibile non è sufficiente per gestire tutti i processi attivi, il sistema operativo utilizza la **memoria virtuale**, che consente di utilizzare parte della memoria di massa come estensione della RAM. Questo processo, però, è molto più lento rispetto all'uso della RAM fisica, poiché l'accesso ai dati su disco richiede più tempo.
+---
+### 6.3 Perché la memoria secondaria è fondamentale
+La memoria secondaria è **il luogo dove il computer conserva tutto**, anche quando è spento:
+* Senza di essa, ogni volta che spegniamo il computer, perderemmo tutto.
+* Serve per **installare programmi**, **salvare documenti**, **avviare il sistema operativo**, e molto altro.
+Possiamo pensare alla memoria secondaria come a un **armadio o un archivio permanente**, mentre la RAM è il **piano di lavoro momentaneo**.
+---
+### 6.4 La gerarchia della memoria
+Nel computer, esiste una **gerarchia delle memorie**, in base alla **velocità** e **alla capacità**:
 
-## 5. La ROM: Memoria di Sola Lettura
-
-### 5.1 Cos'è la ROM
-La **ROM (Read-Only Memory)** è una memoria permanente che conserva permanentemente i dati e le istruzioni anche quando il computer è spento. Come suggerisce il nome, è progettata per consentire solo la lettura dei dati, il che significa che una volta scritti, i dati non possono essere facilmente modificati o cancellati. Viene utilizzata principalmente per memorizzare il firmware, ovvero il software di base che controlla l'hardware del sistema.
-
-### 5.2 Funzioni della ROM
-La ROM svolge un ruolo essenziale nel funzionamento di qualsiasi dispositivo informatico, soprattutto durante la fase di avvio e inizializzazione del sistema. Alcune delle principali funzioni includono:
-
-- **Avvio del Sistema**: Contiene il firmware o il BIOS (Basic Input/Output System), che viene eseguito all'accensione del computer per testare l'hardware e avviare il sistema operativo (se presente sulla memoria di massa).
-- **Conservazione di Istruzioni di Base**: Memorizza le istruzioni fondamentali necessarie per l'operatività del sistema, come i protocolli di comunicazione tra componenti hardware e il controllo delle periferiche di input/output.
-
-### 5.3 Differenze tra ROM e RAM
-- **Persistenza dei Dati**: La ROM conserva i dati in modo permanente, mentre la RAM è una memoria volatile che perde tutte le informazioni quando il dispositivo viene spento.
-- **Modificabilità**: I dati contenuti nella ROM sono pre-programmati e non possono essere facilmente modificati, mentre la RAM può essere letta e scritta continuamente durante l'esecuzione dei programmi.
-- **Funzione**: La ROM è utilizzata per memorizzare il software di base del sistema (firmware) e altre informazioni critiche che non devono essere cambiate, mentre la RAM è utilizzata per memorizzare temporaneamente i dati dei programmi in esecuzione.
-
-### 5.4 Importanza della ROM
-La ROM è fondamentale per il funzionamento di un computer poiché contiene le istruzioni necessarie per avviare il sistema e garantire il corretto funzionamento dell'hardware. Senza la ROM, un computer non sarebbe in grado di eseguire l'inizializzazione del sistema né di caricare il sistema operativo.
-
-## 6. Memoria Secondaria
-
-### 6.1 Cos'è la Memoria Secondaria
-La **memoria secondaria**, o memoria di massa, è un tipo di memoria non volatile utilizzata per immagazzinare dati e programmi in modo permanente, anche quando il computer è spento. A differenza della RAM, la memoria secondaria conserva le informazioni a lungo termine e offre una capacità di archiviazione molto maggiore. È utilizzata per conservare il sistema operativo, i software applicativi, i file degli utenti e altri dati essenziali.
-
-### 6.2 Tipi di Memoria Secondaria
-Esistono diversi tipi di memoria secondaria, ciascuno con caratteristiche e usi specifici:
-
-#### 6.2.1 Hard Disk Drive (HDD)
-- **Descrizione**: È un dispositivo di archiviazione meccanico che utilizza piatti magnetici rotanti e una testina di lettura/scrittura per accedere ai dati.
-- **Caratteristiche**:
-  - **Capacità**: Alta, fino a diversi terabyte (TB).
-  - **Velocità**: Relativamente bassa rispetto agli SSD; i tempi di accesso dipendono dalla velocità di rotazione (tipicamente 5400 o 7200 giri/minuto).
-  - **Durata**: Sensibili a urti e danni fisici, ma offrono una lunga durata se mantenuti in buone condizioni.
-- **Vantaggi**: Elevata capacità a un costo per gigabyte relativamente basso.
-- **Svantaggi**: Maggiore lentezza rispetto agli SSD e vulnerabilità agli urti e alle vibrazioni.
-
-#### 6.2.2 Solid State Drive (SSD)
-- **Descrizione**: Utilizza memorie flash per archiviare dati, senza parti mobili. Gli SSD sono molto più veloci rispetto agli HDD tradizionali.
-- **Caratteristiche**:
-  - **Capacità**: Da alcune centinaia di gigabyte fino a diversi terabyte.
-  - **Velocità**: Molto elevata, con tempi di accesso ai dati quasi immediati.
-  - **Durata**: Maggiore resistenza a urti e vibrazioni rispetto agli HDD, ma il numero di scritture su ciascuna cella di memoria è limitato.
-- **Vantaggi**: Velocità di lettura e scrittura elevate, miglioramento delle prestazioni complessive del sistema, maggiore durata in condizioni di utilizzo normale.
-- **Svantaggi**: Costo per gigabyte più elevato rispetto agli HDD.
-
-#### 6.2.3 Unità Ibride (SSHD - Solid State Hybrid Drive)
-- **Descrizione**: Combinano un HDD tradizionale con una piccola quantità di memoria SSD. Usano l'SSD per archiviare i dati più frequentemente usati, migliorando le prestazioni rispetto a un HDD puro.
-- **Caratteristiche**:
-  - **Capacità**: Simile agli HDD, ma con una piccola porzione (tipicamente 8-16 GB) dedicata alla memoria SSD.
-  - **Velocità**: Migliore rispetto agli HDD, specialmente per l'accesso ai dati più utilizzati.
-  - **Durata**: Combina i vantaggi di durata dell'HDD con i tempi di accesso più rapidi dell'SSD.
-- **Vantaggi**: Compromesso tra velocità e capacità a un costo contenuto.
-- **Svantaggi**: Non raggiunge le prestazioni di un SSD puro.
-
-#### 6.2.4 Dispositivi Ottici
-- **Descrizione**: Utilizzano supporti fisici come CD, DVD o Blu-ray per l'archiviazione dei dati.
-- **Caratteristiche**:
-  - **Capacità**: Fino a 700 MB per i CD, 4,7-8,5 GB per i DVD e fino a 100 GB per i Blu-ray.
-  - **Velocità**: Relativamente bassa rispetto agli HDD e agli SSD.
-  - **Durata**: I supporti ottici sono soggetti a degrado fisico e graffi, che possono comprometterne l'integrità.
-- **Vantaggi**: Ideali per l'archiviazione a lungo termine e la distribuzione di software e contenuti multimediali.
-- **Svantaggi**: Capacità e velocità limitate, uso ridotto nei dispositivi moderni.
-
-#### 6.2.5 Unità USB e Schede di Memoria
-- **Descrizione**: Dispositivi portatili basati su memoria flash utilizzati per il trasferimento e l'archiviazione temporanea di dati.
-- **Caratteristiche**:
-  - **Capacità**: Da pochi gigabyte a oltre un terabyte.
-  - **Velocità**: Varia a seconda dello standard (USB 2.0, 3.0, 3.1) ma comunque più lenta di una memoria interna.
-  - **Durata**: Buona resistenza agli urti e all'uso frequente.
-- **Vantaggi**: Portabilità e facilità d'uso.
-- **Svantaggi**: Facilmente smarribili e, a volte, soggetti a usura della memoria flash.
-
-### 6.3 Importanza della Memoria Secondaria
-La memoria secondaria è essenziale per il funzionamento del computer, poiché consente di immagazzinare in modo permanente il sistema operativo, i programmi e i dati degli utenti. Senza memoria secondaria, il computer perderebbe tutte le informazioni al momento dello spegnimento e sarebbe impossibile eseguire operazioni a lungo termine.
-
-### 6.4 Gerarchia della Memoria
-Nel sistema informatico, la memoria è organizzata in una gerarchia, dove la RAM è più vicina alla CPU e più veloce, mentre la memoria secondaria è più lenta ma offre una capacità molto maggiore. La gestione efficiente di questa gerarchia è fondamentale per ottimizzare le prestazioni complessive del sistema.
+| **Tipo di memoria** | **Velocità** | **Capacità** | **Volatilità** |
+| ------------------- | ------------ | ------------ | -------------- |
+| Cache (CPU)         | Altissima    | Molto bassa  | Volatile       |
+| RAM                 | Molto alta   | Media        | Volatile       |
+| Memoria secondaria  | Bassa        | Molto alta   | Non volatile   |
+Il computer utilizza queste memorie in modo strategico:
+* La **CPU lavora con la cache e la RAM**, per avere sempre dati pronti.
+* Quando serve conservare qualcosa a lungo, lo scrive sulla **memoria secondaria**.
+Una **gestione efficiente di questa gerarchia** è essenziale per avere un computer veloce, stabile e capace di lavorare su grandi quantità di dati.
 ## 7. La Scheda Video
+### 7.1 Che cos’è la scheda video
+La **scheda video**, chiamata anche **GPU (Graphics Processing Unit)**, è il componente del computer che si occupa di **gestire tutto ciò che viene visualizzato sullo schermo**.
+Quando apriamo una finestra, guardiamo un video, giochiamo o usiamo un programma di grafica, è la scheda video che si occupa di **trasformare i dati digitali in immagini**, calcolando in tempo reale ciò che deve comparire sul monitor.
 
-### 7.1 Cos'è la Scheda Video
-La **scheda video**, nota anche come GPU (Graphics Processing Unit) o scheda grafica, è un componente hardware del computer dedicato all'elaborazione e alla gestione delle immagini e dei video. La sua funzione principale è quella di convertire i dati digitali elaborati dalla CPU in segnali visivi che possono essere visualizzati sul monitor. È fondamentale per attività che richiedono una grafica avanzata, come la progettazione grafica, i videogiochi e l'elaborazione video.
-
-### 7.2 Funzioni Principali della Scheda Video
-- **Rendering Grafico**: La scheda video elabora le immagini e i video da visualizzare, occupandosi del rendering 2D e 3D. Questo include la gestione di ombre, luci, texture e animazioni complesse.
-- **Accelerazione Hardware**: Migliora le prestazioni di applicazioni che richiedono un'alta potenza di calcolo grafico, come software di editing video, modellazione 3D e simulazioni.
-- **Elaborazione Parallela**: Le GPU sono progettate per eseguire calcoli in parallelo, rendendole molto efficienti per operazioni che richiedono l'elaborazione simultanea di grandi quantità di dati, come il machine learning e l'intelligenza artificiale.
-
-### 7.3 Componenti Principali di una Scheda Video
-- **GPU (Graphics Processing Unit)**: Il processore grafico che esegue i calcoli necessari per il rendering delle immagini.
-- **VRAM (Video RAM)**: Memoria ad alta velocità utilizzata per immagazzinare dati grafici come texture, modelli 3D e framebuffer. Una maggiore quantità di VRAM consente alla scheda video di gestire immagini più complesse e a risoluzioni più elevate.
-- **Output Video**: Porte di connessione (HDMI, DisplayPort, DVI, VGA) che permettono di collegare la scheda video ai monitor e ad altri dispositivi di visualizzazione.
-- **Raffreddamento**: Sistemi di raffreddamento, come ventole e dissipatori, per mantenere la GPU a temperature operative sicure durante l'elaborazione grafica intensiva.
-
-### 7.4 Schede Video Dedicata vs. Integrata
-Esistono due principali tipologie di schede video:
-
-1. **Scheda Video Dedicata**:
-   - È un componente autonomo, separato dalla scheda madre, con una propria GPU e VRAM.
-   - Offre prestazioni grafiche superiori, essendo progettata specificamente per l'elaborazione grafica.
-   - Ideale per giochi, progettazione grafica, rendering 3D e altre applicazioni ad alte prestazioni.
-
-2. **Scheda Video Integrata**:
-   - È integrata nella CPU o nella scheda madre e condivide la memoria RAM del sistema.
-   - Ha prestazioni grafiche inferiori rispetto alle schede video dedicate, ma consuma meno energia e produce meno calore.
-   - Adatta per attività quotidiane come la navigazione web, la riproduzione di video e l'uso di applicazioni di produttività.
-
-Le **schede video integrate** sono spesso utilizzate nei computer portatili e nei PC di fascia bassa o media, dove l'efficienza energetica e il costo sono più importanti delle prestazioni grafiche. Sebbene non siano ideali per applicazioni che richiedono molta potenza di calcolo grafico, le moderne GPU integrate, come quelle delle famiglie Intel UHD o AMD Radeon Vega, sono sufficientemente potenti per supportare la riproduzione video ad alta definizione, il rendering grafico di base e alcuni giochi leggeri.
+---
+### 7.2 A cosa serve
+La scheda video ha tre funzioni principali:
+1. **Visualizzazione delle immagini**
+   Mostra tutto quello che vediamo sullo schermo: desktop, finestre, scritte, video, animazioni...
+2. **Elaborazione grafica avanzata**
+   È indispensabile per applicazioni che richiedono molta potenza grafica, come videogiochi, software 3D, programmi di editing video o modellazione.
+3. **Calcolo parallelo**
+   Le GPU moderne possono eseguire calcoli complessi su **grandi quantità di dati in parallelo**, e per questo vengono usate anche in settori come l’intelligenza artificiale e la ricerca scientifica.
+---
+### 7.3 Com’è fatta una scheda video
+Una scheda video è composta da:
+* **GPU (Graphics Processing Unit)**: è il vero “processore” grafico, che esegue i calcoli per generare le immagini.
+* **VRAM (Video RAM)**: è una memoria veloce dedicata, dove vengono salvati temporaneamente dati grafici come texture, modelli 3D, fotogrammi ecc.
+* **Uscite video**: porte come HDMI, DisplayPort o VGA per collegare il monitor.
+* **Sistema di raffreddamento**: ventole o dissipatori per evitare il surriscaldamento della GPU durante le operazioni più pesanti.
+---
+### 7.4 Scheda video dedicata o integrata?
+Esistono due tipi principali di schede video:
+1. **Scheda video integrata**
+   * È integrata nella CPU o nella scheda madre.
+   * Usa parte della RAM del sistema.
+   * Consuma poca energia e va bene per attività quotidiane: navigazione, video, documenti.
+2. **Scheda video dedicata**
+   * È un componente separato con una GPU e VRAM proprie.
+   * Offre prestazioni molto più alte.
+   * Serve per videogiochi, grafica professionale, simulazioni, AI.
+---
+### 7.5 Quando serve una scheda video potente?
+Una **scheda video dedicata** è utile se si usano applicazioni che richiedono molta potenza grafica, come:
+* Videogiochi con grafica avanzata,
+* Montaggio video ad alta risoluzione,
+* Disegno e modellazione 3D,
+* Progetti di intelligenza artificiale o calcolo scientifico.
+Per uso scolastico o da ufficio, invece, una **GPU integrata è più che sufficiente**.
 ## 8. La Scheda Madre e il Bus di Sistema
+### 8.1 Cos’è la scheda madre
+La **scheda madre** (in inglese *motherboard*) è il componente centrale che tiene insieme tutto il computer.
+È una **grande piastra elettronica** su cui vengono montati tutti gli altri componenti: la CPU, la RAM, la scheda video, il disco, le porte USB e così via.
+La possiamo immaginare come una **centrale di collegamento**: ogni parte del computer comunica con le altre passando proprio per la scheda madre.
 
-### 8.1 Cos'è la Scheda Madre
-La **scheda madre** (o motherboard) è il principale circuito stampato di un computer, che ospita e connette tra loro tutti i componenti essenziali del sistema. È il centro di comunicazione e gestione dell'hardware, permettendo a CPU, RAM, scheda video, dispositivi di archiviazione e periferiche di interagire tra loro in modo coordinato.
+---
+### 8.2 Cosa contiene la scheda madre
+Sulla scheda madre si trovano vari elementi fondamentali:
+* **Socket della CPU**: è l’alloggiamento dove si inserisce il processore.
+* **Slot per la RAM**: servono per montare i moduli di memoria.
+* **Chipset**: è un insieme di circuiti che gestisce la comunicazione tra CPU, memoria e periferiche.
+* **Slot di espansione (PCIe)**: per collegare schede aggiuntive come la scheda video, la scheda di rete o SSD di tipo NVMe.
+* **Connettori per l’alimentazione**: ricevono corrente dall’alimentatore per distribuire energia ai componenti.
+* **Porte di collegamento (USB, audio, rete, HDMI ecc.)**: per connettere dispositivi esterni.
+* **Connettori per dischi e unità ottiche**: come SATA e M.2, usati per collegare hard disk e SSD.
+* **Chip BIOS/UEFI**: contiene il firmware che gestisce l’avvio del computer.
+Tutti questi elementi lavorano insieme grazie a un sistema di comunicazione interno chiamato **bus**.
+---
+### 8.3 Cos’è il bus di sistema
+Il **bus** è il **sistema di linee elettriche** che consente ai vari componenti del computer di scambiarsi informazioni.
+Possiamo immaginarlo come **una rete di strade** all’interno del computer: i dati viaggiano attraverso queste “corsie” per passare da un componente all’altro.
 
-### 8.2 Componenti Principali della Scheda Madre
-1. **Socket della CPU**: Alloggiamento per il processore (CPU). Il tipo di socket determina quali modelli di CPU possono essere installati sulla scheda madre.
+---
+### 8.5 Perché la scheda madre è così importante?
+La scheda madre è essenziale perché:
+* **Collega tutti i componenti** del computer tra loro.
+* **Gestisce il flusso di informazioni** tra le varie parti.
+* **Distribuisce energia elettrica** ricevuta dall’alimentatore.
+* Contiene il BIOS/UEFI, che permette al computer di **avviarsi e riconoscere l’hardware**.
+In pratica, **nessun componente può funzionare da solo**: tutti devono essere montati su una scheda madre compatibile e comunicare tra loro tramite il bus.
+## 9. Le Periferiche di Input e Output
+### 9.1 Cosa sono le periferiche di input e output
+Le **periferiche** sono tutti quei dispositivi che permettono al computer di **interagire con l’esterno**.
+Si dividono principalmente in due categorie:
+* **Periferiche di input**: servono per **inserire dati nel computer** (ad esempio scrivere, muovere il cursore, acquisire immagini o suoni).
+* **Periferiche di output**: servono per **ricevere un risultato dal computer**, cioè visualizzare, stampare o ascoltare quello che il sistema ha elaborato.
+Senza periferiche, il computer non potrebbe comunicare con l’utente, e quindi non sarebbe utilizzabile.
+---
+### 9.2 Periferiche di input (dati in ingresso)
+Sono tutti i dispositivi che ci permettono di **inviare comandi o informazioni** al computer. Ecco i più comuni:
+* **Tastiera**: per scrivere testi e comandi.
+* **Mouse**: per spostare il cursore, cliccare, selezionare.
+* **Touchpad**: alternativa al mouse, usata nei portatili.
+* **Microfono**: per registrare la voce o altri suoni.
+* **Scanner**: per digitalizzare immagini e documenti cartacei.
+* **Webcam**: per catturare video o fare videoconferenze.
+* **Lettori di codici a barre o RFID**: usati in negozi o magazzini per leggere informazioni velocemente.
+---
+### 9.3 Periferiche di output (dati in uscita)
+Sono i dispositivi che ci permettono di **vedere, sentire o ricevere** i risultati delle elaborazioni del computer. I principali sono:
+* **Monitor**: mostra immagini, testi, video e l’interfaccia grafica.
+* **Stampante**: permette di ottenere una copia cartacea dei documenti digitali.
+* **Altoparlanti o cuffie**: riproducono l’audio elaborato dal computer (musica, video, notifiche, ecc.).
+* **Proiettore**: visualizza l’immagine su una superficie più grande, utile per presentazioni o lezioni.
+---
+### 9.4 Periferiche ibride (input/output)
+Esistono anche dispositivi che fanno **sia da input che da output**, ovvero che **scambiano informazioni in entrambe le direzioni**. Ecco alcuni esempi:
+* **Schermo touchscreen**: mostra le immagini (output), ma risponde anche al tocco (input).
+* **Stampante multifunzione**: stampa (output), ma può anche scannerizzare e fotocopiare (input).
+* **Pen tablet**: usata dai grafici per disegnare direttamente su uno schermo o una superficie sensibile al tocco.
+---
+### 9.5 Perché sono importanti?
+Le periferiche sono fondamentali perché permettono all’utente di:
+* **controllare il computer** (input),
+* **vedere i risultati del lavoro** (output),
+* **interagire in modo semplice e diretto** con software e contenuti.
+In altre parole, rendono il computer **utilizzabile** nella vita quotidiana, a scuola, al lavoro o nel tempo libero.
+---
+## 10. L’Alimentatore
+### 10.1 Cos’è l’alimentatore
+L’**alimentatore**, chiamato in inglese **PSU (Power Supply Unit)**, è il **componente che fornisce energia elettrica** a tutte le parti del computer.
+È essenziale perché senza di lui **nessun componente potrebbe accendersi o funzionare**.
+Possiamo immaginarlo come il "cuore energetico" del sistema: prende corrente dalla presa di casa e la trasforma in una forma adatta per i circuiti interni del computer.
 
-2. **Slot di Memoria (RAM)**: Slot per l'installazione dei moduli di memoria RAM. Il numero e il tipo di slot determinano la quantità e il tipo di RAM supportata.
-
-3. **Chipset**: Insieme di circuiti integrati che gestisce la comunicazione tra la CPU, la memoria e i dispositivi di I/O. Il chipset è responsabile di determinare molte delle funzionalità della scheda madre, come il supporto per le porte USB, SATA, PCIe e altre interfacce.
-
-4. **Slot di Espansione**: Slot PCIe (Peripheral Component Interconnect Express) utilizzati per installare schede aggiuntive, come schede video, schede audio, schede di rete e SSD NVMe.
-
-5. **Porte di Input/Output (I/O)**: Porte situate sul retro della scheda madre per connettere dispositivi esterni come mouse, tastiere, monitor, dispositivi USB e cavi di rete.
-
-6. **Connettori di Alimentazione**: Connettori che forniscono energia alla scheda madre e ai suoi componenti, come il connettore ATX principale e quello per la CPU.
-
-7. **BIOS/UEFI**: Chip di memoria che contiene il firmware di base del sistema, utilizzato per avviare il computer e configurare le impostazioni hardware.
-
-8. **Connettori SATA e M.2**: Utilizzati per collegare dispositivi di archiviazione come hard disk, SSD e unità ottiche.
-
-### 8.3 Funzioni della Scheda Madre
-La scheda madre ha il compito di:
-
-- **Connessione e Comunicazione**: Collegare e far comunicare tutti i componenti del computer attraverso il bus di sistema e altri collegamenti.
-- **Gestione dell'Energia**: Distribuire energia elettrica ai componenti attraverso il circuito di alimentazione.
-- **Configurazione e Controllo**: Permettere la configurazione dell'hardware tramite il BIOS/UEFI e controllare l'avvio del sistema.
-
-### 8.4 Il Bus di Sistema
-
-#### 8.4.1 Cos'è il Bus di Sistema
-Il **bus di sistema** è un insieme di percorsi fisici (linee elettriche) sulla scheda madre che permette la comunicazione tra i vari componenti del computer, come CPU, memoria e dispositivi di input/output. Il bus trasporta dati, indirizzi e segnali di controllo tra le varie parti del sistema.
-
-#### 8.4.2 Tipologie di Bus
-1. **Bus Dati**:
-   - Trasporta i dati tra la CPU e gli altri componenti.
-   - La sua larghezza, misurata in bit (ad esempio, 32 o 64 bit), determina la quantità di dati che possono essere trasferiti simultaneamente.
-
-2. **Bus degli Indirizzi**:
-   - Trasporta gli indirizzi di memoria, indicando dove i dati devono essere letti o scritti.
-   - La larghezza del bus degli indirizzi determina la quantità massima di memoria indirizzabile.
-
-3. **Bus di Controllo**:
-   - Trasporta segnali di controllo e comandi per coordinare le operazioni dei vari componenti del sistema, come lettura/scrittura di memoria o comunicazione con periferiche.
-
-#### 8.4.3 Tipi di Bus sulla Scheda Madre
-1. **Bus di Sistema (Front Side Bus - FSB)**:
-   - Collegava tradizionalmente la CPU al chipset della scheda madre, in particolare al Northbridge. Questo bus era responsabile della comunicazione tra la CPU, la RAM e altri componenti ad alta velocità.
-   - Nelle architetture moderne, il FSB è stato sostituito da collegamenti diretti come il bus DMI (Direct Media Interface) o HyperTransport.
-
-2. **Bus PCIe (Peripheral Component Interconnect Express)**:
-   - Utilizzato per collegare schede di espansione ad alta velocità come schede video, schede di rete e SSD NVMe.
-   - Offre una comunicazione diretta con la CPU e il chipset, permettendo velocità di trasferimento dati molto elevate.
-
-3. **Bus SATA**:
-   - Utilizzato per collegare dispositivi di archiviazione come hard disk, SSD e unità ottiche alla scheda madre.
-   - Permette la trasmissione dei dati tra questi dispositivi e il sistema.
-
-4. **Bus USB**:
-   - Consente la comunicazione tra il computer e le periferiche esterne come mouse, tastiere, stampanti e unità di memoria esterne.
-## 9. Periferiche di Input e Output
-
-### 9.1 Cosa Sono le Periferiche di Input e Output
-Le **periferiche di input e output** (I/O) sono dispositivi che consentono al computer di interagire con il mondo esterno, permettendo agli utenti di inserire dati nel sistema (input) e di ricevere informazioni elaborate dal sistema (output). Queste periferiche sono essenziali per l'utilizzo quotidiano del computer e possono variare da dispositivi semplici, come tastiere e monitor, a sistemi più complessi, come scanner e stampanti 3D.
-
-### 9.2 Periferiche di Input
-Le periferiche di input sono dispositivi utilizzati per immettere dati e comandi nel computer. Ecco i principali tipi:
-
-1. **Tastiera**:
-   - Consente di inserire dati alfanumerici e comandi attraverso i tasti.
-   - Può includere tasti aggiuntivi per funzioni specifiche, come tasti multimediali o tasti di scelta rapida.
-
-2. **Mouse**:
-   - Dispositivo di puntamento che permette di muovere un cursore sullo schermo e di selezionare elementi tramite clic.
-   - Può essere dotato di funzionalità aggiuntive come tasti laterali, rotella di scorrimento e sensori ottici o laser.
-
-3. **Touchpad**:
-   - Superficie sensibile al tocco utilizzata come alternativa al mouse, comunemente presente nei computer portatili.
-   - Permette di muovere il cursore e di eseguire azioni attraverso gesti tattili.
-
-4. **Scanner**:
-   - Dispositivo che digitalizza documenti cartacei o immagini, trasformandoli in file digitali.
-   - Utilizzato per archiviare documenti o elaborare immagini grafiche.
-
-5. **Microfono**:
-   - Permette di inserire input audio nel sistema, utilizzato per registrare suoni, comunicazioni vocali o per applicazioni di riconoscimento vocale.
-
-6. **Fotocamera/Webcam**:
-   - Dispositivo di acquisizione video utilizzato per scattare fotografie, registrare video o partecipare a videoconferenze.
-
-7. **Dispositivi di Puntamento Avanzati**:
-   - Comprendono tavolette grafiche, joystick, trackball e altri dispositivi specializzati per applicazioni di disegno, giochi e modellazione 3D.
-
-8. **Scanner di Codici a Barre e Lettori RFID**:
-   - Utilizzati per la lettura di codici a barre o tag RFID, comuni in applicazioni commerciali e di gestione inventariale.
-
-### 9.3 Periferiche di Output
-Le periferiche di output permettono di visualizzare, ascoltare o ottenere informazioni elaborate dal computer. I principali dispositivi includono:
-
-1. **Monitor**:
-   - Dispositivo di visualizzazione che mostra l'interfaccia utente grafica e i contenuti elaborati dal computer.
-   - I monitor variano per dimensioni, risoluzione e tecnologie di visualizzazione (LCD, LED, OLED).
-
-2. **Stampante**:
-   - Dispositivo che trasforma i documenti digitali in copie cartacee.
-   - Esistono vari tipi di stampanti, come quelle a getto d'inchiostro, laser e 3D, utilizzate per scopi specifici.
-
-3. **Altoparlanti e Cuffie**:
-   - Trasformano i segnali audio digitali in suoni udibili.
-   - Utilizzati per ascoltare musica, film, comunicazioni vocali o segnali di sistema.
-
-4. **Plotter**:
-   - Dispositivo di output utilizzato per la stampa di disegni tecnici e grafici su larga scala.
-   - Comuni in ambiti come l'ingegneria e l'architettura.
-
-5. **Proiettore**:
-   - Dispositivo che proietta immagini o video su una superficie più ampia, come uno schermo o una parete.
-   - Utilizzato in presentazioni, conferenze e ambienti educativi.
-
-### 9.4 Periferiche Ibride (Input/Output)
-Esistono anche periferiche che combinano le funzionalità di input e output in un unico dispositivo:
-
-- **Touchscreen**:
-  - Consente di visualizzare informazioni e, contemporaneamente, di interagire con il sistema tramite il tocco.
-  - Utilizzato comunemente in smartphone, tablet, bancomat e schermi interattivi.
-
-- **Stampanti Multifunzionali**:
-  - Combina le funzionalità di stampa (output), scansione (input) e copia in un unico dispositivo.
-  - Utilizzata in uffici e ambienti domestici per gestire varie esigenze documentali.
-## 10. L'Alimentatore
-
-### 10.1 Cos'è l'Alimentatore
-L’**alimentatore** (PSU - Power Supply Unit) è un componente essenziale del computer che converte la corrente elettrica proveniente dalla rete elettrica in energia utilizzabile per alimentare i vari componenti del sistema. È responsabile di fornire la giusta quantità di energia elettrica, con le tensioni e i livelli di potenza appropriati, per garantire il funzionamento corretto e stabile del computer.
-
-### 10.2 Funzioni dell'Alimentatore
-L’alimentatore svolge diverse funzioni cruciali per il corretto funzionamento del sistema:
-
-1. **Conversione della Corrente Alternata (AC) in Corrente Continua (DC)**:
-   - La corrente elettrica fornita dalle prese domestiche è in corrente alternata (AC), mentre i componenti interni del computer richiedono corrente continua (DC). L'alimentatore converte la corrente AC in DC con diversi livelli di tensione (tipicamente 3.3V, 5V e 12V).
-
-2. **Distribuzione dell’Energia**:
-   - Fornisce energia a tutti i componenti del computer, inclusi la scheda madre, il processore (CPU), la scheda video (GPU), le unità di archiviazione e le periferiche.
-
-3. **Protezione dei Componenti**:
-   - L'alimentatore offre protezione contro sovratensioni, sovraccarichi e cortocircuiti, evitando danni ai componenti interni del computer.
-
-### 10.3 Caratteristiche Principali dell'Alimentatore
-1. **Potenza Nominale (Watt)**:
-   - La potenza di un alimentatore è espressa in watt (W) e rappresenta la quantità massima di energia che può fornire al sistema. Un alimentatore deve avere una potenza sufficiente per supportare tutti i componenti del computer. Ad esempio, un PC per ufficio potrebbe necessitare di 300-400 W, mentre un PC da gaming o workstation potrebbe richiedere 600-1000 W o più.
-
-2. **Efficienza Energetica**:
-   - L'efficienza di un alimentatore indica quanto della potenza prelevata dalla rete viene effettivamente convertita in energia utilizzabile, mentre il resto viene disperso sotto forma di calore. Un alimentatore efficiente riduce il consumo energetico e il calore prodotto. Gli alimentatori certificati **80 PLUS** garantiscono un'efficienza minima dell'80% a vari carichi di lavoro.
-
-3. **Form Factor**:
-   - Indica le dimensioni e la compatibilità dell'alimentatore con il case del computer. Il formato più comune è l’**ATX**, ma esistono anche formati più piccoli, come il **SFX**, utilizzati per PC compatti.
-
-4. **Connettori**:
-   - Gli alimentatori sono dotati di diversi connettori per alimentare i vari componenti:
-     - **Connettore ATX a 24 pin**: Fornisce energia alla scheda madre.
-     - **Connettore EPS a 4/8 pin**: Alimenta la CPU.
-     - **Connettori PCIe a 6/8 pin**: Utilizzati per alimentare le schede grafiche dedicate.
-     - **Connettori SATA e Molex**: Per dischi rigidi, SSD, unità ottiche e altre periferiche.
-
-### 10.4 Tipologie di Alimentatori
-1. **Alimentatori Non Modulari**:
-   - Tutti i cavi sono collegati permanentemente all'alimentatore. Sono meno costosi, ma possono risultare ingombranti all'interno del case, poiché i cavi non necessari non possono essere rimossi.
-
-2. **Alimentatori Semi-Modulari**:
-   - Alcuni cavi, come il connettore principale della scheda madre e della CPU, sono fissi, mentre altri (per esempio i cavi PCIe e SATA) possono essere collegati o scollegati secondo necessità. Offrono un compromesso tra gestione dei cavi e prezzo.
-
-3. **Alimentatori Modulari**:
-   - Tutti i cavi possono essere collegati o scollegati in base alle esigenze del sistema. Questo facilita la gestione dei cavi e migliora il flusso d'aria all'interno del case, rendendo più ordinato l'interno del computer.
-
-### 10.5 Importanza dell'Alimentatore nelle Prestazioni del Sistema
-Un alimentatore di buona qualità è fondamentale per garantire la stabilità e la sicurezza del sistema. Un alimentatore sottodimensionato o di bassa qualità può causare problemi di stabilità, spegnimenti improvvisi e persino danneggiare i componenti. Inoltre, un alimentatore con un'efficienza energetica elevata contribuisce a ridurre i costi energetici e a mantenere temperature più basse all'interno del case.
-
-### 10.6 Scelta dell'Alimentatore
-La scelta dell'alimentatore deve basarsi sulle esigenze del sistema, considerando la potenza richiesta dai componenti e le eventuali necessità future (come upgrade di schede video o aggiunta di periferiche). È consigliabile scegliere un alimentatore con una potenza leggermente superiore a quella necessaria per garantire una certa flessibilità e sicurezza.
+---
+### 10.2 A cosa serve
+L’alimentatore ha tre compiti principali:
+1. **Trasformare la corrente**
+   La corrente elettrica che arriva dalle prese domestiche è in **corrente alternata (AC)**.
+   I componenti del computer, invece, funzionano con **corrente continua (DC)**.
+   L’alimentatore **converte la corrente** da AC a DC e fornisce le giuste tensioni (come 3.3V, 5V, 12V) per ciascun componente.
+2. **Distribuire l’energia**
+   Fornisce energia a:
+   * CPU,
+   * scheda madre,
+   * scheda video,
+   * dischi,
+   * ventole,
+   * periferiche collegate internamente.
+3. **Proteggere il sistema**
+   Gli alimentatori moderni includono **sistemi di protezione** contro:
+   * sovratensioni (troppa corrente),
+   * cortocircuiti,
+   * surriscaldamenti.
+     Questo evita danni ai componenti del computer.
+---
+### 10.3 Caratteristiche principali
+Ecco cosa considerare quando si parla di alimentatori:
+* **Potenza (Watt)**
+  Indica quanta energia può fornire.
+  Per un PC base possono bastare 300–400 W; per un PC da gaming o con scheda video potente possono servire anche 600–800 W o più.
+* **Efficienza**
+  Un alimentatore **efficiente** consuma meno energia e produce meno calore.
+  Gli alimentatori certificati **80 PLUS** garantiscono almeno l’80% di efficienza energetica.
+* **Compatibilità (formato)**
+  Il formato più comune è l’**ATX**, usato nella maggior parte dei case.
+  Esistono anche formati più piccoli per PC compatti.
+* **Connettori**
+  L’alimentatore ha diversi cavi, ognuno con un connettore specifico, per alimentare:
+  * la scheda madre (24 pin),
+  * la CPU (4/8 pin),
+  * la scheda video (6/8 pin PCIe),
+  * i dischi e le periferiche (connettori SATA o Molex).
+---
+### 10.4 Tipi di alimentatori
+Ci sono tre categorie principali:
+* **Non modulari**
+  Tutti i cavi sono fissi. Sono economici, ma possono creare confusione e ingombro all’interno del case.
+* **Semi-modulari**
+  Alcuni cavi sono fissi, altri si possono collegare solo se servono. Offrono più ordine e flessibilità.
+* **Modulari**
+  Tutti i cavi sono separati e si collegano solo quelli necessari.
+  Ideali per una **gestione ordinata dei cavi** e un **flusso d’aria migliore**.
+---
+### 10.5 Perché è importante scegliere bene l’alimentatore?
+Un buon alimentatore:
+* **assicura la stabilità del sistema**,
+* **evita spegnimenti improvvisi o danni ai componenti**,
+* **dura a lungo**,
+* **riduce consumi e rumori**.
+È uno dei componenti **più sottovalutati**, ma **più importanti** per garantire che il computer funzioni bene, in modo sicuro e affidabile nel tempo.
+---
 ## 11. Il Case del Computer
+### 11.1 Cos’è il case
+Il **case** è l’**involucro esterno** che contiene tutti i componenti interni del computer.
+Oltre ad avere una funzione **strutturale** e **protettiva**, il case è importante anche per il **raffreddamento**, l’**organizzazione dei cavi** e la **facilità di accesso ai componenti**.
+Possiamo immaginarlo come **la “scatola” del computer**, ma progettata con attenzione per garantire che tutto funzioni nel modo migliore possibile.
 
-### 11.1 Cos'è il Case
-Il **case** (o cabinet) è l'involucro esterno che ospita e protegge tutti i componenti interni del computer, come la scheda madre, l'alimentatore, la CPU, la RAM, le unità di archiviazione e le periferiche di espansione. Oltre a fornire una struttura fisica per il montaggio dei componenti, il case ha anche il compito di gestire il flusso d'aria per il raffreddamento e di proteggere il sistema da polvere e danni fisici.
-
-### 11.2 Funzioni del Case
-Le principali funzioni del case sono:
-
-1. **Protezione e Struttura**:
-   - Fornisce una struttura robusta per il montaggio e il supporto dei vari componenti interni.
-   - Protegge i componenti da polvere, urti e altri fattori ambientali che potrebbero danneggiarli.
-
-2. **Gestione del Raffreddamento**:
-   - Consente l'installazione di ventole e sistemi di raffreddamento (ad aria o a liquido) per mantenere i componenti alla giusta temperatura durante il funzionamento.
-   - Una buona gestione del flusso d'aria all'interno del case è essenziale per prevenire il surriscaldamento dei componenti.
-
-3. **Organizzazione dei Componenti e dei Cavi**:
-   - Offre slot e alloggiamenti per installare in modo ordinato la scheda madre, le unità di archiviazione, le schede di espansione e altre periferiche.
-   - Dispone di canali e ganci per una corretta gestione dei cavi, migliorando il flusso d'aria e l'estetica interna.
-
-4. **Accessibilità e Espansione**:
-   - Permette un facile accesso ai componenti interni per eventuali aggiornamenti, sostituzioni o manutenzioni.
-   - Offre slot e alloggiamenti per l'aggiunta di ulteriori dispositivi di archiviazione, schede di espansione e periferiche.
-
-### 11.3 Tipologie di Case
-
-1. **Full Tower**:
-   - **Dimensioni**: I più grandi, con un'altezza di circa 50-60 cm o più.
-   - **Uso**: Ideali per build avanzate che richiedono molti slot di espansione, schede grafiche grandi, sistemi di raffreddamento a liquido e numerose unità di archiviazione.
-   - **Caratteristiche**: Ampio spazio per una gestione ordinata dei cavi e un flusso d'aria ottimale.
-
-2. **Mid Tower**:
-   - **Dimensioni**: Dimensioni standard, con un'altezza di circa 40-50 cm.
-   - **Uso**: Adatti per la maggior parte dei computer desktop, con spazio sufficiente per configurazioni di gioco e lavoro.
-   - **Caratteristiche**: Buon compromesso tra spazio interno, gestione del raffreddamento e facilità d'uso.
-
-3. **Mini Tower**:
-   - **Dimensioni**: Più piccoli dei mid tower, con un'altezza di circa 35-40 cm.
-   - **Uso**: Ideali per sistemi compatti con esigenze di espansione limitate, come PC da ufficio o HTPC (Home Theater PC).
-   - **Caratteristiche**: Minore spazio per componenti e gestione del raffreddamento, ma più compatti e facili da collocare.
-
-4. **Small Form Factor (SFF) e Mini-ITX**:
-   - **Dimensioni**: Molto compatti, progettati per schede madri mini-ITX.
-   - **Uso**: Perfetti per build compatte, come PC da salotto, sistemi di intrattenimento domestico o build portatili.
-   - **Caratteristiche**: Limitate possibilità di espansione e raffreddamento, ma ottima portabilità e design compatto.
-
-### 11.4 Caratteristiche Importanti del Case
-
-1. **Compatibilità con Schede Madri**:
-   - I case supportano diverse dimensioni di schede madri, come ATX, micro-ATX, mini-ITX. La compatibilità dipende dalle dimensioni del case e dai fori di montaggio interni.
-
-2. **Gestione del Raffreddamento**:
-   - Spazi per l'installazione di ventole (frontali, superiori, posteriori) e radiatori per il raffreddamento a liquido.
-   - Filtro antipolvere per mantenere l'interno del case pulito e prevenire l'accumulo di polvere sui componenti.
-
-3. **Slot di Espansione**:
-   - Slot per schede grafiche, schede audio e altre periferiche.
-   - Bay per unità da 3,5" e 2,5" per dischi rigidi e SSD.
-
-4. **Gestione dei Cavi**:
-   - Canali e ganci interni per il passaggio ordinato dei cavi.
-   - Pannello posteriore per nascondere i cavi e mantenere un aspetto ordinato.
-
-5. **Porte Frontali**:
-   - Porte USB, jack audio e pulsanti di accensione posizionati sul pannello frontale o superiore per un facile accesso.
-
-6. **Design e Estetica**:
-   - Finestra laterale in vetro temperato o acrilico per mostrare i componenti interni.
-   - Illuminazione RGB integrata per un aspetto estetico personalizzato.
-
-### 11.5 Importanza del Case nella Costruzione del PC
-La scelta del case è fondamentale per la costruzione di un PC ben bilanciato. Un case adeguato consente di ospitare tutti i componenti in modo sicuro e ordinato, garantendo un buon flusso d'aria e riducendo i rischi di surriscaldamento. Inoltre, la gestione dei cavi e l'accessibilità interna facilitano l'installazione e la manutenzione del sistema.
+---
+### 11.2 A cosa serve il case
+Il case ha diversi compiti fondamentali:
+* **Proteggere** i componenti interni da polvere, urti e agenti esterni.
+* **Sostenere e organizzare** fisicamente tutti i componenti (scheda madre, dischi, alimentatore, schede di espansione...).
+* **Gestire il raffreddamento** grazie alla presenza di griglie, ventole, prese d’aria o supporti per raffreddamento a liquido.
+* **Facilitare l’accesso** ai componenti in caso di manutenzione o aggiornamenti.
+* **Permettere l’espansione**, con spazi e slot per aggiungere altri dischi, schede o periferiche.
+Un buon case **non è solo estetica**, ma contribuisce alla **stabilità, efficienza e durata** del sistema.
+---
+### 11.3 Tipi di case
+I case possono avere **dimensioni diverse**, a seconda del tipo di computer e delle esigenze dell’utente.
+Ecco i principali formati:
+* **Full Tower**
+  Grandi dimensioni, ideali per chi vuole **tanti componenti**, **molte ventole** o sistemi di **raffreddamento a liquido**.
+  Adatto a configurazioni professionali o gaming di alto livello.
+* **Mid Tower**
+  Formato più comune nei PC domestici e da ufficio.
+  Offre un buon equilibrio tra **spazio interno**, **ventilazione** e **costo**.
+* **Mini Tower**
+  Più compatto, adatto a sistemi semplici, spesso usato in uffici.
+  Meno spazio per espansioni o grandi schede video.
+* **Small Form Factor / Mini-ITX**
+  Case molto piccoli, progettati per occupare poco spazio.
+  Ottimi per computer da salotto o postazioni compatte, ma più difficili da assemblare.
+---
+### 11.4 Caratteristiche da considerare
+Quando si sceglie un case, è importante valutare:
+* **Compatibilità con la scheda madre** (es. ATX, micro-ATX, mini-ITX).
+* **Spazio per dischi, schede e alimentatore**.
+* **Ventole già incluse o supporto per sistemi di raffreddamento**.
+* **Porte frontali comode** (USB, audio, pulsanti).
+* **Sistema di gestione dei cavi** per mantenere l’interno ordinato.
+* **Presenza di filtri antipolvere** per evitare accumulo di sporcizia.
+* **Design**: alcuni case hanno **finestre trasparenti** e **illuminazione RGB**, apprezzati in ambito gaming o per postazioni personalizzate.
+---
+### 11.5 Perché il case è importante?
+Anche se a volte è sottovalutato, il case:
+* **protegge l’hardware**,
+* **favorisce il raffreddamento**, evitando surriscaldamenti,
+* **rende più facile la manutenzione** e gli aggiornamenti,
+* **influenzando il funzionamento generale del sistema**.
+Un buon case può **prolungare la vita del computer** e rendere l’esperienza d’uso più comoda e ordinata.
