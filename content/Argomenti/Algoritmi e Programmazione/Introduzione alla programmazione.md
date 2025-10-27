@@ -1291,7 +1291,7 @@ Stampa ciao all'infinito.
 #### Cicli Indeterminati
 Un ciclo è detto **indeterminato** quando **non si conosce a priori quante volte sarà ripetuto**. In questi casi, il numero di iterazioni dipende da condizioni valutate **durante l’esecuzione** del programma, ad esempio in base a un input dell’utente o a un evento esterno.
 I cicli indeterminati si implementano con le strutture `while` e `do-while`.
-#### Il ciclo `while`
+#### Il ciclo `while` (ciclo pre-condizionale)
 Il ciclo `while` **valuta la condizione prima** di ogni iterazione. Se la condizione è falsa sin dall’inizio, **il ciclo non viene eseguito nemmeno una volta**.
 #### Sintassi
 ```cpp
@@ -1315,7 +1315,7 @@ int main() {
 ```
 > [!warning] Nota
 > In questo esempio ho inizializzato la variabile numero a 3 per essere sicuro di entrare nel ciclo (poiché alla prima iterazione `3 != 5` è vero). Se non inizializzo la variabile, alcuni linguaggi di programmazione la inizializzano automaticamente a 0, altri a 1, altri con numeri completamente casuali a seconda dell'indirizzo di memoria. Prova con diversi linguaggi di programmazione e prova a stampare una variabile non inizializzata per vedere cosa succede!
-#### Il ciclo `do-while`
+#### Il ciclo `do-while` (ciclo post-condizionale)
 Il ciclo `do-while` esegue il blocco **almeno una volta**, poiché la condizione viene valutata **dopo** l’esecuzione del blocco.
 #### Sintassi
 ```cpp
@@ -1387,7 +1387,7 @@ int main() {
 ```
 
 > [!exercise] Esercizio
-> Riesci a usare la variabile scelta dopo che sei uscito dal ciclo? Come mai? Approfondisci sugli "scopes" delle variabili per avere una risposta.
+> Riesci a usare la variabile `scelta` dopo che sei uscito dal ciclo? Come mai? Approfondisci sugli "scopes" delle variabili per avere una risposta.
 
 **Il comando `continue`**  
 `continue` interrompe l'iterazione corrente e salta direttamente alla successiva. È utile quando voglio ignorare il resto del blocco di codice per una determinata condizione, ma continuare il ciclo.
@@ -4041,7 +4041,7 @@ In C++ il singolo nodo viene rappresentato da questa struct:
 struct cell {
     int valore;
     cell* next;
-};
+};valore
 ```
 
 Grazie a questa struttura, le liste mi permettono di allocare un singolo nodo e aggiungerlo, senza dover riall:
