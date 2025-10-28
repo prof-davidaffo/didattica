@@ -1420,6 +1420,7 @@ int main() {
 >    Scrivi un programma che chiede all’utente di inserire un numero intero e stampa la sua tabellina (moltiplicazione da 1 a 10).
 >3. **Indovina il numero**  
    Scrivi un programma che genera un numero casuale tra 1 e 100. L'utente deve indovinarlo inserendo numeri finché non trova quello corretto. Dopo ogni tentativo, il programma deve dire se il numero inserito è più alto o più basso di quello da indovinare. 
+   Per generare un numero casuale, prova a cercare sulla documentazione di C++ come si fa.
 >4. **Numero primo**  
    Scrivi un programma che chiede all'utente di inserire un numero intero e verifica se è un numero primo. 
 >5. **Fibonacci**  

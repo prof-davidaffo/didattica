@@ -149,3 +149,52 @@ for (let i = 0; i < prices.length; i++) {
 Riscrivilo in forma **pura** usando `map()` e memorizzando il risultato in un nuovo array `updatedPrices`.
 Poi usa `reduce()` per calcolare il totale con IVA.
 Il codice finale non deve modificare `prices`.
+## Progetto Finale – Mini Data Processor
+### Obiettivo
+Realizzare un piccolo programma che gestisca un insieme di dati (ad esempio prodotti, studenti o transazioni) **solo tramite funzioni, metodi e operazioni funzionali**, senza cicli tradizionali e senza modificare i dati originali.
+### Descrizione generale
+Crea un file `dataProcessor.js` che contenga:
+1. **Una struttura dati di partenza**
+   Un array di oggetti, ad esempio:
+   ```js
+   const products = [
+     { name: "Laptop", price: 1200, category: "tech" },
+     { name: "Book", price: 18, category: "media" },
+     { name: "Headphones", price: 80, category: "tech" },
+     { name: "Shirt", price: 25, category: "clothing" }
+   ]
+   ```
+2. **Funzioni pure per la trasformazione dei dati**
+   * `addTax(product)` → restituisce un nuovo oggetto con il prezzo aumentato del 22%.
+   * `isExpensive(product)` → restituisce `true` se il prezzo è superiore a 100.
+   * `toLabel(product)` → restituisce una stringa formattata come `"[CATEGORIA] Nome - Prezzo €"`.
+3. **Uso di metodi funzionali**
+   * Usa `map()` per creare una nuova lista di prodotti con l’IVA applicata.
+   * Usa `filter()` per estrarre solo i prodotti “costosi”.
+   * Usa `reduce()` per calcolare il costo totale dei prodotti filtrati.
+4. **Composizione di funzioni**
+   Crea una funzione `processProducts(products)` che combini tutti i passaggi precedenti, restituendo un oggetto finale come:
+   ```js
+   {
+     labels: [ "TECH Laptop - 1464 €", "TECH Headphones - 97.6 €" ],
+     total: 1561.6
+   }
+   ```
+5. **Oggetto con metodi**
+   Trasforma il programma in un oggetto `store` con metodi:
+   ```js
+   const store = {
+     products,
+     process: processProducts,
+     showSummary() {
+       const result = this.process(this.products)
+       console.log(result.labels.join("\n"))
+       console.log("Totale con IVA:", result.total.toFixed(2))
+     }
+   }
+   ```
+   Invoca `store.showSummary()` per visualizzare l’intero flusso di lavoro.
+6. **Callback opzionale**
+   Modifica `processProducts` per accettare una `callback` che riceva il risultato finale e lo stampi o lo salvi in un formato diverso (ad esempio JSON).
+7. **Estensione**
+   Aggiungi un metodo `store.sortByPrice(order)` che ordini i prodotti in base al prezzo, restituendo un nuovo array ordinato senza modificare quello originale.
