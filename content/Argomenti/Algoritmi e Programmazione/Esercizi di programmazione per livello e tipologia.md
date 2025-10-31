@@ -121,6 +121,8 @@ Chiedi all'utente di inserire il prezzo di base di un prodotto, se il prodotto �
 ### Livello base
 #### Calcolare la media di n numeri letti da input
 Calcolare la media di n numeri letti da input, creare due varianti diverse, una col for e una col while o do-while.
+Nella variante col for, l'utente inserisce di quanti numeri vuole calcolare la media.
+Nella variante con while o do-while, l'utente inserisce numeri finché non inserisce il numero zero.
 #### Lettere maiuscole
 Leggere lettere maiuscole finché l’utente non inserisce un carattere non maiuscolo e stampare la più piccola.
 #### Stampare una successione di numeri con una determinata regola

@@ -129,7 +129,7 @@ Cosa fa il programma? ******____******
 
 Un flag unidirezionale è un booleano che può essere cambiata una sola volta, dopodiché non può più essere riportata al suo valore originale (è "write once").
 
-```
+```python
 s = "Michael Lodi"
 spazio = False
 vocali = 0

@@ -1,7 +1,7 @@
 > [!NOTE] Autore
 > Prof. Davide Daffonchio
 
-[Link presentazione](https://docs.google.com/presentation/d/1aBNYJZ9HyPZonN_9MnN7NLFhceVMKJPE/edit?usp=drive_link&ouid=103341316635969317945&rtpof=true&sd=true)
+[Link presentazione](https://docs.google.com/presentation/d/1oZlxYLJkscpnFcrheKkZLPpG6Ln6lLCk/edit?usp=sharing&ouid=102881143012561131974&rtpof=true&sd=true)
 ## 1. Che cos’è un computer e a cosa serve
 ### 1.1 Che cos’è un computer
 Un computer è una macchina progettata per ricevere informazioni, elaborarle secondo istruzioni precise e restituire un risultato. Possiamo immaginarlo come uno strumento intelligente capace di “pensare in automatico”, cioè di seguire una sequenza di comandi per compiere operazioni anche molto complesse, senza bisogno di intervento umano continuo.

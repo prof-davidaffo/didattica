@@ -2,9 +2,6 @@
 > Prof. Davide Daffonchio
 > Alcuni appunti e immagini dei circuiti reali sono tratti da [edutecnica.it]()
 
-## Indice
-```table-of-contents
-```
 ## Capitolo 1: Tabelle di verità e circuiti logici
 ###  Introduzione di base
 
@@ -342,17 +339,19 @@ $= \overline AA+\overline AB+\overline C+BC =$ *svolta moltiplicazione*
 $= \overline AB+\overline C+BC=$ *per il teorema dei complementi*
 $= \overline AB+\overline C+B=$ *per il secondo teorema dell'assorbimento*
 $=B+\overline C$ *per il primo teorema dell'assorbimento*
-### Mappe di Karnough
-Le mappe di Karnough (o **Karnaugh maps**, K-map) sono uno strumento grafico per la semplificazione delle espressioni booleane. Ogni mappa è una tabella che rappresenta visivamente tutte le combinazioni possibili dei valori delle variabili di ingresso.  
+### Mappe di Karnaugh
+Le mappe di Karnaugh (o **Karnaugh maps**, K-map) sono uno strumento grafico per la semplificazione delle espressioni booleane. Ogni mappa è una tabella che rappresenta visivamente tutte le combinazioni possibili dei valori delle variabili di ingresso.  
 La disposizione delle celle segue l’ordine del **Gray code**, in modo che celle adiacenti differiscano per una sola variabile, facilitando l’individuazione di gruppi di 1 adiacenti.
 Sono particolarmente comode in quanto sono più veloci da utilizzare rispetto alle classiche minimizzazioni algebriche, ma solo se:
 - Conosco a priori i valori di verità dell'espressione o li posso facilmente calcolare
 - Non ho espressioni troppo complesse (di solito fino a 4 proposizioni)
-#### Procedura operativa per l’uso delle mappe di Karnough
+
+#### Procedura operativa per l’uso delle mappe di karnaugh
 1. **Identificare le variabili**
    Conta quante variabili ha la funzione booleana e assegna un simbolo a ciascuna (es. A, B, C...).
 2. **Disegnare la mappa**
    Costruisci una tabella con 2^n celle. Usa intestazioni in **Gray code** per garantire che celle adiacenti differiscano per una sola variabile.
+   Attenzione quindi, quando scrivo le intestazioni, che ad esempio da 01 si passa a 11 e non 10, in quanto deve cambiare 1 bit solo e non 2 per permettere alla mappa di funzionare correttamente.
 3. **Compilare la mappa**
    Inserisci in ciascuna cella il valore della funzione:
    * 1 se la funzione è vera in quella combinazione
@@ -362,7 +361,7 @@ Sono particolarmente comode in quanto sono più veloci da utilizzare rispetto al
    * Cerca gruppi di 1 adiacenti in potenze di 2 (1, 2, 4, 8...).
    * Puoi includere le celle con X nei gruppi, trattandole come 1 se servono a ottenere gruppi più grandi e una forma più semplice.
    * Ogni gruppo deve essere **il più grande possibile**.
-   * I gruppi possono sovrapporsi: uno stesso 1 (o X) può appartenere a più gruppi.
+   * I gruppi possono sovrapporsi: uno stesso 1 (o X) può appartenere a più gruppi se questo mi permette di avere gruppi più grandi per gli elementi che sono rimasti esclusi.
    * Puoi raggruppare celle ai bordi opposti della mappa (adiacenza toroidale).
 5. **Scrivere i prodotti semplificati**
    Per ciascun gruppo:
@@ -373,7 +372,63 @@ Sono particolarmente comode in quanto sono più veloci da utilizzare rispetto al
    * Combina le variabili costanti con l’operazione AND (·).
 6. **Combinare i prodotti**
    Somma (OR, indicato con +) tutti i prodotti ottenuti dai gruppi per formare l’espressione minimizzata.
-#### Esempi
+#### Esempio 1 – Mappa di Karnaugh a 2 variabili
+
+Tabella di verità della funzione:
+
+|  A  |  B  |  Y  |
+| :-: | :-: | :-: |
+|  0  |  0  |  0  |
+|  0  |  1  |  1  |
+|  1  |  0  |  1  |
+|  1  |  1  |  1  |
+
+Mappa di Karnaugh (2×2):
+
+| **A\B** | **0** | **1** |
+| :-----: | :---: | :---: |
+|  **0**  |   0   |   1   |
+|  **1**  |   1   |   1   |
+
+Raggruppamenti:
+
+* Un gruppo da 2 (celle A=1, B=0–1) → A
+* Un gruppo da 2 (celle B=1, A=0–1) → B
+  Espressione semplificata:
+  ( Y = A + B )
+
+---
+
+#### Esempio 2 – Mappa di Karnaugh a 3 variabili
+
+Tabella di verità della funzione:
+
+|  **A**  |  **B**  |  **C**  |  **Y**  |
+| :-: | :-: | :-: | :-: |
+|  0  |  0  |  0  |  0  |
+|  0  |  0  |  1  |  1  |
+|  0  |  1  |  0  |  1  |
+|  0  |  1  |  1  |  1  |
+|  1  |  0  |  0  |  0  |
+|  1  |  0  |  1  |  1  |
+|  1  |  1  |  0  |  0  |
+|  1  |  1  |  1  |  1  |
+
+Mappa (disposizione in Gray code per B e C: 00, 01, 11, 10):
+
+| **C\AB** | **00** | **01** | **11** | **10** |
+| :------: | :----: | :----: | :----: | :----: |
+|  **0**   |   0    |   1    |   0    |   0    |
+|  **1**   |   1    |   1    |   1    |   1    |
+
+Raggruppamenti:
+
+* Gruppo orizzontale da 4 (riga C=1) → C
+* Gruppo verticale da 2 (colonna AB=01) → ¬A·B
+  Espressione semplificata:
+  ( Y = C + ¬A·B )
+
+#### Altri Esempi
 *Fonte immagini: https://www.youtube.com/watch?v=qx90H7Kqh9w - Elisabetta Vannucchi*
 ##### 2 variabili
 ![[mappe_k_2.png]]

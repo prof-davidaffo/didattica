@@ -1291,7 +1291,7 @@ Stampa ciao all'infinito.
 #### Cicli Indeterminati
 Un ciclo è detto **indeterminato** quando **non si conosce a priori quante volte sarà ripetuto**. In questi casi, il numero di iterazioni dipende da condizioni valutate **durante l’esecuzione** del programma, ad esempio in base a un input dell’utente o a un evento esterno.
 I cicli indeterminati si implementano con le strutture `while` e `do-while`.
-#### Il ciclo `while`
+#### Il ciclo `while` (ciclo pre-condizionale)
 Il ciclo `while` **valuta la condizione prima** di ogni iterazione. Se la condizione è falsa sin dall’inizio, **il ciclo non viene eseguito nemmeno una volta**.
 #### Sintassi
 ```cpp
@@ -1315,7 +1315,7 @@ int main() {
 ```
 > [!warning] Nota
 > In questo esempio ho inizializzato la variabile numero a 3 per essere sicuro di entrare nel ciclo (poiché alla prima iterazione `3 != 5` è vero). Se non inizializzo la variabile, alcuni linguaggi di programmazione la inizializzano automaticamente a 0, altri a 1, altri con numeri completamente casuali a seconda dell'indirizzo di memoria. Prova con diversi linguaggi di programmazione e prova a stampare una variabile non inizializzata per vedere cosa succede!
-#### Il ciclo `do-while`
+#### Il ciclo `do-while` (ciclo post-condizionale)
 Il ciclo `do-while` esegue il blocco **almeno una volta**, poiché la condizione viene valutata **dopo** l’esecuzione del blocco.
 #### Sintassi
 ```cpp
@@ -1387,7 +1387,7 @@ int main() {
 ```
 
 > [!exercise] Esercizio
-> Riesci a usare la variabile scelta dopo che sei uscito dal ciclo? Come mai? Approfondisci sugli "scopes" delle variabili per avere una risposta.
+> Riesci a usare la variabile `scelta` dopo che sei uscito dal ciclo? Come mai? Approfondisci sugli "scopes" delle variabili per avere una risposta.
 
 **Il comando `continue`**  
 `continue` interrompe l'iterazione corrente e salta direttamente alla successiva. È utile quando voglio ignorare il resto del blocco di codice per una determinata condizione, ma continuare il ciclo.
@@ -1420,6 +1420,7 @@ int main() {
 >    Scrivi un programma che chiede all’utente di inserire un numero intero e stampa la sua tabellina (moltiplicazione da 1 a 10).
 >3. **Indovina il numero**  
    Scrivi un programma che genera un numero casuale tra 1 e 100. L'utente deve indovinarlo inserendo numeri finché non trova quello corretto. Dopo ogni tentativo, il programma deve dire se il numero inserito è più alto o più basso di quello da indovinare. 
+   Per generare un numero casuale, prova a cercare sulla documentazione di C++ come si fa.
 >4. **Numero primo**  
    Scrivi un programma che chiede all'utente di inserire un numero intero e verifica se è un numero primo. 
 >5. **Fibonacci**  
@@ -3995,18 +3996,17 @@ Il `std::vector` è uno strumento potente per la gestione dinamica della memoria
 > 	    int FindPos(const PhoneBook& r, string S);
 > 	    ```
 > 	    
-> 	    che, utilizzando la ricerca binaria, abbia il seguente comportamento:
+> 	    che abbia il seguente comportamento:
 > 	    - Se nella rubrica esiste un contatto `C` il cui campo `C.Surname` è uguale all’argomento `S`, allora restituisca l’indice di tale contatto nella rubrica (ossia nel vettore).
-> 	    - Se nella rubrica non esiste un contatto `C` il cui campo `C.Surname` è uguale all’argomento `S`, allora restituisca l’indice del contatto che sarebbe quello immediatamente precedente in ordine alfabetico.  
-> 	        ***SUGGERIMENTO:** Ricordate che la ricerca binaria assume che il vettore sia ordinato.*
-> 	7. **Scrivere una funzione**:
+> 	    - -1 altrimenti
+> 	1. **Scrivere una funzione**:
 > 	    
 > 	    ```cpp
 > 	    void Shift_PhoneBook(PhoneBook& B, int pos);
 > 	    ```
 > 	    
 > 	    che incrementa di un elemento la dimensione del vettore `B` e poi sposta a destra di un elemento tutti gli elementi a partire dalla posizione `pos + 1`.
-> 	8. **Scrivere la funzione**:
+> 	2. **Scrivere la funzione**:
 > 	    
 > 	    ```cpp
 > 	    bool add_ord(PhoneBook& B, string surname, string name, int phoneNumber);
@@ -4016,7 +4016,7 @@ Il `std::vector` è uno strumento potente per la gestione dinamica della memoria
 > 	    
 > 	    ***SUGGERIMENTO:** Assumendo che la rubrica sia ordinata, usare la funzione `FindPos` per ottenere la posizione immediatamente precedente a quella in cui il contatto andrebbe inserito, seguita dalle funzioni `Shift_PhoneBook` e una assegnazione.*
 > 	
-> 	9. **Rendere il programma interattivo:** 
+> 	3. **Rendere il programma interattivo:** 
 > 		Ora potete rendere il programma interattivo, ad esempio utilizzando uno switch per accedere alle varie funzioni e gestire la rubrica.
 
 ---
@@ -4041,7 +4041,7 @@ In C++ il singolo nodo viene rappresentato da questa struct:
 struct cell {
     int valore;
     cell* next;
-};
+};valore
 ```
 
 Grazie a questa struttura, le liste mi permettono di allocare un singolo nodo e aggiungerlo, senza dover riall:
