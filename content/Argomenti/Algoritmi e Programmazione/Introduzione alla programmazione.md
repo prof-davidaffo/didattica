@@ -3996,18 +3996,17 @@ Il `std::vector` è uno strumento potente per la gestione dinamica della memoria
 > 	    int FindPos(const PhoneBook& r, string S);
 > 	    ```
 > 	    
-> 	    che, utilizzando la ricerca binaria, abbia il seguente comportamento:
+> 	    che abbia il seguente comportamento:
 > 	    - Se nella rubrica esiste un contatto `C` il cui campo `C.Surname` è uguale all’argomento `S`, allora restituisca l’indice di tale contatto nella rubrica (ossia nel vettore).
-> 	    - Se nella rubrica non esiste un contatto `C` il cui campo `C.Surname` è uguale all’argomento `S`, allora restituisca l’indice del contatto che sarebbe quello immediatamente precedente in ordine alfabetico.  
-> 	        ***SUGGERIMENTO:** Ricordate che la ricerca binaria assume che il vettore sia ordinato.*
-> 	7. **Scrivere una funzione**:
+> 	    - -1 altrimenti
+> 	1. **Scrivere una funzione**:
 > 	    
 > 	    ```cpp
 > 	    void Shift_PhoneBook(PhoneBook& B, int pos);
 > 	    ```
 > 	    
 > 	    che incrementa di un elemento la dimensione del vettore `B` e poi sposta a destra di un elemento tutti gli elementi a partire dalla posizione `pos + 1`.
-> 	8. **Scrivere la funzione**:
+> 	2. **Scrivere la funzione**:
 > 	    
 > 	    ```cpp
 > 	    bool add_ord(PhoneBook& B, string surname, string name, int phoneNumber);
@@ -4017,7 +4016,7 @@ Il `std::vector` è uno strumento potente per la gestione dinamica della memoria
 > 	    
 > 	    ***SUGGERIMENTO:** Assumendo che la rubrica sia ordinata, usare la funzione `FindPos` per ottenere la posizione immediatamente precedente a quella in cui il contatto andrebbe inserito, seguita dalle funzioni `Shift_PhoneBook` e una assegnazione.*
 > 	
-> 	9. **Rendere il programma interattivo:** 
+> 	3. **Rendere il programma interattivo:** 
 > 		Ora potete rendere il programma interattivo, ad esempio utilizzando uno switch per accedere alle varie funzioni e gestire la rubrica.
 
 ---

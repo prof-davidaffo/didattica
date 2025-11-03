@@ -1,6 +1,3 @@
-# Index
-```table-of-contents
-```
 # Utilizzo per le lezioni
 Questo documento funziona come dispensa. Tuttavia per fare lezione si utilizzerà un approccio inverso. Ovvero verranno mostrati agli alunni uno alla volta i codici con gli smell, si faranno dei ragionamenti su questo codice discutendo con la classe, facendo proporre varie idee e soluzioni. Dopodiché allora si mostrerà la definizione dello smell e l'esempio di refactoring.
 

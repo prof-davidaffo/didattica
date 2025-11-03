@@ -1,40 +1,41 @@
 ## 11.1 Functions ARE Variables
-1. **Funzione come valore**
-   Scrivi una funzione `sayHello(name)` che stampi “Hello, [name]”. Assegnala poi a una variabile `greet` e invoca `greet("Alice")`.
-2. **Funzione passata come parametro**
-   Scrivi una funzione `execute(fn)` che riceve una funzione e la esegue. Passale una funzione che stampi un messaggio personalizzato.
-3. **Funzione restituita da un’altra funzione**
-   Scrivi una funzione `makeAdder(n)` che restituisca una nuova funzione che somma `n` al valore ricevuto.
-   Esempio:
+
+1. **Funzione come valore**  
+    Scrivi una funzione `sayHello(name)` che stampi `"Hello, [name]"`. Assegnala poi a una variabile `greet` e invoca `greet("Alice")`.
+2. **Funzione anonima assegnata a variabile**  
+    Crea una funzione anonima che riceve un parametro `x` e stampi `x * x`. Assegnala a una variabile `square` e testala con un numero a tua scelta.
+3. **Alias di funzione**  
+    Scrivi una funzione `sayHi()` che stampi `"Hi!"`. Assegna la funzione a una nuova variabile `shout` e invoca `shout()` senza ridefinirla.
+4. **Verifica del tipo di una funzione**  
+    Dichiarata la funzione `sayHello`, stampa in console il risultato di `typeof sayHello`. Che tipo restituisce?
+5. **Passaggio di funzione come parametro**  
+    Scrivi una funzione `execute(fn)` che riceve una funzione come argomento e la esegue. Passale una funzione anonima che stampi `"Executing!"`.
+6. **Funzione restituita da un’altra funzione**  
+    Crea una funzione `makeAdder(n)` che restituisca una nuova funzione che somma `n` al numero ricevuto come parametro.  
+    Esempio:
+
 ```js
 const addFive = makeAdder(5)
 console.log(addFive(10)) // 15
 ```
-4. **Alias e riferimenti**
-   Crea una funzione `shout(msg)` che stampi il messaggio in maiuscolo. Poi scrivi:
-```js
-const loud = shout
-loud("hey")
-```
-Spiega con un commento nel codice perché `loud` e `shout` fanno riferimento alla stessa funzione.
-5. **Differenza tra `fn` e `fn()`**
-   Scrivi:
-```js
-function hello() { console.log("hi") }
-const a = hello
-const b = hello()
-console.log(a, b)
-```
-Spiega nel codice perché `a` contiene la funzione e `b` contiene il suo risultato.
-6. **Funzione che gestisce più operazioni**
-   Scrivi una funzione `applyOperations(value, ...operations)` che riceve un numero e una serie di funzioni da applicare in sequenza.
-   Esempio:
-```js
-function double(x) { return x * 2 }
-function addOne(x) { return x + 1 }
-console.log(applyOperations(3, double, addOne)) // 7
-```
-L’esercizio unisce i concetti di funzione come valore, parametro e risultato.
+
+7. **Funzione come elemento di array**  
+    Crea un array `actions` contenente tre funzioni anonime: una che stampi `"A"`, una che stampi `"B"` e una che stampi `"C"`. Invoca la seconda funzione.
+8. **Funzione come valore di oggetto**  
+    Crea un oggetto `mathOps` con due proprietà:
+
+- `add`: funzione che somma due numeri
+- `multiply`: funzione che moltiplica due numeri  
+    Usa le due funzioni tramite `mathOps.add(2,3)` e `mathOps.multiply(2,3)`.
+
+9. **Uso di funzione anonima immediata (IIFE)**  
+    Scrivi una funzione anonima immediatamente invocata che stampi `"IIFE executed!"`.
+10. **Differenza di hoisting**  
+    Scrivi due versioni della stessa funzione `foo()`:
+
+- una come dichiarazione di funzione (`function foo() { ... }`)
+- una come funzione anonima assegnata a variabile (`let foo = function() { ... }`)  
+    Invocale entrambe prima della loro definizione e spiega cosa accade.
 ## 11.2 Object Functions
 1. **Metodi di un oggetto**
    Crea un oggetto `counter` con una proprietà `count` inizializzata a 0 e un metodo `increment()` che aumenti `count` di 1 ogni volta che viene chiamato. Stampa il valore aggiornato dopo ogni chiamata.

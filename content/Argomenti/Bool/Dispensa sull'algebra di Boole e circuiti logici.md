@@ -351,6 +351,7 @@ Sono particolarmente comode in quanto sono più veloci da utilizzare rispetto al
    Conta quante variabili ha la funzione booleana e assegna un simbolo a ciascuna (es. A, B, C...).
 2. **Disegnare la mappa**
    Costruisci una tabella con 2^n celle. Usa intestazioni in **Gray code** per garantire che celle adiacenti differiscano per una sola variabile.
+   Attenzione quindi, quando scrivo le intestazioni, che ad esempio da 01 si passa a 11 e non 10, in quanto deve cambiare 1 bit solo e non 2 per permettere alla mappa di funzionare correttamente.
 3. **Compilare la mappa**
    Inserisci in ciascuna cella il valore della funzione:
    * 1 se la funzione è vera in quella combinazione
@@ -360,7 +361,7 @@ Sono particolarmente comode in quanto sono più veloci da utilizzare rispetto al
    * Cerca gruppi di 1 adiacenti in potenze di 2 (1, 2, 4, 8...).
    * Puoi includere le celle con X nei gruppi, trattandole come 1 se servono a ottenere gruppi più grandi e una forma più semplice.
    * Ogni gruppo deve essere **il più grande possibile**.
-   * I gruppi possono sovrapporsi: uno stesso 1 (o X) può appartenere a più gruppi.
+   * I gruppi possono sovrapporsi: uno stesso 1 (o X) può appartenere a più gruppi se questo mi permette di avere gruppi più grandi per gli elementi che sono rimasti esclusi.
    * Puoi raggruppare celle ai bordi opposti della mappa (adiacenza toroidale).
 5. **Scrivere i prodotti semplificati**
    Per ciascun gruppo:
@@ -386,8 +387,8 @@ Mappa di Karnaugh (2×2):
 
 | **A\B** | **0** | **1** |
 | :-----: | :---: | :---: |
-|    **0**    |   0   |   1   |
-|    **1**    |   1   |   1   |
+|  **0**  |   0   |   1   |
+|  **1**  |   1   |   1   |
 
 Raggruppamenti:
 
@@ -415,17 +416,17 @@ Tabella di verità della funzione:
 
 Mappa (disposizione in Gray code per B e C: 00, 01, 11, 10):
 
-| **A\BC** | **00** | **01** | **11** | **10** |
+| **C\AB** | **00** | **01** | **11** | **10** |
 | :------: | :----: | :----: | :----: | :----: |
-|    **0**     |   0    |   1    |   1    |   1    |
-|    **1**     |   0    |   1    |   1    |   0    |
+|  **0**   |   0    |   1    |   0    |   0    |
+|  **1**   |   1    |   1    |   1    |   1    |
 
 Raggruppamenti:
 
-* Gruppo orizzontale da 4 (riga A=0) → ¬A
-* Gruppo verticale da 2 (colonna BC=01) → ¬B·C
+* Gruppo orizzontale da 4 (riga C=1) → C
+* Gruppo verticale da 2 (colonna AB=01) → ¬A·B
   Espressione semplificata:
-  ( Y = ¬A + ¬B·C )
+  ( Y = C + ¬A·B )
 
 #### Altri Esempi
 *Fonte immagini: https://www.youtube.com/watch?v=qx90H7Kqh9w - Elisabetta Vannucchi*
