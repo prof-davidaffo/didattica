@@ -4,13 +4,11 @@
     Scrivi una funzione `sayHello(name)` che stampi `"Hello, [name]"`. Assegnala poi a una variabile `greet` e invoca `greet("Alice")`.
 2. **Funzione anonima assegnata a variabile**  
     Crea una funzione anonima che riceve un parametro `x` e stampi `x * x`. Assegnala a una variabile `square` e testala con un numero a tua scelta.
-3. **Alias di funzione**  
-    Scrivi una funzione `sayHi()` che stampi `"Hi!"`. Assegna la funzione a una nuova variabile `shout` e invoca `shout()` senza ridefinirla.
-4. **Verifica del tipo di una funzione**  
+3. **Verifica del tipo di una funzione**  
     Dichiarata la funzione `sayHello`, stampa in console il risultato di `typeof sayHello`. Che tipo restituisce?
-5. **Passaggio di funzione come parametro**  
+4. **Passaggio di funzione come parametro**  
     Scrivi una funzione `execute(fn)` che riceve una funzione come argomento e la esegue. Passale una funzione anonima che stampi `"Executing!"`.
-6. **Funzione restituita da un’altra funzione**  
+5. **Funzione restituita da un’altra funzione**  
     Crea una funzione `makeAdder(n)` che restituisca una nuova funzione che somma `n` al numero ricevuto come parametro.  
     Esempio:
 
@@ -28,9 +26,7 @@ console.log(addFive(10)) // 15
 - `multiply`: funzione che moltiplica due numeri  
     Usa le due funzioni tramite `mathOps.add(2,3)` e `mathOps.multiply(2,3)`.
 
-9. **Uso di funzione anonima immediata (IIFE)**  
-    Scrivi una funzione anonima immediatamente invocata che stampi `"IIFE executed!"`.
-10. **Differenza di hoisting**  
+9. **Differenza di hoisting**  
     Scrivi due versioni della stessa funzione `foo()`:
 
 - una come dichiarazione di funzione (`function foo() { ... }`)
