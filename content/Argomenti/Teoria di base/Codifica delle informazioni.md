@@ -1361,6 +1361,7 @@ Questi numeri permettono la **continuità vicino allo zero**, evitando un salto 
 > 	- $0.125$
 > 	- $-0.5$
 > 	- $1.5$
+> 
 > Decodifica IEEE 754 (32 bit):
 > 	- `0 10000001 01000000000000000000000`
 > 	- `1 10000000 10000000000000000000000`
