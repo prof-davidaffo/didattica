@@ -152,6 +152,7 @@ Scrivere un programma che preso in input un numero in base 10 lo trasformi in bi
 Scrivere un programma che chiede all'utente il suo colore preferito proponendo almeno 5 scelte di colori che iniziano con lettere diverse. Il colore viene scelto dall'utente con l'iniziale del colore, è indifferente se la lettera inserita è minuscola o maiuscola. Se la lettera inserita non corrisponde a nessun colore, il programma ricomincia da capo.
 #### Giocare più mani di morra cinese
 Scrivere un programma che faccia giocare più mani di morra cinese e che chieda agli utenti se vogliono continuare o no dopo ogni mano. Stampare ogni volta il punteggio dei due giocatori e quando si termina stampare il vincitore.
+Posso anche considerare un giocatore solo che gioca contro il computer.
 #### Trapezio di x
 Scrivere un programma che legge due numeri interi positivi e stampa il trapezio rettangolo fatto di `x` con le basi lunghe quanto i numeri letti, e l'altezza pari alla differenza fra le basi più uno. Esempio con 5 e 9:
 ```
