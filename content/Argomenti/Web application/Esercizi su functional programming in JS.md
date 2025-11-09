@@ -52,6 +52,58 @@ console.log(addFive(10)) // 15
 ```js
 player.addPoints(10).penalty(3).summary()
 ```
+
+### Project – Dog Shelter Manager
+Scrivi un programma JavaScript per simulare la gestione di un rifugio per cani. L’obiettivo è esercitarsi con **oggetti, metodi, `this`, e interazioni tra funzioni e array di oggetti**.
+#### Specifiche
+1. Crea un oggetto `shelter` che rappresenti il rifugio. Deve contenere:
+   * una proprietà `dogs`, inizialmente un array vuoto
+   * un metodo `addDog(dog)` che aggiunge un nuovo cane all’array
+   * un metodo `listDogs()` che mostra in console tutti i cani con nome e razza
+   * un metodo `feedAll()` che richiama il metodo `eat()` su ciascun cane
+   * un metodo `playAll()` che richiama il metodo `play()` su ciascun cane
+2. Crea una **funzione costruttrice `Dog(name, breed, age)`** o una **factory function** che restituisca oggetti cane con:
+   * proprietà `name`, `breed`, `age`, `energy` (valore iniziale 100)
+   * metodo `bark()` che stampa `${this.name} barks loudly!`
+   * metodo `eat()` che aumenta `energy` di 10 (max 100) e stampa lo stato aggiornato
+   * metodo `play()` che riduce `energy` di 20 e stampa lo stato aggiornato
+     Se l’energia è sotto 20, il cane rifiuta di giocare e “barks sadly”.
+3. Aggiungi al prototipo (o alla factory) un metodo `status()` che restituisca una stringa con tutte le informazioni del cane:
+   `"Rex (Labrador, 4 years old) – Energy: 80"`
+4. Crea almeno **5 cani diversi** e aggiungili al rifugio con `shelter.addDog()`.
+5. Simula una giornata nel rifugio:
+   * Mostra tutti i cani (`listDogs()`)
+   * Falli giocare (`playAll()`)
+   * Falli mangiare (`feedAll()`)
+   * Mostra di nuovo i loro stati aggiornati.
+#### Extra (livello avanzato)
+* Aggiungi un metodo `findDogByName(name)` che restituisce il cane corrispondente.
+* Implementa un metodo `adopt(name)` che rimuove il cane dall’array e mostra un messaggio come `"Luna has been adopted!"`.
+* Aggiungi una proprietà `isAdopted` che cambia stato dopo l’adozione.
+* Gestisci i casi di errore (es. adozione di cane inesistente).
+* Usa `this` in modo corretto in tutti i metodi, anche all’interno di callback come `forEach`.
+#### Esempio di output
+```
+*** Dogs in the shelter ***
+Rex (Labrador, 4 years old) – Energy: 100
+Luna (Mutt, 2 years old) – Energy: 100
+Spot (Beagle, 5 years old) – Energy: 100
+*** Playing time ***
+Rex barks loudly!
+Rex plays and now has 80 energy.
+Luna barks loudly!
+Luna plays and now has 80 energy.
+Spot barks loudly!
+Spot plays and now has 80 energy.
+*** Feeding time ***
+Rex eats happily and now has 90 energy.
+Luna eats happily and now has 90 energy.
+Spot eats happily and now has 90 energy.
+*** Adoption ***
+Luna has been adopted!
+Dogs remaining: Rex, Spot
+```
+
 ## 11.3 Callback Functions
 1. **Callback semplice**
    Scrivi una funzione `doTwice(callback)` che esegua due volte la funzione passata come argomento. Provala passando una funzione che stampi un messaggio.
