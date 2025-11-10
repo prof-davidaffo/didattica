@@ -1,3 +1,5 @@
+Certo, ecco una versione più lunga dell'esercitazione:
+
 **Esercitazione guidata di Linux per studenti di terza superiore**
 
 **Obiettivo:**
@@ -91,3 +93,5 @@ Questa esercitazione è un ottimo modo per iniziare a insegnare agli studenti l'
     
 - Il programma dovrebbe essere composto da una sola funzione, che stampa il messaggio.
     
+
+Questi sono solo alcuni suggerimenti per rendere l'esercitazione più lunga e coinvolgente. Puoi adattare l'esercitazione in base alle esigenze dei tuoi studenti e al tuo livello di esperienza.
