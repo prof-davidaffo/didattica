@@ -372,92 +372,110 @@ Sono particolarmente comode in quanto sono più veloci da utilizzare rispetto al
    * Combina le variabili costanti con l’operazione AND (·).
 6. **Combinare i prodotti**
    Somma (OR, indicato con +) tutti i prodotti ottenuti dai gruppi per formare l’espressione minimizzata.
-#### Esempio 1 – Mappa di Karnaugh a 2 variabili
-
+#### Mappa di Karnaugh a 2 variabili
 Tabella di verità della funzione:
 
-|  A  |  B  |  Y  |
-| :-: | :-: | :-: |
-|  0  |  0  |  0  |
-|  0  |  1  |  1  |
-|  1  |  0  |  1  |
-|  1  |  1  |  1  |
-
+| **A** | **B** | **Y** |
+| :---: | :---: | :---: |
+|   0   |   0   |   0   |
+|   0   |   1   |   1   |
+|   1   |   0   |   1   |
+|   1   |   1   |   1   |
 Mappa di Karnaugh (2×2):
 
 | **A\B** | **0** | **1** |
 | :-----: | :---: | :---: |
 |  **0**  |   0   |   1   |
 |  **1**  |   1   |   1   |
-
 Raggruppamenti:
+* Gruppo da 2 (celle A=1, B=0–1) → **A**
+* Gruppo da 2 (celle B=1, A=0–1) → **B**
+Espressione semplificata:
+**Y = A + B**
 
-* Un gruppo da 2 (celle A=1, B=0–1) → A
-* Un gruppo da 2 (celle B=1, A=0–1) → B
-  Espressione semplificata:
-  ( Y = A + B )
-
----
-
-#### Esempio 2 – Mappa di Karnaugh a 3 variabili
-
+*Fonte immagini esercizi svolti: https://www.youtube.com/watch?v=qx90H7Kqh9w - Elisabetta Vannucchi*
+##### Esercizi svolti
+![[mappe_k_2.png]]
+#### Mappa di Karnaugh a 3 variabili
 Tabella di verità della funzione:
 
-|  **A**  |  **B**  |  **C**  |  **Y**  |
-| :-: | :-: | :-: | :-: |
-|  0  |  0  |  0  |  0  |
-|  0  |  0  |  1  |  1  |
-|  0  |  1  |  0  |  1  |
-|  0  |  1  |  1  |  1  |
-|  1  |  0  |  0  |  0  |
-|  1  |  0  |  1  |  1  |
-|  1  |  1  |  0  |  0  |
-|  1  |  1  |  1  |  1  |
-
-Mappa (disposizione in Gray code per B e C: 00, 01, 11, 10):
+| **A** | **B** | **C** | **Y** |
+| :---: | :---: | :---: | :---: |
+|   0   |   0   |   0   |   0   |
+|   0   |   0   |   1   |   1   |
+|   0   |   1   |   0   |   1   |
+|   0   |   1   |   1   |   1   |
+|   1   |   0   |   0   |   0   |
+|   1   |   0   |   1   |   1   |
+|   1   |   1   |   0   |   0   |
+|   1   |   1   |   1   |   1   |
+Mappa (disposizione in Gray code per AB: 00, 01, 11, 10):
 
 | **C\AB** | **00** | **01** | **11** | **10** |
 | :------: | :----: | :----: | :----: | :----: |
-|  **0**   |   0    |   1    |   0    |   0    |
-|  **1**   |   1    |   1    |   1    |   1    |
-
+|   **0**  |    0   |    1   |    0   |    0   |
+|   **1**  |    1   |    1   |    1   |    1   |
 Raggruppamenti:
-
-* Gruppo orizzontale da 4 (riga C=1) → C
-* Gruppo verticale da 2 (colonna AB=01) → ¬A·B
-  Espressione semplificata:
-  ( Y = C + ¬A·B )
-
-#### Altri Esempi
-*Fonte immagini: https://www.youtube.com/watch?v=qx90H7Kqh9w - Elisabetta Vannucchi*
-##### 2 variabili
-![[mappe_k_2.png]]
-##### 3 variabili
+* Gruppo orizzontale da 4 (riga C=1) → **C**
+* Gruppo verticale da 2 (colonna AB=01) → **ĀB**
+Espressione semplificata:
+**Y = C + ĀB**
+##### Esercizi svolti
 ![[mappe_k_3.png]]
-##### 4 variabili
+##### Esercizi da svolgere
+
+|  A  |  B  |  C  | Y₁  | Y₂  | Y₃  | Y₄  | Y₅  | Y₆  | Y₇  | Y₈  | Y₉  | Y₁₀ | Y₁₁ | Y₁₂ | Y₁₃ | Y₁₄ | Y₁₅ |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+|  0  |  0  |  0  |  0  |  1  |  X  |  0  |  1  |  1  |  0  |  1  |  0  |  1  |  X  |  0  |  1  |  0  |  1  |
+|  0  |  0  |  1  |  1  |  0  |  1  |  0  |  0  |  1  |  1  |  0  |  X  |  1  |  0  |  1  |  0  |  1  |  0  |
+|  0  |  1  |  0  |  1  |  1  |  0  |  1  |  1  |  0  |  1  |  1  |  0  |  1  |  1  |  X  |  0  |  0  |  1  |
+|  0  |  1  |  1  |  0  |  0  |  1  |  1  |  1  |  1  |  0  |  1  |  0  |  1  |  0  |  1  |  1  |  1  |  0  |
+|  1  |  0  |  0  |  1  |  0  |  1  |  0  |  1  |  1  |  0  |  1  |  1  |  0  |  1  |  0  |  0  |  1  |  0  |
+|  1  |  0  |  1  |  1  |  1  |  0  |  1  |  0  |  0  |  1  |  0  |  1  |  X  |  0  |  1  |  0  |  1  |  1  |
+|  1  |  1  |  0  |  0  |  1  |  1  |  1  |  0  |  1  |  1  |  0  |  0  |  1  |  1  |  1  |  1  |  0  |  0  |
+|  1  |  1  |  1  |  1  |  0  |  0  |  X  |  1  |  0  |  1  |  0  |  1  |  0  |  1  |  0  |  1  |  1  |  1  |
+
+#### Mappa di Karnaugh a 4 variabili
+Tabella di verità della funzione:
+
+| **A** | **B** | **C** | **D** | **Y** |
+| :---: | :---: | :---: | :---: | :---: |
+|   0   |   0   |   0   |   0   |   0   |
+|   0   |   0   |   0   |   1   |   1   |
+|   0   |   0   |   1   |   0   |   1   |
+|   0   |   0   |   1   |   1   |   0   |
+|   0   |   1   |   0   |   0   |   0   |
+|   0   |   1   |   0   |   1   |   1   |
+|   0   |   1   |   1   |   0   |   1   |
+|   0   |   1   |   1   |   1   |   1   |
+|   1   |   1   |   0   |   0   |   1   |
+|   1   |   1   |   0   |   1   |   1   |
+|   1   |   1   |   1   |   0   |   0   |
+|   1   |   1   |   1   |   1   |   0   |
+|   1   |   0   |   0   |   0   |   0   |
+|   1   |   0   |   0   |   1   |   1   |
+|   1   |   0   |   1   |   0   |   0   |
+|   1   |   0   |   1   |   1   |   0   |
+Mappa (disposizione in Gray code per AB e CD: 00, 01, 11, 10):
+
+| **CD\AB** | **00** | **01** | **11** | **10** |
+| :-------: | :----: | :----: | :----: | :----: |
+|   **00**  |    0   |    0   |    1   |    0   |
+|   **01**  |    1   |    1   |    1   |    1   |
+|   **11**  |    0   |    1   |    0   |    0   |
+|   **10**  |    1   |    1   |    0   |    0   |
+Raggruppamenti:
+* Gruppo da 4 (riga CD=01) → **C D̄**
+  (tutti gli 1 della seconda riga corrispondono a C=0, D=1)
+* Gruppo da 2 (colonna AB=01, righe 01–10) → **ĀB C̄**
+  (colonna centrale, in basso)
+* Gruppo da 2 (colonna AB=11, righe 00–01) → **AB C̄**
+Espressione semplificata:
+**Y = C D̄ + ĀB C̄ + AB C̄**
+##### Esercizi svolti
 ![[mappe_k_4.png]]
 ![[mappe_k_4p2.png]]
-
-> [!warning] Nota
-> Alcune forme che ottengo in realtà non sono davvero minimizzate, posso ancora fare dei raccoglimenti per utilizzare meno porte logiche.
-
-#### Esercizi
-##### Mappe di Karnaugh a 3 variabili
-
-|A|B|C|Y₁|Y₂|Y₃|Y₄|Y₅|Y₆|Y₇|Y₈|Y₉|Y₁₀|Y₁₁|Y₁₂|Y₁₃|Y₁₄|Y₁₅|
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-|0|0|0|0|1|X|0|1|1|0|1|0|1|X|0|1|0|1|
-|0|0|1|1|0|1|0|0|1|1|0|X|1|0|1|0|1|0|
-|0|1|0|1|1|0|1|1|0|1|1|0|1|1|X|0|0|1|
-|0|1|1|0|0|1|1|1|1|0|1|0|1|0|1|1|1|0|
-|1|0|0|1|0|1|0|1|1|0|1|1|0|1|0|0|1|0|
-|1|0|1|1|1|0|1|0|0|1|0|1|X|0|1|0|1|1|
-|1|1|0|0|1|1|1|0|1|1|0|0|1|1|1|1|0|0|
-|1|1|1|1|0|0|X|1|0|1|0|1|0|1|0|1|1|1|
-
----
-
-##### Mappe di Karnaugh a 4 variabili
+##### Esercizi da svolgere
 
 |  A  |  B  |  C  |  D  | Y₁  | Y₂  | Y₃  | Y₄  | Y₅  | Y₆  | Y₇  | Y₈  | Y₉  | Y₁₀ | Y₁₁ | Y₁₂ | Y₁₃ | Y₁₄ | Y₁₅ |
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
@@ -478,6 +496,39 @@ Raggruppamenti:
 |  1  |  1  |  1  |  0  |  1  |  0  |  1  |  1  |  0  |  1  |  1  |  0  |  1  |  0  |  X  |  1  |  0  |  1  |  1  |
 |  1  |  1  |  1  |  1  |  0  |  1  |  X  |  0  |  1  |  0  |  1  |  1  |  0  |  1  |  1  |  0  |  1  |  1  |  0  |
 
+
+> [!warning] Nota
+> Alcune forme che ottengo in realtà non sono davvero minimizzate, posso ancora fare dei raccoglimenti per utilizzare meno porte logiche.
+#### Come passare velocemente da tabella a mappa
+##### Mappa di Karnaugh a 3 variabili
+Quando si compila una mappa di Karnaugh, **non si seguono i numeri binari in ordine normale**, ma l’**ordine Gray code**, in cui cambia **una sola variabile per volta**.
+Per la mappa a 3 variabili (A, B, C):
+* le **colonne** rappresentano **AB** e seguono l’ordine Gray **00, 01, 11, 10**
+* le **righe** rappresentano **C = 0** e **C = 1**
+  Si riempie **riga per riga**: prima tutte le celle con C=0, poi quelle con C=1.
+
+| **C \ AB** |  **00** |  **01** |  **11** |  **10** |
+| :----: | :-: | :-: | :-: | :-: |
+|  **0** |  0  |  2  |  6  |  4  |
+|  **1** |  1  |  3  |  7  |  5  |
+**Cosa si salta e perché:** all’interno della riga, non si passa mai da **01 a 10**, perché significherebbe cambiare sia A che B insieme.
+Per questo le colonne sono disposte come **00, 01, 11, 10** invece che in ordine binario (00, 01, 10, 11): serve per mantenere la logica vicina e facilitare i raggruppamenti.
+##### Mappa di Karnaugh a 4 variabili
+Stesso principio, ma ora ci sono **4 variabili**: A, B, C e D.
+* le **colonne** rappresentano **AB** e seguono il Gray code **00, 01, 11, 10**
+* le **righe** rappresentano **CD** e seguono anch’esse il Gray code **00, 01, 11, 10**
+  Si riempie sempre **riga per riga**, scorrendo prima tutte le celle della riga e poi passando alla successiva.
+
+| **CD \ AB** |  **00** |  **01** |  **11** |  **10** |
+| :---------: | :-: | :-: | :-: | :-: |
+|   **00**    |  0  |  4  |  12 |  8  |
+|   **01**    |  1  |  5  |  13 |  9  |
+|   **11**    |  3  |  7  |  15 |  11 |
+|   **10**    |  2  |  6  |  14 |  10 |
+**Cosa si salta e perché:**
+* tra le **colonne**, non si passa da **01 a 10** (cambierebbero sia A che B)
+* tra le **righe**, non si passa da **01 a 10** (cambierebbero sia C che D)
+L’uso del Gray code in entrambe le direzioni garantisce che **ogni cella adiacente differisca per una sola variabile**, rendendo facile creare i gruppi di 1 (o di 0) per semplificare le espressioni logiche.
 ## Capitolo 3: Applicazione della logica booleana e dei circuiti logici in contesti reali
 #### Utilizzo dello XOR in crittografia
 ##### Introduzione
