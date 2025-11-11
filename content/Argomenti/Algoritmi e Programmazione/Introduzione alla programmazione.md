@@ -3950,76 +3950,85 @@ int main() {
 
 Il `std::vector` è uno strumento potente per la gestione dinamica della memoria in C++. La sua facilità d'uso e le funzionalità avanzate lo rendono una delle scelte principali per lavorare con array dinamici in C++ moderno.
 
-#### Esercizi
-
-> [!exercise] Esercizi
-> 1. **Implementazione di un vector:**
->    Ora che sappiamo come funziona la classe vector e che funzionalità deve avere, proviamo a implementarne uno nostro. Il vector così creato deve avere almeno le funzionalità di base per funzionare. Più funzionalità riesco ad aggiungere e meglio è.
-> 2. **Rubrica telefonica:**
-> 	   Implementare le funzioni che compongono una libreria per la memorizzazione e gestione di una rubrica telefonica utilizzando `struct` e `std::vector`. Oltre alla definizione delle funzioni e dei tipi richiesti per la libreria, dovete, naturalmente, scrivere un programma per testare le funzioni man mano che le implementate.
-> 	
-> 	*SUGGERIMENTO: Per scrivere i programmi intermedi per testare le funzioni prodotte fino ad un certo punto, potete modificare sempre lo stesso `main`, commentando i pezzi che non vi servono più perché avete testato in maniera soddisfacente la funzione a cui fanno riferimento; però non cancellate, perché se poi dovete fare modifiche alle funzioni precedenti o vi accorgete di un caso che non avete provato, così vi trovate ancora il codice di test pronto, basta togliere i commenti.*
-> 	
-> 	Per quanto riguarda l’input dei dati su cui provare le chiamate di funzione, potete fare lettura da input (più facile, ma ci mettete più tempo a far girare il programma) oppure da file (richiede più sforzo la prima volta, ma vi permette di ripetere i test molto rapidamente e senza ulteriore fatica).]
-> 	
-> 	1. **Definire una struct `Contact_Str`** contenente almeno i campi `Name`, `Surname`, `PhoneNumber` (di un tipo opportuno).
-> 	2. **Creare un tipo vettore di contatti** dandogli il nome `PhoneBook`, usando:
-> 	    
-> 	    ```cpp
-> 	    typedef std::vector<Contact_Str> PhoneBook;
-> 	    ```
-> 	    
-> 	3. **Scrivere la funzione**:
-> 	    
-> 	    ```cpp
-> 	    void add(PhoneBook& B, string surname, string name, int phoneNumber);
-> 	    ```
-> 	    
-> 	    per aggiungere un contatto `C` in coda alla rubrica `B`.
-> 	4. **Scrivere la funzione**:
-> 	    
-> 	    ```cpp
-> 	    void print(const PhoneBook& B);
-> 	    ```
-> 	    
-> 	    per stampare il contenuto della rubrica `B`.
-> 	5. **Scrivere una funzione**:
-> 	    
-> 	    ```cpp
-> 	    void sortSurnames(PhoneBook& B);
-> 	    ```
-> 	    
-> 	    che, data una rubrica, ordini alfabeticamente gli elementi in essa contenuti rispetto al campo `Surname`.
-> 	6. **Scrivere una funzione**:
-> 	    
-> 	    ```cpp
-> 	    int FindPos(const PhoneBook& r, string S);
-> 	    ```
-> 	    
-> 	    che abbia il seguente comportamento:
-> 	    - Se nella rubrica esiste un contatto `C` il cui campo `C.Surname` è uguale all’argomento `S`, allora restituisca l’indice di tale contatto nella rubrica (ossia nel vettore).
-> 	    - -1 altrimenti
-> 	1. **Scrivere una funzione**:
-> 	    
-> 	    ```cpp
-> 	    void Shift_PhoneBook(PhoneBook& B, int pos);
-> 	    ```
-> 	    
-> 	    che incrementa di un elemento la dimensione del vettore `B` e poi sposta a destra di un elemento tutti gli elementi a partire dalla posizione `pos + 1`.
-> 	2. **Scrivere la funzione**:
-> 	    
-> 	    ```cpp
-> 	    bool add_ord(PhoneBook& B, string surname, string name, int phoneNumber);
-> 	    ```
-> 	    
-> 	    che inserisce il nuovo contatto nella rubrica nella posizione giusta rispetto all’ordine alfabetico.  
-> 	    
-> 	    ***SUGGERIMENTO:** Assumendo che la rubrica sia ordinata, usare la funzione `FindPos` per ottenere la posizione immediatamente precedente a quella in cui il contatto andrebbe inserito, seguita dalle funzioni `Shift_PhoneBook` e una assegnazione.*
-> 	
-> 	3. **Rendere il programma interattivo:** 
-> 		Ora potete rendere il programma interattivo, ad esempio utilizzando uno switch per accedere alle varie funzioni e gestire la rubrica.
-
 ---
+#### Esercizi
+> [!exercise] Esercizi
+>
+> 1. **Simulazione di sensori ambientali:**
+>    Realizzare un programma che gestisca i dati raccolti da una serie di sensori di temperatura in una giornata. Ogni sensore registra un certo numero di letture (una ogni minuto, ad esempio). È utile usare un `std::vector` perché:
+>
+>    * il numero di letture cresce progressivamente ma in modo compatto, quindi serve un contenitore contiguo in memoria;
+>
+>    * si accede spesso alle letture per indice (per calcolare medie, massimi, minimi o differenze tra letture contigue);
+>
+>    * l’inserimento avviene solo in coda, non in mezzo come avverrebbe con una lista.
+>
+>    1. **Definire una struct `Sensor`** contenente almeno i campi:
+>
+>       ```cpp
+>       struct Sensor {
+>           string id;
+>           vector<double> readings;
+>       };
+>       ```
+>
+>       Ogni sensore è identificato da un codice (`id`) e da un vettore di letture di temperatura.
+>    2. **Creare un tipo vettore di sensori** denominato `SensorArray`:
+>
+>       ```cpp
+>       typedef std::vector<Sensor> SensorArray;
+>       ```
+>    3. **Scrivere la funzione:**
+>
+>       ```cpp
+>       void addSensor(SensorArray& A, string id);
+>       ```
+>
+>       che aggiunge un nuovo sensore al sistema.
+>    4. **Scrivere la funzione:**
+>
+>       ```cpp
+>       void addReading(SensorArray& A, string id, double value);
+>       ```
+>
+>       che aggiunge una lettura al sensore con identificativo `id`.
+>    5. **Scrivere la funzione:**
+>
+>       ```cpp
+>       void printSensor(const SensorArray& A, string id);
+>       ```
+>
+>       che stampa tutte le letture del sensore richiesto.
+>    6. **Scrivere la funzione:**
+>
+>       ```cpp
+>       double averageReading(const SensorArray& A, string id);
+>       ```
+>
+>       che calcola la temperatura media registrata da un sensore.
+>    7. **Scrivere la funzione:**
+>
+>       ```cpp
+>       double maxVariation(const SensorArray& A, string id);
+>       ```
+>
+>       che restituisce la massima variazione tra due letture consecutive di un sensore (cioè il massimo valore assoluto di `readings[i+1] - readings[i]`).
+>    8. **Scrivere la funzione:**
+>
+>       ```cpp
+>       void exportAll(const SensorArray& A);
+>       ```
+>
+>       che salva su file di testo i dati di tutti i sensori in un formato leggibile (uno per riga).
+>    9. **Rendere il programma interattivo:**
+>       Implementare un menù che permetta di:
+>
+>       * aggiungere sensori
+>       * inserire letture
+>       * visualizzare i dati di un sensore
+>       * calcolare media e massima variazione
+>       * esportare tutti i dati su file
+>         L’uso di `std::vector` è ideale perché consente accesso diretto per indice, calcoli rapidi su dati contigui e gestione efficiente della memoria per grandi quantità di letture.
 
 ### Liste
 
@@ -4196,8 +4205,70 @@ int main() {
 ```
 
 > [!exercise] Esercizi
-> 1. **Implementazione manuale di una lista semplice:**
->    Utilizzando come base il codice qui sopra, cerca di capire e spiegare come funzionano le funzioni già esistenti e crea un main per testarle. Dopodiché aggiungi le funzioni mancanti marcate con `TODO`.
+>
+> 1. **Implementazione di una lista:**
+>    Dopo aver studiato il funzionamento della classe `std::list` e le sue principali operazioni, implementarne una versione semplificata utilizzando nodi collegati dinamicamente. La lista così creata deve permettere almeno l’inserimento in testa e in coda, la cancellazione e la stampa. Più funzionalità si aggiungono, meglio è.
+> 2. **Rubrica telefonica con lista:**
+>    Implementare una libreria per la gestione di una rubrica telefonica utilizzando `struct` e `std::list`. Oltre alla definizione delle funzioni e dei tipi richiesti, scrivere un programma per testare le funzioni man mano che vengono realizzate.
+>
+>    *Suggerimento:* mantenere un unico `main` che si arricchisce via via, commentando i test già svolti invece di cancellarli, per poterli riutilizzare in caso di modifiche.
+>
+>    1. **Definire una struct `Contact_Str`** contenente almeno i campi `Name`, `Surname`, `PhoneNumber` (di un tipo appropriato).
+>    2. **Creare un tipo lista di contatti** denominato `PhoneBook`, usando:
+>
+>       ```cpp
+>       typedef std::list<Contact_Str> PhoneBook;
+>       ```
+>    3. **Scrivere la funzione:**
+>
+>       ```cpp
+>       void add(PhoneBook& B, string surname, string name, int phoneNumber);
+>       ```
+>
+>       per aggiungere un contatto `C` in coda alla rubrica `B` (usare `push_back`).
+>    4. **Scrivere la funzione:**
+>
+>       ```cpp
+>       void print(const PhoneBook& B);
+>       ```
+>
+>       per stampare tutti i contatti presenti nella rubrica `B`.
+>    5. **Scrivere la funzione:**
+>
+>       ```cpp
+>       void sortSurnames(PhoneBook& B);
+>       ```
+>
+>       che ordina la lista alfabeticamente per cognome, usando `B.sort()` con un comparatore personalizzato.
+>    6. **Scrivere la funzione:**
+>
+>       ```cpp
+>       PhoneBook::iterator findContact(PhoneBook& B, string surname);
+>       ```
+>
+>       che restituisce un iteratore al contatto con cognome uguale a `surname`, oppure `B.end()` se non esiste.
+>    7. **Scrivere la funzione:**
+>
+>       ```cpp
+>       bool add_ord(PhoneBook& B, string surname, string name, int phoneNumber);
+>       ```
+>
+>       che inserisce il nuovo contatto nella posizione corretta rispetto all’ordine alfabetico, mantenendo la lista ordinata.
+>    8. **Scrivere la funzione:**
+>
+>       ```cpp
+>       bool removeContact(PhoneBook& B, string surname);
+>       ```
+>
+>       che rimuove il contatto corrispondente al cognome dato, se presente.
+>    9. **Rendere il programma interattivo:**
+>       Creare un menù che permetta di:
+>
+>       * aggiungere contatti (in fondo o ordinati)
+>       * visualizzare la rubrica
+>       * ordinare per cognome
+>       * cercare o eliminare un contatto
+>         Usare uno `switch` o un ciclo `while(true)` con menu numerato per gestire le scelte dell’utente.
 
 ---
 
