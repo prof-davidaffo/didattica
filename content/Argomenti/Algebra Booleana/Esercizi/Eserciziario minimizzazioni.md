@@ -23,7 +23,7 @@ $\overline{ABC + A} + B=\overline A + B$
 #### Esercizio 12
 $(A+B+\overline C+D)(A+\overline B+ \overline C+ D)(A+\overline B+ \overline C+ \overline D)=A+\overline C+ D \overline B$
 #### Esercizio 13
-$\overline{\overline{A+C}+\overline A+ \overline B}+\overline{BC+\overline B \ \overline C+AB+\overline A \ \overline B}=A \overline B+ \overline A B+\overline A C$
+$\overline{\overline{A+C}+\overline A+ \overline B}+\overline{BC+\overline B \ \overline C+AB+\overline A \ \overline B}=A(B+C)$
 #### Esercizio 14
 $(A+\overline B + C)(\overline A + B + \overline C)(A + B + \overline C)(A + \overline B + \overline C)=A + \overline C$
 #### Esercizio 15
