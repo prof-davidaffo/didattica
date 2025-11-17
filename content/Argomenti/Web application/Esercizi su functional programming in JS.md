@@ -105,26 +105,80 @@ Dogs remaining: Rex, Spot
 ```
 
 ## 11.3 Callback Functions
-1. **Callback semplice**
-   Scrivi una funzione `doTwice(callback)` che esegua due volte la funzione passata come argomento. Provala passando una funzione che stampi un messaggio.
-2. **Callback con parametro**
-   Scrivi una funzione `repeatMessage(message, callback)` che chiami `callback` passando come argomento il messaggio ricevuto. Il callback deve gestire la visualizzazione del messaggio (ad esempio stampandolo in maiuscolo o con un prefisso).
-3. **Simulazione asincrona**
-   Scrivi una funzione `loadData(callback)` che usi `setTimeout` per simulare un caricamento di 2 secondi, poi chiami `callback("Dati caricati")`. Provala con due callback diversi: uno che stampa il messaggio e uno che aggiunge un testo aggiuntivo (“Operazione completata”).
-4. **Catena di callback**
-   Definisci tre funzioni:
-* `fetchData(callback)` che simula il recupero di dati dopo 1 secondo,
-* `processData(callback)` che trasforma i dati (ad esempio aggiungendo un campo),
-* `displayData(callback)` che mostra il risultato finale.
-  Falle chiamare in sequenza una dentro l’altra tramite callback, simulando un piccolo flusso asincrono.
-5. **Funzioni anonime e arrow functions**
-   Riscrivi uno degli esercizi precedenti usando prima una funzione anonima tradizionale e poi una arrow function. Commenta le differenze principali tra i due approcci in termini di leggibilità e comportamento del `this`.
-6. **Gestione di un processo a fasi**
-   Crea tre funzioni:
-* `prepare(callback)`, che dopo 1 secondo stampa “Preparazione completata” e chiama `callback()`,
-* `cook(callback)`, che dopo 2 secondi stampa “Cottura completata” e chiama `callback()`,
-* `serve()`, che stampa “Piatto servito!”.
-  Falle eseguire in sequenza tramite callback, simulando un piccolo processo coordinato.
+###  Esercizio 1 Callback di base
+Scrivi una funzione `shoutMessage` che prende una stringa e la stampa tutta in maiuscolo. Scrivi poi una funzione `withExclamation` che accetta una funzione callback e una stringa: deve chiamare la callback aggiungendo un punto esclamativo alla fine della stringa.
+Chiama `withExclamation(shoutMessage, "hello")`.
+###  Esercizio 2 Callback anonima
+Scrivi una funzione `repeatAction` che accetta due parametri: un numero `n` e una funzione `action`.
+La funzione deve eseguire `action()` per `n` volte.
+Chiama `repeatAction` passando un callback anonimo che stampi `"Doing it!"` tre volte.
+###  Esercizio 3 Callback che restituisce il risultato
+Scrivi una funzione `compute` che prende due numeri e una callback. La callback deve ricevere i due numeri e restituire un risultato. `compute` deve poi stampare quel risultato.
+Chiama `compute` con:
+* una callback che calcola la differenza
+* una callback che calcola il massimo tra i due
+###  Esercizio 4 Callback in un array
+Hai un array di funzioni:
+```js
+let actions = [
+    function(){ console.log("jump"); },
+    function(){ console.log("run"); },
+    function(){ console.log("stop"); }
+];
+```
+Scrivi una funzione `doAll` che prende un array di funzioni come argomento e le esegue una alla volta.
+Chiama `doAll(actions)`.
+###  Esercizio 5 Closure semplice
+Scrivi una funzione `makeCounter` che crea e restituisce un’altra funzione.
+La funzione restituita, ogni volta che viene eseguita, deve incrementare un contatore interno e stamparlo.
+Usa il contatore in tre chiamate consecutive: noti qualcosa di particolare?
+###  Esercizio 6 Closure parametrica
+Scrivi una funzione `multiplier(factor)` che restituisce una funzione capace di moltiplicare qualunque numero per `factor`.
+Crea:
+* `double = multiplier(2)`
+* `triple = multiplier(3)`
+  E chiamali su un numero a tua scelta.
+###  Esercizio 7 Closure per salvare stato testuale
+Scrivi una funzione `makeLogger(prefix)` che restituisce una funzione capace di stampare messaggi preceduti dal `prefix`.
+Esempio:
+`let warn = makeLogger("[WARN]");`
+`warn("Disk almost full");`
+Produce: `[WARN] Disk almost full`.
+###  Esercizio 8 Combinare callback e closure
+Scrivi una funzione `countAndDo(callback)` che contiene un contatore interno (closure). Ogni chiamata:
+* incrementa il contatore
+* stampa `"Call number: X"`
+* esegue la callback ricevuta
+  Chiama `countAndDo` tre volte con una callback che stampa `"Action!"`.
+###  Esercizio 9 Fabbrica di funzioni con comportamento diverso
+Scrivi una funzione `makeTagger(tag)` che restituisce una funzione che prenda una stringa e la stampi racchiusa nel tag HTML specificato.
+Esempi:
+* `let bold = makeTagger("b")` → `bold("hello")` stampa `<b>hello</b>`
+* `let italic = makeTagger("i")`
+###  Esercizio 10 Closure per accumulare dati
+Scrivi una funzione `makeAccumulator(startValue)` che restituisce una funzione capace di sommare un valore al totale interno e restituire il nuovo totale.
+Provala con una serie di incrementi.
+###  Esercizio 11 Callback nel filtraggio personalizzato
+Scrivi una funzione `filterArray(arr, testCallback)` che genera un nuovo array includendo solo gli elementi per cui `testCallback(element)` restituisce `true`.
+Usala per filtrare:
+* solo numeri pari
+* solo numeri maggiori di 10
+* solo stringhe più lunghe di 4 caratteri
+###  Mini progetto finale
+Realizzare un piccolo gestore di attività con queste caratteristiche:
+- Deve esistere un “TaskManager” creato tramite una factory function.
+- Ogni task ha:
+    - un nome
+    - una funzione da eseguire (callback)
+- Il TaskManager deve permettere:
+    - aggiungere task
+    - eseguire tutti i task
+    - eseguire solo i task che soddisfano una condizione (callback filtro)
+- Il TaskManager deve mantenere internamente il conteggio totale delle esecuzioni (closure).
+- Ogni task deve essere un oggetto con:
+    - proprietà `name`
+    - proprietà `action` (funzione)
+
 ## 11.4 Functional Looping
 1. **forEach**
    Crea un array di nomi e usa `forEach()` per stampare un messaggio personalizzato per ciascuno (ad esempio “Ciao, Anna!”).
@@ -198,10 +252,10 @@ for (let i = 0; i < prices.length; i++) {
 Riscrivilo in forma **pura** usando `map()` e memorizzando il risultato in un nuovo array `updatedPrices`.
 Poi usa `reduce()` per calcolare il totale con IVA.
 Il codice finale non deve modificare `prices`.
-## Progetto Finale – Mini Data Processor
-### Obiettivo
+###  Progetto Finale – Mini Data Processor
+####  Obiettivo
 Realizzare un piccolo programma che gestisca un insieme di dati (ad esempio prodotti, studenti o transazioni) **solo tramite funzioni, metodi e operazioni funzionali**, senza cicli tradizionali e senza modificare i dati originali.
-### Descrizione generale
+####  Descrizione generale
 Crea un file `dataProcessor.js` che contenga:
 1. **Una struttura dati di partenza**
    Un array di oggetti, ad esempio:

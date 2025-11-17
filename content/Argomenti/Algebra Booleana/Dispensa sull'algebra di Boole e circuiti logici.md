@@ -755,51 +755,7 @@ Questo è uno schema completo di un sommatore a 4 bit che usa solo porte element
 ![[1ad6471b63cd2b6c56d9303f7935b843_MD5.jpeg]]
 In questo circuito manca il riporto finale che va in overflow.
 ####   Sottrattori binari
-
-In analogia a quanto visto per il sommatore, è possibile realizzare una rete combinatoria che effettua una sottrazione tra due numeri binari. Anche in questo caso, tenendo presenti le regole della sottrazione binaria, dobbiamo preparare due blocchi fondamentali:  
-• il **semisottrattore binario (HS)**, senza prestito in ingresso  
-• il **sottrattore binario (FS)**, con prestito in ingresso
-
-#####   Circuito semisottrattore HS
-
-Il semisottrattore è il blocco elementare che realizza la differenza di due bit: deve rispettare la seguente tabella della verità:
-
-![[6efc97de7ad51c9fc3c7c7e1472e24c1_MD5.jpeg]]
-
-In questo caso, invece di usare i teoremi dell’algebra di Boole, semplifichiamo la funzione con le **mappe di Karnaugh**, ottenendo le variabili di uscita seguenti:
-
-![[fc5e973cfbe317ab605e2d2d7f95a498_MD5.jpeg]]
-
-La differenza si ottiene facendo l’operazione di **XOR (OR esclusivo)** come nel caso del sommatore, mentre il prestito è un **AND logico** tra la variabile B e la variabile A negata.
-
-![[8c102219a46729d55520da477206af34_MD5.jpeg]]
-
-#####   Circuito sottrattore FS
-
-Lo schema completo di un sottrattore è il seguente:
-
-![[706ca81ccb2b0057ad8a2d7ff75fe783_MD5.jpeg]]
-
-Dove:  
-Aₙ e Bₙ sono i bit da sottrarre  
-Pₙ è il prestito da richiedere  
-Dₙ è la differenza binaria  
-Pₙ₋₁ è il prestito da fornire
-
-Il circuito logico che esegue la sottrazione è ottenuto in due fasi:
-
-1. con un HS si sottraggono Aₙ e Bₙ
-    
-2. con un secondo HS si toglie il riporto Pₙ₋₁  
-    I riporti in uscita convergono verso una porta OR.  
-    In modo analogo al sommatore, non si verifica mai che a questa porta si presentino due 1 simultaneamente.
-    
-
-Per eseguire la sottrazione binaria di due numeri di n bit, bisogna disporre di **n blocchi elementari** collegati in cascata. Il primo blocco, meno significativo, può essere un HS; gli altri saranno FS.
-
-Bisogna dire che, in caso di calcoli complessi, i sottrattori sono poco usati: si preferisce effettuare l’operazione tramite una **addizione con complementazione**.
-
-In tal caso, la sottrazione viene effettuata aggiungendo al minuendo il **complemento a uno del sottraendo**. Il sottrattore risulta simile a un sommatore in cui uno dei due numeri è complementato.
+La sottrazione, nei sistemi digitali moderni, non viene implementata tramite circuiti dedicati: si sfrutta invece lo stesso circuito usato per l’addizione. Per ottenere A − B si trasforma prima B nel suo complemento e poi si esegue una comune somma binaria. In questo modo l’operazione di sottrazione viene ricondotta a un’unica struttura hardware, evitando la necessità di circuiti separati e semplificando l’architettura complessiva.
 
 ![[ebd31e412d0091b89a91f851d20d5d6f_MD5.jpeg]]
 
@@ -827,9 +783,7 @@ L’uscita C₃ costituisce il riporto ottenuto dalla somma di A₃ e B₃, ment
 Per permettere al circuito di funzionare sia da sommatore che da sottrattore, occorre aggiungere un **comando** che:
 
 - complementi o meno uno dei due nibble;
-    
 - abiliti o meno la somma dell’ultimo riporto con i bit meno significativi.
-    
 
 L’operazione di complementazione a 1 su un singolo bit può essere eseguita da una **porta XOR**.
 
@@ -846,7 +800,7 @@ Questo può essere effettuato con la stessa struttura di porte prevista sull’o
 
 ![[417de07d8b8d11e63b863d5c090143c6_MD5.jpeg]]
 
-Come visto nei sistemi digitali, i numeri interi relativi si rappresentano con il **complemento a 2**, utilizzando il bit più pesante come **bit di segno**:  
+Come visto nei sistemi digitali, i numeri interi relativi si rappresentano con il [[Codifica delle informazioni#2.6 Rappresentazione dei numeri negativi il complemento a 2|complemento a 2]], utilizzando il bit più pesante come **bit di segno**:  
 0 → numero positivo  
 1 → numero negativo
 
