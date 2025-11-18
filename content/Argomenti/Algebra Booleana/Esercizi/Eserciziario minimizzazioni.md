@@ -25,7 +25,7 @@ $(A+B+\overline C+D)(A+\overline B+ \overline C+ D)(A+\overline B+ \overline C+ 
 #### Esercizio 13
 $\overline{\overline{A+C}+\overline A+ \overline B}+\overline{BC+\overline B \ \overline C+AB+\overline A \ \overline B}= BA+B \overline C + AC$
 #### Esercizio 14
-$(A+\overline B + C)(\overline A + B + \overline C)(A + B + \overline C)(A + \overline B + \overline C)=A + \overline C$
+$(A+\overline B + C)(\overline A + B + \overline C)(A + B + \overline C)(A + \overline B + \overline C)= AB+\overline B \ \overline C+A\overline C$
 #### Esercizio 15
 $\overline{(A+B)(\overline A + C)} + (A+B)C + \overline A \ \overline B \ \overline C = \overline A C + A \overline B + \overline B \ \overline C$
 #### Esercizio 16
