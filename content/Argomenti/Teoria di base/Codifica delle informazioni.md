@@ -1166,40 +1166,6 @@ Esempio:
 * Esponente codificato = $131$ → $E = 131 - 127 = +4$
 * Esponente codificato = $122$ → $E = 122 - 127 = -5$
 ---
-####  Esempio – rappresentare il numero $-6.75$ in virgola mobile (IEEE 754, 32 bit)
-1. **Segno**: negativo → bit segno = 1
-2. **Convertiamo $6.75$ in binario**:
-* Parte intera: $6 = 110$
-* Parte frazionaria:
-  * $0.75 \times 2 = 1.5$ → 1
-  * $0.5 \times 2 = 1.0$ → 1
-→ $6.75 = 110.11 = 1.1011 \times 2^2$
-3. **Mantissa**: prendo solo la parte dopo la virgola **senza il primo 1**:
-* $1.1011$ → mantissa = `10110000000000000000000`
-4. **Esponente**:
-* Esponente reale = $2$
-* Esponente codificato = $2 + 127 = 129 = 10000001$
-1. **Costruzione finale**:
-
-| Segno | Esponente | Mantissa                |
-| ----- | --------- | ----------------------- |
-| 1     | 10000001  | 10110000000000000000000 |
-Quindi:
-$$
--6.75 = \boxed{1\ 10000001\ 10110000000000000000000}
-$$
----
-####  Schema operativo – conversione decimale → virgola mobile
-1. **Segna il bit di segno**: 0 o 1
-2. **Converti il numero in binario**
-3. **Normalizza**: porta il numero in forma $1.xxxxx \times 2^e$
-4. **Calcola esponente codificato**: $e + \text{bias}$
-5. **Scrivi mantissa**: solo i bit dopo il primo 1
-6. **Assembla i 32 bit**: 1 segno, 8 esponente, 23 mantissa
----
-#####  Esempio grafico
-![[57642d48593878693822534669dcc3d2_MD5.jpeg]]
-
 ####  Conversione da virgola mobile (IEEE 754) a numero decimale
 
 Il valore del numero è calcolato come:
@@ -1265,6 +1231,39 @@ Valore:
 $$
 -1.25 \cdot 2^1 = -2.5
 $$
+#####  Esempio grafico
+![[57642d48593878693822534669dcc3d2_MD5.jpeg]]
+####  Esempio – rappresentare il numero $-6.75$ in virgola mobile (IEEE 754, 32 bit)
+1. **Segno**: negativo → bit segno = 1
+2. **Convertiamo $6.75$ in binario**:
+* Parte intera: $6 = 110$
+* Parte frazionaria:
+  * $0.75 \times 2 = 1.5$ → 1
+  * $0.5 \times 2 = 1.0$ → 1
+→ $6.75 = 110.11 = 1.1011 \times 2^2$
+3. **Mantissa**: prendo solo la parte dopo la virgola **senza il primo 1**:
+* $1.1011$ → mantissa = `10110000000000000000000`
+4. **Esponente**:
+* Esponente reale = $2$
+* Esponente codificato = $2 + 127 = 129 = 10000001$
+1. **Costruzione finale**:
+
+| Segno | Esponente | Mantissa                |
+| ----- | --------- | ----------------------- |
+| 1     | 10000001  | 10110000000000000000000 |
+Quindi:
+$$
+-6.75 = \boxed{1\ 10000001\ 10110000000000000000000}
+$$
+---
+####  Schema operativo – conversione decimale → virgola mobile
+1. **Segna il bit di segno**: 0 o 1
+2. **Converti il numero in binario**
+3. **Normalizza**: porta il numero in forma $1.xxxxx \times 2^e$
+4. **Calcola esponente codificato**: $e + \text{bias}$
+5. **Scrivi mantissa**: solo i bit dopo il primo 1
+6. **Assembla i 32 bit**: 1 segno, 8 esponente, 23 mantissa
+---
 ####  Vantaggi e svantaggi
 | Vantaggi                                        | Svantaggi                                    |
 | ----------------------------------------------- | -------------------------------------------- |
@@ -1363,13 +1362,14 @@ Questi numeri permettono la **continuità vicino allo zero**, evitando un salto 
 > 	- $1.5$
 > 
 > Decodifica IEEE 754 (32 bit):
-> 	- `0 10000001 01000000000000000000000`
-> 	- `1 10000000 10000000000000000000000`
+> 	- `0 10000001 01011000000000000000000`
+> 	- `1 10000000 10100000000000000000000`
 > 	- `0 01111110 00000000000000000000000`
-> 	- `1 01111111 00000000000000000000000`
-> 	- `0 10000010 10000000000000000000000`
+> 	- `1 01111111 11000000000000000000000`
+> 	- `0 10000010 10001000000000000000000`
 > 	- `0 11111111 00000000000000000000000`
 > 	- `1 11111111 00000000000000000000000`
-> 	- `0 111111111 0000000000000000000000`
+> 	- `0 11111111 0000000000000000000000`
 > 	- `0 000000000 0000000000000000000001`
 > 	- `0 00000000 00000000000000000000000`
+> 	-  `0 11111111 01000000000000000000000`
