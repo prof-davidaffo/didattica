@@ -1,6 +1,5 @@
  > [!NOTE] Autore
 > Prof. Davide Daffonchio
-> Alcuni appunti e immagini dei circuiti reali sono tratti da [edutecnica.it]()
 
 
 > [!warning] Attenzione
@@ -10,165 +9,151 @@ Questa dispensa segue un percorso completo per comprendere e costruire tutti i c
 La progressione di questa dispensa segue quella del gioco [nandgame.com]().
 ## Aritmetica
 ###  Sommatore binario
-
-> [!author] Fonte
-> https://www.edutecnica.it/sistemi/sommatori/sommatori.htm
-
 ####  Introduzione
-
-L’addizione è la più elementare delle operazioni aritmetiche; l’addizione è più o meno la sola cosa che i computer fanno. L’unico problema è riuscire a costruire qualcosa che produca delle somme col sistema binario, dato che tutte le macchine sono basate su questo sistema numerico.
-
-Sommare numeri binari è più o meno come sommare numeri decimali. Per sommare due numeri come 245 e 673, si scompone il problema in passi più semplici. Ogni passo richiede soltanto di sommare una coppia di cifre decimali. In questo esempio si comincerebbe con 5 più 3, e così via.
-
-I sommatori binari sono reti combinatorie che ricevono in ingresso **n bit** degli addendi da sommare e generano in uscita i bit della somma binaria con il relativo riporto. Si tratta, dunque, di un tipico esempio di rete combinatoria con ingressi multipli e uscite multiple, strutturata in modo da seguire il meccanismo secondo cui avviene la somma binaria.
-
-####  Tipi di sommatori
-
-Introduciamo, pertanto, i due blocchi funzionali fondamentali che sono:
-
-- **Semi4 binario (HA - Half Adder)**: senza riporto in ingresso.
-- **Sommatore binario (FA - Full Adder)**: con riporto in ingresso.
-
-####  Circuito Semisommatore (HA)
-
-La differenza tra la somma in decimale e la somma in binario è che per quest'ultimo sistema lo schema per la somma è molto più semplice:
+L’addizione è una delle operazioni fondamentali alla base di qualunque sistema digitale. Ogni volta che un processore esegue un calcolo, aggiorna un indirizzo di memoria o incrementa un contatore, sta effettuando una somma binaria. Per questo motivo il **sommatore** è uno dei circuiti combinatori più importanti dell’intera architettura di un computer.
+Sommare numeri binari segue le stesse idee dell’addizione decimale: ogni cifra viene sommata con quella della stessa posizione e, quando la somma supera il valore rappresentabile con un solo bit, si genera un riporto verso la posizione successiva. La differenza è che nel sistema binario ci sono solo due cifre possibili, quindi l’addizione tra bit è estremamente semplice e può essere implementata direttamente con poche porte logiche.
+Per progettare un sommatore completo occorre partire da due elementi base:
+* il **semisommatore**, che somma due bit e calcola sia il bit di somma sia il riporto;
+* il **sommatore completo**, che aggiunge al modello precedente la gestione di un riporto in ingresso.
+Da questi due blocchi è possibile costruire circuiti in grado di sommare numeri di qualunque lunghezza, come i **sommatori paralleli**, ottenuti collegando più full-adder in cascata. Una volta implementata correttamente la somma binaria, è possibile sfruttare le stesse strutture anche per la sottrazione grazie alla rappresentazione in complemento a 2, rendendo i sommatori uno dei pilastri essenziali nella costruzione dell'ALU.
+Le sezioni che seguono illustrano passo dopo passo la costruzione di questi blocchi, utilizzando le immagini e gli schemi presenti nel materiale originale per seguire in modo chiaro l’evoluzione dalla somma di un singolo bit fino alla realizzazione di un circuito aritmetico completo.
+#### Semisommatore (Half-Adder)
+Il **semisommatore** è il circuito più semplice in grado di effettuare la somma tra due bit. Riceve in ingresso i bit **A** e **B** e produce:
+* **S**, il bit della somma
+* **C**, il riporto generato dalla somma
+La somma binaria segue regole molto immediate:
 0 + 0 = 0
 0 + 1 = 1
 1 + 0 = 1
-1 + 1 = 0 con riporto di 1
-
-Questa logica corrisponde alla tabella della verità della porta XOR (a parte la questione del riporto che deve essere risolta).
-
+1 + 1 = 0 con riporto 1
+Questa logica corrisponde esattamente al comportamento della porta XOR per la somma e della porta AND per il riporto.
 ![[fcf44d3ab12f26cbb5e97443c594c43f_MD5.jpeg]]
-
-Per gestire anche il riporto, questo circuito deve essere modificato in modo da risolvere la seguente tabella della verità:
+Per tenere conto sia del bit di somma sia del riporto, il circuito completo del semisommatore deve rispettare la seguente tabella della verità:
 ![[44e7d070f3cba39d82500c24a0917cb8_MD5.jpeg]]
-- **A** e **B** sono i bit da sommare.
-- **S** è il bit della somma.
-- **C** è il bit del riporto.
-
-
-Abbiamo così costruito il semisommatore o **Half-Adder**.
-
-
-####  Circuito Sommatore (FA)
-
-Il dispositivo creato si chiama semi-sommatore (half-adder). Questo nome deriva dal fatto che per ottenere la somma completa (full-adder) tra due numeri di più cifre, oltre ai bit dello stesso ordine occorre sommare anche il riporto eventualmente ottenuto dai due bit di ordine immediatamente inferiore.
-
-- **Ingressi**: i due bit **A** e **B** da sommarsi e il riporto **C**.
-- **Uscite**: il bit di somma e il riporto per il sommatore successivo.
-
+* **A** e **B** sono i bit da sommare
+* **S** è il bit della somma
+* **C** è il bit del riporto
+Combinando una porta XOR e una porta AND si ottiene il comportamento desiderato, formando così il semisommatore o **Half-Adder (HA)**.
+#### Circuito Sommatore (Full-Adder)
+Il **sommatore completo** (Full-Adder, FA) estende il comportamento del semisommatore permettendo di sommare non solo i bit **A** e **B**, ma anche un **riporto in ingresso** proveniente dalla posizione meno significativa. È questo elemento che consente di concatenare più sommatori per ottenere la somma di numeri con più bit.
+Il full-adder ha quindi:
+* **Ingressi:**
+  * A
+  * B
+  * Cᵢ (riporto in ingresso)
+* **Uscite:**
+  * S (bit di somma)
+  * Cₒ (riporto in uscita)
+Il suo schema logico è il seguente:
 ![[308ee129c6dc461ac15d1c95c5624572_MD5.jpeg]]
-
-Dalla tabella di verità è possibile dedurre la funzione logica della somma eseguita di questo circuito combinatorio:
-
-$S = \overline{A} \, \overline{B} \, C_i + \overline{A} B \, \overline{C_i} + A \, \overline{B} \, \overline{C_i} + A B C_i$
-
-$S = C_i (\overline{A} \, \overline{B} + A B) + \overline{C_i} (\overline{A} B + A \, \overline{B})$
-
-$S = C_i \, \overline{(A \oplus B)} + \overline{C_i} \, (A \oplus B)$
-
-$S = (A \oplus B) \oplus C_i$
-
-mentre la funzione logica del riporto è la seguente:
-
-$C_o = \overline{A} B C_i + A \overline{B} C_i + A B \overline{C_i} + A B C_i$
-
-$C_o = C_i (\overline{A} B + A \overline{B}) + A B (\overline{C_i} + C_i)$
-
-$C_o = C_i (A \oplus B) + A B$
-
-####  Sommatore Parallelo
-
-Quando si vogliono sommare numeri di più bit ciascuno, il metodo più semplice è quello di realizzare un **sommatore parallelo**. 
+La somma S viene calcolata sommando prima A e B, poi aggiungendo il riporto Cᵢ.
+Osservando la tabella di verità, si può ricavare la formula finale:
+```
+S = (A ⊕ B) ⊕ Cᵢ
+```
+Il riporto in uscita Cₒ è 1 in due situazioni:
+1. quando almeno due tra A, B e Cᵢ valgono 1
+2. quando la somma dei tre bit genera un overflow verso il bit successivo
+Questo porta alla formula:
+```
+Cₒ = (A AND B) OR (Cᵢ AND (A ⊕ B))
+```
+Queste due relazioni sono fondamentali per implementare un sommatore a più bit, poiché permettono di “passarsi” il riporto da un full-adder al successivo. Nel prossimo punto vedremo come concatenare questi blocchi per ottenere un **sommatore parallelo**, capace di sommare numeri binari completi.
+#### Sommatore Parallelo
+Finora abbiamo visto come sommare singoli bit usando semisommatori e full-adder. Per sommare numeri binari composti da più bit è sufficiente mettere in cascata più full-adder, uno per ogni posizione, formando un **sommatore parallelo**.
 ![[51529a5f41b1f9a0769f199e948e1693_MD5.jpeg]]
-Questo viene costruito mettendo in cascata tanti Full Adder (FA) quanti sono i bit di ciascun numero binario da sommare.
-
-Se utilizziamo numeri di 4 bit (nibble), i quattro bit di ciascun numero vengono presentati simultaneamente all'ingresso del sommatore parallelo. Nel caso migliore, la somma avviene simultaneamente se non ci sono riporti. Nel caso peggiore, invece, in cui ad ogni somma corrisponde un riporto, si avrà che questo bit traslerà dal primo HA a tutti gli altri FA fino all'ultimo.
-
-Questo è uno schema completo di un sommatore a 4 bit che usa solo porte elementari ed in cui i numeri da sommare sono individuati dalle posizioni degli otto deviatori:
-
-![[1ad6471b63cd2b6c56d9303f7935b843_MD5.jpeg]]
-In questo circuito manca il riporto finale che va in overflow.
-###    Sottrattori binari
-La sottrazione, nei sistemi digitali moderni, non viene implementata tramite circuiti dedicati: si sfrutta invece lo stesso circuito usato per l’addizione. Per ottenere A − B si trasforma prima B nel suo complemento e poi si esegue una comune somma binaria. In questo modo l’operazione di sottrazione viene ricondotta a un’unica struttura hardware, evitando la necessità di circuiti separati e semplificando l’architettura complessiva.
-
+Consideriamo il caso di un sommatore a 4 bit. I due numeri da sommare sono:
+* A = A₃ A₂ A₁ A₀
+* B = B₃ B₂ B₁ B₀
+  dove A₀ e B₀ sono i bit meno significativi. A ciascuna coppia di bit (Aᵢ, Bᵢ) è associato un full-adder:
+* il full-adder meno significativo somma A₀, B₀ e il riporto iniziale (di solito 0)
+* il riporto in uscita viene passato al full-adder successivo, che somma A₁, B₁ e quel riporto
+* il processo continua fino al bit più significativo, che produce l’ultimo riporto C₄
+  In questo modo tutti i bit dei due numeri vengono presentati **in parallelo** agli ingressi del sommatore e la somma viene calcolata contemporaneamente, con i riporti che si propagano da destra verso sinistra.
+  ![[1ad6471b63cd2b6c56d9303f7935b843_MD5.jpeg]]
+  Nel caso di un sommatore a 4 bit, le uscite saranno:
+* S₀, S₁, S₂, S₃: i bit della somma
+* C₄: il riporto finale, che può indicare un overflow se la somma esce dal range rappresentabile con 4 bit
+  Questo tipo di struttura è chiamata anche **sommatore a propagazione di riporto** (ripple-carry adder), perché ogni full-adder deve attendere il riporto dal blocco precedente. È una soluzione semplice e diretta, sufficiente per capire il funzionamento interno dei calcolatori e per costruire i primi modelli di ALU.
+### Sottrattori binari
+Nei calcolatori attuali **non esiste** un circuito separato per la sottrazione. L’hardware non implementa direttamente A − B. Al contrario, la sottrazione viene trasformata in un’addizione, sfruttando la rappresentazione dei numeri in **complemento a 2**.
+Questo approccio permette di utilizzare esattamente lo stesso sommatore già costruito per l’addizione, evitando di progettare un circuito dedicato.
+L’idea è la seguente:
+```
+A − B = A + (complemento a 2 di B)
+```
+Per ottenere il complemento a 2 di un numero occorre:
+1. invertire tutti i bit (complemento a 1)
+2. aggiungere 1 tramite il carry-in del sommatore
 ![[ebd31e412d0091b89a91f851d20d5d6f_MD5.jpeg]]
-
-L’eventuale riporto ottenuto dalla somma dei bit significativi deve essere aggiunto alla somma dei bit meno significativi.  
-Il riporto si ha solo nel caso in cui il minuendo è maggiore del sottraendo e mai nel caso opposto.
-
-**Caso A** – minuendo maggiore del sottraendo  
+In questo modo, sommando A con la versione complementata di B, il risultato binario rappresenta esattamente A − B secondo le convenzioni del complemento a 2. Il circuito sfrutta quindi un normale sommatore, con poche modifiche per gestire l’inversione di B e l’impostazione del riporto iniziale.
+Quando A è maggiore di B, il risultato è positivo e il riporto finale indica che non si è verificato overflow:
+**Caso A – minuendo maggiore del sottraendo**
 ![[1482b9ef70a223cdb7cf5c5bc6f39a9e_MD5.jpeg]]
-
-**Caso B** – minuendo minore del sottraendo  
+Quando invece A è minore di B, la sottrazione produce un risultato negativo, che viene espresso direttamente in complemento a 2:
+**Caso B – minuendo minore del sottraendo**
 ![[b9f4127311d9c62864e7d9d96ffffe29_MD5.jpeg]]
-
-Nel secondo caso, il risultato è negativo (poiché minuendo < sottraendo). Per ottenere il modulo, basta complementare nuovamente a 1 il risultato.  
-Esempio: 1100 → complemento a 1 = 0011 → (3)₁₀
-
-Il circuito deve quindi essere in grado di complementare un addendo e di tener conto del riporto causato dalla somma dei due bit più significativi.  
-Partendo da un sommatore semplice, un circuito capace di eseguire la sottrazione con il metodo del **complemento ad 1** può essere schematizzato così:
-
+In questo caso il riporto finale *non* si genera, e il bit più significativo del risultato è 1, segnalando che il numero è negativo.
+Se si desidera ottenere il valore assoluto, basta applicare nuovamente il complemento (invertire i bit e sommare 1).
+Questo meccanismo rende la struttura aritmetica molto più semplice, perché la stessa rete combinatoria può realizzare sia l’addizione sia la sottrazione con una sola modifica del percorso di ingresso di uno degli operandi.
+#### Circuito di sottrazione basato sul complemento
+Per implementare una sottrazione utilizzando lo stesso circuito impiegato per l’addizione, occorre essere in grado di generare il **complemento dell’operando B** e di gestire correttamente il riporto iniziale. La struttura si basa sul complemento a 1 applicato bit per bit, seguito dall’eventuale somma di 1 tramite il carry-in.
+Il primo passo è costruire un circuito che possa **invertire ogni bit di B quando richiesto**.
+L’idea è semplice: utilizzare una porta XOR per ciascun bit di B, controllata da un segnale P che indica se stiamo facendo una sottrazione.
+* Se **P = 0**, l’uscita è B (nessuna sottrazione).
+* Se **P = 1**, l’uscita è NOT B (primo passo per ottenere il complemento).
 ![[49d000ab4f74955cd67ef59a85240cd7_MD5.jpeg]]
-
-L’uscita C₃ costituisce il riporto ottenuto dalla somma di A₃ e B₃, mentre C₀ è l’ingresso da sommare con A₀ e B₀.
-
+Il secondo passaggio consiste nell’aggiungere **il riporto iniziale** C₀.
+Quando P = 1 (sottrazione), il carry-in deve essere impostato a 1 per completare il **complemento a 2**:
+* Somma di A + (NOT B) + 1 → A − B
+Il riporto finale C₃ riportato in uscita dal bit più significativo contiene un’informazione importante:
+* se è 1, significa che **A ≥ B**
+* se è 0, significa che **A < B**, quindi il risultato è negativo
 ![[ba6e7d8daf9eea442b6586d2433f879c_MD5.jpeg]]
-
-Per permettere al circuito di funzionare sia da sommatore che da sottrattore, occorre aggiungere un **comando** che:
-
-- complementi o meno uno dei due nibble;
-- abiliti o meno la somma dell’ultimo riporto con i bit meno significativi.
-
-L’operazione di complementazione a 1 su un singolo bit può essere eseguita da una **porta XOR**.
-
-Quando la variabile X = 1, la variabile A viene complementata; quando X = 0, A resta invariata.  
-La variabile X applicata a ogni singolo bit del sottraendo B è determinata dalla posizione del selettore P.
-
-L’eventuale bit di riporto C₃ deve coincidere con il riporto in ingresso Cᵢ.  
-Il dispositivo è quindi costituito da **4 full-adder**, non da 3 FA e 1 HA.
-
+Per permettere al circuito di funzionare sia da sommatore sia da sottrattore, il segnale P deve:
+1. decidere se invertire B (tramite XOR)
+2. decidere se attivare il carry-in iniziale
+In questo modo, con un solo selettore è possibile controllare entrambe le operazioni.
+Il circuito completo, ottenuto sostituendo uno dei due input con la sua versione condizionatamente invertibile, è costituito da **4 full-adder collegati in cascata**, ognuno dotato del proprio XOR per l'inversione:
 ![[1e1845e2fbb1989509866ffbae4a01d3_MD5.jpeg]]
-
-Nel caso in cui l’operazione sia una sottrazione (P=1) e il risultato negativo (C₃=0), deve essere eseguita una **complementazione finale**.  
-Questo può essere effettuato con la stessa struttura di porte prevista sull’operando B.
-
+Quando il risultato è negativo (bit più significativo = 1 e riporto finale = 0), potrebbe essere necessario ottenere il valore assoluto. Anche questo si ottiene tramite la stessa tecnica: un XOR controllato più un incremento finale.
+Il circuito per la **complementazione finale** è infatti identico a quello utilizzato per invertire B:
 ![[417de07d8b8d11e63b863d5c090143c6_MD5.jpeg]]
-
-Come visto nei sistemi digitali, i numeri interi relativi si rappresentano con il [[Codifica delle informazioni#2.6 Rappresentazione dei numeri negativi il complemento a 2|complemento a 2]], utilizzando il bit più pesante come **bit di segno**:  
-0 → numero positivo  
+Questo schema permette quindi di realizzare:
+* addizione
+* sottrazione
+* complemento a 1
+* complemento a 2
+* modulo (valore assoluto di un numero negativo)
+…il tutto riutilizzando esclusivamente:
+* XOR
+* full-adder
+* linee di controllo
+#### Complemento a 2 e numeri negativi
+Come visto nei sistemi digitali, i numeri interi relativi si rappresentano con il [[Codifica delle informazioni#2.6 Rappresentazione dei numeri negativi il complemento a 2|complemento a 2]], utilizzando il bit più pesante come bit di segno:
+0 → numero positivo
 1 → numero negativo
-
-Esempio per un sistema a 4 bit:
-
+Nel complemento a 2, il range di valori rappresentabili non è simmetrico: con 4 bit, ad esempio, si possono rappresentare i numeri da −8 a +7. I numeri negativi non sono memorizzati con un “segno” separato, ma come particolari configurazioni di bit che si ottengono complementando a 2 il corrispondente valore positivo.
 ![[d23276f5237eed75bd9a1277ae89f675_MD5.jpeg]]
-
-I circuiti sommatori sono indispensabili anche in questo caso. Il circuito seguente permette di eseguire il **complemento a 2** di un numero a 4 bit.  
-Se A₀ = 1 si ha la complementazione a 2 dei bit in ingresso X; se A₀ = 0 il numero rimane invariato.
-
+Per calcolare il complemento a 2 di un numero binario si procede così:
+1. si invertono tutti i bit (complemento a 1)
+2. si aggiunge 1 al risultato utilizzando un sommatore
+Questa operazione può essere realizzata in hardware con un circuito dedicato.
 ![[b7a973de578dc6120275f9df90a609f6_MD5.jpeg]]
-
-Esempio:  
-Numero +5 = 0101  
-Dopo la complementazione (A₀ = 1):  
-![[45a68b168e41b903f565a931e896e286_MD5.jpeg]]  
-Risultato: 1011 = -5
-
-Nel sistema binario a complemento a 2, la differenza tra due numeri positivi si ottiene complementando a 2 il sottraendo e sommando il risultato al minuendo.
-
-Il circuito può anche essere usato per ricavare il **modulo** di un numero in ingresso: se il numero è negativo, il bit X₃ pilota l’ingresso di complementazione A₀.  
-Esempio: per calcolare |1101₍C2₎| → A₀ = X₃
-
-![[5567723d08e1b5714e520cd6bf2f2f03_MD5.jpeg]]
-
-Infatti 1101₍C2₎ = -3 → |−3| = 3 = 0011₍C2₎
-
-Per effettuare l’operazione A ± |B| con A positivo e B positivo in complemento a 2, in un sistema a 4 bit, possiamo collegare i dispositivi precedenti così:
-
+Il circuito rappresentato permette di eseguire il complemento a 2 di un numero a 4 bit: se A₀ = 1 viene attivata la complementazione a 2 sui bit di ingresso X; se A₀ = 0 il numero attraversa il circuito senza essere modificato. In questo modo lo stesso blocco può essere usato sia per lasciare invariato il dato sia per trasformarlo nel suo opposto.
+Esempio:
+Numero +5 = 0101
+Dopo la complementazione (A₀ = 1):
+![[45a68b168e41b903f565a931e896e286_MD5.jpeg]]
+Risultato: 1011, che in complemento a 2 rappresenta −5
+Nel sistema binario a complemento a 2, la differenza tra due numeri positivi si ottiene complementando a 2 il sottraendo e sommando il risultato al minuendo. Lo stesso circuito può però essere sfruttato anche per ricavare il modulo (valore assoluto) di un numero negativo.
+   ![[5567723d08e1b5714e520cd6bf2f2f03_MD5.jpeg]]
+Se il numero in ingresso è negativo, il bit più significativo X₃ vale 1. Questo bit può essere usato per pilotare direttamente l’ingresso di complementazione A₀: quando X₃ = 1 il circuito esegue automaticamente il complemento a 2, trasformando il numero negativo nel suo valore assoluto.
+Esempio: per calcolare |1101₍C2₎| si pone A₀ = X₃.
+1101₍C2₎ = −3 → il circuito restituisce 0011₍C2₎ = 3
+Questo meccanismo permette di realizzare in modo compatto operazionidel tipo A ± |B| con A positivo e B rappresentato in complemento a 2. In un sistema a 4 bit è sufficiente collegare i dispositivi visti (sommatore, circuito di complemento e logica di controllo) nel modo seguente:
 ![[2120a628f152cfb8100b913b1c6fb2e8_MD5.jpeg]]
-
-Una volta implementata la sottrazione, abbiamo di fatto realizzato una **unità aritmetico-logica (ALU)**, poiché la moltiplicazione è una somma ripetuta e la divisione una sottrazione ripetuta.
+Una volta implementate correttamente somma, sottrazione tramite complemento a 2 e calcolo del modulo, si dispone di tutti i blocchi necessari per costruire una vera e propria unità aritmetico-logica (ALU). La moltiplicazione può essere vista come una somma ripetuta, mentre la divisione come una sottrazione ripetuta: le operazioni più complesse si appoggiano quindi sempre alla struttura dei sommatori e ai circuiti di complemento.
 ###  Increment
 
 L’operazione di incremento aumenta di uno il valore binario in ingresso. Per realizzarla non è necessario un circuito dedicato: è sufficiente sfruttare direttamente il comportamento del sommatore già introdotto.
