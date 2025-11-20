@@ -39,7 +39,7 @@ export default (() => {
     return (
       <head>
         <title>{title}</title>
-        <meta charSet="utf-8" name="google-adsense-account" content="ca-pub-6244956152734111"/>
+        <meta charSet="utf-8"/>
         {cfg.theme.cdnCaching && cfg.theme.fontOrigin === "googleFonts" && (
           <>
             <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -97,6 +97,8 @@ export default (() => {
             return resource
           }
         })}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6244956152734111"
+     crossorigin="anonymous"></script>
       </head>
     )
   }
