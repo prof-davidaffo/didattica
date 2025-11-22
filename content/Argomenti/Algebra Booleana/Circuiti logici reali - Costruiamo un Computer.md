@@ -1,12 +1,193 @@
- > [!NOTE] Autore
-> Prof. Davide Daffonchio
-
-
 > [!warning] Attenzione
-> Prima di studiare questa dispensa, hai bisogno di studiare le basi dell'algebra di Boole: [[Dispensa sull'algebra di Boole e circuiti logici]]
-##  Introduzione
+> Prima di studiare questa dispensa, hai bisogno di studiare le basi dell'algebra di Boole: [[Dispensa sull'algebra di Boole e circuiti logici]] e dei sistemi di numerazione [[Codifica delle informazioni#2. Sistemi di numerazione]]
+## Introduzione
 Questa dispensa segue un percorso completo per comprendere e costruire tutti i circuiti logici fondamentali che costituiscono l’architettura di un computer. L’obiettivo è mostrare come, partendo esclusivamente da porte logiche elementari, sia possibile arrivare a realizzare unità aritmetiche, dispositivi di memoria, sistemi di controllo e infine un processore funzionante. Il metodo è incrementale: ogni circuito introduce un concetto nuovo e fornisce il blocco costruttivo necessario per il successivo. In questo modo l’intero sistema emerge in modo naturale, come risultato della composizione di componenti semplici ma estremamente potenti.
 La progressione di questa dispensa segue quella del gioco [nandgame.com]().
+## Porte logiche di base
+
+###  Porta logica NAND: costruzione e fondamenti
+####  La logica digitale e i circuiti fondamentali
+Nel contesto dell’elettronica digitale, i segnali binari (0 e 1) vengono elaborati mediante **circuiti logici**, detti **porte logiche**, ciascuna delle quali realizza una specifica operazione booleana.
+Tra tutte le porte logiche, la **porta NAND** occupa un ruolo privilegiato: essa è **funzionalmente completa**, il che significa che tutte le altre operazioni logiche (AND, OR, NOT, XOR, ecc.) possono essere costruite a partire da essa. Per questo motivo, è la porta scelta come **mattoncino base** nell’introduzione ai circuiti logici.
+
+---
+####  La porta NAND: definizione logica
+La porta NAND (abbreviazione di **NOT AND**) restituisce un valore logico **falso (0)** **solo** quando **entrambi** gli ingressi sono veri (1); in tutti gli altri casi restituisce **vero (1)**.
+#####  Tavola di verità della porta NAND
+| Ingresso A | Ingresso B | Uscita (A NAND B) |
+| ---------- | ---------- | ----------------- |
+| 0          | 0          | 1                 |
+| 0          | 1          | 1                 |
+| 1          | 0          | 1                 |
+| 1          | 1          | 0                 |
+####  Implementazione della NAND tramite relè
+Per comprendere la costruzione fisica della NAND, è utile modellare il circuito usando **relè**, dispositivi elettromeccanici che funzionano come interruttori controllati da corrente elettrica. Storicamente, i primi computer digitali furono costruiti proprio con relè prima dell’avvento dei transistor.
+#####  Cos'è un relè?
+Un **relè** è un interruttore azionato da un campo magnetico generato da una corrente di controllo. Quando il segnale di controllo è attivo (livello logico 1), il relè **chiude il contatto**, permettendo il passaggio della corrente. Quando è inattivo (livello logico 0), il contatto rimane **aperto**, impedendo la trasmissione del segnale.
+Nel contesto logico:
+* Un relè controllato da un segnale `x` si comporta come un **interruttore che chiude solo se x = 1**.
+* I relè possono essere **concatenati** per implementare operazioni logiche complesse.
+---
+####  Costruzione della NAND con due relè
+#####  Principio di funzionamento
+Per costruire una porta NAND con relè, si possono usare **due stadi**:
+1. **Primo stadio**: si ottiene collegando due relè in **serie**, controllati rispettivamente dagli ingressi `a` e `b`. In questa configurazione, il segnale passa solo se **entrambi i relè sono chiusi**, cioè se `a = 1` e `b = 1`.
+2. **Secondo stadio**: si inverte il risultato del primo stadio usando un **meccanismo invertente**, ad esempio con un relè configurato per **aprire il passaggio** quando il segnale è attivo, e viceversa.
+
+#####  Schema del circuito
+![[nand.png]]
+
+---
+####  Equivalenza con i circuiti moderni
+Sebbene oggi i circuiti digitali siano implementati mediante **transistor**, l’analogia con i relè è diretta:
+* Entrambi sono **interruttori controllabili**.
+* Entrambi realizzano **funzioni logiche binarie**.
+* L’inversione, il controllo multiplo e la combinazione logica si ottengono con configurazioni simili.
+Utilizzare relè come modello didattico (come avviene in *nandgame.com*) è vantaggioso perché permette di **visualizzare** i meccanismi logici al livello fisico e strutturale.
+###  Porta logica NOT (inverter) costruita con una porta NAND
+####  Definizione della porta NOT
+La **porta NOT**, detta anche **inverter**, è una delle operazioni logiche fondamentali in algebra booleana. Essa restituisce l’opposto del valore logico in ingresso:
+* Se l’ingresso è `0`, l’uscita è `1`.
+* Se l’ingresso è `1`, l’uscita è `0`.
+#####  Tavola di verità della porta NOT
+| Ingresso A | Uscita (NOT A) |
+| ---------- | -------------- |
+| 0          | 1              |
+| 1          | 0              |
+
+---
+####  Implementazione della NOT tramite NAND
+Una delle proprietà più importanti della porta NAND è che essa può essere **riconfigurata per replicare qualsiasi altra operazione logica**, incluso l’inversore.
+Per ottenere una porta NOT utilizzando **solo una NAND**, è sufficiente collegare **entrambi gli ingressi della NAND allo stesso segnale**.
+#####  Formula logica
+Poiché la NAND restituisce 0 solo quando **entrambi** gli ingressi sono 1, se colleghiamo ad entrambi lo stesso segnale `A`, otteniamo:
+* Se `A = 0`, allora `NAND(0, 0) = 1` ⇒ `NOT 0 = 1`
+* Se `A = 1`, allora `NAND(1, 1) = 0` ⇒ `NOT 1 = 0`
+Questa configurazione simula esattamente il comportamento di una porta NOT.
+---
+####  Interpretazione circuitale nel contesto logico
+Dalla costruzione a partire dalla NAND, possiamo trarre un’importante conseguenza didattica: **la negazione logica può essere vista come un caso particolare dell’operazione NAND**, in cui i due argomenti coincidono.
+Nel simulatore *nandgame.com*, questo è il primo esempio in cui si **riutilizza una porta precedentemente costruita (NAND)** per creare un nuovo blocco funzionale (NOT), avviando la costruzione **gerarchica** di un sistema logico.
+
+---
+####  Schema logico
+![[invert.png]]
+
+---
+####  Astrazione e semplificazione
+A partire da questo livello, i circuiti non richiedono più la rappresentazione fisica dei componenti interni (come relè, alimentazione, magneti, ecc.). Si passa dunque a una **visione logico-funzionale**, in cui ogni componente viene trattato come una **scatola nera** che trasforma ingressi in uscite secondo una funzione booleana.
+Questa astrazione riflette il modello di progettazione digitale usato nell’ingegneria elettronica e nell’informatica teorica: i componenti complessi vengono costruiti componendo **blocchi funzionali più semplici**, ciascuno definito dal proprio comportamento logico.
+
+---
+###  Porta logica AND costruita con NAND e NOT
+####  Definizione della porta AND
+La **porta AND** è una delle tre operazioni logiche fondamentali del sistema booleano. Essa restituisce `1` (vero) **solo quando entrambi** gli ingressi sono `1`.
+#####  Tavola di verità della porta AND
+| Ingresso A | Ingresso B | Uscita (A AND B) |
+| ---------- | ---------- | ---------------- |
+| 0          | 0          | 0                |
+| 0          | 1          | 0                |
+| 1          | 0          | 0                |
+| 1          | 1          | 1                |
+####  Implementazione della AND con NAND e NOT
+Poiché la porta NAND è già stata implementata e può essere usata come **blocco logico riutilizzabile**, e la porta NOT è a sua volta costruita con una NAND, è possibile realizzare la porta AND sfruttando la **negazione del risultato di una NAND**.
+#####  Passaggi logici
+1. Calcolare `NAND(A, B)`: questa operazione restituisce `¬(A ∧ B)`
+2. Invertire il risultato: `NOT(NAND(A, B)) = ¬(¬(A ∧ B)) = A ∧ B`
+---
+####  Schema logico del circuito
+![[and.png]]
+
+---
+####  Considerazioni didattiche
+Un aspetto importante da sottolineare è che, **dal punto di vista fisico-costruttivo**, non è la porta NAND a derivare dalla AND con negazione, ma esattamente il contrario:
+
+> **La porta AND è costruita invertendo il risultato della NAND.**
+
+In termini teorici, è comune definire la NAND come una **AND seguita da NOT**. Tuttavia, in un contesto di progettazione logica a partire da componenti elementari (come in _nandgame_), **la NAND è il componente primitivo**, e tutte le altre operazioni (inclusa l’AND stessa) **vengono derivate da essa**. Questo rovesciamento di prospettiva è fondamentale per comprendere la logica costruttiva dei circuiti digitali.
+###  Porta logica OR costruita con NAND e NOT
+####  Definizione della porta OR
+La **porta OR** restituisce `1` (vero) se **almeno uno** dei due ingressi è `1`. Solo nel caso in cui **entrambi** gli ingressi siano `0`, l’uscita sarà `0`.
+#####  Tavola di verità della porta OR
+| Ingresso A | Ingresso B | Uscita (A OR B) |
+| ---------- | ---------- | --------------- |
+| 0          | 0          | 0               |
+| 0          | 1          | 1               |
+| 1          | 0          | 1               |
+| 1          | 1          | 1               |
+####  Derivazione della OR tramite NAND e NOT
+Per costruire una porta OR utilizzando solo NAND (e quindi eventualmente inverter costruiti con NAND), si può applicare una trasformazione logica basata sulle **leggi di De Morgan**, che permettono di riscrivere l’OR in termini di AND e NOT.
+#####  Legge di De Morgan applicata
+$A \lor B = \neg (\neg A \land \neg B)$
+Questa espressione ci dice che si può ottenere l’OR in tre passaggi:
+1. Invertire `A` → `NOT A`
+2. Invertire `B` → `NOT B`
+3. Calcolare `AND(NOT A, NOT B)`
+4. Invertire il risultato finale
+Nel nostro contesto, poiché la **porta AND è costruita come `NOT(NAND(...))`**, questa formula può essere direttamente riscritta in termini di NAND:
+#####  Formula completa in NAND
+$\text{OR}(A, B) = \text{NAND}(\text{NAND}(A, A), \text{NAND}(B, B))$
+Ovvero:
+* `NAND(A, A)` = `NOT A`
+* `NAND(B, B)` = `NOT B`
+* `NAND(NOT A, NOT B)` = `OR(A, B)`
+---
+####  Schema logico del circuito
+![[or.png]]
+###  Porta logica XOR costruita con NAND e NOT
+####  Definizione della porta XOR
+La **porta XOR** (eXclusive OR) restituisce `1` **solo se uno solo** dei due ingressi è `1`. Se entrambi gli ingressi sono uguali (entrambi `0` o entrambi `1`), l’uscita è `0`.
+È la porta logica che implementa la **disuguaglianza logica** tra due segnali binari.
+#####  Tavola di verità della porta XOR
+| Ingresso A | Ingresso B | Uscita (A XOR B) |
+| ---------- | ---------- | ---------------- |
+| 0          | 0          | 0                |
+| 0          | 1          | 1                |
+| 1          | 0          | 1                |
+| 1          | 1          | 0                |
+Formula logica:
+[
+A \oplus B = (A \land \neg B) \lor (\neg A \land B)
+]
+---
+####  Costruzione della XOR con NAND e NOT
+La porta XOR è più complessa rispetto alle precedenti, poiché **non può essere realizzata con una sola o due NAND**, ma richiede una combinazione **gerarchica di più operazioni**.
+Partendo dalla definizione logica sopra, e sapendo che abbiamo a disposizione solo:
+* **NAND**: $(\neg(A \land B))$
+* **NOT**: costruita come $(\text{NAND}(A, A))$
+si può derivare una costruzione equivalente della XOR interamente in NAND.
+#####  Costruzione funzionale in passi
+Un possibile modo per costruire la XOR è il seguente:
+1. Calcolare `NAND(A, B)` → chiamiamolo `n1`
+   (equivale a `¬(A ∧ B)`)
+2. Calcolare `NAND(A, n1)` → chiamiamolo `n2`
+   (equivale a `¬(A ∧ ¬(A ∧ B))`)
+3. Calcolare `NAND(B, n1)` → chiamiamolo `n3`
+   (equivale a `¬(B ∧ ¬(A ∧ B))`)
+4. Calcolare `NAND(n2, n3)` → questo è il risultato finale
+   (equivale a `¬(¬(A ∧ ¬(A ∧ B)) ∧ ¬(B ∧ ¬(A ∧ B)))`)
+#####  Formula finale in NAND
+$\text{XOR}(A, B) = \text{NAND}(\text{NAND}(A, \text{NAND}(A, B)), \text{NAND}(B, \text{NAND}(A, B)))$
+Questa espressione utilizza **quattro porte NAND**, e non richiede inverter espliciti se si considera che il NOT è implementato con una NAND autocollegata.
+
+---
+####  Schema logico del circuito
+![[xor.png]]
+
+---
+### Conclusione – Dalla NAND al calcolatore
+Attraverso la costruzione progressiva delle principali porte logiche (NOT, AND, OR, XOR), a partire dalla sola **porta NAND**, si è dimostrato un principio fondamentale dell’informatica teorica e dell’ingegneria digitale:
+
+> **L’intera logica di un calcolatore può essere costruita a partire dalla porta NAND.**
+
+Questo è possibile grazie alla proprietà di **completezza funzionale** della NAND: qualsiasi funzione booleana, e quindi qualsiasi circuito logico, può essere realizzata combinando un numero finito di porte NAND. In particolare:
+
+* **NOT** si ottiene collegando i due ingressi della NAND allo stesso segnale.
+* **AND** si ottiene negando l’uscita della NAND.
+* **OR** si ottiene negando gli ingressi e applicando NAND (secondo De Morgan).
+* **XOR** si costruisce tramite una combinazione multilivello di NAND.
+A partire da questi blocchi, si possono realizzare **unità aritmetiche**, **registri**, **contatori**, **memorie**, **unità di controllo**, fino ad arrivare al cuore del calcolatore: la **CPU** (unità centrale di elaborazione). Ogni singola operazione svolta da un processore — dall’addizione di due numeri alla valutazione di una condizione logica — può essere ricondotta a una sequenza di operazioni realizzate con **porte logiche costruite su NAND**.
+Questa visione è ciò che *nandgame.com* traduce in forma interattiva: costruire **dal basso verso l’alto** la logica di un calcolatore, partendo da un singolo, semplicissimo componente.
 ## Aritmetica
 ###  Sommatore binario
 ####  Introduzione
