@@ -448,30 +448,23 @@ Tabella di verità della funzione:
 |   0   |   1   |   0   |   1   |   1   |
 |   0   |   1   |   1   |   0   |   1   |
 |   0   |   1   |   1   |   1   |   1   |
-|   1   |   1   |   0   |   0   |   1   |
-|   1   |   1   |   0   |   1   |   1   |
-|   1   |   1   |   1   |   0   |   0   |
-|   1   |   1   |   1   |   1   |   0   |
-|   1   |   0   |   0   |   0   |   0   |
+|   1   |   0   |   0   |   0   |   1   |
 |   1   |   0   |   0   |   1   |   1   |
 |   1   |   0   |   1   |   0   |   0   |
 |   1   |   0   |   1   |   1   |   0   |
+|   1   |   1   |   0   |   0   |   0   |
+|   1   |   1   |   0   |   1   |   1   |
+|   1   |   1   |   1   |   0   |   0   |
+|   1   |   1   |   1   |   1   |   0   |
 Mappa (disposizione in Gray code per AB e CD: 00, 01, 11, 10):
 
 | **CD\AB** | **00** | **01** | **11** | **10** |
 | :-------: | :----: | :----: | :----: | :----: |
-|   **00**  |    0   |    0   |    1   |    0   |
-|   **01**  |    1   |    1   |    1   |    1   |
-|   **11**  |    0   |    1   |    0   |    0   |
-|   **10**  |    1   |    1   |    0   |    0   |
-Raggruppamenti:
-* Gruppo da 4 (riga CD=01) → **C D̄**
-  (tutti gli 1 della seconda riga corrispondono a C=0, D=1)
-* Gruppo da 2 (colonna AB=01, righe 01–10) → **ĀB C̄**
-  (colonna centrale, in basso)
-* Gruppo da 2 (colonna AB=11, righe 00–01) → **AB C̄**
-Espressione semplificata:
-**Y = C D̄ + ĀB C̄ + AB C̄**
+|   **00**  |    0   |    0   |   0    |   1    |
+|   **01**  |    1   |    1   |   1    |   1    |
+|   **11**  |    0   |    1   |   0    |   0    |
+|   **10**  |    1   |    1   |   0    |   0    |
+$Y = \overline C D + A \overline B \ \overline C + \overline A B D + C \overline D \  \overline A$
 ##### Esercizi svolti
 ![[mappe_k_4.png]]
 ![[mappe_k_4p2.png]]

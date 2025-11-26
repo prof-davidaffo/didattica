@@ -295,13 +295,15 @@ Scrivere un programma che gestisce le spedizioni di un’azienda. Il programma d
     - **Pesante:** 5 < peso ≤ 20 kg
     - **Molto Pesante:** peso > 20 kg
 4. Calcolare il costo di spedizione per ciascun pacco in base alla seguente tabella:
-    |Categoria|Nazionale|Internazionale|
-    |---|---|---|
-    |Leggero|5€|10€|
-    |Medio|10€|20€|
-    |Pesante|15€|30€|
-    |Molto Pesante|25€|50€|
-    
+
+|Categoria|Nazionale|Internazionale|
+|---|---|---|
+|Leggero|5€|10€|
+|Medio|10€|20€|
+|Pesante|15€|30€|
+|Molto Pesante|25€|50€|
+
+
 5. Per ogni pacco, stampare:
     
     - Numero del pacco
