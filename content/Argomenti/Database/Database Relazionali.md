@@ -456,7 +456,6 @@ Gli attributi:
 ###  5. Determinazione delle cardinalità e partecipazioni
 Dal testo bisogna ricavare **quante entità** possono essere associate a quante altre.
 Esempi di indicatori nel testo:
-* “ogni studente può frequentare più corsi” → 1:N
 * “un cliente può effettuare molti ordini” → 1:N
 * “un corso può essere seguito da molti studenti” → N:M
 * “ogni ordine appartiene a un unico cliente” → 1:N (partecipazione totale sul lato “ordine”)
