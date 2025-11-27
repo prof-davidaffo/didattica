@@ -139,6 +139,47 @@ Esempi:
 * “Iscrizione”: STUDENTE → CORSO
 * “Acquisto”: CLIENTE → PRODOTTO
 ---
+### Partecipazione totale e parziale
+La partecipazione di un’entità a una relazione indica se ogni occorrenza dell’entità deve obbligatoriamente comparire nella relazione (partecipazione totale) oppure se la presenza nella relazione è facoltativa (partecipazione parziale). La partecipazione permette di distinguere tra vincoli di obbligatorietà e vincoli di scelta all’interno del modello ER e influisce sulla successiva traduzione nel modello relazionale.
+#### Partecipazione totale
+Un’entità ha partecipazione totale a una relazione quando ogni sua istanza deve necessariamente comparire nella relazione. Questo significa che non può esistere un’istanza dell’entità senza essere associata almeno a un'istanza dell’altra entità coinvolta.
+Esempio: ogni carta d’identità deve appartenere a una persona.
+```mermaid
+erDiagram
+    PERSONA ||--|| CARTA_IDENTITA : possiede
+    PERSONA {
+        string CodPersona PK
+        string Nome
+        string Cognome
+    }
+    CARTA_IDENTITA {
+        string NumeroCIE PK
+        date DataRilascio
+    }
+```
+In questo caso l’entità CARTA_IDENTITA ha partecipazione totale: una carta d’identità non può esistere senza la persona a cui appartiene.
+#### Partecipazione parziale
+Un’entità ha partecipazione parziale a una relazione quando può esistere anche senza comparire nella relazione. La partecipazione alla relazione è facoltativa e non vincolata.
+Esempio: un reparto può esistere anche senza docenti assegnati.
+```mermaid
+erDiagram
+    REPARTO ||--o{ DOCENTE : comprende
+    REPARTO {
+        string CodReparto PK
+        string Nome
+    }
+    DOCENTE {
+        string Matricola PK
+        string Nome
+    }
+```
+In questo caso l’entità DOCENTE ha partecipazione parziale: un docente può esistere anche prima di essere assegnato a un reparto.
+#### Implicazioni sul modello relazionale
+La partecipazione determina la posizione della chiave esterna nella traduzione al modello relazionale. La regola è la seguente:
+* nella partecipazione totale la chiave esterna va nella tabella dell’entità che partecipa totalmente
+* nella partecipazione parziale la chiave esterna non deve essere inserita nella tabella dell’entità con partecipazione parziale
+La partecipazione totale indica una dipendenza logica da un’altra entità e guida la struttura delle relazioni durante la trasformazione del modello ER.
+
 ###  Cardinalità delle relazioni
 La cardinalità rappresenta quante istanze di un’entità possono essere associate a una istanza dell’entità dall’altro lato.
 ####  Relazione 1 : 1
@@ -164,24 +205,6 @@ Esempio:
 erDiagram
     STUDENTE }o--o{ CORSO : frequenta
 ```
----
-###  Vincoli di partecipazione
-Indicano se le entità devono obbligatoriamente partecipare alla relazione.
-####  Partecipazione totale
-Ogni istanza dell’entità deve essere collegata alla relazione.
-####  Partecipazione parziale
-Alcune istanze possono non partecipare.
-Esempio:
-```mermaid
-erDiagram
-    CLIENTE ||--o{ ORDINE : effettua
-```
-Interpretiamo così:
-* ORDINE → partecipazione totale (ogni ordine appartiene a un cliente)
-* CLIENTE → partecipazione parziale (non tutti i clienti fanno ordini)
-In fase relazionale:
-* partecipazione totale → FK NOT NULL
-* partecipazione parziale → FK NULL permesso
 ---
 ###  Relazioni con attributi
 Quando la relazione possiede attributi propri (data, quantità, prezzo, voto, ruolo, ecc.), si rappresenta tramite un’entità associativa.
@@ -386,155 +409,6 @@ $$
 $$
 
 ---
-##  Normalizzazione
-La **normalizzazione** è un processo sistematico volto a organizzare le tabelle di un database relazionale per:
-* ridurre la ridondanza dei dati,
-* evitare anomalie di inserimento, aggiornamento e cancellazione,
-* garantire coerenza e integrità.
-La normalizzazione si basa sul concetto di **dipendenze funzionali** e comporta una serie di trasformazioni che portano le tabelle a soddisfare forme normali sempre più restrittive.
----
-###  Dipendenze funzionali
-Una **dipendenza funzionale** (DF) tra attributi di una relazione si indica con:
-$$
-X \rightarrow Y
-$$
-e significa che *ogni valore* di (X) determina *un unico valore* di (Y).
-Esempi classici:
-* La matricola determina nome e cognome:
-  $$
-  \text{Matricola} \rightarrow \text{Nome}, \text{Cognome}
-  $$
-* Il codice del corso determina il suo titolo:
-  $$
-  \text{CodCorso} \rightarrow \text{Titolo}
-  $$
-####  Dipendenza funzionale banale
-Una DF è banale se (Y \subseteq X).
-Esempio:
-$$
-\text{Matricola, Corso} \rightarrow \text{Matricola}
-$$
-####  Dipendenza funzionale non banale
-Altrimenti è non banale, ed è quella che ci interessa nella normalizzazione.
-
----
-###  Prima Forma Normale (1NF)
-Una relazione è in **1NF** se:
-* *tutti gli attributi sono atomici* (non divisibili),
-* non esistono valori multipli nello stesso campo.
-Esempio NON 1NF:
-* Telefono: "333…, 345…"
-Corretto in 1NF:
-* tabella TelefonoStudente separata, oppure un record per numero.
----
-###  Seconda Forma Normale (2NF)
-Una relazione è in **2NF** se:
-1. è già in 1NF
-2. **ogni attributo non primo** dipende **interamente** dalla chiave primaria
-   (non da una sua parte)
-Questa forma normale riguarda solo le tabelle con **chiavi primarie composte**.
-####  Esempio classico
-Supponiamo:
-$$
-\text{FREQUENZA}(
-\underline{\text{Matricola}^{\text{STUDENTE}}},
-\underline{\text{CodCorso}^{\text{CORSO}}},
-\text{NomeStudente},
-\text{TitoloCorso}
-)
-$$
-DF implicite:
-$$
-\text{Matricola} \rightarrow \text{NomeStudente}
-$$
-$$
-\text{CodCorso} \rightarrow \text{TitoloCorso}
-$$
-Qui abbiamo **dipendenze parziali** ⇒ NON è in 2NF.
-La soluzione è decomporre:
-1.
-$$
-\text{STUDENTE}(
-\underline{\text{Matricola}},
-\text{NomeStudente}
-)
-$$
-2.
-$$
-\text{CORSO}(
-\underline{\text{CodCorso}},
-\text{TitoloCorso}
-)
-$$
-3.
-$$
-\text{FREQUENZA}(
-\underline{\text{Matricola}^{\text{STUDENTE}}},
-\underline{\text{CodCorso}^{\text{CORSO}}}
-)
-$$
----
-###  Terza Forma Normale (3NF)
-Una relazione è in **3NF** se:
-1. è in 2NF
-2. non esistono **dipendenze transitiva** tra attributi non chiave
-Esempio classico:
-$$
-\text{STUDENTE}(
-\underline{\text{Matricola}},
-\text{CodDip}^{\text{DIPARTIMENTO}},
-\text{NomeDip}
-)
-$$
-DF implicite:
-$$
-\text{CodDip} \rightarrow \text{NomeDip}
-$$
-Il problema:
-* NomeDip dipende da CodDip
-* CodDip dipende da Matricola
-* quindi NomeDip dipende *transitivamente* da Matricola
-  → NON è in 3NF
-Soluzione:
-1.
-$$
-\text{DIPARTIMENTO}(
-\underline{\text{CodDip}},
-\text{NomeDip}
-)
-$$
-2.
-$$
-\text{STUDENTE}(
-\underline{\text{Matricola}},
-\text{CodDip}^{\text{DIPARTIMENTO}}
-)
-$$
----
-###  Forma Normale di Boyce-Codd (BCNF)
-La BCNF è una versione più rigorosa della 3NF.
-Una relazione è in **BCNF** se per ogni dipendenza funzionale:
-$$
-X \rightarrow Y
-$$
-(X) è una **superchiave**.
-####  Esempio semplice
-Supponiamo una relazione:
-$$
-\text{INSEGNAMENTO}(
-\underline{\text{Corso}},
-\text{Aula},
-\text{Docente}
-)
-$$
-DF:
-1. $(\text{Corso} \rightarrow \text{Docente})$
-2. $(\text{Aula} \rightarrow \text{Docente})$
-Qui **Aula non è una chiave**, ma determina Docente ⇒ violazione della BCNF.
-Soluzione:
-* decomposizione in due tabelle, seguendo le DF.
----
-
 ## Costruzione del modello ER a partire da una consegna testuale
 Quando ci viene fornita una **consegna scritta** (un testo descrittivo, un capitolato, una specifica informale), il nostro obiettivo è trasformare quel testo in un **modello ER corretto, completo e coerente**.
 Si tratta di una delle abilità più importanti nella progettazione concettuale.
@@ -785,4 +659,150 @@ $$
 )
 $$
 ---
+##  Normalizzazione
+La **normalizzazione** è un processo sistematico volto a organizzare le tabelle di un database relazionale per:
+* ridurre la ridondanza dei dati,
+* evitare anomalie di inserimento, aggiornamento e cancellazione,
+* garantire coerenza e integrità.
+La normalizzazione si basa sul concetto di **dipendenze funzionali** e comporta una serie di trasformazioni che portano le tabelle a soddisfare forme normali sempre più restrittive.
+---
+###  Dipendenze funzionali
+Una **dipendenza funzionale** (DF) tra attributi di una relazione si indica con:
+$$
+X \rightarrow Y
+$$
+e significa che *ogni valore* di (X) determina *un unico valore* di (Y).
+Esempi classici:
+* La matricola determina nome e cognome:
+  $$
+  \text{Matricola} \rightarrow \text{Nome}, \text{Cognome}
+  $$
+* Il codice del corso determina il suo titolo:
+  $$
+  \text{CodCorso} \rightarrow \text{Titolo}
+  $$
+####  Dipendenza funzionale banale
+Una DF è banale se $(Y \subseteq X)$.
+Esempio:
+$$
+\text{Matricola, Corso} \rightarrow \text{Matricola}
+$$
+####  Dipendenza funzionale non banale
+Altrimenti è non banale, ed è quella che ci interessa nella normalizzazione.
 
+---
+###  Prima Forma Normale (1NF)
+Una relazione è in **1NF** se:
+* *tutti gli attributi sono atomici* (non divisibili),
+* non esistono valori multipli nello stesso campo.
+Esempio NON 1NF:
+* Telefono: "333…, 345…"
+Corretto in 1NF:
+* tabella TelefonoStudente separata, oppure un record per numero.
+---
+###  Seconda Forma Normale (2NF)
+Una relazione è in **2NF** se:
+1. è già in 1NF
+2. **ogni attributo non primo** dipende **interamente** dalla chiave primaria
+   (non da una sua parte)
+Questa forma normale riguarda solo le tabelle con **chiavi primarie composte**.
+####  Esempio classico
+Supponiamo:
+$$
+\text{FREQUENZA}(
+\underline{\text{Matricola}^{\text{STUDENTE}}},
+\underline{\text{CodCorso}^{\text{CORSO}}},
+\text{NomeStudente},
+\text{TitoloCorso}
+)
+$$
+DF implicite:
+$$
+\text{Matricola} \rightarrow \text{NomeStudente}
+$$
+$$
+\text{CodCorso} \rightarrow \text{TitoloCorso}
+$$
+Qui abbiamo **dipendenze parziali** ⇒ NON è in 2NF.
+La soluzione è decomporre:
+1.
+$$
+\text{STUDENTE}(
+\underline{\text{Matricola}},
+\text{NomeStudente}
+)
+$$
+2.
+$$
+\text{CORSO}(
+\underline{\text{CodCorso}},
+\text{TitoloCorso}
+)
+$$
+3.
+$$
+\text{FREQUENZA}(
+\underline{\text{Matricola}^{\text{STUDENTE}}},
+\underline{\text{CodCorso}^{\text{CORSO}}}
+)
+$$
+---
+###  Terza Forma Normale (3NF)
+Una relazione è in **3NF** se:
+1. è in 2NF
+2. non esistono **dipendenze transitiva** tra attributi non chiave
+Esempio classico:
+$$
+\text{STUDENTE}(
+\underline{\text{Matricola}},
+\text{CodDip}^{\text{DIPARTIMENTO}},
+\text{NomeDip}
+)
+$$
+DF implicite:
+$$
+\text{CodDip} \rightarrow \text{NomeDip}
+$$
+Il problema:
+* NomeDip dipende da CodDip
+* CodDip dipende da Matricola
+* quindi NomeDip dipende *transitivamente* da Matricola
+  → NON è in 3NF
+Soluzione:
+1.
+$$
+\text{DIPARTIMENTO}(
+\underline{\text{CodDip}},
+\text{NomeDip}
+)
+$$
+2.
+$$
+\text{STUDENTE}(
+\underline{\text{Matricola}},
+\text{CodDip}^{\text{DIPARTIMENTO}}
+)
+$$
+---
+###  Forma Normale di Boyce-Codd (BCNF)
+La BCNF è una versione più rigorosa della 3NF.
+Una relazione è in **BCNF** se per ogni dipendenza funzionale:
+$$
+X \rightarrow Y
+$$
+(X) è una **superchiave**.
+####  Esempio semplice
+Supponiamo una relazione:
+$$
+\text{INSEGNAMENTO}(
+\underline{\text{Corso}},
+\text{Aula},
+\text{Docente}
+)
+$$
+DF:
+1. $(\text{Corso} \rightarrow \text{Docente})$
+2. $(\text{Aula} \rightarrow \text{Docente})$
+Qui **Aula non è una chiave**, ma determina Docente ⇒ violazione della BCNF.
+Soluzione:
+* decomposizione in due tabelle, seguendo le DF.

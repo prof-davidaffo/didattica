@@ -1,7 +1,3 @@
- > [!NOTE] Autore
-> Prof. Davide Daffonchio
-> Alcuni appunti e immagini dei circuiti reali sono tratti da [edutecnica.it]()
-
 ## Capitolo 1: Tabelle di verità e circuiti logici
 ###  Introduzione di base
 
