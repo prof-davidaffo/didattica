@@ -256,6 +256,40 @@ Consideriamo il caso di un sommatore a 4 bit. I due numeri da sommare sono:
 * S₀, S₁, S₂, S₃: i bit della somma
 * C₄: il riporto finale, che può indicare un overflow se la somma esce dal range rappresentabile con 4 bit
   Questo tipo di struttura è chiamata anche **sommatore a propagazione di riporto** (ripple-carry adder), perché ogni full-adder deve attendere il riporto dal blocco precedente. È una soluzione semplice e diretta, sufficiente per capire il funzionamento interno dei calcolatori e per costruire i primi modelli di ALU.
+###  Increment
+
+L’operazione di incremento aumenta di uno il valore binario in ingresso. Per realizzarla non è necessario un circuito dedicato: è sufficiente sfruttare direttamente il comportamento del sommatore già introdotto.
+
+Incrementare equivale a eseguire:
+
+```
+X + 1
+```
+
+Per ottenere questo risultato si collega:
+
+- il numero da incrementare all’ingresso A,
+    
+- il valore **000…0000** all’ingresso B,
+    
+- e si imposta il **carry-in iniziale a 1**.
+    
+
+Il sommatore esegue automaticamente l’incremento tramite la normale propagazione dei riporti.
+
+Esempio a 4 bit:
+
+```
+ A:   0111
+ B:   0000
+Cin:     1
+--------------
+ S:   1000
+```
+
+Il carry iniziale avvia l’addizione con 1, e i riporti si propagano tra i bit finché necessario. Il risultato è un incremento ottenuto in modo semplice ed efficiente sfruttando esclusivamente la logica del sommatore.
+![[increment.png]]
+
 ### Sottrattori binari
 Nei calcolatori attuali **non esiste** un circuito separato per la sottrazione. L’hardware non implementa direttamente A − B. Al contrario, la sottrazione viene trasformata in un’addizione, sfruttando la rappresentazione dei numeri in **complemento a 2**.
 Questo approccio permette di utilizzare esattamente lo stesso sommatore già costruito per l’addizione, evitando di progettare un circuito dedicato.
@@ -335,39 +369,6 @@ Esempio: per calcolare |1101₍C2₎| si pone A₀ = X₃.
 Questo meccanismo permette di realizzare in modo compatto operazionidel tipo A ± |B| con A positivo e B rappresentato in complemento a 2. In un sistema a 4 bit è sufficiente collegare i dispositivi visti (sommatore, circuito di complemento e logica di controllo) nel modo seguente:
 ![[2120a628f152cfb8100b913b1c6fb2e8_MD5.jpeg]]
 Una volta implementate correttamente somma, sottrazione tramite complemento a 2 e calcolo del modulo, si dispone di tutti i blocchi necessari per costruire una vera e propria unità aritmetico-logica (ALU). La moltiplicazione può essere vista come una somma ripetuta, mentre la divisione come una sottrazione ripetuta: le operazioni più complesse si appoggiano quindi sempre alla struttura dei sommatori e ai circuiti di complemento.
-###  Increment
-
-L’operazione di incremento aumenta di uno il valore binario in ingresso. Per realizzarla non è necessario un circuito dedicato: è sufficiente sfruttare direttamente il comportamento del sommatore già introdotto.
-
-Incrementare equivale a eseguire:
-
-```
-X + 1
-```
-
-Per ottenere questo risultato si collega:
-
-- il numero da incrementare all’ingresso A,
-    
-- il valore **000…0000** all’ingresso B,
-    
-- e si imposta il **carry-in iniziale a 1**.
-    
-
-Il sommatore esegue automaticamente l’incremento tramite la normale propagazione dei riporti.
-
-Esempio a 4 bit:
-
-```
- A:   0111
- B:   0000
-Cin:     1
---------------
- S:   1000
-```
-
-Il carry iniziale avvia l’addizione con 1, e i riporti si propagano tra i bit finché necessario. Il risultato è un incremento ottenuto in modo semplice ed efficiente sfruttando esclusivamente la logica del sommatore.
-![[increment.png]]
 ###  Equal to Zero
 Questo circuito verifica se un numero binario in ingresso è uguale a zero. L’idea è semplice: se almeno uno dei bit è pari a 1, allora il numero non è zero; se tutti i bit sono 0, allora l’ingresso rappresenta effettivamente lo zero.
 Il comportamento si ottiene combinando i bit tramite un’operazione di OR multi-bit. L’uscita dell’OR sarà:

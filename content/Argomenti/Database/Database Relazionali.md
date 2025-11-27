@@ -577,7 +577,7 @@ Ogni sede appartiene a una sola città e non può esistere senza di essa → ent
 ```mermaid
 erDiagram
     REPARTO ||--o{ DIPENDENTE : contiene
-    REPARTO ||--|| RESPONSABILE : ha_responsabile
+    REPARTO ||--|| DIPENDENTE : ha_responsabile
     DIPENDENTE ||--o{ PARTECIPAZIONE : partecipa
     PROGETTO   ||--o{ PARTECIPAZIONE : riguarda
     CITTA ||--o{ SEDE : contiene
