@@ -226,6 +226,7 @@ Il full-adder ha quindi:
   * S (bit di somma)
   * Cₒ (riporto in uscita)
 Il suo schema logico è il seguente:
+![[full_adder.png]]
 ![[308ee129c6dc461ac15d1c95c5624572_MD5.jpeg]]
 La somma S viene calcolata sommando prima A e B, poi aggiungendo il riporto Cᵢ.
 Osservando la tabella di verità, si può ricavare la formula finale:
@@ -251,6 +252,7 @@ Consideriamo il caso di un sommatore a 4 bit. I due numeri da sommare sono:
 * il riporto in uscita viene passato al full-adder successivo, che somma A₁, B₁ e quel riporto
 * il processo continua fino al bit più significativo, che produce l’ultimo riporto C₄
   In questo modo tutti i bit dei due numeri vengono presentati **in parallelo** agli ingressi del sommatore e la somma viene calcolata contemporaneamente, con i riporti che si propagano da destra verso sinistra.
+![[multibit_adder.png]]
   ![[1ad6471b63cd2b6c56d9303f7935b843_MD5.jpeg]]
   Nel caso di un sommatore a 4 bit, le uscite saranno:
 * S₀, S₁, S₂, S₃: i bit della somma
@@ -301,6 +303,7 @@ Per ottenere il complemento a 2 di un numero occorre:
 1. invertire tutti i bit (complemento a 1)
 2. aggiungere 1 tramite il carry-in del sommatore
 ![[ebd31e412d0091b89a91f851d20d5d6f_MD5.jpeg]]
+![[subtraction.png]]
 In questo modo, sommando A con la versione complementata di B, il risultato binario rappresenta esattamente A − B secondo le convenzioni del complemento a 2. Il circuito sfrutta quindi un normale sommatore, con poche modifiche per gestire l’inversione di B e l’impostazione del riporto iniziale.
 Quando A è maggiore di B, il risultato è positivo e il riporto finale indica che non si è verificato overflow:
 **Caso A – minuendo maggiore del sottraendo**
@@ -411,7 +414,7 @@ Se l’MSB è 1, il numero è minore di zero; se è 0, è maggiore o uguale a ze
 
 Un **multiplexer** (abbreviato in MUX) è un circuito logico combinatorio che seleziona uno tra molteplici ingressi e lo indirizza verso una singola uscita. Questa selezione è governata da specifici segnali di controllo, detti **linee di selezione**.
 Immaginalo come un interruttore elettronico: in base a un comando (le linee di selezione), decide quale ingresso "passare" all'uscita.
-
+![[selector.png]]
 ####  Come Funziona?
 
 1. **Ingressi:** $2^n$ ingressi ($A, B, C, D$), che rappresentano i dati tra cui scegliere.
@@ -451,7 +454,9 @@ $$Y=A \cdot P + B \cdot \overline{P}$$
 |1|1|1|1|
 
 ---
-
+#### Multiplexer ottimale
+In realtà posso semplificare il circuito utilizzando solo le nand e ottenendo un comportamento analogo:
+![[selector.png]]
 ####  Multiplexer 4-a-1
 ![[mux_4_1.png]]
 Un **multiplexer 4-a-1**:
