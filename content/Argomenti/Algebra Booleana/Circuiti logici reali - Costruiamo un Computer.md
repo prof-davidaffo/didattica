@@ -226,6 +226,7 @@ Il full-adder ha quindi:
   * S (bit di somma)
   * Cₒ (riporto in uscita)
 Il suo schema logico è il seguente:
+![[full_adder.png]]
 ![[308ee129c6dc461ac15d1c95c5624572_MD5.jpeg]]
 La somma S viene calcolata sommando prima A e B, poi aggiungendo il riporto Cᵢ.
 Osservando la tabella di verità, si può ricavare la formula finale:
@@ -251,11 +252,46 @@ Consideriamo il caso di un sommatore a 4 bit. I due numeri da sommare sono:
 * il riporto in uscita viene passato al full-adder successivo, che somma A₁, B₁ e quel riporto
 * il processo continua fino al bit più significativo, che produce l’ultimo riporto C₄
   In questo modo tutti i bit dei due numeri vengono presentati **in parallelo** agli ingressi del sommatore e la somma viene calcolata contemporaneamente, con i riporti che si propagano da destra verso sinistra.
+![[multibit_adder.png]]
   ![[1ad6471b63cd2b6c56d9303f7935b843_MD5.jpeg]]
   Nel caso di un sommatore a 4 bit, le uscite saranno:
 * S₀, S₁, S₂, S₃: i bit della somma
 * C₄: il riporto finale, che può indicare un overflow se la somma esce dal range rappresentabile con 4 bit
   Questo tipo di struttura è chiamata anche **sommatore a propagazione di riporto** (ripple-carry adder), perché ogni full-adder deve attendere il riporto dal blocco precedente. È una soluzione semplice e diretta, sufficiente per capire il funzionamento interno dei calcolatori e per costruire i primi modelli di ALU.
+###  Increment
+
+L’operazione di incremento aumenta di uno il valore binario in ingresso. Per realizzarla non è necessario un circuito dedicato: è sufficiente sfruttare direttamente il comportamento del sommatore già introdotto.
+
+Incrementare equivale a eseguire:
+
+```
+X + 1
+```
+
+Per ottenere questo risultato si collega:
+
+- il numero da incrementare all’ingresso A,
+    
+- il valore **000…0000** all’ingresso B,
+    
+- e si imposta il **carry-in iniziale a 1**.
+    
+
+Il sommatore esegue automaticamente l’incremento tramite la normale propagazione dei riporti.
+
+Esempio a 4 bit:
+
+```
+ A:   0111
+ B:   0000
+Cin:     1
+--------------
+ S:   1000
+```
+
+Il carry iniziale avvia l’addizione con 1, e i riporti si propagano tra i bit finché necessario. Il risultato è un incremento ottenuto in modo semplice ed efficiente sfruttando esclusivamente la logica del sommatore.
+![[increment.png]]
+
 ### Sottrattori binari
 Nei calcolatori attuali **non esiste** un circuito separato per la sottrazione. L’hardware non implementa direttamente A − B. Al contrario, la sottrazione viene trasformata in un’addizione, sfruttando la rappresentazione dei numeri in **complemento a 2**.
 Questo approccio permette di utilizzare esattamente lo stesso sommatore già costruito per l’addizione, evitando di progettare un circuito dedicato.
@@ -267,6 +303,7 @@ Per ottenere il complemento a 2 di un numero occorre:
 1. invertire tutti i bit (complemento a 1)
 2. aggiungere 1 tramite il carry-in del sommatore
 ![[ebd31e412d0091b89a91f851d20d5d6f_MD5.jpeg]]
+![[subtraction.png]]
 In questo modo, sommando A con la versione complementata di B, il risultato binario rappresenta esattamente A − B secondo le convenzioni del complemento a 2. Il circuito sfrutta quindi un normale sommatore, con poche modifiche per gestire l’inversione di B e l’impostazione del riporto iniziale.
 Quando A è maggiore di B, il risultato è positivo e il riporto finale indica che non si è verificato overflow:
 **Caso A – minuendo maggiore del sottraendo**
@@ -335,39 +372,6 @@ Esempio: per calcolare |1101₍C2₎| si pone A₀ = X₃.
 Questo meccanismo permette di realizzare in modo compatto operazionidel tipo A ± |B| con A positivo e B rappresentato in complemento a 2. In un sistema a 4 bit è sufficiente collegare i dispositivi visti (sommatore, circuito di complemento e logica di controllo) nel modo seguente:
 ![[2120a628f152cfb8100b913b1c6fb2e8_MD5.jpeg]]
 Una volta implementate correttamente somma, sottrazione tramite complemento a 2 e calcolo del modulo, si dispone di tutti i blocchi necessari per costruire una vera e propria unità aritmetico-logica (ALU). La moltiplicazione può essere vista come una somma ripetuta, mentre la divisione come una sottrazione ripetuta: le operazioni più complesse si appoggiano quindi sempre alla struttura dei sommatori e ai circuiti di complemento.
-###  Increment
-
-L’operazione di incremento aumenta di uno il valore binario in ingresso. Per realizzarla non è necessario un circuito dedicato: è sufficiente sfruttare direttamente il comportamento del sommatore già introdotto.
-
-Incrementare equivale a eseguire:
-
-```
-X + 1
-```
-
-Per ottenere questo risultato si collega:
-
-- il numero da incrementare all’ingresso A,
-    
-- il valore **000…0000** all’ingresso B,
-    
-- e si imposta il **carry-in iniziale a 1**.
-    
-
-Il sommatore esegue automaticamente l’incremento tramite la normale propagazione dei riporti.
-
-Esempio a 4 bit:
-
-```
- A:   0111
- B:   0000
-Cin:     1
---------------
- S:   1000
-```
-
-Il carry iniziale avvia l’addizione con 1, e i riporti si propagano tra i bit finché necessario. Il risultato è un incremento ottenuto in modo semplice ed efficiente sfruttando esclusivamente la logica del sommatore.
-![[increment.png]]
 ###  Equal to Zero
 Questo circuito verifica se un numero binario in ingresso è uguale a zero. L’idea è semplice: se almeno uno dei bit è pari a 1, allora il numero non è zero; se tutti i bit sono 0, allora l’ingresso rappresenta effettivamente lo zero.
 Il comportamento si ottiene combinando i bit tramite un’operazione di OR multi-bit. L’uscita dell’OR sarà:
@@ -410,7 +414,7 @@ Se l’MSB è 1, il numero è minore di zero; se è 0, è maggiore o uguale a ze
 
 Un **multiplexer** (abbreviato in MUX) è un circuito logico combinatorio che seleziona uno tra molteplici ingressi e lo indirizza verso una singola uscita. Questa selezione è governata da specifici segnali di controllo, detti **linee di selezione**.
 Immaginalo come un interruttore elettronico: in base a un comando (le linee di selezione), decide quale ingresso "passare" all'uscita.
-
+![[selector.png]]
 ####  Come Funziona?
 
 1. **Ingressi:** $2^n$ ingressi ($A, B, C, D$), che rappresentano i dati tra cui scegliere.
@@ -450,7 +454,9 @@ $$Y=A \cdot P + B \cdot \overline{P}$$
 |1|1|1|1|
 
 ---
-
+#### Multiplexer ottimale
+In realtà posso semplificare il circuito utilizzando solo le nand e ottenendo un comportamento analogo:
+![[selector.png]]
 ####  Multiplexer 4-a-1
 ![[mux_4_1.png]]
 Un **multiplexer 4-a-1**:
@@ -557,7 +563,47 @@ Un’ALU tipica è composta da due sezioni principali:
 * una **unità logica**, che applica funzioni logiche come AND, OR o XOR sui bit in ingresso
 Entrambi i risultati vengono prodotti in parallelo. Un segnale di controllo seleziona poi quale dei due utilizzare in uscita. In questo modo l’ALU può svolgere molte operazioni diverse riutilizzando gli stessi blocchi fondamentali. Eventuali segnali aggiuntivi, come quelli che indicano se il risultato è zero o negativo, completano il comportamento necessario alla costruzione della logica di controllo del processore.
 ### Logic Unit
+La Logic Unit esegue operazioni logiche bit-a-bit sui due ingressi a 16 bit, **X** e **Y**. Il comportamento è controllato da due bit di selezione, **op1** e **op0**, che determinano quale delle quattro operazioni viene applicata. Ogni bit della parola in uscita è calcolato indipendentemente dagli altri, applicando la stessa operazione alle coppie di bit corrispondenti di X e Y.
 
+| op1 | op0 | Operazione | Descrizione                                                     |
+| --- | --- | ---------- | --------------------------------------------------------------- |
+| 0   | 0   | X AND Y    | Confronto logico bit-a-bit: 1 solo quando entrambi i bit sono 1 |
+| 0   | 1   | X OR Y     | 1 quando almeno uno dei due bit è 1                             |
+| 1   | 0   | X XOR Y    | 1 quando i bit sono diversi                                     |
+| 1   | 1   | NOT X      | Inversione di ogni bit dell’operando X                          |
+Le quattro funzioni sono ottenute componendo porte elementari costruite in precedenza. In particolare:
+* **X AND Y** utilizza una rete di AND parallele, una per ciascun bit.
+* **X OR Y** combina i bit di X e Y tramite OR parallele.
+* **X XOR Y** utilizza XOR parallele; questa operazione è utile nei confronti e nelle somme.
+* **NOT X** richiede l’inversione di ciascun bit tramite una rete di NOT.
+La Logic Unit è quindi un selettore di operazioni: tutti i risultati parziali vengono calcolati in parallelo, mentre **op1** e **op0** scelgono quale dei quattro valori debba comparire in uscita, tramite un multiplexer a 4 ingressi per ciascun bit.
+In questo modo, la struttura rimane uniforme: 16 multiplexer identici, tutti controllati dagli stessi due bit, producono l’uscita logica finale.
+
+#### Circuito completo
+![[logic_unit.png]]
+### Arithmetic Unit
+#### Arithmetic Unit
+L’Arithmetic Unit è il blocco responsabile delle operazioni aritmetiche fondamentali eseguite dall’ALU. In questo caso opera su due ingressi a 16 bit, **X** e **Y**, e utilizza due bit di controllo (**op1** e **op0**) per determinare quale operazione eseguire. Le quattro combinazioni possibili corrispondono a quattro operazioni:
+
+| op1 | op0 | Operazione | Descrizione                         |
+| --- | --- | ---------- | ----------------------------------- |
+| 0   | 0   | X + Y      | Addizione dei due operandi          |
+| 1   | 0   | X - Y      | Sottrazione tramite complemento a 2 |
+| 0   | 1   | X + 1      | Incremento dell’operando X          |
+| 1   | 1   | X - 1      | Decremento dell’operando X          |
+Il cuore dell’unità aritmetica è sempre un **sommatore a 16 bit**. Le altre operazioni vengono ottenute manipolando opportunamente l’ingresso Y e il carry-in del sommatore, sfruttando il principio secondo cui tutte le operazioni aritmetiche si possono ricondurre a una somma.
+Funzionamento dei quattro casi:
+* **X + Y**
+  Y passa invariato al sommatore; carry-in iniziale = 0.
+* **X - Y**
+  L’unità genera il complemento a 2 di Y (invertendo ogni bit e aggiungendo 1 al carry-in) e poi somma X + (−Y).
+* **X + 1**
+  L’ingresso Y viene posto a 0 e il carry-in iniziale è impostato a 1, ottenendo l’incremento tramite la somma X + 1.
+* **X - 1**
+  L’ingresso Y viene posto a 0, ma l’unità genera il complemento a 2 di 1 (ossia tutti 1 in ingresso al sommatore) ottenendo X + (−1), cioè X − 1.
+In tutti i casi l’unico blocco realmente utilizzato è il sommatore parallelo, reso versatile grazie al controllo sui bit op0 e op1, che determinano se invertire Y, se iniettare un carry iniziale e se ignorare Y completamente. Questa strategia mantiene il progetto hardware semplice ed efficiente, evitando circuiti separati per ogni operazione.
+#### Circuito completo
+![[arithmetic_unit.png]]
 
 ## Altri esempi di utilizzo dell'algebra booleana in contesti reali
 ###  Utilizzo dello XOR in crittografia

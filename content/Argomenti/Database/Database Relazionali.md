@@ -139,6 +139,47 @@ Esempi:
 * “Iscrizione”: STUDENTE → CORSO
 * “Acquisto”: CLIENTE → PRODOTTO
 ---
+### Partecipazione totale e parziale
+La partecipazione di un’entità a una relazione indica se ogni occorrenza dell’entità deve obbligatoriamente comparire nella relazione (partecipazione totale) oppure se la presenza nella relazione è facoltativa (partecipazione parziale). La partecipazione permette di distinguere tra vincoli di obbligatorietà e vincoli di scelta all’interno del modello ER e influisce sulla successiva traduzione nel modello relazionale.
+#### Partecipazione totale
+Un’entità ha partecipazione totale a una relazione quando ogni sua istanza deve necessariamente comparire nella relazione. Questo significa che non può esistere un’istanza dell’entità senza essere associata almeno a un'istanza dell’altra entità coinvolta.
+Esempio: ogni carta d’identità deve appartenere a una persona.
+```mermaid
+erDiagram
+    PERSONA ||--|| CARTA_IDENTITA : possiede
+    PERSONA {
+        string CodPersona PK
+        string Nome
+        string Cognome
+    }
+    CARTA_IDENTITA {
+        string NumeroCIE PK
+        date DataRilascio
+    }
+```
+In questo caso l’entità CARTA_IDENTITA ha partecipazione totale: una carta d’identità non può esistere senza la persona a cui appartiene.
+#### Partecipazione parziale
+Un’entità ha partecipazione parziale a una relazione quando può esistere anche senza comparire nella relazione. La partecipazione alla relazione è facoltativa e non vincolata.
+Esempio: un reparto può esistere anche senza docenti assegnati.
+```mermaid
+erDiagram
+    REPARTO ||--o{ DOCENTE : comprende
+    REPARTO {
+        string CodReparto PK
+        string Nome
+    }
+    DOCENTE {
+        string Matricola PK
+        string Nome
+    }
+```
+In questo caso l’entità DOCENTE ha partecipazione parziale: un docente può esistere anche prima di essere assegnato a un reparto.
+#### Implicazioni sul modello relazionale
+La partecipazione determina la posizione della chiave esterna nella traduzione al modello relazionale. La regola è la seguente:
+* nella partecipazione totale la chiave esterna va nella tabella dell’entità che partecipa totalmente
+* nella partecipazione parziale la chiave esterna non deve essere inserita nella tabella dell’entità con partecipazione parziale
+La partecipazione totale indica una dipendenza logica da un’altra entità e guida la struttura delle relazioni durante la trasformazione del modello ER.
+
 ###  Cardinalità delle relazioni
 La cardinalità rappresenta quante istanze di un’entità possono essere associate a una istanza dell’entità dall’altro lato.
 ####  Relazione 1 : 1
@@ -164,24 +205,6 @@ Esempio:
 erDiagram
     STUDENTE }o--o{ CORSO : frequenta
 ```
----
-###  Vincoli di partecipazione
-Indicano se le entità devono obbligatoriamente partecipare alla relazione.
-####  Partecipazione totale
-Ogni istanza dell’entità deve essere collegata alla relazione.
-####  Partecipazione parziale
-Alcune istanze possono non partecipare.
-Esempio:
-```mermaid
-erDiagram
-    CLIENTE ||--o{ ORDINE : effettua
-```
-Interpretiamo così:
-* ORDINE → partecipazione totale (ogni ordine appartiene a un cliente)
-* CLIENTE → partecipazione parziale (non tutti i clienti fanno ordini)
-In fase relazionale:
-* partecipazione totale → FK NOT NULL
-* partecipazione parziale → FK NULL permesso
 ---
 ###  Relazioni con attributi
 Quando la relazione possiede attributi propri (data, quantità, prezzo, voto, ruolo, ecc.), si rappresenta tramite un’entità associativa.
@@ -386,6 +409,255 @@ $$
 $$
 
 ---
+## Costruzione del modello ER a partire da una consegna testuale
+Quando ci viene fornita una **consegna scritta** (un testo descrittivo, un capitolato, una specifica informale), il nostro obiettivo è trasformare quel testo in un **modello ER corretto, completo e coerente**.
+Si tratta di una delle abilità più importanti nella progettazione concettuale.
+Qui spieghiamo **metodicamente**, passo per passo, come procedere.
+
+---
+###  1. Lettura globale e individuazione del dominio
+La prima cosa da fare è leggere l’intero testo per capire **di cosa si parla**, cioè qual è il contesto applicativo.
+Domande guida:
+* Chi sono i protagonisti del sistema?
+* Quali oggetti gestiamo?
+* Quali processi o azioni compaiono nel testo?
+A questo stadio non si cercano ancora entità o relazioni precise: si costruisce la visione d’insieme.
+---
+###  2. Identificazione preliminare delle entità candidate
+Dal testo si estraggono **sostantivi significativi**, soprattutto quelli che indicano:
+* persone (Studente, Cliente, Dipendente)
+* oggetti (Prodotto, Libro, Auto)
+* concetti (Corso, Categoria, Reparto)
+* eventi (Ordine, Prenotazione, Pagamento)
+Il trucco è:
+> ogni volta che nel testo compare un sostantivo che “sembra qualcosa che il sistema deve memorizzare in modo autonomo”, probabilmente è un’entità.
+Non tutte le entità candidate sono poi entità vere: alcune diventeranno relazioni, altre attributi, altre verranno scartate.
+---
+###  3. Identificazione delle relazioni candidate
+Di solito emergono dai **verbi** o espressioni che li sostituiscono.
+Esempi:
+* “uno studente **si iscrive** a un corso” → relazione
+* “il cliente **effettua** un ordine” → relazione
+* “un libro **è scritto** da un autore” → relazione
+* “un prodotto **appartiene** a una categoria” → relazione
+In generale:
+> ogni frase che descrive un collegamento logico tra due (o più) entità candidate → relazione.
+---
+###  4. Individuazione degli attributi
+Gli attributi vengono spesso introdotti nella consegna come:
+* caratteristiche (“ogni studente ha nome, cognome…”)
+* proprietà numeriche (“il prodotto ha un prezzo”)
+* proprietà descrittive (“il corso ha un titolo”)
+* riferimenti temporali (“la prenotazione ha una data”)
+Gli attributi:
+* si collegano all’entità cui appartengono
+* se descrivono una relazione *e solo quella*, vanno nella relazione (che poi diventa entità associativa nel modello relazionale)
+---
+###  5. Determinazione delle cardinalità e partecipazioni
+Dal testo bisogna ricavare **quante entità** possono essere associate a quante altre.
+Esempi di indicatori nel testo:
+* “un cliente può effettuare molti ordini” → 1:N
+* “un corso può essere seguito da molti studenti” → N:M
+* “ogni ordine appartiene a un unico cliente” → 1:N (partecipazione totale sul lato “ordine”)
+* “un paziente può essere seguito da più medici” → N:M
+Indicatori di partecipazione totale:
+* “ogni X deve avere…”
+* “tutti gli X devono essere associati a…”
+* “non esiste X senza Y”
+---
+###  6. Eliminazione delle false entità
+Non tutto quello che sembra entità lo è veramente.
+Si eliminano:
+* Aggregati puramente descrittivi → diventano attributi
+  (es. “Indirizzo” può diventare attributo composto)
+* Nomi che non rappresentano oggetti autonomi
+* Concetti che sono semplici proprietà di altri
+Esempio:
+* “StatoOrdine” (spedito, pagato, ecc.) è quasi sempre **attributo**, non entità.
+---
+###  7. Gestione delle relazioni N:M e con attributi
+Ogni relazione N:M del modello ER:
+* è corretta nel modello concettuale
+* diventa tabella associativa nel relazionale
+Relazioni con attributi:
+* sono entità associative
+* devono essere mantenute nel modello ER come tali
+---
+###  8. Identificazione delle chiavi primarie (PK)
+Si decide, per ogni entità, quale attributo (o insieme di attributi):
+* identifica univocamente le sue istanze
+* è stabile
+* è semanticamente corretto
+Se il dominio non prevede identificatori naturali robusti:
+* si introduce una PK artificiale
+---
+###  9. Disegno del modello ER definitivo
+A questo punto si possono disegnare:
+* entità con attributi
+* relazioni con cardinalità
+* relazioni con attributi (entità associative)
+* partecipazione totale o parziale
+* scelte coerenti di nomi
+L’obiettivo è ottenere un modello coerente, privo di ridondanze concettuali e leggibile.
+---
+###  10. Verifica del modello con la consegna
+Ultimo passaggio:
+> Riprendere la consegna originale e verificare che ogni frase sia rappresentata nel modello ER.
+* Ogni oggetto citato deve apparire come entità o attributo
+* Ogni azione deve apparire come relazione
+* Ogni vincolo deve essere rappresentato come cardinalità/partecipazione
+* Nessuna informazione deve essere persa
+* Nessun elemento superfluo deve essere stato aggiunto
+---
+
+## Esempio completo: dal testo al modello ER
+###  Consegna testuale
+
+> L’azienda deve gestire i dipendenti, i reparti e i progetti.
+> Ogni dipendente ha un codice identificativo, nome, cognome e può avere un numero di telefono interno aggiuntivo.
+> Ogni reparto ha un codice e un nome, e deve avere un responsabile, che è un dipendente. Ogni dipendente appartiene ad un solo reparto.
+> Ogni progetto ha un codice, un nome e un budget.
+> Ogni dipendente può partecipare a più progetti e per ogni partecipazione devono essere registrati le ore lavorate e il ruolo nel progetto.
+> L’azienda assegna ad ogni progetto una sede operativa, identificata da un codice sede e dall’indirizzo. Ogni sede appartiene a una sola città.
+> Ogni città è identificata dal nome e dal CAP.
+> Una sede non può esistere senza la città in cui si trova.
+---
+###  Identificazione delle entità
+####  Entità individuate
+* DIPENDENTE
+* REPARTO
+* PROGETTO
+* SEDE (entità debole)
+* CITTA
+####  Entità associative
+* PARTECIPAZIONE (derivante dalla relazione N:M)
+---
+###  Attributi delle entità
+**DIPENDENTE**
+* CodDip *(PK)*
+* Nome
+* Cognome
+* TelefonoInterno *(nullabile)*
+**REPARTO**
+* CodReparto *(PK)*
+* Nome
+**PROGETTO**
+* CodProgetto *(PK)*
+* Nome
+* Budget
+**CITTA**
+* NomeCitta *(PK)*
+* CAP
+**SEDE (entità debole)**
+* CodSede *(PK parziale)*
+* Indirizzo
+* dipende da CITTA
+---
+###  Relazioni individuate
+**1 : N — REPARTO → DIPENDENTE**
+Ogni reparto ha molti dipendenti.
+Ogni dipendente appartiene a un solo reparto.
+
+**1 : 1 — REPARTO ↔ RESPONSABILE (DIPENDENTE)**
+Ogni reparto ha un responsabile.
+Un dipendente può essere responsabile al massimo di un reparto.
+
+**N : M — DIPENDENTE ↔ PROGETTO**
+Con attributi:
+* OreLavorate
+* Ruolo
+Diventa PARTECIPAZIONE.
+
+ **1 : N — CITTA → SEDE**
+Ogni città ha più sedi.
+Ogni sede appartiene a una sola città e non può esistere senza di essa → entità debole.
+
+---
+####  Modello ER
+```mermaid
+erDiagram
+    REPARTO ||--o{ DIPENDENTE : contiene
+    REPARTO ||--|| DIPENDENTE : ha_responsabile
+    DIPENDENTE ||--o{ PARTECIPAZIONE : partecipa
+    PROGETTO   ||--o{ PARTECIPAZIONE : riguarda
+    CITTA ||--o{ SEDE : contiene
+    DIPENDENTE {
+        string CodDip PK
+        string Nome
+        string Cognome
+        string TelefonoInterno
+    }
+    REPARTO {
+        string CodReparto PK
+        string Nome
+    }
+    PROGETTO {
+        string CodProgetto PK
+        string Nome
+        float Budget
+    }
+    PARTECIPAZIONE {
+        string CodDip
+        string CodProgetto
+        int OreLavorate
+        string Ruolo
+    }
+    SEDE {
+        string CodSede
+        string Indirizzo
+    }
+    CITTA {
+        string NomeCitta PK
+        string CAP
+    }
+```
+---
+####  Traduzione nel modello relazionale
+$$
+\text{DIPENDENTE}(
+\underline{\text{CodDip}},
+\text{Nome},
+\text{Cognome},
+\text{TelefonoInterno}_{\circ},
+\text{CodReparto}^{\text{REPARTO}}
+)
+$$
+$$
+\text{REPARTO}(
+\underline{\text{CodReparto}},
+\text{Nome},
+\text{Responsabile}^{\text{DIPENDENTE}}
+)
+$$
+$$
+\text{PROGETTO}(
+\underline{\text{CodProgetto}},
+\text{Nome},
+\text{Budget}
+)
+$$
+$$
+\text{PARTECIPAZIONE}(
+\underline{\text{CodDip}^{\text{DIPENDENTE}}},
+\underline{\text{CodProgetto}^{\text{PROGETTO}}},
+\text{OreLavorate},
+\text{Ruolo}
+)
+$$
+$$
+\text{CITTA}(
+\underline{\text{NomeCitta}},
+\text{CAP}
+)
+$$
+$$
+\text{SEDE}(
+\underline{\text{CodSede}},
+\underline{\text{NomeCitta}^{\text{CITTA}}},
+\text{Indirizzo}
+)
+$$
+---
 ##  Normalizzazione
 La **normalizzazione** è un processo sistematico volto a organizzare le tabelle di un database relazionale per:
 * ridurre la ridondanza dei dati,
@@ -409,7 +681,7 @@ Esempi classici:
   \text{CodCorso} \rightarrow \text{Titolo}
   $$
 ####  Dipendenza funzionale banale
-Una DF è banale se (Y \subseteq X).
+Una DF è banale se $(Y \subseteq X)$.
 Esempio:
 $$
 \text{Matricola, Corso} \rightarrow \text{Matricola}
@@ -533,256 +805,3 @@ DF:
 Qui **Aula non è una chiave**, ma determina Docente ⇒ violazione della BCNF.
 Soluzione:
 * decomposizione in due tabelle, seguendo le DF.
----
-
-## Costruzione del modello ER a partire da una consegna testuale
-Quando ci viene fornita una **consegna scritta** (un testo descrittivo, un capitolato, una specifica informale), il nostro obiettivo è trasformare quel testo in un **modello ER corretto, completo e coerente**.
-Si tratta di una delle abilità più importanti nella progettazione concettuale.
-Qui spieghiamo **metodicamente**, passo per passo, come procedere.
-
----
-###  1. Lettura globale e individuazione del dominio
-La prima cosa da fare è leggere l’intero testo per capire **di cosa si parla**, cioè qual è il contesto applicativo.
-Domande guida:
-* Chi sono i protagonisti del sistema?
-* Quali oggetti gestiamo?
-* Quali processi o azioni compaiono nel testo?
-A questo stadio non si cercano ancora entità o relazioni precise: si costruisce la visione d’insieme.
----
-###  2. Identificazione preliminare delle entità candidate
-Dal testo si estraggono **sostantivi significativi**, soprattutto quelli che indicano:
-* persone (Studente, Cliente, Dipendente)
-* oggetti (Prodotto, Libro, Auto)
-* concetti (Corso, Categoria, Reparto)
-* eventi (Ordine, Prenotazione, Pagamento)
-Il trucco è:
-> ogni volta che nel testo compare un sostantivo che “sembra qualcosa che il sistema deve memorizzare in modo autonomo”, probabilmente è un’entità.
-Non tutte le entità candidate sono poi entità vere: alcune diventeranno relazioni, altre attributi, altre verranno scartate.
----
-###  3. Identificazione delle relazioni candidate
-Di solito emergono dai **verbi** o espressioni che li sostituiscono.
-Esempi:
-* “uno studente **si iscrive** a un corso” → relazione
-* “il cliente **effettua** un ordine” → relazione
-* “un libro **è scritto** da un autore” → relazione
-* “un prodotto **appartiene** a una categoria” → relazione
-In generale:
-> ogni frase che descrive un collegamento logico tra due (o più) entità candidate → relazione.
----
-###  4. Individuazione degli attributi
-Gli attributi vengono spesso introdotti nella consegna come:
-* caratteristiche (“ogni studente ha nome, cognome…”)
-* proprietà numeriche (“il prodotto ha un prezzo”)
-* proprietà descrittive (“il corso ha un titolo”)
-* riferimenti temporali (“la prenotazione ha una data”)
-Gli attributi:
-* si collegano all’entità cui appartengono
-* se descrivono una relazione *e solo quella*, vanno nella relazione (che poi diventa entità associativa nel modello relazionale)
----
-###  5. Determinazione delle cardinalità e partecipazioni
-Dal testo bisogna ricavare **quante entità** possono essere associate a quante altre.
-Esempi di indicatori nel testo:
-* “ogni studente può frequentare più corsi” → 1:N
-* “un cliente può effettuare molti ordini” → 1:N
-* “un corso può essere seguito da molti studenti” → N:M
-* “ogni ordine appartiene a un unico cliente” → 1:N (partecipazione totale sul lato “ordine”)
-* “un paziente può essere seguito da più medici” → N:M
-Indicatori di partecipazione totale:
-* “ogni X deve avere…”
-* “tutti gli X devono essere associati a…”
-* “non esiste X senza Y”
----
-###  6. Eliminazione delle false entità
-Non tutto quello che sembra entità lo è veramente.
-Si eliminano:
-* Aggregati puramente descrittivi → diventano attributi
-  (es. “Indirizzo” può diventare attributo composto)
-* Nomi che non rappresentano oggetti autonomi
-* Concetti che sono semplici proprietà di altri
-Esempio:
-* “StatoOrdine” (spedito, pagato, ecc.) è quasi sempre **attributo**, non entità.
----
-###  7. Gestione delle relazioni N:M e con attributi
-Ogni relazione N:M del modello ER:
-* è corretta nel modello concettuale
-* diventa tabella associativa nel relazionale
-Relazioni con attributi:
-* sono entità associative
-* devono essere mantenute nel modello ER come tali
----
-###  8. Identificazione delle chiavi primarie (PK)
-Si decide, per ogni entità, quale attributo (o insieme di attributi):
-* identifica univocamente le sue istanze
-* è stabile
-* è semanticamente corretto
-Se il dominio non prevede identificatori naturali robusti:
-* si introduce una PK artificiale
----
-###  9. Disegno del modello ER definitivo
-A questo punto si possono disegnare:
-* entità con attributi
-* relazioni con cardinalità
-* relazioni con attributi (entità associative)
-* partecipazione totale o parziale
-* scelte coerenti di nomi
-L’obiettivo è ottenere un modello coerente, privo di ridondanze concettuali e leggibile.
----
-###  10. Verifica del modello con la consegna
-Ultimo passaggio:
-> Riprendere la consegna originale e verificare che ogni frase sia rappresentata nel modello ER.
-* Ogni oggetto citato deve apparire come entità o attributo
-* Ogni azione deve apparire come relazione
-* Ogni vincolo deve essere rappresentato come cardinalità/partecipazione
-* Nessuna informazione deve essere persa
-* Nessun elemento superfluo deve essere stato aggiunto
----
-
-## Esempio completo: dal testo al modello ER
-###  Consegna testuale
-
-> L’azienda deve gestire i dipendenti, i reparti e i progetti.
-> Ogni dipendente ha un codice identificativo, nome, cognome e può avere un numero di telefono interno aggiuntivo.
-> Ogni reparto ha un codice e un nome, e deve avere un responsabile, che è un dipendente. Ogni dipendente appartiene ad un solo reparto.
-> Ogni progetto ha un codice, un nome e un budget.
-> Ogni dipendente può partecipare a più progetti e per ogni partecipazione devono essere registrati le ore lavorate e il ruolo nel progetto.
-> L’azienda assegna ad ogni progetto una sede operativa, identificata da un codice sede e dall’indirizzo. Ogni sede appartiene a una sola città.
-> Ogni città è identificata dal nome e dal CAP.
-> Una sede non può esistere senza la città in cui si trova.
----
-###  Identificazione delle entità
-####  Entità individuate
-* DIPENDENTE
-* REPARTO
-* PROGETTO
-* SEDE (entità debole)
-* CITTA
-####  Entità associative
-* PARTECIPAZIONE (derivante dalla relazione N:M)
----
-###  Attributi delle entità
-**DIPENDENTE**
-* CodDip *(PK)*
-* Nome
-* Cognome
-* TelefonoInterno *(nullabile)*
-**REPARTO**
-* CodReparto *(PK)*
-* Nome
-**PROGETTO**
-* CodProgetto *(PK)*
-* Nome
-* Budget
-**CITTA**
-* NomeCitta *(PK)*
-* CAP
-**SEDE (entità debole)**
-* CodSede *(PK parziale)*
-* Indirizzo
-* dipende da CITTA
----
-###  Relazioni individuate
-**1 : N — REPARTO → DIPENDENTE**
-Ogni reparto ha molti dipendenti.
-Ogni dipendente appartiene a un solo reparto.
-
-**1 : 1 — REPARTO ↔ RESPONSABILE (DIPENDENTE)**
-Ogni reparto ha un responsabile.
-Un dipendente può essere responsabile al massimo di un reparto.
-
-**N : M — DIPENDENTE ↔ PROGETTO**
-Con attributi:
-* OreLavorate
-* Ruolo
-Diventa PARTECIPAZIONE.
-
- **1 : N — CITTA → SEDE**
-Ogni città ha più sedi.
-Ogni sede appartiene a una sola città e non può esistere senza di essa → entità debole.
-
----
-####  Modello ER
-```mermaid
-erDiagram
-    REPARTO ||--o{ DIPENDENTE : contiene
-    REPARTO ||--|| RESPONSABILE : ha_responsabile
-    DIPENDENTE ||--o{ PARTECIPAZIONE : partecipa
-    PROGETTO   ||--o{ PARTECIPAZIONE : riguarda
-    CITTA ||--o{ SEDE : contiene
-    DIPENDENTE {
-        string CodDip PK
-        string Nome
-        string Cognome
-        string TelefonoInterno
-    }
-    REPARTO {
-        string CodReparto PK
-        string Nome
-    }
-    PROGETTO {
-        string CodProgetto PK
-        string Nome
-        float Budget
-    }
-    PARTECIPAZIONE {
-        string CodDip
-        string CodProgetto
-        int OreLavorate
-        string Ruolo
-    }
-    SEDE {
-        string CodSede
-        string Indirizzo
-    }
-    CITTA {
-        string NomeCitta PK
-        string CAP
-    }
-```
----
-####  Traduzione nel modello relazionale
-$$
-\text{DIPENDENTE}(
-\underline{\text{CodDip}},
-\text{Nome},
-\text{Cognome},
-\text{TelefonoInterno}_{\circ},
-\text{CodReparto}^{\text{REPARTO}}
-)
-$$
-$$
-\text{REPARTO}(
-\underline{\text{CodReparto}},
-\text{Nome},
-\text{Responsabile}^{\text{DIPENDENTE}}
-)
-$$
-$$
-\text{PROGETTO}(
-\underline{\text{CodProgetto}},
-\text{Nome},
-\text{Budget}
-)
-$$
-$$
-\text{PARTECIPAZIONE}(
-\underline{\text{CodDip}^{\text{DIPENDENTE}}},
-\underline{\text{CodProgetto}^{\text{PROGETTO}}},
-\text{OreLavorate},
-\text{Ruolo}
-)
-$$
-$$
-\text{CITTA}(
-\underline{\text{NomeCitta}},
-\text{CAP}
-)
-$$
-$$
-\text{SEDE}(
-\underline{\text{CodSede}},
-\underline{\text{NomeCitta}^{\text{CITTA}}},
-\text{Indirizzo}
-)
-$$
----
-

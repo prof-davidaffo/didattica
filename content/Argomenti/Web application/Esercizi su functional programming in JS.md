@@ -301,3 +301,115 @@ Crea un file `dataProcessor.js` che contenga:
    Modifica `processProducts` per accettare una `callback` che riceva il risultato finale e lo stampi o lo salvi in un formato diverso (ad esempio JSON).
 7. **Estensione**
    Aggiungi un metodo `store.sortByPrice(order)` che ordini i prodotti in base al prezzo, restituendo un nuovo array ordinato senza modificare quello originale.
+## 11.4 Functional looping
+### Esercizio 1 forEach base
+Dato l’array:
+```js
+let colors = ["red", "green", "blue", "yellow"];
+```
+Scrivi una chiamata a `forEach()` che stampa ogni colore in console usando una callback anonima.
+Senza usare cicli `for`.
+### Esercizio 2 forEach con più parametri
+Dato:
+```js
+let names = ["Alice", "Bob", "Carol"];
+```
+Usa `forEach()` per stampare una frase del tipo `"Index 1: Bob"` utilizzando sia l’elemento sia l’indice.
+### Esercizio 3 map base
+Dato:
+```js
+let nums = [3,6,9,12];
+```
+Usa `map()` per creare un array contenente la metà di ogni numero.
+### Esercizio 4 map per trasformare stringhe
+Dato:
+```js
+let words = ["Apple", "BANANA", "peAr"];
+```
+Crea un nuovo array con tutte le parole trasformate in minuscolo. Usa una callback anonima.
+### Esercizio 5 filter base
+Dato:
+```js
+let values = [0, 11, 4, -2, 9, 18];
+```
+Usa `filter()` per ottenere solo i valori maggiori di 5.
+### Esercizio 6 combinazione filter + map
+Dato:
+```js
+let numbers = [5,12,8,130,44];
+```
+Ottieni un nuovo array che contiene il doppio dei soli numeri maggiori di 10.
+### Esercizio 7 reduce per somma
+Dato:
+```js
+let arr = [1,2,3,4];
+```
+Usa `reduce()` per calcolare la somma degli elementi.
+### Esercizio 8 reduce con valore iniziale personalizzato
+Usa lo stesso array dell’esercizio precedente ma fai partire la somma da 100.
+### Esercizio 9 riduzione non numerica
+Dato:
+```js
+let chars = ["H","e","l","l","o"];
+```
+Usa `reduce()` per ottenere la stringa `"Hello"`.
+### Esercizio 10 mappa di oggetti
+Dato:
+```js
+let people = [
+  {name: "Alice", age: 20},
+  {name: "Bob", age: 25},
+  {name: "Carol", age: 30}
+];
+```
+Usa `map()` per ottenere un array contenente solo i nomi.
+### Esercizio 11 filtro su oggetti
+Usa la stessa lista dell’esercizio precedente per ottenere solo le persone con età ≥ 25.
+### Esercizio 12 riduzione per calcolare la media
+Usando `people`, calcola l’età media con `reduce()`.
+### Esercizio 13 concatenazione multipla
+Dato:
+```js
+let nums2 = [1,2,3,4,5,6,7,8];
+```
+Scrivi una pipeline:
+1. Filtra i numeri dispari
+2. Elevane ciascuno al quadrato
+3. Somma tutti i quadrati
+   Deve essere una singola catena: `nums2.filter(...).map(...).reduce(...)`
+### Esercizio 14 creare la propria funzione di forEach
+Implementa una funzione `myForEach(array, callback)` che simula il comportamento di `Array.forEach`.
+Non usare `forEach` o `map`.
+## Mini progetto finale
+### Obiettivo
+Creare un piccolo “processore di dati” usando **map**, **filter** e **reduce** in combinazione, applicati a una lista complessa di oggetti.
+### Dataset iniziale
+```js
+let products = [
+  { name: "Laptop", price: 1200, category: "tech", rating: 4.5 },
+  { name: "Headphones", price: 80, category: "tech", rating: 4.1 },
+  { name: "Shoes", price: 60, category: "fashion", rating: 3.9 },
+  { name: "Keyboard", price: 150, category: "tech", rating: 4.7 },
+  { name: "Jacket", price: 200, category: "fashion", rating: 4.3 },
+  { name: "Monitor", price: 300, category: "tech", rating: 4.2 }
+];
+```
+### Task richiesti
+1. Filtrare solo i prodotti della categoria `"tech"` con rating ≥ 4.2.
+2. Trasformarli in un nuovo array contenente oggetti del tipo:
+   ```js
+   { name: "...", priceWithTax: ... }
+   ```
+   dove `priceWithTax` = `price * 1.22`.
+3. Calcolare con `reduce()` la somma totale dei `priceWithTax`.
+4. Creare una funzione finale `processData(products)` che esegue internamente tutti i passaggi e restituisce un oggetto del tipo:
+   ```js
+   {
+     items: [...],              // i prodotti trasformati
+     totalCost: <numero>        // risultato della reduce
+   }
+   ```
+### Requisiti tecnici
+* Niente cicli espliciti (`for`, `while`, `for...of`).
+* Solo `map`, `filter`, `reduce`, `forEach` (se serve).
+* Tutte le trasformazioni devono avvenire in maniera funzionale (senza mutare gli oggetti originali).
