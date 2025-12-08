@@ -563,8 +563,104 @@ Un’ALU tipica è composta da due sezioni principali:
 * una **unità logica**, che applica funzioni logiche come AND, OR o XOR sui bit in ingresso
 Entrambi i risultati vengono prodotti in parallelo. Un segnale di controllo seleziona poi quale dei due utilizzare in uscita. In questo modo l’ALU può svolgere molte operazioni diverse riutilizzando gli stessi blocchi fondamentali. Eventuali segnali aggiuntivi, come quelli che indicano se il risultato è zero o negativo, completano il comportamento necessario alla costruzione della logica di controllo del processore.
 ### Logic Unit
+La Logic Unit esegue operazioni logiche bit-a-bit sui due ingressi a 16 bit, **X** e **Y**. Il comportamento è controllato da due bit di selezione, **op1** e **op0**, che determinano quale delle quattro operazioni viene applicata. Ogni bit della parola in uscita è calcolato indipendentemente dagli altri, applicando la stessa operazione alle coppie di bit corrispondenti di X e Y.
 
+| op1 | op0 | Operazione | Descrizione                                                     |
+| --- | --- | ---------- | --------------------------------------------------------------- |
+| 0   | 0   | X AND Y    | Confronto logico bit-a-bit: 1 solo quando entrambi i bit sono 1 |
+| 0   | 1   | X OR Y     | 1 quando almeno uno dei due bit è 1                             |
+| 1   | 0   | X XOR Y    | 1 quando i bit sono diversi                                     |
+| 1   | 1   | NOT X      | Inversione di ogni bit dell’operando X                          |
+Le quattro funzioni sono ottenute componendo porte elementari costruite in precedenza. In particolare:
+* **X AND Y** utilizza una rete di AND parallele, una per ciascun bit.
+* **X OR Y** combina i bit di X e Y tramite OR parallele.
+* **X XOR Y** utilizza XOR parallele; questa operazione è utile nei confronti e nelle somme.
+* **NOT X** richiede l’inversione di ciascun bit tramite una rete di NOT.
+La Logic Unit è quindi un selettore di operazioni: tutti i risultati parziali vengono calcolati in parallelo, mentre **op1** e **op0** scelgono quale dei quattro valori debba comparire in uscita, tramite un multiplexer a 4 ingressi per ciascun bit.
+In questo modo, la struttura rimane uniforme: 16 multiplexer identici, tutti controllati dagli stessi due bit, producono l’uscita logica finale.
 
+#### Circuito completo
+![[logic_unit.png]]
+### Arithmetic Unit
+#### Arithmetic Unit
+L’Arithmetic Unit è il blocco responsabile delle operazioni aritmetiche fondamentali eseguite dall’ALU. In questo caso opera su due ingressi a 16 bit, **X** e **Y**, e utilizza due bit di controllo (**op1** e **op0**) per determinare quale operazione eseguire. Le quattro combinazioni possibili corrispondono a quattro operazioni:
+
+| op1 | op0 | Operazione | Descrizione                         |
+| --- | --- | ---------- | ----------------------------------- |
+| 0   | 0   | X + Y      | Addizione dei due operandi          |
+| 1   | 0   | X - Y      | Sottrazione tramite complemento a 2 |
+| 0   | 1   | X + 1      | Incremento dell’operando X          |
+| 1   | 1   | X - 1      | Decremento dell’operando X          |
+Il cuore dell’unità aritmetica è sempre un **sommatore a 16 bit**. Le altre operazioni vengono ottenute manipolando opportunamente l’ingresso Y e il carry-in del sommatore, sfruttando il principio secondo cui tutte le operazioni aritmetiche si possono ricondurre a una somma.
+Funzionamento dei quattro casi:
+* **X + Y**
+  Y passa invariato al sommatore; carry-in iniziale = 0.
+* **X - Y**
+  L’unità genera il complemento a 2 di Y (invertendo ogni bit e aggiungendo 1 al carry-in) e poi somma X + (−Y).
+* **X + 1**
+  L’ingresso Y viene posto a 0 e il carry-in iniziale è impostato a 1, ottenendo l’incremento tramite la somma X + 1.
+* **X - 1**
+  L’ingresso Y viene posto a 0, ma l’unità genera il complemento a 2 di 1 (ossia tutti 1 in ingresso al sommatore) ottenendo X + (−1), cioè X − 1.
+In tutti i casi l’unico blocco realmente utilizzato è il sommatore parallelo, reso versatile grazie al controllo sui bit op0 e op1, che determinano se invertire Y, se iniettare un carry iniziale e se ignorare Y completamente. Questa strategia mantiene il progetto hardware semplice ed efficiente, evitando circuiti separati per ogni operazione.
+#### Circuito completo
+![[arithmetic_unit.png]]
+
+### ALU
+#### Introduzione
+L’ALU (Arithmetic Logic Unit) combina in un unico circuito tutte le operazioni logiche e aritmetiche richieste dal processore. La sua struttura è modulare: le operazioni logiche vengono gestite dalla Logic Unit, quelle aritmetiche dalla Arithmetic Unit, mentre una serie di selettori e flag aggiuntivi permettono di manipolare gli operandi prima dell’elaborazione.
+L’uscita finale dell’ALU è scelta tramite un multiplexer che, in base al bit di controllo **u**, seleziona se restituire un risultato aritmetico oppure logico.
+---
+#### Manipolazione degli operandi: zx e sw
+Prima di passare alle unità logiche e aritmetiche, l’ALU può trasformare i due ingressi X e Y attraverso due flag:
+* **zx** (zero X): se vale 1, il valore X viene sostituito con 0
+* **sw** (swap): se vale 1, X e Y vengono scambiati
+Questi due controlli permettono di generare varianti delle operazioni senza aggiungere nuove funzioni. Per esempio, nel caso dell’operazione X − Y:
+
+| zx | sw | Operazione eseguita |
+| -- | -- | ------------------- |
+| 0  | 0  | X − Y               |
+| 0  | 1  | Y − X               |
+| 1  | 0  | 0 − Y               |
+| 1  | 1  | 0 − X               |
+I due ingressi modificati vengono poi inviati sia alla Logic Unit sia alla Arithmetic Unit.
+
+---
+#### Logic Unit
+La Logic Unit riceve in ingresso gli (eventualmente modificati) X e Y e genera quattro risultati in parallelo:
+* X AND Y
+* X OR Y
+* X XOR Y
+* NOT X
+Un selettore a due bit (**op1, op0**) sceglie quale delle quattro operazioni logiche viene prodotta come risultato logico finale.
+---
+#### Arithmetic Unit
+La Arithmetic Unit elabora gli stessi operandi modificati e calcola quattro operazioni aritmetiche:
+* X + Y
+* X − Y
+* X + 1
+* X − 1
+Anche qui, due bit di controllo (**op1, op0**) determinano quale delle quattro uscite aritmetiche deve essere selezionata.
+
+---
+#### Selezione finale: u
+L’ultimo livello dell’ALU consiste in un multiplexer a 16 bit controllato dal segnale **u**:
+* **u = 0 → uscita logica** (proveniente dalla Logic Unit)
+* **u = 1 → uscita aritmetica** (proveniente dalla Arithmetic Unit)
+Il risultato del multiplexer è l’uscita finale dell’ALU.
+---
+#### Tabella delle operazioni dell’ALU
+| u | op1 | op0 | Operazione finale |
+| - | --- | --- | ----------------- |
+| 0 | 0   | 0   | X AND Y           |
+| 0 | 0   | 1   | X OR Y            |
+| 0 | 1   | 0   | X XOR Y           |
+| 0 | 1   | 1   | NOT X             |
+| 1 | 0   | 0   | X + Y             |
+| 1 | 1   | 0   | X − Y             |
+| 1 | 0   | 1   | X + 1             |
+| 1 | 1   | 1   | X − 1             |
+I flag **zx** e **sw** agiscono *prima* della selezione delle otto operazioni, modificando gli operandi e quindi influenzando qualunque operazione aritmetica o logica.
+![[alu.png]]
 ## Altri esempi di utilizzo dell'algebra booleana in contesti reali
 ###  Utilizzo dello XOR in crittografia
 ####  Introduzione
@@ -618,15 +714,10 @@ XOR 11001100
 ```
 
 Per decifrare, si applica l'operazione XOR tra il testo cifrato e la stessa chiave, ottenendo nuovamente il testo in chiaro grazie alla proprietà di auto-inversione.
-
 ####  Criticità e limiti
-L'uso dell'XOR in crittografia presenta vantaggi notevoli in termini di efficienza computazionale e semplicità. Tuttavia, emergono alcune criticità:
-
-- **Riutilizzo della chiave:** In sistemi dove la chiave (o keystream) viene usata più di una volta, l'analisi di coppie di messaggi cifrati può portare a rivelare informazioni sul testo in chiaro.
-- **Qualità del keystream:** Un keystream non sufficientemente casuale può essere sfruttato tramite attacchi statistici o di criptoanalisi per recuperare la chiave o il testo originale.
-- **Attacchi noti:** Tecniche come l'attacco al keystream riutilizzato (nota anche come "two-time pad") sfruttano la linearità dell'operazione XOR per individuare pattern e dedurre dati sensibili.
+Sebbene il one-time-pad sia la tecnica crittografica per eccellenza, non è realmente applicabile. Questo perché ho bisogno di una chiave lunga quanto il messaggio, rendendola impraticabile sia perché per messaggi molto lunghi dovrei utilizzare una chiave molto lunga, sia perché per ogni singolo messaggio avrei bisogno di una chiave diversa.
+I protocolli moderni risolvono questi due problemi mantenendo una crittografia estremamente robusta, seppur non abbiano una crittografia "perfetta" come quella del one time pad, come ad esempio AES (Advanced Encryption Standard), che utilizza chiavi a lunghezza fissa.
 ###  Display a 7 segmenti
-
 La realizzazione di dispositivi numerici digitali si accompagna alla necessità di **visualizzare variabili e risultati**. Nel caso dei circuiti **sommatori e sottrattori**, si può ricorrere ai **display a 7 segmenti**, realizzati con **LED (Light Emitting Diode)** o **LCD (Liquid Crystal Display)**.  
 In entrambi i casi, i segmenti vengono identificati secondo lo schema seguente:
 
