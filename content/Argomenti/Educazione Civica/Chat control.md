@@ -20,6 +20,73 @@ L’adozione dell’E2EE è stata accelerata da vari fattori:
 * richiesta crescente di protezione da parte degli utenti;
 * necessità di garantire sicurezza a giornalisti, attivisti, minoranze e professionisti che trattano informazioni sensibili.
 Oggi l’E2EE è considerato dagli esperti di sicurezza una delle tecnologie più efficaci per proteggere la società digitale.
+## Capitolo 1.1 Approfondimento sulla crittografia: simmetrica, asimmetrica, Diffie-Hellman e modelli ibridi
+La sicurezza delle comunicazioni digitali si basa su un insieme di tecniche matematiche che permettono di proteggere i messaggi da accessi non autorizzati. Le app di messaggistica moderne non usano un solo tipo di crittografia, ma un sistema complesso che combina più strumenti per ottenere efficienza, robustezza e protezione reale contro la sorveglianza. Comprendere come funzionano questi elementi aiuta a capire perché l’end-to-end è così importante e perché sistemi di scansione preventiva come il client-side scanning ne minano le fondamenta.
+### Crittografia simmetrica
+La crittografia simmetrica è il metodo più semplice ed efficiente: la stessa chiave viene usata sia per cifrare che per decifrare il messaggio. È molto veloce ed è ideale per proteggere grandi quantità di dati. Il limite principale è la distribuzione della chiave. Se mittente e destinatario devono condividere la stessa chiave segreta, devono trovare un modo sicuro per scambiarsela. In rete questo è problematico: se un attaccante intercetta la chiave, tutta la comunicazione è compromessa.
+### Crittografia asimmetrica
+Per aggirare il problema della distribuzione delle chiavi è nata la crittografia asimmetrica. In questo modello ogni utente possiede una coppia di chiavi:
+* una chiave pubblica, distribuita liberamente
+* una chiave privata, custodita segreta
+  Ciò che viene cifrato con la chiave pubblica può essere decifrato solo con la chiave privata, e viceversa. Questo consente autenticazione e firme digitali, ma la crittografia asimmetrica è troppo lenta per essere usata per cifrare ogni messaggio di una chat.
+### Lo scambio di chiavi Diffie-Hellman
+La vera svolta arriva con Diffie-Hellman, un protocollo che permette a due dispositivi di ottenere una chiave simmetrica condivisa senza mai trasmetterla. Ogni dispositivo genera un proprio valore segreto e un valore pubblico derivato matematicamente. I dispositivi si scambiano solo i valori pubblici e, combinandoli con il proprio segreto, ottengono indipendentemente la stessa chiave simmetrica. Un osservatore esterno vede solo i valori pubblici e non può ricavare la chiave condivisa. Le versioni moderne come ECDH (Elliptic Curve Diffie-Hellman) sono molto più efficienti e sono impiegate in quasi tutte le comunicazioni sicure contemporanee.
+
+#### Esempio semplificato con numeri primi
+Per capire in modo concreto come due dispositivi riescano a ottenere una chiave condivisa senza trasmetterla, si può usare un esempio estremamente semplificato con numeri piccoli. Nella realtà si usano numeri enormi, impossibili da invertire, ma la logica è la stessa.
+Si parte da due valori pubblici, scelti una volta per tutte:
+* un numero primo $p = 23$
+* una base $g = 5$
+
+Questi numeri sono pubblici e li conoscono tutti, anche eventuali attaccanti.
+Il dispositivo A sceglie un valore segreto:
+
+$a = 6$ (valore segreto di A)
+  Calcola poi il proprio valore pubblico:
+  
+$A_{pub} = g^a \mod p = 5^6 \mod 23 = 8$
+Il dispositivo B sceglie il suo valore segreto:
+
+$b = 15$ (valore segreto di B)
+
+  Calcola il proprio valore pubblico:
+  
+$B_{pub} = g^b \mod p = 5^{15} \mod 23 = 19$
+
+A questo punto i due dispositivi si scambiano soltanto i valori pubblici
+
+$A_{pub} = 8$ e $B_{pub} = 19$. Nessuno scambia i valori segreti.
+
+Ora ciascun dispositivo combina **il valore pubblico ricevuto** con **il proprio segreto**:
+A calcola la chiave condivisa:
+
+ $K = B_{pub}^{,a} \mod p = 19^6 \mod 23 = 2$
+B calcola la stessa chiave condivisa:
+ $K = A_{pub}^{,b} \mod p = 8^{15} \mod 23 = 2$
+
+Entrambi ottengono **la stessa chiave simmetrica$K = 2$**, senza che la chiave sia mai stata trasmessa o rivelata sulla rete.
+Un osservatore esterno vede solo:
+
+$p = 23$, $g = 5$
+$A_{pub} = 8$ ,$B_{pub} = 19$
+
+Ma non è in grado di ricostruire i valori segreti $a$, $b$ né la chiave finale $K$, perché dovrebbe risolvere un problema matematico noto come **discrete logarithm problem**, considerato intrattabile per valori reali (che hanno centinaia o migliaia di bit).
+### Tecniche ibride: combinare velocità e sicurezza
+Il modello più usato nella pratica è quello ibrido:
+1. i dispositivi eseguono uno scambio di chiavi Diffie-Hellman o una sua variante
+2. da questo scambio derivano una o più chiavi simmetriche
+3. i messaggi vengono cifrati usando crittografia simmetrica, molto più efficiente
+   In questo modo:
+* la parte asimmetrica garantisce sicurezza nello scambio delle chiavi
+* la parte simmetrica garantisce velocità nel cifrare i messaggi
+### Dalle tecniche ibride alla crittografia end-to-end
+La crittografia end-to-end delle app moderne è un perfezionamento di questo approccio. I dispositivi non effettuano un singolo scambio di chiavi, ma una serie continua di scambi Diffie-Hellman che aggiornano costantemente le chiavi simmetriche. Questo processo è gestito da protocolli avanzati, come X3DH per la fase iniziale e il Double Ratchet per gli aggiornamenti continui. In pratica ogni messaggio può usare una chiave diversa, riducendo drasticamente i danni in caso di compromissione: conoscere una chiave non permette di decifrare l’intera conversazione.
+### Perché questa architettura è incompatibile con il client-side scanning
+Il punto chiave è che in un sistema end-to-end:
+* le chiavi esistono solo sui dispositivi degli utenti
+* i server non possono leggere i messaggi
+* ogni messaggio è protetto da chiavi effimere che cambiano di continuo
+  Questa architettura è progettata esattamente per impedire che qualunque entità esterna possa accedere al contenuto, anche se lo volesse. Inserire un meccanismo di scansione prima della cifratura significa introdurre un elemento che vede i contenuti in chiaro e che quindi annulla il vantaggio del modello end-to-end. Un sistema pensato per massimizzare la sicurezza diventerebbe improvvisamente un punto di vulnerabilità permanente.
 ## Capitolo 2 Cosa cambia con la proposta Chat Control
 Per capire l’impatto della proposta dell’Unione Europea è utile confrontare il funzionamento attuale delle comunicazioni digitali con ciò che avverrebbe se venisse introdotto il modello di scansione preventiva lato dispositivo. Il cambiamento non è marginale: rappresenta una trasformazione strutturale del modo in cui i cittadini europei comunicano online.
 ### L’obiettivo dichiarato: contrastare il materiale pedopornografico (CSAM)
@@ -60,55 +127,84 @@ Tutte queste tecnologie presentano margini d’errore. Ciò può portare a:
 * grave stress psicologico per persone totalmente innocenti.
 ### Un cambiamento nella relazione cittadino–Stato
 L’effetto complessivo è la nascita di un modello in cui la vita digitale non è più considerata privata, ma costantemente verificata. Questo rappresenta un punto di svolta nella storia della tecnologia civile europea.
-## Capitolo 3 Il contesto europeo e il mito del “going dark”
-Per comprendere davvero la proposta Chat Control non basta analizzare l’aspetto tecnico: bisogna capire **perché** l’Unione Europea sta spingendo verso un modello di sorveglianza preventiva delle comunicazioni digitali. Il contesto politico, istituzionale e narrativo è fondamentale per interpretare ciò che sta accadendo.
-### Il ruolo dell’High-Level Group on Access to Data for Effective Law Enforcement
-Nel 2022 la Commissione Europea ha istituito un gruppo di esperti chiamato **High-Level Group (HLG) sull’accesso ai dati per l’applicazione della legge**. L’obiettivo dichiarato era esplorare soluzioni per facilitare l’accesso ai dati da parte delle forze dell’ordine, specialmente quando le comunicazioni sono protette da crittografia end-to-end.
-Il gruppo ha riunito:
-* rappresentanti delle forze dell’ordine;
-* funzionari della Commissione;
-* esperti tecnici;
-* aziende del settore;
-* società civile.
-Tuttavia, molte organizzazioni — tra cui EDRi (European Digital Rights) — hanno denunciato che il processo:
-* non era realmente equilibrato tra sicurezza e diritti;
-* dava poco spazio a esperti indipendenti;
-* non considerava soluzioni alternative non intrusive.
-### Il documento “A Mission Failure”: una bocciatura senza precedenti
-EDRi ha pubblicato un’analisi durissima intitolata **“High-Level Group Going Dark Outcome: A Mission Failure”**, in cui evidenzia vari problemi:
-* nessuna soluzione tecnica presentata è risultata compatibile con l’E2EE senza compromettere la sicurezza di tutti;
-* molte idee discusse sono state considerate “fantascienza tecnologica” da esperti crittografici;
-* l’intero processo sembrava orientato alla giustificazione di misure invasive, più che alla ricerca di opzioni realmente equilibrate.
-In sintesi: **non esistono soluzioni che consentano di leggere i messaggi cifrati senza indebolire la sicurezza di tutti**. Gli esperti hanno confermato un fatto noto da anni: non esiste la “backdoor buona”.
-### La narrativa del “going dark”
-Le forze dell’ordine europee e statunitensi utilizzano da anni l’espressione **“going dark”**, sostenendo che la diffusione dell’E2EE stia “oscurando” le capacità investigative. È una narrativa potente, perché mette sicurezza e privacy in apparente conflitto.
-Gli esperti però criticano questa visione per diversi motivi:
-1. **La disponibilità di dati non è mai stata così alta.**
-   Metadati, dati di localizzazione, tracciamenti commerciali, social network, cloud storage: l’accesso delle autorità è di fatto aumentato.
-2. **L’E2EE non impedisce le indagini**, come confermano numerosi rapporti.
-   Spesso i dispositivi vengono sequestrati e sbloccati tramite tecniche forensi, che restano estremamente efficaci.
-3. **La complessità dei crimini digitali richiede competenze, non scorciatoie tecniche.**
-4. **Proporre soluzioni invasive per tutti per colpire pochi criminali è inefficiente e sproporzionato.**
-La narrativa del “going dark” funziona politicamente, ma è debole tecnicamente.
-### Il peso politico del contrasto agli abusi sui minori
-Un altro elemento del contesto è la scelta, da parte della Commissione, di legare il dibattito alla lotta al materiale di abuso su minori (CSAM). Un tema estremamente sensibile, che rende difficile criticare la proposta senza temere di apparire “dalla parte sbagliata”.
-Molti osservatori sottolineano che questa scelta retorica:
-* crea un clima emotivo che ostacola un’analisi razionale;
-* sfrutta la gravità del tema per giustificare tecnologie invasive;
-* distoglie l’attenzione da soluzioni alternative più efficaci e meno pericolose.
-### Pressioni interne ed esterne all’UE
-Il contesto politico internazionale spinge nella stessa direzione:
-* negli Stati Uniti FBI e DOJ fanno pressioni contro l’E2EE da oltre un decennio;
-* nel Regno Unito l’Online Safety Act tenta di introdurre obblighi simili;
-* in Australia e India sono già state avviate normative ostili alla crittografia.
-L’Europa sembra inserirsi in questa tendenza globale verso la sorveglianza preventiva, con il rischio di diventare un modello per altri Paesi meno democratici.
-### Perché questo contesto è essenziale per capire Chat Control
-La proposta non nasce nel vuoto. Deriva da:
-* pressioni politiche delle forze dell’ordine;
-* necessità di mostrarsi “duri” contro i reati digitali;
-* una narrativa diffusa che presenta la privacy come un ostacolo alla sicurezza;
-* movimenti culturali che normalizzano la sorveglianza.
-È quindi fondamentale comprendere che Chat Control non è solo una questione tecnica, ma il risultato di un clima politico in cui la **privacy è sempre più vista come un lusso, non come un diritto**.
+## Capitolo 3 Il contesto europeo e il ruolo della “fucina di sorveglianza” #EUGoingDark
+Per capire perché l’Unione Europea stia valutando misure come il client-side scanning, è necessario osservare ciò che accade dietro le quinte del processo legislativo. Un ruolo decisivo è svolto dal **High Level Group on Access to Data for Effective Law Enforcement**, meglio noto come **#EUGoingDark**, istituito dalla Commissione Europea nel 2023 con l’obiettivo ufficiale di analizzare le sfide dell’accesso ai dati e proporre strategie per il futuro.
+Sebbene presentato come un gruppo tecnico neutrale, numerose analisi mostrano che si tratta di una **fucina di sorveglianza**: un luogo in cui governi e forze dell’ordine elaborano strategie per indebolire la crittografia, reintrodurre la conservazione di massa dei dati e ottenere accesso ai dispositivi degli utenti, il tutto con una partecipazione minima o nulla della società civile.
+### Una struttura opaca e priva di bilanciamento interno
+Fin dalla sua creazione, #EUGoingDark ha operato con un elevato livello di segretezza.
+Richieste formali di accesso ai documenti hanno spesso prodotto:
+* atti pesantemente oscurati,
+* risposte tardive o incomplete,
+* totale assenza dell’elenco dei partecipanti.
+Si sa soltanto che partecipano polizie, servizi segreti, rappresentanti governativi e alcuni attori industriali. Il Garante europeo della protezione dei dati può presenziare solo come osservatore, mentre ONG, ricercatori indipendenti e associazioni dei diritti digitali **non** sono ammessi alle riunioni operative. Questo squilibrio viola di fatto lo spirito delle regole europee sulle expert groups, che richiederebbero rappresentanza bilanciata.
+### Una strategia di elusione della trasparenza
+Per aggirare gli obblighi di pubblicità:
+* il gruppo ha cambiato nome da “High-Level Expert Group (HLEG)” a “High-Level Group (HLG)” per sottrarsi all’iscrizione obbligatoria nel registro ufficiale;
+* le regole interne sono state modificate nel 2024, riducendo ulteriormente la trasparenza;
+* le consultazioni pubbliche sono state gestite in modo fittizio, con tempi ridotti, procedure confuse e contributi poi ignorati nel rapporto finale.
+Secondo EDRi, la Commissione ha perfino allentato volontariamente i requisiti di trasparenza per rispondere alle critiche, invece che correggere le mancanze.
+### Il piano segreto in 42 punti: nessuna innovazione, solo vecchie idee riproposte
+Nel 2024, l’eurodeputato Patrick Breyer è riuscito a visionare il documento interno contenente le **42 raccomandazioni** che il gruppo desidera veder adottate nella prossima agenda legislativa dell’UE. L’analisi di questi punti mostra un fatto sorprendente: **non c’è nulla di nuovo**.
+Il gruppo ripropone soluzioni già bocciate dagli esperti dagli anni ’90:
+* accessi obbligatori ai dispositivi,
+* backdoor strutturali nei sistemi di cifratura,
+* conservazione indiscriminata dei metadati di tutti i cittadini,
+* pressione sui provider per ottenere dati in chiaro che non possiedono.
+La novità è soltanto terminologica: si introducono concetti come “lawful access by design” per rendere politicamente più accettabili architetture intrinsecamente insicure.
+### “Security by design” diventa “surveillance by design”
+Una delle trasformazioni concettuali più gravi riguarda la volontà di ridefinire il principio di sicurezza by design.
+Nella visione del gruppo:
+* sicurezza non significa più proteggere gli utenti da intrusioni;
+* sicurezza significa garantire percorsi standardizzati per l’accesso delle forze dell’ordine.
+In pratica:
+* hardware e software dovrebbero essere progettati con **backdoor obbligatorie**,
+* a prescindere dalla loro intrinseca vulnerabilità,
+* in nome della “necessità investigativa”.
+Questa è la negazione dell’idea stessa di sicurezza informatica: un sistema con un accesso nascosto non può mai essere veramente sicuro, perché lo stesso punto di ingresso può essere sfruttato da criminali, attaccanti statali o dipendenti malevoli.
+### Tre assi centrali del piano #EUGoingDark
+Gli obiettivi principali del gruppo si articolano in tre direttrici.
+**1. Accesso ai dispositivi e alle app**
+Si punta a ottenere percorsi uniformi per entrare in smartphone, smart home, automobili connesse e software di comunicazione. Le raccomandazioni parlano di “standardizzazione dell’accesso”, un concetto che equivale a introdurre backdoor regolamentate.
+**2. Ritorno della data retention di massa**
+Nonostante ripetute sentenze della Corte di Giustizia che vietano la conservazione generalizzata dei dati, il gruppo chiede una nuova legge europea che reintroduca la data retention su larga scala, usando il modello belga come riferimento.
+**3. Indebolimento della crittografia in transito**
+Il terzo sottogruppo mira a ottenere accesso in tempo reale ai dati durante la trasmissione, classificando le architetture realmente privacy-preserving come “ostacoli da superare”.
+### Pressioni sulle aziende e richieste impossibili
+Il gruppo affida un ruolo centrale ai provider, chiedendo loro di:
+* raccogliere e conservare dati che non servono ai servizi offerti,
+* garantire accesso a dati “in chiaro” anche quando tecnicamente impossibile,
+* accettare pesanti sanzioni in caso di non conformità, fino a rischi di esclusione dal mercato o responsabilità penali.
+Il piano estende l’obbligo di cooperazione a:
+* smartphone e produttori hardware,
+* piattaforme OTT,
+* servizi cloud,
+* IoT, automobili, domotica.
+Una simile infrastruttura creerebbe vulnerabilità sistemiche in tutta l’economia digitale europea.
+### Normalizzare operazioni di hacking governativo
+Il gruppo usa il successo investigativo delle operazioni EncroChat e SkyECC per suggerire che tecniche invasive come hacking di massa, accessi remoti ai dispositivi e intercettazioni prolungate debbano diventare strumenti permanenti. Vengono inoltre promosse:
+* facilitazioni nel forum shopping investigativo,
+* infrastrutture per scambi massivi di dati,
+* riduzioni delle garanzie giudiziarie sulle prove digitali.
+### Una narrativa costruita: il mito del “going dark”
+La matrice ideologica dell’intero progetto è l’idea che la crittografia stia “oscurando” le indagini. Ma studi indipendenti dimostrano che:
+* oggi le forze dell’ordine hanno accesso a più dati che in qualsiasi epoca precedente;
+* la maggior parte delle indagini digitali non dipende dai contenuti cifrati;
+* esistono metadati, cloud, backup, geodati, social network, estrazioni forensi, cooperative internazionali.
+La narrativa del “going dark” non è un fatto tecnico ma un **mito politico** usato per giustificare misure intrusive.
+### Un processo costruito per escludere critiche e alternative
+L’intero progetto è stato strutturato per evitare che posizioni critiche potessero influenzare il risultato.
+Le ONG hanno partecipato solo in modo simbolico.
+Le osservazioni tecniche sono state ignorate.
+Il rapporto finale non include risposte ai contributi ricevuti.
+La Commissione ha indebolito le regole di trasparenza invece che rafforzarle.
+### Conclusione: un percorso orientato verso la sorveglianza preventiva
+Il lavoro di #EUGoingDark non rappresenta un’analisi equilibrata né una base affidabile per politiche future. È un tentativo sistematico di normalizzare:
+* backdoor nei dispositivi,
+* sorveglianza by design,
+* conservazione di massa dei dati,
+* indebolimento della crittografia,
+* hacking governativo su larga scala.
+Chat Control è solo una delle prime manifestazioni legislative di questa strategia più ampia.
 ## Capitolo 4 Come funziona tecnicamente la scansione dei contenuti
 Per valutare la portata del Chat Control è necessario capire in modo chiaro e concreto **come** funzionerebbe la scansione dei messaggi. Questa parte è cruciale perché mostra il cuore del problema: l’introduzione di un meccanismo di controllo permanente all’interno dei dispositivi personali.
 ### Il principio della scansione locale (client-side scanning)

@@ -605,6 +605,204 @@ In tutti i casi l’unico blocco realmente utilizzato è il sommatore parallelo,
 #### Circuito completo
 ![[arithmetic_unit.png]]
 
+### ALU
+#### Introduzione
+L’ALU (Arithmetic Logic Unit) combina in un unico circuito tutte le operazioni logiche e aritmetiche richieste dal processore. La sua struttura è modulare: le operazioni logiche vengono gestite dalla Logic Unit, quelle aritmetiche dalla Arithmetic Unit, mentre una serie di selettori e flag aggiuntivi permettono di manipolare gli operandi prima dell’elaborazione.
+L’uscita finale dell’ALU è scelta tramite un multiplexer che, in base al bit di controllo **u**, seleziona se restituire un risultato aritmetico oppure logico.
+---
+#### Manipolazione degli operandi: zx e sw
+Prima di passare alle unità logiche e aritmetiche, l’ALU può trasformare i due ingressi X e Y attraverso due flag:
+* **zx** (zero X): se vale 1, il valore X viene sostituito con 0
+* **sw** (swap): se vale 1, X e Y vengono scambiati
+Questi due controlli permettono di generare varianti delle operazioni senza aggiungere nuove funzioni. Per esempio, nel caso dell’operazione X − Y:
+
+| zx | sw | Operazione eseguita |
+| -- | -- | ------------------- |
+| 0  | 0  | X − Y               |
+| 0  | 1  | Y − X               |
+| 1  | 0  | 0 − Y               |
+| 1  | 1  | 0 − X               |
+I due ingressi modificati vengono poi inviati sia alla Logic Unit sia alla Arithmetic Unit.
+
+---
+#### Logic Unit
+La Logic Unit riceve in ingresso gli (eventualmente modificati) X e Y e genera quattro risultati in parallelo:
+* X AND Y
+* X OR Y
+* X XOR Y
+* NOT X
+Un selettore a due bit (**op1, op0**) sceglie quale delle quattro operazioni logiche viene prodotta come risultato logico finale.
+---
+#### Arithmetic Unit
+La Arithmetic Unit elabora gli stessi operandi modificati e calcola quattro operazioni aritmetiche:
+* X + Y
+* X − Y
+* X + 1
+* X − 1
+Anche qui, due bit di controllo (**op1, op0**) determinano quale delle quattro uscite aritmetiche deve essere selezionata.
+
+---
+#### Selezione finale: u
+L’ultimo livello dell’ALU consiste in un multiplexer a 16 bit controllato dal segnale **u**:
+* **u = 0 → uscita logica** (proveniente dalla Logic Unit)
+* **u = 1 → uscita aritmetica** (proveniente dalla Arithmetic Unit)
+Il risultato del multiplexer è l’uscita finale dell’ALU.
+---
+#### Tabella delle operazioni dell’ALU
+| u | op1 | op0 | Operazione finale |
+| - | --- | --- | ----------------- |
+| 0 | 0   | 0   | X AND Y           |
+| 0 | 0   | 1   | X OR Y            |
+| 0 | 1   | 0   | X XOR Y           |
+| 0 | 1   | 1   | NOT X             |
+| 1 | 0   | 0   | X + Y             |
+| 1 | 1   | 0   | X − Y             |
+| 1 | 0   | 1   | X + 1             |
+| 1 | 1   | 1   | X − 1             |
+I flag **zx** e **sw** agiscono *prima* della selezione delle otto operazioni, modificando gli operandi e quindi influenzando qualunque operazione aritmetica o logica.
+![[alu.png]]
+### Condition
+#### Introduzione
+Il blocco **Condition** valuta il risultato numerico **X** prodotto dall’ALU e stabilisce se soddisfa una o più condizioni logiche. Queste condizioni sono codificate tramite tre flag in ingresso:
+* **lt** → indica la condizione *“less than zero”* (X < 0)
+* **eq** → indica la condizione *“equal to zero”* (X = 0)
+* **gt** → indica la condizione *“greater than zero”* (X > 0)
+Ogni flag non descrive direttamente una condizione, ma specifica **se la condizione deve essere verificata**. L'uscita vale 1 solo se almeno una delle condizioni richieste è soddisfatta dal valore X.
+---
+#### Condizioni fondamentali
+Le tre condizioni di base dipendono da due proprietà del numero X:
+* il **bit di segno** (MSB) indica se X è negativo
+* lo **zero flag** indica se X è uguale a zero
+Combinando queste due informazioni si ottiene:
+* X < 0 → bit di segno = 1
+* X = 0 → zero flag = 1
+* X > 0 → bit di segno = 0 e zero flag = 0
+Il blocco Condition usa questi due segnali per verificare le condizioni richieste dai flag lt, eq e gt.
+---
+#### Combinazioni dei flag di condizione
+I tre flag possono essere combinati per esprimere qualunque confronto base. L’uscita vale 1 se **il valore di X soddisfa almeno una delle condizioni selezionate**.
+La tabella seguente riassume il comportamento:
+
+| lt | eq | gt | Uscita = 1 quando… |
+| -- | -- | -- | ------------------ |
+| 0  | 0  | 0  | Mai                |
+| 0  | 0  | 1  | X > 0              |
+| 0  | 1  | 0  | X = 0              |
+| 0  | 1  | 1  | X ≥ 0              |
+| 1  | 0  | 0  | X < 0              |
+| 1  | 0  | 1  | X ≠ 0              |
+| 1  | 1  | 0  | X ≤ 0              |
+| 1  | 1  | 1  | Sempre             |
+#### Interpretazione
+Questa struttura permette di ottenere con pochi segnali tutte le condizioni necessarie per i salti condizionali della Control Unit:
+* verifica di uguaglianza
+* maggiore/minore
+* maggiore o uguale
+* minore o uguale
+* diverso da zero
+* salto incondizionato
+Il blocco Condition funziona come un decoder di condizioni, trasformando i flag lt/eq/gt in un singolo segnale di controllo utilizzabile per determinare il flusso di esecuzione del programma.
+![[condition.png]]
+
+### Condition
+Il blocco **Condition** verifica alcune proprietà del valore a 16 bit **X**, producendo un’uscita che vale 1 solo se almeno una delle condizioni richieste dai flag è soddisfatta. Le condizioni verificabili sono tre:
+* **lt**: X < 0
+* **eq**: X = 0
+* **gt**: X > 0
+Per determinare queste condizioni vengono ricavati da X due segnali fondamentali:
+* **N** (negative): corrisponde al bit più significativo di X. Vale 1 se X è negativo.
+* **Z** (zero): vale 1 quando tutti i bit di X sono uguali a 0. Si ottiene applicando a tutti i bit di X una OR generale seguita da una NOT.
+A partire da questi segnali è possibile definire ciascuna condizione:
+* **X < 0**: la condizione è vera quando N = 1
+* **X = 0**: la condizione è vera quando Z = 1
+* **X > 0**: la condizione è vera quando N = 0 e Z = 0
+Ciascuna condizione viene poi abilitata solo se il relativo flag in ingresso è attivo. Per farlo, ogni condizione è posta in AND con il rispettivo flag:
+* lt AND (X < 0)
+* eq AND (X = 0)
+* gt AND (X > 0)
+L’uscita del blocco **vale 1** quando almeno una delle condizioni abilitate risulta vera.
+Questo risultato si ottiene applicando una OR alle tre condizioni finali.
+La seguente tabella riassume il comportamento del circuito:
+
+| lt | eq | gt | Uscita = 1 quando |
+| -- | -- | -- | ----------------- |
+| 0  | 0  | 0  | mai               |
+| 0  | 0  | 1  | X > 0             |
+| 0  | 1  | 0  | X = 0             |
+| 0  | 1  | 1  | X ≥ 0             |
+| 1  | 0  | 0  | X < 0             |
+| 1  | 0  | 1  | X ≠ 0             |
+| 1  | 1  | 0  | X ≤ 0             |
+| 1  | 1  | 1  | sempre            |
+![[condition.png]]
+## Memory
+### SR Latch
+L’**SR Latch** (Set/Reset Latch) è il circuito più semplice in grado di **memorizzare un singolo bit**. Diversamente dai circuiti combinatori, che producono un’uscita immediata in base agli ingressi, un latch mantiene il proprio stato anche dopo che i segnali in ingresso sono cambiati.
+Il circuito ha due ingressi:
+* **s** (set): serve per impostare l’uscita a 1
+* **r** (reset): serve per impostare l’uscita a 0
+Il comportamento dell’SR Latch è il seguente:
+* Quando **s = 1** e **r = 0**, l’uscita viene forzata a 1.
+* Quando **s = 0** e **r = 1**, l’uscita viene forzata a 0.
+* Quando **s = 1** e **r = 1**, l’uscita **non cambia**: viene mantenuto il valore precedente memorizzato nel latch.
+* Quando **s = 0** e **r = 0**, il comportamento è **non definito**: il circuito non ha un valore stabile e il risultato non è garantito.
+Questo significa che il latch può mantenere l’informazione solo se almeno uno dei due ingressi è attivo (set o reset).
+Prima della prima attivazione di set o reset, l’uscita è anch’essa indefinita.
+Tabella di funzionamento:
+
+| s | r | Uscita            |
+| - | - | ----------------- |
+| 1 | 0 | 1                 |
+| 0 | 1 | 0                 |
+| 1 | 1 | Valore precedente |
+| 0 | 0 | Indefinita        |
+Lo SR Latch rappresenta il primo passo verso l’introduzione della **memoria sequenziale**, poiché consente di conservare uno stato nel tempo e costituisce la base per circuiti più complessi come latch abilitati e flip-flop.
+![[latch.png]]
+### D Latch
+Il **D Latch** (Data Latch) è un circuito sequenziale in grado di **memorizzare un singolo bit**.
+Rispetto all’SR Latch, il D Latch è progettato per evitare condizioni non definite: il dato da memorizzare è fornito da un unico ingresso (**d**), mentre il controllo dell’aggiornamento avviene tramite un segnale di abilitazione (**st**, store).
+Il suo comportamento è semplice:
+* Quando **st = 1**, il valore presente su **d** viene acquisito e inviato in uscita.
+* Quando **st = 0**, l’uscita **rimane invariata**, indipendentemente dal valore di d.
+  In questa fase il latch mantiene il bit precedentemente memorizzato.
+Prima della prima memorizzazione, l’uscita è indefinita (può assumere 0 o 1).
+Tabella di funzionamento:
+
+| st | d | Uscita            |
+| -- | - | ----------------- |
+| 1  | 0 | 0                 |
+| 1  | 1 | 1                 |
+| 0  | 0 | Valore precedente |
+| 0  | 1 | Valore precedente |
+Il D Latch viene spesso utilizzato come blocco base per la costruzione di registri e memorie, poiché consente di controllare in maniera pulita quando il dato deve essere aggiornato e quando invece mantenuto stabile.
+![[d_latch.png]]
+### Data Flip-Flop (DFF)
+Il **DFF** (Data Flip-Flop) è un circuito sequenziale che consente di **memorizzare un singolo bit**, ma a differenza del D Latch l’aggiornamento dell’uscita non avviene immediatamente. Il cambiamento è sincronizzato dal segnale di **clock** (**cl**), che alterna periodicamente i valori 0 e 1.
+Il funzionamento del DFF si articola in due fasi:
+####  Fase 1: cl = 0
+Durante questa fase il circuito **accetta variazioni** sugli ingressi:
+* **st** (store): abilita la memorizzazione
+* **d**: dato da memorizzare
+Nessun aggiornamento dell’uscita avviene in questa fase.
+####  Fase 2: transizione cl : 0 → 1
+Quando il clock passa da 0 a 1, il circuito valuta lo stato degli ingressi:
+* Se **st = 1**, il valore presente su **d** viene memorizzato internamente.
+* Se **st = 0**, il contenuto precedente viene mantenuto.
+Il valore memorizzato **non è ancora inviato in uscita**: rimane in attesa della fase successiva.
+####  Fase 3: transizione cl : 1 → 0
+Quando il clock ritorna da 1 a 0, il DFF **aggiorna l’uscita** con il valore memorizzato nella fase precedente.
+In questo modo l’uscita cambia solo in corrispondenza della discesa del clock.
+####  Tabella degli effetti quando cl = 1
+| st | d | Effetto sul valore memorizzato |
+| -- | - | ------------------------------ |
+| 1  | 0 | next = 0                       |
+| 1  | 1 | next = 1                       |
+| 0  | 0 | invariato                      |
+| 0  | 1 | invariato                      |
+Prima della prima memorizzazione, l’uscita è indefinita.
+Si assume inoltre che, mentre **cl = 1**, gli ingressi non cambino (condizione standard per un corretto funzionamento).
+Il DFF rappresenta il componente fondamentale per la costruzione di **registri**, **contatori** e, più in generale, di qualsiasi sistema sequenziale sincronizzato.
+![[data_flipflop.png]]
 ## Altri esempi di utilizzo dell'algebra booleana in contesti reali
 ###  Utilizzo dello XOR in crittografia
 ####  Introduzione
@@ -658,15 +856,10 @@ XOR 11001100
 ```
 
 Per decifrare, si applica l'operazione XOR tra il testo cifrato e la stessa chiave, ottenendo nuovamente il testo in chiaro grazie alla proprietà di auto-inversione.
-
 ####  Criticità e limiti
-L'uso dell'XOR in crittografia presenta vantaggi notevoli in termini di efficienza computazionale e semplicità. Tuttavia, emergono alcune criticità:
-
-- **Riutilizzo della chiave:** In sistemi dove la chiave (o keystream) viene usata più di una volta, l'analisi di coppie di messaggi cifrati può portare a rivelare informazioni sul testo in chiaro.
-- **Qualità del keystream:** Un keystream non sufficientemente casuale può essere sfruttato tramite attacchi statistici o di criptoanalisi per recuperare la chiave o il testo originale.
-- **Attacchi noti:** Tecniche come l'attacco al keystream riutilizzato (nota anche come "two-time pad") sfruttano la linearità dell'operazione XOR per individuare pattern e dedurre dati sensibili.
+Sebbene il one-time-pad sia la tecnica crittografica per eccellenza, non è realmente applicabile. Questo perché ho bisogno di una chiave lunga quanto il messaggio, rendendola impraticabile sia perché per messaggi molto lunghi dovrei utilizzare una chiave molto lunga, sia perché per ogni singolo messaggio avrei bisogno di una chiave diversa.
+I protocolli moderni risolvono questi due problemi mantenendo una crittografia estremamente robusta, seppur non abbiano una crittografia "perfetta" come quella del one time pad, come ad esempio AES (Advanced Encryption Standard), che utilizza chiavi a lunghezza fissa.
 ###  Display a 7 segmenti
-
 La realizzazione di dispositivi numerici digitali si accompagna alla necessità di **visualizzare variabili e risultati**. Nel caso dei circuiti **sommatori e sottrattori**, si può ricorrere ai **display a 7 segmenti**, realizzati con **LED (Light Emitting Diode)** o **LCD (Liquid Crystal Display)**.  
 In entrambi i casi, i segmenti vengono identificati secondo lo schema seguente:
 
