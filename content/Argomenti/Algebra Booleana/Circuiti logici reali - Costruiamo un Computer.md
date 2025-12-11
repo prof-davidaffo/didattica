@@ -703,6 +703,106 @@ Questa struttura permette di ottenere con pochi segnali tutte le condizioni nece
 * salto incondizionato
 Il blocco Condition funziona come un decoder di condizioni, trasformando i flag lt/eq/gt in un singolo segnale di controllo utilizzabile per determinare il flusso di esecuzione del programma.
 ![[condition.png]]
+
+### Condition
+Il blocco **Condition** verifica alcune proprietà del valore a 16 bit **X**, producendo un’uscita che vale 1 solo se almeno una delle condizioni richieste dai flag è soddisfatta. Le condizioni verificabili sono tre:
+* **lt**: X < 0
+* **eq**: X = 0
+* **gt**: X > 0
+Per determinare queste condizioni vengono ricavati da X due segnali fondamentali:
+* **N** (negative): corrisponde al bit più significativo di X. Vale 1 se X è negativo.
+* **Z** (zero): vale 1 quando tutti i bit di X sono uguali a 0. Si ottiene applicando a tutti i bit di X una OR generale seguita da una NOT.
+A partire da questi segnali è possibile definire ciascuna condizione:
+* **X < 0**: la condizione è vera quando N = 1
+* **X = 0**: la condizione è vera quando Z = 1
+* **X > 0**: la condizione è vera quando N = 0 e Z = 0
+Ciascuna condizione viene poi abilitata solo se il relativo flag in ingresso è attivo. Per farlo, ogni condizione è posta in AND con il rispettivo flag:
+* lt AND (X < 0)
+* eq AND (X = 0)
+* gt AND (X > 0)
+L’uscita del blocco **vale 1** quando almeno una delle condizioni abilitate risulta vera.
+Questo risultato si ottiene applicando una OR alle tre condizioni finali.
+La seguente tabella riassume il comportamento del circuito:
+
+| lt | eq | gt | Uscita = 1 quando |
+| -- | -- | -- | ----------------- |
+| 0  | 0  | 0  | mai               |
+| 0  | 0  | 1  | X > 0             |
+| 0  | 1  | 0  | X = 0             |
+| 0  | 1  | 1  | X ≥ 0             |
+| 1  | 0  | 0  | X < 0             |
+| 1  | 0  | 1  | X ≠ 0             |
+| 1  | 1  | 0  | X ≤ 0             |
+| 1  | 1  | 1  | sempre            |
+![[condition.png]]
+## Memory
+### SR Latch
+L’**SR Latch** (Set/Reset Latch) è il circuito più semplice in grado di **memorizzare un singolo bit**. Diversamente dai circuiti combinatori, che producono un’uscita immediata in base agli ingressi, un latch mantiene il proprio stato anche dopo che i segnali in ingresso sono cambiati.
+Il circuito ha due ingressi:
+* **s** (set): serve per impostare l’uscita a 1
+* **r** (reset): serve per impostare l’uscita a 0
+Il comportamento dell’SR Latch è il seguente:
+* Quando **s = 1** e **r = 0**, l’uscita viene forzata a 1.
+* Quando **s = 0** e **r = 1**, l’uscita viene forzata a 0.
+* Quando **s = 1** e **r = 1**, l’uscita **non cambia**: viene mantenuto il valore precedente memorizzato nel latch.
+* Quando **s = 0** e **r = 0**, il comportamento è **non definito**: il circuito non ha un valore stabile e il risultato non è garantito.
+Questo significa che il latch può mantenere l’informazione solo se almeno uno dei due ingressi è attivo (set o reset).
+Prima della prima attivazione di set o reset, l’uscita è anch’essa indefinita.
+Tabella di funzionamento:
+
+| s | r | Uscita            |
+| - | - | ----------------- |
+| 1 | 0 | 1                 |
+| 0 | 1 | 0                 |
+| 1 | 1 | Valore precedente |
+| 0 | 0 | Indefinita        |
+Lo SR Latch rappresenta il primo passo verso l’introduzione della **memoria sequenziale**, poiché consente di conservare uno stato nel tempo e costituisce la base per circuiti più complessi come latch abilitati e flip-flop.
+![[latch.png]]
+### D Latch
+Il **D Latch** (Data Latch) è un circuito sequenziale in grado di **memorizzare un singolo bit**.
+Rispetto all’SR Latch, il D Latch è progettato per evitare condizioni non definite: il dato da memorizzare è fornito da un unico ingresso (**d**), mentre il controllo dell’aggiornamento avviene tramite un segnale di abilitazione (**st**, store).
+Il suo comportamento è semplice:
+* Quando **st = 1**, il valore presente su **d** viene acquisito e inviato in uscita.
+* Quando **st = 0**, l’uscita **rimane invariata**, indipendentemente dal valore di d.
+  In questa fase il latch mantiene il bit precedentemente memorizzato.
+Prima della prima memorizzazione, l’uscita è indefinita (può assumere 0 o 1).
+Tabella di funzionamento:
+
+| st | d | Uscita            |
+| -- | - | ----------------- |
+| 1  | 0 | 0                 |
+| 1  | 1 | 1                 |
+| 0  | 0 | Valore precedente |
+| 0  | 1 | Valore precedente |
+Il D Latch viene spesso utilizzato come blocco base per la costruzione di registri e memorie, poiché consente di controllare in maniera pulita quando il dato deve essere aggiornato e quando invece mantenuto stabile.
+![[d_latch.png]]
+### Data Flip-Flop (DFF)
+Il **DFF** (Data Flip-Flop) è un circuito sequenziale che consente di **memorizzare un singolo bit**, ma a differenza del D Latch l’aggiornamento dell’uscita non avviene immediatamente. Il cambiamento è sincronizzato dal segnale di **clock** (**cl**), che alterna periodicamente i valori 0 e 1.
+Il funzionamento del DFF si articola in due fasi:
+####  Fase 1: cl = 0
+Durante questa fase il circuito **accetta variazioni** sugli ingressi:
+* **st** (store): abilita la memorizzazione
+* **d**: dato da memorizzare
+Nessun aggiornamento dell’uscita avviene in questa fase.
+####  Fase 2: transizione cl : 0 → 1
+Quando il clock passa da 0 a 1, il circuito valuta lo stato degli ingressi:
+* Se **st = 1**, il valore presente su **d** viene memorizzato internamente.
+* Se **st = 0**, il contenuto precedente viene mantenuto.
+Il valore memorizzato **non è ancora inviato in uscita**: rimane in attesa della fase successiva.
+####  Fase 3: transizione cl : 1 → 0
+Quando il clock ritorna da 1 a 0, il DFF **aggiorna l’uscita** con il valore memorizzato nella fase precedente.
+In questo modo l’uscita cambia solo in corrispondenza della discesa del clock.
+####  Tabella degli effetti quando cl = 1
+| st | d | Effetto sul valore memorizzato |
+| -- | - | ------------------------------ |
+| 1  | 0 | next = 0                       |
+| 1  | 1 | next = 1                       |
+| 0  | 0 | invariato                      |
+| 0  | 1 | invariato                      |
+Prima della prima memorizzazione, l’uscita è indefinita.
+Si assume inoltre che, mentre **cl = 1**, gli ingressi non cambino (condizione standard per un corretto funzionamento).
+Il DFF rappresenta il componente fondamentale per la costruzione di **registri**, **contatori** e, più in generale, di qualsiasi sistema sequenziale sincronizzato.
+![[data_flipflop.png]]
 ## Altri esempi di utilizzo dell'algebra booleana in contesti reali
 ###  Utilizzo dello XOR in crittografia
 ####  Introduzione
