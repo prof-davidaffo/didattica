@@ -702,39 +702,11 @@ Questa struttura permette di ottenere con pochi segnali tutte le condizioni nece
 * diverso da zero
 * salto incondizionato
 Il blocco Condition funziona come un decoder di condizioni, trasformando i flag lt/eq/gt in un singolo segnale di controllo utilizzabile per determinare il flusso di esecuzione del programma.
+#### Circuito
+![[condition_my.png]]
+#### Circuito ottimizzato
 ![[condition.png]]
 
-### Condition
-Il blocco **Condition** verifica alcune proprietà del valore a 16 bit **X**, producendo un’uscita che vale 1 solo se almeno una delle condizioni richieste dai flag è soddisfatta. Le condizioni verificabili sono tre:
-* **lt**: X < 0
-* **eq**: X = 0
-* **gt**: X > 0
-Per determinare queste condizioni vengono ricavati da X due segnali fondamentali:
-* **N** (negative): corrisponde al bit più significativo di X. Vale 1 se X è negativo.
-* **Z** (zero): vale 1 quando tutti i bit di X sono uguali a 0. Si ottiene applicando a tutti i bit di X una OR generale seguita da una NOT.
-A partire da questi segnali è possibile definire ciascuna condizione:
-* **X < 0**: la condizione è vera quando N = 1
-* **X = 0**: la condizione è vera quando Z = 1
-* **X > 0**: la condizione è vera quando N = 0 e Z = 0
-Ciascuna condizione viene poi abilitata solo se il relativo flag in ingresso è attivo. Per farlo, ogni condizione è posta in AND con il rispettivo flag:
-* lt AND (X < 0)
-* eq AND (X = 0)
-* gt AND (X > 0)
-L’uscita del blocco **vale 1** quando almeno una delle condizioni abilitate risulta vera.
-Questo risultato si ottiene applicando una OR alle tre condizioni finali.
-La seguente tabella riassume il comportamento del circuito:
-
-| lt | eq | gt | Uscita = 1 quando |
-| -- | -- | -- | ----------------- |
-| 0  | 0  | 0  | mai               |
-| 0  | 0  | 1  | X > 0             |
-| 0  | 1  | 0  | X = 0             |
-| 0  | 1  | 1  | X ≥ 0             |
-| 1  | 0  | 0  | X < 0             |
-| 1  | 0  | 1  | X ≠ 0             |
-| 1  | 1  | 0  | X ≤ 0             |
-| 1  | 1  | 1  | sempre            |
-![[condition.png]]
 ## Memory
 ### SR Latch
 L’**SR Latch** (Set/Reset Latch) è il circuito più semplice in grado di **memorizzare un singolo bit**. Diversamente dai circuiti combinatori, che producono un’uscita immediata in base agli ingressi, un latch mantiene il proprio stato anche dopo che i segnali in ingresso sono cambiati.
