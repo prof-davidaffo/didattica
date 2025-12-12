@@ -10,8 +10,3 @@ Qui troverete materiali, appunti e risorse utili per le lezioni di informatica.
 Questo sito rappresenta una versione pubblica dei miei appunti personali, organizzata in modo da offrire un supporto consultabile anche al di fuori dell’orario scolastico.
 
 ⚠️ Alcuni contenuti potrebbero risultare incompleti, non aggiornati o in fase di stesura. Vi invito a considerare questo spazio come un punto di partenza, non come un riferimento assoluto.
-
-## Edu Tools
-Ho aggiunto una nuova sezione dedicata agli strumenti didattici.
-<a href="https://prof-davidaffo.github.io/edu-tools/" target="_blank">Vai a Edu Tools</a>
-
