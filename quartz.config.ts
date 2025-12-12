@@ -85,8 +85,8 @@ const config: QuartzConfig = {
         enableSiteMap: true,
         enableRSS: true,
       }),
-      Plugin.Assets(),
       Plugin.Static(),
+      Plugin.Assets(),
       Plugin.Favicon(),
       Plugin.NotFoundPage(),
       // Comment out CustomOgImages to speed up build time
