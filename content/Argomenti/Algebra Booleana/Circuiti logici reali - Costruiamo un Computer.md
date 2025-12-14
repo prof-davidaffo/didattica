@@ -730,6 +730,12 @@ Tabella di funzionamento:
 | 0 | 0 | Indefinita        |
 Lo SR Latch rappresenta il primo passo verso l’introduzione della **memoria sequenziale**, poiché consente di conservare uno stato nel tempo e costituisce la base per circuiti più complessi come latch abilitati e flip-flop.
 ![[latch.png]]
+#### Dal SR Latch al D Latch: perché serve un’evoluzione
+Lo SR Latch è il componente più semplice capace di memorizzare un bit, ma presenta due problemi strutturali:
+La combinazione s = 0 e r = 0 è indeterminata: l’uscita non è definita.
+La combinazione s = 1 e r = 1 è ambigua: il valore precedente viene mantenuto, ma non rappresenta un comando “chiaro” al circuito.
+In altre parole, lo SR Latch richiede due segnali separati (set e reset) che non devono mai essere attivi insieme e che non devono mai essere entrambi a zero. Questo lo rende poco pratico da utilizzare in circuiti reali, dove è necessario un comportamento prevedibile e privo di combinazioni vietate.
+Per risolvere questo limite, si introduce il D Latch, che semplifica radicalmente il meccanismo di scrittura.
 ### D Latch
 Il **D Latch** (Data Latch) è un circuito sequenziale in grado di **memorizzare un singolo bit**.
 Rispetto all’SR Latch, il D Latch è progettato per evitare condizioni non definite: il dato da memorizzare è fornito da un unico ingresso (**d**), mentre il controllo dell’aggiornamento avviene tramite un segnale di abilitazione (**st**, store).
@@ -749,32 +755,152 @@ Tabella di funzionamento:
 Il D Latch viene spesso utilizzato come blocco base per la costruzione di registri e memorie, poiché consente di controllare in maniera pulita quando il dato deve essere aggiornato e quando invece mantenuto stabile.
 ![[d_latch.png]]
 ### Data Flip-Flop (DFF)
-Il **DFF** (Data Flip-Flop) è un circuito sequenziale che consente di **memorizzare un singolo bit**, ma a differenza del D Latch l’aggiornamento dell’uscita non avviene immediatamente. Il cambiamento è sincronizzato dal segnale di **clock** (**cl**), che alterna periodicamente i valori 0 e 1.
-Il funzionamento del DFF si articola in due fasi:
-####  Fase 1: cl = 0
-Durante questa fase il circuito **accetta variazioni** sugli ingressi:
-* **st** (store): abilita la memorizzazione
-* **d**: dato da memorizzare
-Nessun aggiornamento dell’uscita avviene in questa fase.
-####  Fase 2: transizione cl : 0 → 1
-Quando il clock passa da 0 a 1, il circuito valuta lo stato degli ingressi:
-* Se **st = 1**, il valore presente su **d** viene memorizzato internamente.
-* Se **st = 0**, il contenuto precedente viene mantenuto.
-Il valore memorizzato **non è ancora inviato in uscita**: rimane in attesa della fase successiva.
-####  Fase 3: transizione cl : 1 → 0
-Quando il clock ritorna da 1 a 0, il DFF **aggiorna l’uscita** con il valore memorizzato nella fase precedente.
-In questo modo l’uscita cambia solo in corrispondenza della discesa del clock.
-####  Tabella degli effetti quando cl = 1
+Il **Data Flip-Flop (DFF)** è il componente fondamentale della memoria sincrona. A differenza dei latch, che aggiornano immediatamente l’uscita quando cambia l’ingresso, il DFF utilizza un **clock** per controllare *esattamente quando* memorizzare un valore e quando renderlo disponibile in uscita. Questo meccanismo evita le problematiche presenti nei sistemi basati esclusivamente sui latch.
+##### Perché i latch non bastano
+Un circuito costruito solo con latch cambia stato in tempo reale: ogni variazione degli ingressi si propaga immediatamente e senza coordinamento. In circuiti complessi ciò genera aggiornamenti che avvengono in ordine imprevedibile, dando luogo a **race condition** e comportamenti non deterministici.
+Per evitare questi problemi, tutti i componenti sequenziali devono aggiornarsi **contemporaneamente**.
+La soluzione è il **clock**, un segnale binario condiviso che oscilla periodicamente tra 0 e 1.
+Quando i componenti cambiano stato solo in corrispondenza delle transizioni del clock, l’intero circuito evolve in modo sincronizzato e prevedibile.
+Un **ciclo di clock** corrisponde al passaggio:
+```
+0 → 1 → 0
+```
+La velocità con cui il clock oscilla è il **clock rate**: più è alta, più velocemente opera il processore.
+
+> Nota
+> Il clock non misura il tempo: fornisce solo un ritmo regolare. In combinazione con un contatore, è possibile costruire dispositivi che tengono traccia del tempo o scandiscono operazioni.
+##### Il Flip-Flop come combinazione di due latch
+Un DFF può essere costruito utilizzando **due latch** collegati in sequenza:
+1. **Primo latch (fase di memorizzazione)**
+   Viene aggiornato quando **cl = 1**.
+   In questa fase il valore d viene acquisito e memorizzato internamente come *next*, ma non è ancora inviato all’uscita.
+2. **Secondo latch (fase di aggiornamento dell’uscita)**
+   Viene aggiornato quando il clock torna **a 0**.
+   In questo momento *next* viene trasferito in uscita.
+In questo modo il DFF:
+* **cattura il dato** durante la transizione del clock verso 1,
+* **aggiorna l’uscita** solo durante il ritorno del clock a 0.
+L’uscita rimane quindi stabile per l’intera durata del ciclo di clock, evitando propagazioni incontrollate.
+##### Comportamento del DFF
+Durante il funzionamento, gli ingressi sono:
+* **d**: valore da memorizzare
+* **st**: abilita la memorizzazione
+* **cl**: clock
+Il comportamento complessivo è:
+* **cl = 0**
+  Gli ingressi possono cambiare liberamente; nessun aggiornamento dell’uscita avviene.
+* **transizione cl: 0 → 1**
+  Se **st = 1**, il valore di d viene memorizzato (next).
+  Se **st = 0**, il valore precedente viene conservato.
+* **transizione cl: 1 → 0**
+  Il valore memorizzato viene trasferito all’uscita.
+Tabella degli effetti quando cl = 1:
+
 | st | d | Effetto sul valore memorizzato |
 | -- | - | ------------------------------ |
 | 1  | 0 | next = 0                       |
 | 1  | 1 | next = 1                       |
 | 0  | 0 | invariato                      |
 | 0  | 1 | invariato                      |
-Prima della prima memorizzazione, l’uscita è indefinita.
-Si assume inoltre che, mentre **cl = 1**, gli ingressi non cambino (condizione standard per un corretto funzionamento).
-Il DFF rappresenta il componente fondamentale per la costruzione di **registri**, **contatori** e, più in generale, di qualsiasi sistema sequenziale sincronizzato.
+Prima della prima scrittura, l’uscita del DFF è indefinita.
+Il DFF, grazie alla sua sincronizzazione con il clock, è la base per registri, contatori, memorie e per l’intera logica sequenziale dei moderni processori.
+
+
 ![[data_flipflop.png]]
+### Counter
+Il **Counter** è un componente sequenziale che produce in uscita un numero a 16 bit e lo aggiorna automaticamente a ogni ciclo di clock. È costruito sopra un registro (basato su flip-flop), ma con una logica aggiuntiva che permette di:
+* **caricare** un valore esterno X quando richiesto
+* **incrementare** il valore corrente quando non viene effettuato alcun caricamento
+Il funzionamento dipende da due ingressi:
+* **st** (store): se vale 1, il contatore carica il valore X
+* **cl** (clock): definisce il momento in cui l’uscita viene aggiornata
+Il contatore possiede due valori interni:
+* **output** → il valore attualmente in uscita
+* **next** → il valore che diventerà output alla prossima discesa del clock
+Il comportamento è il seguente.
+##### Quando cl = 0
+Durante questa fase, il contatore calcola il valore **next**:
+* Se **st = 1**
+  il valore X viene caricato come prossimo contenuto:
+  ```
+  next = X
+  ```
+* Se **st = 0**
+  il contatore incrementa il valore attuale:
+  ```
+  next = output + 1
+  ```
+In entrambi i casi, l’uscita corrente non cambia ancora.
+##### Transizione del clock: cl = 1 → 0
+Quando il clock torna a 0, il valore memorizzato in **next** viene trasferito in uscita:
+```
+output = next
+```
+Da questo momento, l’uscita rappresenta il nuovo stato del contatore, valido fino al ciclo successivo.
+##### Riepilogo degli effetti (quando cl = 0)
+| st | cl | Effetto           |
+| -- | -- | ----------------- |
+| 0  | 0  | next = output + 1 |
+| 1  | 0  | next = X          |
+L’uscita viene aggiornata solo alla transizione **cl: 1 → 0**, esattamente come per un registro basato su flip-flop.
+Il Counter è la base per:
+* contatori di programma (PC)
+* gestione degli indirizzi nelle RAM
+* temporizzatori
+* dispositivi di sincronizzazione
+e rappresenta uno dei componenti fondamentali nei processori e nelle architetture digitali.
+![[counter.png]]
+### RAM
+Una **RAM** (Random Access Memory) è un’unità di memoria composta da più registri, ognuno dei quali è in grado di conservare un valore a 16 bit. La caratteristica principale della RAM è l’**accesso diretto**: ogni parola di memoria può essere letta o scritta conoscendone l’indirizzo, indipendentemente dalla sua posizione fisica nel circuito.
+Per comprendere il meccanismo di indirizzamento, costruiamo prima una memoria composta da **due registri** e la rendiamo selezionabile tramite un singolo bit di indirizzo.
+##### Ingressi
+La RAM riceve i seguenti segnali:
+* **ad** (address): seleziona quale dei due registri usare (0 → registro 0, 1 → registro 1).
+* **st** (store): indica se si vuole scrivere un valore nella memoria.
+  * Se **st = 1**, il valore **X** viene memorizzato nel registro selezionato.
+  * Se **st = 0**, la memoria non viene modificata.
+* **X**: valore a 16 bit da memorizzare.
+* **cl** (clock): sincronizza le operazioni di scrittura e aggiornamento dell’uscita.
+##### Funzionamento temporale
+Come in tutti i componenti sequenziali basati su flip-flop, la RAM segue due momenti distinti:
+* **Transizione cl: 0 → 1**
+  Se **st = 1**, il valore X viene memorizzato nel registro selezionato dall’indirizzo ad.
+  Se **st = 0**, nessuna scrittura avviene.
+* **Transizione cl: 1 → 0**
+  Il registro selezionato emette il proprio valore aggiornato in uscita.
+In questo modo la lettura e la scrittura sono perfettamente sincronizzate con il clock.
+##### Uscita
+L’uscita del blocco RAM è semplicemente il contenuto del registro selezionato da **ad**, reso disponibile dopo la discesa del clock.
+##### Indirizzamento e scalabilità
+In questa costruzione iniziale disponiamo di due registri, quindi di due possibili indirizzi:
+```
+ad = 0 → seleziona il registro 0
+ad = 1 → seleziona il registro 1
+```
+Questa semplice struttura è però **ricorsiva**: utilizzando selettori più ampi (MUX e DEMUX) e combinando più registri, è possibile costruire memorie più grandi:
+* 2 registri → 1 bit di indirizzo
+* 4 registri → 2 bit di indirizzo
+* 8 registri → 3 bit
+* …
+* 65.536 registri → 16 bit di indirizzo
+Poiché la nostra architettura è a 16 bit, disponendo di 16 linee di indirizzo possiamo indirizzare fino a:
+```
+2^16 = 65.536 parole
+```
+##### Capacità della memoria
+Ogni parola è lunga **16 bit = 2 byte**.
+Quindi la capacità totale della memoria diventa:
+```
+65.536 parole × 2 byte = 131.072 byte
+```
+Questa quantità viene espressa come:
+```
+128 KB
+```
+perché nel contesto delle memorie digitali:
+* 1 KB = 1024 byte
+  e non 1000 come nelle unità di misura decimali.
+![[ram.png]]
 ## Altri esempi di utilizzo dell'algebra booleana in contesti reali
 ###  Utilizzo dello XOR in crittografia
 ####  Introduzione
