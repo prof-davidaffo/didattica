@@ -955,6 +955,200 @@ perché nel contesto delle memorie digitali:
 * 1 KB = 1024 byte
   e non 1000 come nelle unità di misura decimali.
 ![[ram.png]]
+###   Combined Memory
+La **Combined Memory** rappresenta l’intero sistema di memoria del processore. È costituita da **due registri da 16 bit**, chiamati **A** e **D**, e da una **RAM**. Dal punto di vista architetturale, questo blocco raccoglie e coordina tutti i meccanismi di memorizzazione disponibili per il processore.
+Il processore può scrivere un valore a 16 bit **X** in uno o più elementi di memoria nello stesso ciclo di clock, utilizzando opportuni **flag di controllo**.
+####   Struttura della memoria
+Il sistema di memoria è organizzato su **due livelli**:
+* i **registri**, pochi e direttamente accessibili, usati per valori temporanei e calcoli intermedi;
+* la **RAM**, molto più capiente, usata per memorizzare dati e programmi, ma accessibile solo tramite un indirizzo.
+In questo processore sono presenti solo due registri:
+* **A**, usato principalmente per contenere indirizzi di memoria;
+* **D**, usato per contenere dati.
+Questa scelta rappresenta il minimo indispensabile per realizzare un processore funzionante. Nei processori reali il numero di registri è generalmente molto maggiore, ma il principio rimane identico.
+####   Scrittura nella memoria
+La scrittura è controllata da tre flag indipendenti:
+* **a**: scrive il valore X nel registro A;
+* **d**: scrive il valore X nel registro D;
+* **\*a**: scrive il valore X nella RAM all’indirizzo contenuto nel registro A.
+I flag possono essere **attivati in qualsiasi combinazione**. Questo significa che lo stesso valore X può essere scritto contemporaneamente:
+* solo in A,
+* solo in D,
+* solo in RAM,
+* in A e D,
+* in A e RAM,
+* in D e RAM,
+* in A, D e RAM.
+Se tutti e tre i flag sono uguali a 0, l’ingresso X viene ignorato e nessuna memoria viene modificata.
+Tutte le operazioni di scrittura sono **sincronizzate dal clock** (**cl**), come per gli altri componenti sequenziali del processore.
+####   Lettura della memoria
+La Combined Memory fornisce tre uscite distinte:
+* **A**: il valore attualmente contenuto nel registro A;
+* **D**: il valore attualmente contenuto nel registro D;
+* **\*A**: il valore contenuto nella RAM all’indirizzo specificato dal registro A.
+In questo modo il registro A svolge un doppio ruolo: è una memoria veloce interna al processore e, allo stesso tempo, fornisce l’indirizzo per accedere alla RAM.
+####   *Ruolo dei flag*
+Un *flag* è un ingresso binario che abilita una specifica operazione. In questo componente i flag **a**, **d** e **a\*** sono indipendenti tra loro e non si escludono a vicenda. Questo consente al processore di eseguire più scritture nello stesso ciclo di clock, rendendo il flusso delle istruzioni più efficiente.
+####   Considerazioni architetturali
+La Combined Memory mostra chiaramente come un processore utilizzi contemporaneamente *registri* e *RAM*, assegnando a ciascun tipo di memoria un ruolo preciso. Questa separazione tra memoria veloce e memoria capiente è una caratteristica fondamentale di tutti i computer reali e costituisce la base per l’esecuzione delle istruzioni e dei programmi.
+#### Circuito
+![[combined_memory.png]]
+###   ALU Instruction
+Una **ALU Instruction** è una parola di controllo che specifica **che operazione deve eseguire l’ALU**, **dove deve andare il risultato** e **se devono essere verificate condizioni sul risultato**.
+In pratica, questa istruzione collega tre blocchi fondamentali del processore:
+* **ALU** (calcolo)
+* **memoria combinata** (destinazione del risultato)
+* **unità di condizione** (verifica logica sul risultato)
+L’istruzione è codificata in un insieme di bit, ognuno dei quali ha un significato preciso.
+####   Struttura dell’istruzione
+Ogni bit dell’istruzione controlla un aspetto specifico del comportamento del processore.
+
+| Bit | Gruppo       | Flag | Significato                                |
+| --: | ------------ | ---- | ------------------------------------------ |
+|  10 | ALU          | u    | seleziona unità logica o aritmetica        |
+|   9 | ALU          | op1  | selezione operazione ALU                   |
+|   8 | ALU          | op0  | selezione operazione ALU                   |
+|   7 | ALU          | zx   | forza a zero l’operando sinistro           |
+|   6 | ALU          | sw   | scambia gli operandi                       |
+|   5 | destinazione | a    | scrive il risultato nel registro A         |
+|   4 | destinazione | d    | scrive il risultato nel registro D         |
+|   3 | destinazione | *a   | scrive il risultato in RAM all’indirizzo A |
+|   2 | condizione   | lt   | verifica risultato < 0                     |
+|   1 | condizione   | eq   | verifica risultato = 0                     |
+|   0 | condizione   | gt   | verifica risultato > 0                     |
+Questa suddivisione rende evidente che **una singola istruzione** controlla più sottosistemi contemporaneamente.
+####   Operandi dell’ALU
+L’ALU riceve sempre due ingressi:
+* **X**, che è sempre il contenuto del registro **D**
+* **Y**, che dipende da un bit dell’istruzione
+Un bit aggiuntivo dell’istruzione (bit 12) seleziona la sorgente di Y:
+* se il bit 12 vale 0 → Y = A
+* se il bit 12 vale 1 → Y = \*A (contenuto della RAM all’indirizzo A)
+In questo modo l’ALU può lavorare sia su valori contenuti nei registri, sia su valori provenienti dalla memoria.
+####   Operazione dell’ALU
+I bit **u, op1, op0, zx e sw** determinano l’operazione eseguita dall’ALU.
+Il risultato dell’operazione viene prodotto in uscita come valore **R**.
+L’ALU non decide autonomamente cosa fare con R: si limita a calcolarlo. Le decisioni successive dipendono dai bit di destinazione e di condizione.
+####   Destinazione del risultato
+I bit **a**, **d** e **\*a** indicano **dove scrivere il risultato R**:
+* se **a = 1**, R viene scritto nel registro A
+* se **d = 1**, R viene scritto nel registro D
+* se **\*a = 1**, R viene scritto in RAM all’indirizzo contenuto in A
+I flag di destinazione sono indipendenti: il risultato può essere scritto in più destinazioni contemporaneamente.
+Se tutti e tre valgono 0, il risultato viene calcolato ma **non memorizzato**.
+####   Condizioni e flag j
+I bit **lt**, **eq** e **gt** definiscono una condizione da verificare sul risultato R dell’ALU:
+* **lt**: R < 0
+* **eq**: R = 0
+* **gt**: R > 0
+Questi bit possono essere combinati per definire condizioni più complesse.
+Il segnale di uscita **j** vale 1 se il risultato R soddisfa la condizione specificata dai bit 0–2, altrimenti vale 0.
+Il flag **j** non modifica direttamente la memoria: viene utilizzato dall’unità di controllo per decidere, ad esempio, se effettuare un salto o proseguire con l’istruzione successiva.
+####   Ruolo dell’ALU Instruction
+La ALU Instruction è il punto di incontro tra:
+* calcolo aritmetico e logico
+* aggiornamento dei registri e della RAM
+* controllo del flusso di esecuzione
+Attraverso questa istruzione, il processore esegue operazioni, memorizza risultati e prende decisioni, rendendo possibile l’esecuzione di programmi complessi.
+#### Circuito
+![[instruction.png]]
+###   Control Selector
+Il **Control Selector** è un componente di controllo che permette al processore di **scegliere tra due possibili insiemi di segnali di uscita**, in base al valore di un singolo flag di selezione.
+Non esegue calcoli né memorizza dati: il suo unico compito è **instradare correttamente i segnali di controllo**.
+Questo meccanismo è fondamentale per supportare **diversi tipi di istruzioni** all’interno della CPU.
+####   Funzione del selettore
+Il Control Selector riceve in ingresso **due gruppi completi di segnali**, indicati con indice 0 e indice 1, e produce in uscita **un solo gruppo**, scelto tramite il flag **s**.
+Il comportamento è il seguente:
+* se **s = 0**, vengono inoltrati i segnali del gruppo 0
+* se **s = 1**, vengono inoltrati i segnali del gruppo 1
+####   Segnali coinvolti
+Per ciascun gruppo sono presenti i seguenti segnali:
+* **R**: risultato (tipicamente dall’ALU o da un’altra sorgente)
+* **a**: scrittura nel registro A
+* **d**: scrittura nel registro D
+* **\*a**: scrittura in RAM all’indirizzo A
+* **j**: esito della condizione (usato per il controllo del flusso)
+La selezione avviene **su tutti i segnali contemporaneamente**.
+
+| s   | R   | a   | d   | /*a | j   |
+| --- | --- | --- | --- | --- | --- |
+| 0   | R₀  | a₀  | d₀  | *a₀ | j₀  |
+| 1   | R₁  | a₁  | d₁  | *a₁ | j₁  |
+####   Perché è necessario
+In un processore non tutte le istruzioni funzionano allo stesso modo.
+Alcune istruzioni:
+* producono un risultato da scrivere in memoria,
+* altre aggiornano solo registri,
+* altre ancora servono solo a valutare condizioni o a controllare il flusso.
+Il Control Selector permette di **unificare il percorso dei segnali**, scegliendo di volta in volta quale insieme di controlli deve essere applicato, senza duplicare l’hardware a valle.
+In questo modo:
+* la CPU rimane modulare,
+* i diversi tipi di istruzione condividono la stessa struttura,
+* la logica di controllo risulta più semplice e leggibile.
+####   Considerazione finale
+Il Control Selector è un componente semplice, ma svolge un ruolo cruciale:
+consente al processore di **comportarsi in modi diversi usando sempre gli stessi blocchi interni**, semplicemente cambiando quali segnali vengono effettivamente applicati.
+#### Circuito
+![[control_selector.png]]
+###   Control Unit
+La **Control Unit** è il componente che interpreta le istruzioni del programma e genera tutti i segnali di controllo necessari per far funzionare correttamente il processore.
+Il suo compito è decidere **che tipo di istruzione è stata ricevuta** e **quali segnali attivare** per eseguirla.
+In questo processore esistono **due tipi di istruzioni**:
+* **Data instruction**
+* **ALU instruction**
+La distinzione tra i due tipi è determinata da **un singolo bit** dell’istruzione.
+####   Selezione del tipo di istruzione
+Il bit più significativo dell’istruzione (**bit 15**) indica il tipo di istruzione:
+
+| Bit 15 | Tipo di istruzione |
+| -----: | ------------------ |
+|      0 | Data instruction   |
+|      1 | ALU instruction    |
+La Control Unit usa questo bit come **segnale di selezione** per decidere quale comportamento adottare.
+####   Data instruction
+Una **data instruction** serve esclusivamente a caricare un valore costante nel registro **A**.
+Non coinvolge l’ALU né la RAM.
+Il comportamento è il seguente:
+* il valore dell’istruzione **I** viene usato direttamente come risultato **R**
+* il risultato viene scritto **solo** nel registro A
+I segnali di controllo prodotti sono quindi:
+* **R = I**
+* **a = 1**
+* **d = 0**
+* **\*a = 0**
+* **j = 0**
+In questo tipo di istruzione, l’ALU non è utilizzata: l’istruzione stessa rappresenta il dato da memorizzare.
+####   ALU instruction
+Una **ALU instruction** viene gestita secondo le regole definite nel blocco *ALU Instruction*.
+In questo caso:
+* l’ALU esegue l’operazione specificata dai bit dell’istruzione
+* **R** è il risultato prodotto dall’ALU
+* i flag **a**, **d** e **\*a** indicano dove scrivere il risultato
+* il flag **j** indica se il risultato soddisfa la condizione specificata
+Per le ALU instruction, la Control Unit **non modifica** i segnali: si limita a inoltrare quelli già determinati dalla decodifica dell’istruzione.
+####   Ruolo del Control Selector
+La Control Unit utilizza il **Control Selector** per scegliere tra:
+* i segnali generati per una **data instruction**
+* i segnali generati per una **ALU instruction**
+Il bit 15 dell’istruzione funge da selettore:
+* se vale 0 → vengono usati i segnali della data instruction
+* se vale 1 → vengono usati i segnali della ALU instruction
+In questo modo entrambe le tipologie di istruzioni condividono lo stesso percorso hardware a valle.
+####   Programmi e istruzioni
+Un **programma** è semplicemente una sequenza di istruzioni.
+Ogni istruzione è un insieme di bit che specificano:
+* quale operazione eseguire (ALU o caricamento dati)
+* quali operandi usare
+* dove memorizzare il risultato
+* se e come valutare una condizione
+La Control Unit è il componente che rende possibile questa interpretazione, trasformando una parola binaria in un comportamento concreto del processore.
+####   Considerazione finale
+La Control Unit è il vero “direttore d’orchestra” della CPU:
+non calcola, non memorizza, ma **coordina** tutti gli altri componenti.
+Grazie a essa, una sequenza di bit diventa un programma eseguibile.
+#### Circuito
+![[control_unit.png]]
+
 ## Altri esempi di utilizzo dell'algebra booleana in contesti reali
 ###  Utilizzo dello XOR in crittografia
 ####  Introduzione
