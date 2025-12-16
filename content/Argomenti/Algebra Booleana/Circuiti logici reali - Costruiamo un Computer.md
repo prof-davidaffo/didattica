@@ -609,6 +609,7 @@ In tutti i casi l’unico blocco realmente utilizzato è il sommatore parallelo,
 #### Introduzione
 L’ALU (Arithmetic Logic Unit) combina in un unico circuito tutte le operazioni logiche e aritmetiche richieste dal processore. La sua struttura è modulare: le operazioni logiche vengono gestite dalla Logic Unit, quelle aritmetiche dalla Arithmetic Unit, mentre una serie di selettori e flag aggiuntivi permettono di manipolare gli operandi prima dell’elaborazione.
 L’uscita finale dell’ALU è scelta tramite un multiplexer che, in base al bit di controllo **u**, seleziona se restituire un risultato aritmetico oppure logico.
+
 ---
 #### Manipolazione degli operandi: zx e sw
 Prima di passare alle unità logiche e aritmetiche, l’ALU può trasformare i due ingressi X e Y attraverso due flag:
@@ -807,6 +808,59 @@ Il DFF, grazie alla sua sincronizzazione con il clock, è la base per registri, 
 
 
 ![[data_flipflop.png]]
+### Register
+Un **Register** è un componente sequenziale che permette di **memorizzare più bit contemporaneamente** e di recuperarli come un’unica parola.
+Dal punto di vista concettuale, un registro non è altro che **più Data Flip-Flop affiancati**, tutti sincronizzati dallo stesso segnale di clock.
+Per comprendere il funzionamento, partiamo dal caso più semplice: un **registro a 2 bit**.
+
+---
+#### Registro a 2 bit: idea di base
+Un **DFF** memorizza **un solo bit**.
+Per memorizzare **due bit nello stesso istante**, è sufficiente usare **due DFF in parallelo**:
+* il primo memorizza **d1**
+* il secondo memorizza **d0**
+Entrambi condividono:
+* lo stesso **clock (cl)**
+* lo stesso segnale di **store (st)**
+In questo modo i due bit vengono memorizzati e aggiornati **insieme**, come un’unica unità.
+---
+#### Costruzione del registro a 2 bit
+Il registro è composto da:
+* **2 Data Flip-Flop**
+* ingressi dati: **d1**, **d0**
+* un segnale **st** comune
+* un segnale **cl** comune
+---
+#### Funzionamento
+Il comportamento del registro è identico a quello di un DFF, ma applicato a più bit contemporaneamente.
+* Quando **st = 1** e il clock compie un ciclo:
+  * i valori **d1** e **d0** vengono memorizzati
+* Quando **st = 0**:
+  * il contenuto del registro rimane invariato
+* L’uscita (**q1, q0**) viene aggiornata **solo alla transizione cl: 1 → 0**
+I due bit vengono sempre scritti e letti **insieme**.
+---
+#### Tabella di funzionamento (concettuale)
+| st | Effetto                       |
+| -- | ----------------------------- |
+| 1  | memorizza (d1, d0)            |
+| 0  | mantiene il valore precedente |
+L’uscita cambia solo in corrispondenza del clock, come per ogni DFF.
+
+---
+#### Estensione a registri più grandi
+Il passaggio da 2 bit a 16 bit non introduce **nessuna nuova idea**:
+si tratta solo di affiancare più DFF.
+* Registro a 2 bit → 2 DFF
+* Registro a 4 bit → 4 DFF
+* Registro a 8 bit → 8 DFF
+* Registro a 16 bit → 16 DFF
+Tutti i flip-flop condividono:
+* lo stesso **st**
+* lo stesso **cl**
+e formano una parola unica.
+#### Circuito
+![[register.png]]
 ### Counter
 Il **Counter** è un componente sequenziale che produce in uscita un numero a 16 bit e lo aggiorna automaticamente a ogni ciclo di clock. È costruito sopra un registro (basato su flip-flop), ma con una logica aggiuntiva che permette di:
 * **caricare** un valore esterno X quando richiesto
