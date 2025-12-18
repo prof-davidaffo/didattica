@@ -38,6 +38,7 @@ export default (() => {
 
     return (
       <head>
+      <link rel="stylesheet" href="/static/print.css" media="print" />
         <title>{title}</title>
         <meta charSet="utf-8"/>
         {cfg.theme.cdnCaching && cfg.theme.fontOrigin === "googleFonts" && (

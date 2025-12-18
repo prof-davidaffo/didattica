@@ -1,0 +1,39 @@
+@media print {
+  /* 1. Nasconde tutto mantenendo il layout */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* 2. Riattiva SOLO l’articolo */
+  article,
+  article * {
+    visibility: visible !important;
+  }
+
+  /* 3. Forza l’articolo a occupare tutta la pagina */
+  article {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 4. Rimuove elementi non desiderati anche se dentro article */
+  article .graph-view,
+  article .explorer,
+  article .backlinks,
+  article .table-of-contents,
+  article button {
+    display: none !important;
+  }
+
+  /* 5. Ads (ridondante ma sicuro) */
+  iframe,
+  .adsbygoogle {
+    display: none !important;
+  }
+}
+
