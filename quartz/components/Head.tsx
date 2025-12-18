@@ -39,20 +39,6 @@ export default (() => {
     return (
       <head>
         <title>{title}</title>
-        <script
-  dangerouslySetInnerHTML={{
-    __html: `
-document.addEventListener("spa:navigation", () => {
-  try {
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
-  } catch (e) {
-    console.warn("Ads refresh failed", e);
-  }
-});
-`,
-  }}
-></script>
-
         <meta charSet="utf-8"/>
         {cfg.theme.cdnCaching && cfg.theme.fontOrigin === "googleFonts" && (
           <>
