@@ -125,12 +125,16 @@
     font-size: 90%;
   }
   
-    /* Google IAB TCF inline privacy banner */
+  /* FORZATURA FINALE: CMP / PRIVACY INLINE */
   .ipr-container,
+  .ipr-container *,
   .ipr-button,
   .ipr-info {
     display: none !important;
     visibility: hidden !important;
+    height: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
   }
 }
 
