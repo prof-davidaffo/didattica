@@ -1148,7 +1148,105 @@ non calcola, non memorizza, ma **coordina** tutti gli altri componenti.
 Grazie a essa, una sequenza di bit diventa un programma eseguibile.
 #### Circuito
 ![[control_unit.png]]
+###  Computer
+Il **Computer** è il risultato finale della composizione di tutti i componenti costruiti fino a questo punto. Non introduce nuovi concetti logici fondamentali, ma **coordina** elementi già noti per realizzare l’esecuzione automatica di un programma.
+Un computer, in questa architettura, è un sistema che:
+* legge un’istruzione dalla memoria di programma,
+* la interpreta tramite la control unit,
+* esegue operazioni su dati e memoria,
+* decide quale istruzione eseguire successivamente.
+Questo ciclo si ripete indefinitamente, sincronizzato dal clock.
+####   Componenti del computer
+Il computer è composto dai seguenti blocchi:
+* **Control Unit**, che interpreta l’istruzione corrente e genera i segnali di controllo.
+* **Storage Memory**, costituita da:
+  * registri A e D,
+  * RAM.
+* **Program Memory (ROM)**, che contiene il programma, cioè la sequenza di istruzioni.
+* **Program Counter (PC)**, un contatore che tiene traccia dell’indirizzo della prossima istruzione da eseguire.
+* **Clock**, che sincronizza tutte le operazioni.
+####   Flusso delle istruzioni
+Il funzionamento del computer segue sempre lo stesso schema:
+1. Il **Program Counter** contiene l’indirizzo dell’istruzione corrente.
+2. La **ROM** fornisce la parola memorizzata a quell’indirizzo.
+3. Questa parola diventa l’ingresso **I** della **Control Unit**.
+4. La Control Unit:
+   * decodifica l’istruzione,
+   * attiva l’ALU, la memoria e i registri secondo i flag dell’istruzione.
+5. Al termine del ciclo di clock, il **Program Counter** viene aggiornato.
+####   Aggiornamento del Program Counter
+Il comportamento del PC dipende dal segnale **j**, prodotto dall’unità di condizione durante l’esecuzione dell’istruzione.
+* Se **j = 0**
+  il Program Counter viene **incrementato di 1**, passando all’istruzione successiva:
+  ```
+  PC = PC + 1
+  ```
+* Se **j = 1**
+  il Program Counter viene **caricato con il valore del registro A**:
+  ```
+  PC = A
+  ```
+Questo meccanismo permette di realizzare:
+* esecuzione sequenziale delle istruzioni,
+* salti condizionati,
+* cicli,
+* strutture di controllo tipiche dei linguaggi di programmazione.
+####   Ruolo della ROM
+La **Program Memory** è una memoria di sola lettura (**ROM**): il suo contenuto non viene modificato durante l’esecuzione del programma.
+Essa contiene il codice macchina, ovvero le istruzioni che il computer deve eseguire.
+A ogni ciclo, la ROM viene interrogata all’indirizzo indicato dal PC e fornisce l’istruzione corrispondente.
+####   Il ciclo di esecuzione
+L’insieme delle operazioni descritte costituisce il **ciclo di esecuzione del processore**:
+* fetch: lettura dell’istruzione dalla ROM,
+* decode: interpretazione dell’istruzione,
+* execute: esecuzione dell’operazione e aggiornamento dello stato,
+* update: aggiornamento del Program Counter.
+Questo ciclo è interamente governato dal clock e rappresenta il cuore del funzionamento di qualsiasi computer.
+![[computer.png]]
 
+###   Input and Output
+Per essere realmente utile, un computer deve poter **comunicare con il mondo esterno**. Questo avviene tramite dispositivi hardware come schermi, tastiere, pulsanti, sensori, interfacce di rete e così via.
+In questa architettura l’interazione con l’esterno viene realizzata tramite il meccanismo di **memory-mapped input/output**.
+####   Memory-mapped I/O
+Con il termine **memory-mapped I/O** si indica una tecnica in cui i dispositivi di input e output vengono collegati **allo stesso spazio di indirizzamento della RAM**.
+Dal punto di vista del processore, non esiste alcuna differenza tra:
+* leggere o scrivere una cella di RAM;
+* leggere o scrivere un dispositivo esterno.
+In entrambi i casi il processore utilizza:
+* un **indirizzo**,
+* un **dato**,
+* i normali segnali di lettura e scrittura.
+Questo approccio semplifica enormemente l’architettura: il processore non ha bisogno di istruzioni speciali per l’I/O, ma usa gli stessi meccanismi già visti per la memoria.
+####   Dispositivi utilizzati
+In questo livello vengono integrati due dispositivi hardware molto semplici:
+* una **lampada**, che rappresenta un dispositivo di output;
+* un **pulsante**, che rappresenta un dispositivo di input.
+Entrambi vengono mappati nello spazio di memoria del processore.
+####   Output verso un dispositivo
+La **lampada** è un dispositivo di output controllato scrivendo un valore nella sua posizione di memoria.
+Il controllo avviene utilizzando i bit meno significativi del valore X:
+* **bit 1 = 1** → accende la lampada (on)
+* **bit 0 = 1** → spegne la lampada (off)
+I segnali verso l’hardware vengono inviati **solo quando**:
+* **st = 1** (scrittura abilitata)
+* **cl = 1** (fase attiva del clock)
+In questo modo il comportamento del dispositivo di output è sincronizzato con il resto del sistema, esattamente come la RAM e i registri.
+####   Input da un dispositivo
+Il **pulsante** è un dispositivo di input. Il suo stato viene reso disponibile leggendo il valore associato alla sua posizione di memoria.
+Lo stato del pulsante è rappresentato da:
+* **bit 15 dell’uscita**
+Il significato è:
+* bit 15 = 1 → pulsante premuto
+* bit 15 = 0 → pulsante non premuto
+A differenza dell’output, i segnali di input devono essere **leggibili immediatamente**: il valore del pulsante è sempre disponibile sull’uscita, senza attendere il clock o un’operazione di scrittura.
+####   Considerazioni architetturali
+Grazie al memory-mapped I/O:
+* il processore può controllare dispositivi esterni usando le stesse istruzioni usate per la RAM;
+* input e output diventano parte integrante dello spazio di memoria;
+* non è necessaria alcuna logica speciale dedicata all’I/O.
+Questo modello è ampiamente utilizzato anche nei computer reali, specialmente nei sistemi embedded e nei microcontrollori, e rappresenta uno dei modi più semplici ed efficaci per collegare un processore al mondo esterno.
+Con l’integrazione di input e output, il computer non è più un sistema chiuso, ma diventa in grado di **percepire** e **agire** sull’ambiente che lo circonda.
+![[input_output.png]]
 ## Altri esempi di utilizzo dell'algebra booleana in contesti reali
 ###  Utilizzo dello XOR in crittografia
 ####  Introduzione

@@ -124,5 +124,13 @@
     content: " (" attr(href) ")";
     font-size: 90%;
   }
+  
+    /* Google IAB TCF inline privacy banner */
+  .ipr-container,
+  .ipr-button,
+  .ipr-info {
+    display: none !important;
+    visibility: hidden !important;
+  }
 }
 

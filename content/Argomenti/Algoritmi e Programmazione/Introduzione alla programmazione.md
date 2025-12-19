@@ -1,8 +1,3 @@
-> [!NOTE] Crediti
-> Autore: Davide Daffonchio
-> Alcuni esercizi sono presi da "Introduzione alla programmazione - eserciziario" dei docenti dell'università di Genova e altri sono stati trovati in rete.
-> 
-> Questo documento è stato creato con il supporto di un'intelligenza artificiale per facilitare la raccolta e l'organizzazione delle informazioni. L'autore ha verificato e integrato le informazioni per garantire accuratezza e coerenza, ma si raccomanda di consultare fonti aggiuntive e di considerare eventuali aggiornamenti successivi alla stesura. L'uso del contenuto è a scopo informativo e didattico.
 ## Siti e appunti consigliati e utilizzati
 Per programmare senza dover installare nulla sul proprio computer, è possibile utilizzare **GitHub Codespaces**. Per farlo è necessario creare un account su GitHub. Dopo la registrazione, si può aprire un nuovo progetto (anche vuoto) e si avvierà una versione online di **Visual Studio Code**, uno degli ambienti di sviluppo più completi e gratuiti disponibili, che può essere scaricato e installato anche sul PC in versione desktop.  Include un terminale in ambiente linux che potete utilizzare per interagire con i file e compilare manualmente.
 [https://github.com/codespaces](https://github.com/codespaces)
