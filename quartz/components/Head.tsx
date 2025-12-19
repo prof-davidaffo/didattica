@@ -100,6 +100,27 @@ export default (() => {
         })}
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6244956152734111"
      crossorigin="anonymous"></script>
+     <script
+  dangerouslySetInnerHTML={{
+    __html: `
+(function () {
+  function removeGoogleCMP() {
+    document.querySelectorAll("*").forEach(el => {
+      if (el.shadowRoot) {
+        el.shadowRoot
+          .querySelectorAll(".ipr-container")
+          .forEach(n => n.remove())
+      }
+    })
+  }
+
+  window.addEventListener("beforeprint", removeGoogleCMP)
+  window.addEventListener("afterprint", () => location.reload())
+})()
+    `,
+  }}
+/>
+
       </head>
     )
   }
