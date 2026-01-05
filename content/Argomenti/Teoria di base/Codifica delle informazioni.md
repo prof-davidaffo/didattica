@@ -1,5 +1,3 @@
-> [!NOTE] Crediti
-> Autore: Prof. Davide Daffonchio
 ## 1. Introduzione generale
 Viviamo in un'epoca in cui ogni aspetto della nostra quotidianità è permeato dall'uso di dispositivi digitali: smartphone, computer, tablet, sistemi di navigazione, elettrodomestici intelligenti, reti di comunicazione, e così via. Tutti questi strumenti condividono una caratteristica fondamentale: **elaborano, trasmettono e memorizzano informazioni sotto forma digitale**.
 Ma cosa significa esattamente "informazione digitale"? E come può un computer, che non ha coscienza, né comprensione semantica, trattare testi, immagini, suoni, video o istruzioni complesse?
@@ -1373,3 +1371,4 @@ Questi numeri permettono la **continuità vicino allo zero**, evitando un salto 
 > 	- `0 000000000 0000000000000000000001`
 > 	- `0 00000000 00000000000000000000000`
 > 	-  `0 11111111 01000000000000000000000`
+
