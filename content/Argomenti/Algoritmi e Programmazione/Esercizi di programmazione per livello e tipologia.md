@@ -315,7 +315,7 @@ Date due matrici compatibili al prodotto di matrici, eseguirne il prodotto riga 
 #### Tavola pitagorica
 Scrivere un programma che definisce una costante N pari a 10, dichiara un array bidimensionale per la tavola pitagorica (dimensioni N×N) e lo riempie in modo tale che l’elemento (i, j) contenga il prodotto tra i+1 e j+1. Successivamente, il programma chiede all’utente una coppia di valori compresi tra 1 e 10 e restituisce il loro prodotto, ottenuto consultando la tavola come look‑up table.
 #### Esercitazione con test 1 (voti e studenti)
-https://drive.google.com/file/d/13sBfT47sfq5LEQpqMwJxuGvUYLSgUqTp/view?usp=sharing
+https://drive.google.com/file/d/1LLCe1oQJUtBTbKzwfSXgUL9ObRjPlc28/view?usp=sharing
 ### Esercizi più avanzati
 #### palyndrome
 Scrivere un programma che legge un array e calcola un valore booleano che vale true se l’array è palindromo (cioè, se gli elementi letti da sinistra verso destra sono uguali a quelli letti da destra verso sinistra). Il programma deve poi stampare un messaggio che comunichi il risultato.
