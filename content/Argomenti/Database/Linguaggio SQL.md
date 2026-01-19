@@ -1,4 +1,6 @@
 ## Introduzione a SQL
+### Nota operativa
+Per svolgere i vari esercizi, useremo [DB Fiddle](https://www.db-fiddle.com/). Ti baserà premere il tasto `Text do DDL` incollare la tabella e darle un nome. A quel punto potrai liberamente eseguire le query sulle tabelle fornite.
 ### Cos’è SQL
 SQL (Structured Query Language) è un linguaggio progettato per consentire l’interrogazione, la manipolazione e la trasformazione dei dati contenuti in un database relazionale. È pensato per essere accessibile sia a utenti tecnici sia a utenti non tecnici, mantenendo al tempo stesso un’elevata espressività.
 Grazie alla sua struttura dichiarativa e alla sua diffusione, SQL è oggi alla base di numerosi sistemi informativi utilizzati da siti web, applicazioni mobili e software gestionali.
@@ -26,13 +28,13 @@ Si consideri un database utilizzato da un ente che gestisce informazioni sui mez
 
 Tabella: Mezzi
 
-|Id|Modello|Ruote|Porte|Categoria|
-|---|---|---|---|---|
-|1|Toyota Yaris|4|4|Utilitaria|
-|2|Ducati Monster|2|0|Moto|
-|3|BMW X5|4|5|SUV|
-|4|Ferrari SF90|4|2|Sportiva|
-|5|Iveco Daily|4|2|Furgone|
+| Id  | Modello        | Ruote | Porte | Categoria  |
+| --- | -------------- | ----- | ----- | ---------- |
+| 1   | Toyota Yaris   | 4     | 4     | Utilitaria |
+| 2   | Ducati Monster | 2     | 0     | Moto       |
+| 3   | BMW X5         | 4     | 5     | SUV        |
+| 4   | Ferrari SF90   | 4     | 2     | Sportiva   |
+| 5   | Iveco Daily    | 4     | 2     | Furgone    |
 
 In questo esempio:
 * ogni riga rappresenta un mezzo specifico
@@ -131,6 +133,7 @@ num_ruote >= 4 AND porte <= 2
 ```
 ### Operatori di confronto per dati numerici
 La tabella seguente riassume i principali operatori utilizzabili nella clausola `WHERE` per il confronto di valori numerici.
+
 | Operatore           | Significato                                  | Esempio SQL                      |
 | ------------------- | -------------------------------------------- | -------------------------------- |
 | =, !=, <, <=, >, >= | Operatori di confronto standard              | `anno != 2000`                   |
@@ -144,6 +147,7 @@ SQL non impone l’uso delle lettere maiuscole per le parole chiave (`SELECT`, `
 ### Esempio pratico
 Si consideri una tabella contenente informazioni su film prodotti da **Pixar**.
 Tabella: Film
+
 | id | titolo              | regista        | anno | durata_minuti |
 | -- | ------------------- | -------------- | ---- | ------------- |
 | 1  | Toy Story           | John Lasseter  | 1995 | 81            |
@@ -448,16 +452,40 @@ In molte query si può trovare semplicemente `JOIN` al posto di `INNER JOIN`: le
 Si consideri un database contenente informazioni sui film prodotti da **Pixar**, suddivise in due tabelle.
 Tabella: movies
 
-| id | titolo    | regista       | anno | durata_minuti |
-| -- | --------- | ------------- | ---- | ------------- |
-| 1  | Toy Story | John Lasseter | 1995 | 81            |
-| …  | …         | …             | …    | …             |
+| id  | titolo              | regista        | anno | durata_minuti |
+| --- | ------------------- | -------------- | ---- | ------------- |
+| 1   | Toy Story           | John Lasseter  | 1995 | 81            |
+| 2   | A Bug's Life        | John Lasseter  | 1998 | 95            |
+| 3   | Toy Story 2         | John Lasseter  | 1999 | 93            |
+| 4   | Monsters, Inc.      | Pete Docter    | 2001 | 92            |
+| 5   | Finding Nemo        | Andrew Stanton | 2003 | 107           |
+| 6   | The Incredibles     | Brad Bird      | 2004 | 116           |
+| 7   | Cars                | John Lasseter  | 2006 | 117           |
+| 8   | Ratatouille         | Brad Bird      | 2007 | 115           |
+| 9   | WALL-E              | Andrew Stanton | 2008 | 104           |
+| 10  | Up                  | Pete Docter    | 2009 | 101           |
+| 11  | Toy Story 3         | Lee Unkrich    | 2010 | 103           |
+| 12  | Cars 2              | John Lasseter  | 2011 | 120           |
+| 13  | Brave               | Brenda Chapman | 2012 | 102           |
+| 14  | Monsters University | Dan Scanlon    | 2013 | 110           |
 Tabella: boxoffice
 
 | movie_id | rating | vendite_domestiche | vendite_internazionali |
 | -------- | ------ | ------------------ | ---------------------- |
+| 5        | 8.2    | 380843261          | 555900000              |
+| 14       | 7.4    | 268492764          | 475066843              |
+| 8        | 8.0    | 206445654          | 417277164              |
+| 12       | 6.4    | 191452396          | 368400000              |
+| 3        | 7.9    | 245852179          | 239163000              |
+| 6        | 8.0    | 261441092          | 370001000              |
+| 9        | 8.5    | 223808164          | 297503696              |
+| 11       | 8.4    | 415004880          | 648167031              |
 | 1        | 8.3    | 191796233          | 170162503              |
-| …        | …      | …                  | …                      |
+| 7        | 7.2    | 244082982          | 217900167              |
+| 10       | 8.3    | 293004164          | 438338580              |
+| 4        | 8.1    | 289916256          | 272900000              |
+| 2        | 7.2    | 162798565          | 200600000              |
+| 13       | 7.2    | 237283207          | 301700000              |
 La colonna `movie_id` della tabella `boxoffice` corrisponde alla colonna `id` della tabella `movies`.
 ### Esempi di interrogazioni con INNER JOIN
 * Vendite domestiche e internazionali per ciascun film:
@@ -580,20 +608,26 @@ Si considerino le stesse tabelle relative a edifici e dipendenti.
 
 Tabella: buildings
 
-| building_name | capacity |
-| ------------- | -------- |
-| 1e            | 24       |
-| 1w            | 32       |
-| 2e            | 16       |
-| 2w            | 20       |
+| edificio | capacity |
+| -------- | -------- |
+| 1e       | 24       |
+| 1w       | 32       |
+| 2e       | 16       |
+| 2w       | 20       |
 Tabella: employees
 
-| ruolo    | nome      | edificio | anni_servizio |
-| -------- | --------- | -------- | ------------- |
-| Engineer | Becky A.  | 1e       | 4             |
-| …        | …         | …        | …             |
-| Engineer | Yancy I.  | NULL     | 0             |
-| Artist   | Oliver P. | NULL     | 0             |
+| ruolo    | nome       | edificio | anni_servizio |
+| -------- | ---------- | -------- | ------------- |
+| Engineer | Becky A.   | 1e       | 4             |
+| Engineer | Dan B.     | 1e       | 2             |
+| Engineer | Sharon F.  | 1e       | 6             |
+| Engineer | Dan M.     | 1e       | 4             |
+| Engineer | Malcom S.  | 1e       | 1             |
+| Artist   | Tylar S.   | 2w       | 2             |
+| Artist   | Sherman D. | 2w       | 8             |
+| Artist   | Jakob J.   | 2w       | 6             |
+| Artist   | Lillia A.  | 2w       | 7             |
+| Artist   | Brandon J. | 2w       | 7             |
 Alcuni dipendenti non sono ancora assegnati a un edificio, e il campo `edificio` assume valore `NULL`.
 ### Esempi di interrogazioni sui valori NULL
 * Dipendenti non assegnati ad alcun edificio:
@@ -604,10 +638,10 @@ WHERE edificio IS NULL;
 ```
 * Edifici che non ospitano alcun dipendente:
 ```sql
-SELECT b.building_name
+SELECT b.edificio
 FROM buildings AS b
 LEFT JOIN employees AS e
-    ON b.building_name = e.edificio
+    ON b.edificio = e.edificio
 WHERE e.edificio IS NULL;
 ```
 ## Query con espressioni
@@ -630,22 +664,22 @@ FROM movies AS m;
 ### Tabelle di riferimento
 Tabella: movies
 
-| id | titolo              | regista        | anno | durata_minuti |
-| -- | ------------------- | -------------- | ---- | ------------- |
-| 1  | Toy Story           | John Lasseter  | 1995 | 81            |
-| 2  | A Bug's Life        | John Lasseter  | 1998 | 95            |
-| 3  | Toy Story 2         | John Lasseter  | 1999 | 93            |
-| 4  | Monsters, Inc.      | Pete Docter    | 2001 | 92            |
-| 5  | Finding Nemo        | Andrew Stanton | 2003 | 107           |
-| 6  | The Incredibles     | Brad Bird      | 2004 | 116           |
-| 7  | Cars                | John Lasseter  | 2006 | 117           |
-| 8  | Ratatouille         | Brad Bird      | 2007 | 115           |
-| 9  | WALL-E              | Andrew Stanton | 2008 | 104           |
-| 10 | Up                  | Pete Docter    | 2009 | 101           |
-| 11 | Toy Story 3         | Lee Unkrich    | 2010 | 103           |
-| 12 | Cars 2              | John Lasseter  | 2011 | 120           |
-| 13 | Brave               | Brenda Chapman | 2012 | 102           |
-| 14 | Monsters University | Dan Scanlon    | 2013 | 110           |
+| id  | titolo              | regista        | anno | durata_minuti |
+| --- | ------------------- | -------------- | ---- | ------------- |
+| 1   | Toy Story           | John Lasseter  | 1995 | 81            |
+| 2   | A Bug's Life        | John Lasseter  | 1998 | 95            |
+| 3   | Toy Story 2         | John Lasseter  | 1999 | 93            |
+| 4   | Monsters, Inc.      | Pete Docter    | 2001 | 92            |
+| 5   | Finding Nemo        | Andrew Stanton | 2003 | 107           |
+| 6   | The Incredibles     | Brad Bird      | 2004 | 116           |
+| 7   | Cars                | John Lasseter  | 2006 | 117           |
+| 8   | Ratatouille         | Brad Bird      | 2007 | 115           |
+| 9   | WALL-E              | Andrew Stanton | 2008 | 104           |
+| 10  | Up                  | Pete Docter    | 2009 | 101           |
+| 11  | Toy Story 3         | Lee Unkrich    | 2010 | 103           |
+| 12  | Cars 2              | John Lasseter  | 2011 | 120           |
+| 13  | Brave               | Brenda Chapman | 2012 | 102           |
+| 14  | Monsters University | Dan Scanlon    | 2013 | 110           |
 Tabella: boxoffice
 
 | movie_id | rating | domestic_sales | international_sales |
@@ -1277,10 +1311,20 @@ Tabella: boxoffice
 
 | movie_id | rating | domestic_sales | international_sales |
 | -------- | ------ | -------------- | ------------------- |
-| 1        | 8.3    | 191796233      | 170162503           |
-| 2        | 7.2    | 162798565      | 200600000           |
+| 5        | 8.2    | 380843261      | 555900000           |
+| 14       | 7.4    | 268492764      | 475066843           |
+| 8        | 8      | 206445654      | 417277164           |
+| 12       | 6.4    | 191452396      | 368400000           |
 | 3        | 7.9    | 245852179      | 239163000           |
-| …        | …      | …              | …                   |
+| 6        | 8      | 261441092      | 370001000           |
+| 9        | 8.5    | 223808164      | 297503696           |
+| 11       | 8.4    | 415004880      | 648167031           |
+| 1        | 8.3    | 191796233      | 170162503           |
+| 7        | 7.2    | 244082982      | 217900167           |
+| 10       | 8.3    | 293004164      | 438338580           |
+| 4        | 8.1    | 289916256      | 272900000           |
+| 2        | 7.2    | 162798565      | 200600000           |
+| 13       | 7.2    | 237283207      | 301700000           |
 ### Esempi di DROP TABLE relativi agli esercizi
 * Eliminazione della tabella `movies`:
 ```sql
