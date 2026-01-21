@@ -1,7 +1,7 @@
 In questa esercitazione imparerai ad utilizzare le diverse formule di lookup per cercare dati nelle tabelle a partire da una chiave.
-## Foglio VLOOKUP – exact match
-In questo foglio impari a usare per la prima volta la funzione VLOOKUP.
-VLOOKUP serve a cercare un valore nella **prima colonna** di una tabella.  
+## Foglio CERCA.VERT – exact match
+In questo foglio impari a usare per la prima volta la funzione CERCA.VERT.
+CERCA.VERT serve a cercare un valore nella **prima colonna** di una tabella.  
 Quando trova la riga giusta, restituisce un valore che si trova **nella stessa riga**, ma in un’altra colonna. 
 La ricerca funziona solo se il valore cercato si trova nella colonna più a sinistra.
 
@@ -12,18 +12,19 @@ la terza le Notes.
 A destra è presente una cella in cui puoi inserire un Customer ID.
 
 1. Clicca nella cella del Customer Name.
-2. Scrivi una formula che inizi con =VLOOKUP(.
+2. Scrivi una formula che inizi con =CERCA.VERT(.
 3. Come valore di ricerca, seleziona la cella in cui hai inserito il Customer ID.
 4. Come intervallo, seleziona tutta la tabella dei clienti.
 5. Come indice di colonna, inserisci il numero della colonna che contiene il nome del cliente.
-6. Come ultimo parametro indica che la ricerca deve essere esatta scrivendo FALSE.
+6. Come ultimo parametro indica che la ricerca deve essere esatta scrivendo `FALSO`.
 
 Conferma la formula e prova a cambiare il Customer ID.
-Ripeti lo stesso procedimento nella cella delle Notes, modificando solo l’indice di colonna.
+Ripeti lo stesso procedimento creando una cella che indichi il contenuto delle notes per quel customer ID.
 Inserisci ora un Customer ID che non esiste.
 Osserva l’errore visualizzato.
 Modifica la formula usando una funzione che permetta di mostrare un messaggio testuale al posto dell’errore.
-## Foglio VLOOKUP – create table
+Puoi farlo grazie alla formula SE.ERRORE, mettendo come primo argomento la formula di CERCA.VERT, e come secondo argomento il messaggio di errore che vuoi mostrare).
+## Foglio CERCA.VERT – create table
 Trasformare un intervallo in tabella rende le formule più affidabili.  
 Se la tabella cresce o cambia dimensione, le formule continuano a funzionare senza dover essere modificate.  
 Usare tabelle riduce molti errori comuni nei lookup.
@@ -35,9 +36,9 @@ La tabella è già organizzata, ma non è ancora stata trasformata in una tabell
 
 Osserva cosa cambia nella gestione delle colonne.
 Da adesso in poi, quando lavori con tabelle di dati, trasformale sempre in tabelle.
-## Foglio VLOOKUP – approximate match
+## Foglio CERCA.VERT – approximate match
 In questo foglio impari la differenza tra ricerca esatta e ricerca approssimata.
-Con la ricerca approssimata VLOOKUP **non cerca un valore uguale**, ma il valore più grande che **non supera** quello cercato.  
+Con la ricerca approssimata CERCA.VERT **non cerca un valore uguale**, ma il valore più grande che **non supera** quello cercato.  
 Per questo motivo la tabella di riferimento deve essere ordinata in modo crescente.  
 Questo tipo di ricerca è utile quando si lavora con **soglie** o **intervalli di valori**.
 
@@ -46,11 +47,11 @@ A destra c’è una tabella che indica quanti biscotti omaggio spettano in base 
 Nota che molti ordini non corrispondono esattamente ai valori della tabella.
 
 1. Clicca nella prima cella della colonna Biscotti omaggio.
-2. Scrivi una formula VLOOKUP che usi come valore di ricerca il numero di biscotti ordinati.
+2. Scrivi una formula CERCA.VERT che usi come valore di ricerca il numero di biscotti ordinati.
 3. Usa la tabella delle soglie come intervallo.
 4. Imposta l’ultimo parametro in modo che la ricerca non sia esatta.
 5. Conferma la formula e trascinala verso il basso.
-## Foglio VLOOKUP – across sheets
+## Foglio CERCA.VERT – across sheets
 Le funzioni di lookup possono usare dati che si trovano in **altri fogli dello stesso file**.  
 Il comportamento della funzione non cambia: cambia solo la posizione della tabella di riferimento.  
 È importante selezionare correttamente il foglio giusto quando si indica l’intervallo.
@@ -59,18 +60,18 @@ Il numero di biscotti ordinati è visibile,
 ma la tabella delle soglie si trova in un foglio diverso.
 
 1. Clicca nella cella dei biscotti omaggio.
-2. Scrivi una formula VLOOKUP.
+2. Scrivi una formula CERCA.VERT.
 3. Quando devi selezionare l’intervallo, spostati nel foglio corretto e seleziona la tabella.
 4. Conferma la formula e verifica che il risultato sia corretto.
-## Foglio HLOOKUP
-HLOOKUP funziona come VLOOKUP, ma cerca i dati **in orizzontale** invece che in verticale.  
+## Foglio CERCA.ORIZZ
+CERCA.ORIZZ funziona come CERCA.VERT, ma cerca i dati **in orizzontale** invece che in verticale.  
 La ricerca avviene nella **prima riga** della tabella e il risultato viene preso da una riga sottostante.  
 Si usa solo quando i dati sono organizzati per righe e non per colonne.
 
 La tabella delle soglie è organizzata per righe anziché per colonne.
 
 1. Clicca nella cella dei biscotti omaggio.
-2. Scrivi una formula che inizi con =HLOOKUP(.
+2. Scrivi una formula che inizi con =CERCA.ORIZZ(.
 3. Usa come valore di ricerca il numero di biscotti ordinati.
 4. Seleziona la tabella orizzontale.
 5. Inserisci l’indice della riga da cui ottenere il risultato.
@@ -79,7 +80,7 @@ La tabella delle soglie è organizzata per righe anziché per colonne.
 8. Se compaiono errori, correggi i riferimenti rendendoli assoluti.
 ## Foglio XLOOKUP
 In questo foglio impari a usare XLOOKUP.
-XLOOKUP è una funzione più moderna che sostituisce VLOOKUP e HLOOKUP.  
+XLOOKUP è una funzione più moderna che sostituisce CERCA.VERT e CERCA.ORIZZ.  
 Permette di scegliere liberamente **dove cercare** e **cosa restituire**, senza contare colonne o righe.  
 Non è necessario che il valore cercato sia nella prima colonna.
 
