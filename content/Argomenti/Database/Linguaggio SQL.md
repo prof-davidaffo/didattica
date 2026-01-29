@@ -432,6 +432,7 @@ LIMIT 2 OFFSET 2;
 Nei database reali, le informazioni relative a una stessa entità vengono spesso suddivise in più tabelle attraverso un processo chiamato **normalizzazione**.
 La normalizzazione riduce la duplicazione dei dati e consente alle informazioni di crescere in modo indipendente. Ad esempio, i dati economici di un film possono essere separati dai suoi dati descrittivi.
 Questa organizzazione comporta query più articolate, poiché i dati devono essere ricombinati a partire da tabelle diverse.
+Approfondimenti sulla normalizzazione qui: [[Normalizzazione dei database]]
 ### Chiavi primarie e relazioni
 Per collegare correttamente più tabelle è necessario che esse condividano una **chiave comune**:
 * una chiave primaria identifica in modo univoco ogni record di una tabella
