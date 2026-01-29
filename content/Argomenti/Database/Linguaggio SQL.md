@@ -476,7 +476,7 @@ Tabella: movies
 | 14  | Monsters University | Dan Scanlon    | 2013 | 110           |
 Tabella: boxoffice
 
-| movie_id | rating | vendite_domestiche | vendite_internazionali |
+| movie_id | rating | vendite_nazionali | vendite_internazionali |
 | -------- | ------ | ------------------ | ---------------------- |
 | 5        | 8.2    | 380843261          | 555900000              |
 | 14       | 7.4    | 268492764          | 475066843              |
@@ -494,29 +494,28 @@ Tabella: boxoffice
 | 13       | 7.2    | 237283207          | 301700000              |
 La colonna `movie_id` della tabella `boxoffice` corrisponde alla colonna `id` della tabella `movies`.
 ### Esempi di interrogazioni con INNER JOIN
-* Vendite domestiche e internazionali per ciascun film:
+* Vendite nazionali e internazionali per ciascun film:
 ```sql
-SELECT m.titolo, b.vendite_domestiche, b.vendite_internazionali
+SELECT m.titolo, b.vendite_nazionali, b.vendite_internazionali
 FROM movies AS m
 INNER JOIN boxoffice AS b
     ON m.id = b.movie_id;
 ```
 * Film che hanno incassato di più a livello internazionale rispetto al mercato domestico:
 ```sql
-SELECT m.titolo, b.vendite_domestiche, b.vendite_internazionali
+SELECT m.titolo, b.vendite_nazionali, b.vendite_internazionali
 FROM movies AS m
 INNER JOIN boxoffice AS b
     ON m.id = b.movie_id
-WHERE b.vendite_internazionali > b.vendite_domestiche;
+WHERE b.vendite_internazionali > b.vendite_nazionali;
 ```
 * Elenco dei film ordinati per valutazione, dalla più alta alla più bassa:
 ```sql
-SELECT m.titolo, b.rating
-FROM movies AS m
-INNER JOIN boxoffice AS b
-    ON m.id = b.movie_id
-ORDER BY b.rating DESC;
+SELECT DISTINCT building_name, ruolo FROM  buildings
+LEFT JOIN employees ON building_name=edificio;
 ```
+
+**Nota:** posso usare AS per abbreviare i nomi delle tabelle come mostrato nelle query precedenti.
 ## JOIN esterni (OUTER JOIN)
 ### Limiti dell’INNER JOIN
 L’`INNER JOIN` restituisce solo le righe per cui esiste una corrispondenza in entrambe le tabelle coinvolte. In presenza di dati **asimmetrici** (ad esempio record presenti in una tabella ma assenti nell’altra), questo tipo di join può escludere informazioni rilevanti.
@@ -569,16 +568,12 @@ Alcuni edifici non hanno ancora dipendenti assegnati.
 ### Esempi di interrogazioni con LEFT JOIN
 * Edifici che hanno almeno un dipendente:
 ```sql
-SELECT DISTINCT b.building_name
-FROM buildings AS b
-INNER JOIN employees AS e
-    ON b.building_name = e.edificio;
+SELECT DISTINCT building_name
+FROM buildings
+JOIN employees
+    ON building_name = edificio;
 ```
-* Tutti gli edifici con la relativa capacità:
-```sql
-SELECT building_name, capacity
-FROM buildings;
-```
+
 * Tutti gli edifici e i ruoli distinti dei dipendenti assegnati, includendo gli edifici senza dipendenti:
 ```sql
 SELECT b.building_name, e.ruolo
@@ -587,9 +582,6 @@ LEFT JOIN employees AS e
     ON b.building_name = e.edificio
 GROUP BY b.building_name, e.ruolo;
 ```
-
-## Esercizi su Join
-[[Esercizi SQL su Join]]
 ## Valori NULL nei database SQL
 ### Significato dei valori NULL
 In SQL, il valore `NULL` rappresenta l’assenza di un dato. Non indica né zero né una stringa vuota, ma semplicemente che l’informazione non è disponibile o non è stata ancora inserita.
@@ -653,6 +645,9 @@ LEFT JOIN employees AS e
     ON b.edificio = e.edificio
 WHERE e.edificio IS NULL;
 ```
+
+## Esercizi su Join e valori null
+[[Esercizi SQL su Join e valori NULL]]
 ## Query con espressioni
 ### Uso delle espressioni nelle query SQL
 Oltre a selezionare valori grezzi dalle colonne, SQL consente di utilizzare **espressioni** per applicare trasformazioni e calcoli direttamente all’interno delle query. Un’espressione può combinare operatori aritmetici e funzioni (matematiche, su stringhe, su date) e viene valutata al momento dell’esecuzione della query.
@@ -732,7 +727,7 @@ WHERE anno % 2 = 0;
 ```
 
 ## Esercizi
-[[Esercizi SQL su null ed espressioni]]
+[[Esercizi SQL su espressioni]]
 ## Query con funzioni di aggregazione (Pt. 1)
 ### Funzioni di aggregazione
 Oltre alle espressioni semplici, SQL mette a disposizione le **funzioni di aggregazione**, che permettono di riassumere informazioni relative a un insieme di righe.
