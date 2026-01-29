@@ -26,7 +26,7 @@ Modifica la formula usando una funzione che permetta di mostrare un messaggio te
 Puoi farlo grazie alla formula SE.ERRORE, mettendo come primo argomento la formula di CERCA.VERT, e come secondo argomento il messaggio di errore che vuoi mostrare).
 ## Foglio CERCA.VERT – create table
 Trasformare un intervallo in tabella rende le formule più affidabili.  
-Se la tabella cresce o cambia dimensione, le formule continuano a funzionare senza dover essere modificate.  
+Se la tabella cresce o cambia dimensione, le formule continuano a funzionare senza dover essere modificate, infatti ora anziché selezionare la tabella, posso direttamente scrivere il suo nome nella formula.
 Usare tabelle riduce molti errori comuni nei lookup.
 La tabella è già organizzata, ma non è ancora stata trasformata in una tabella vera e propria.
 
@@ -61,7 +61,7 @@ ma la tabella delle soglie si trova in un foglio diverso.
 
 1. Clicca nella cella dei biscotti omaggio.
 2. Scrivi una formula CERCA.VERT.
-3. Quando devi selezionare l’intervallo, spostati nel foglio corretto e seleziona la tabella.
+3. Quando devi selezionare l’intervallo, spostati nel foglio corretto e seleziona la tabella (oppure puoi utilizzare direttamente il nome della tabella).
 4. Conferma la formula e verifica che il risultato sia corretto.
 ## Foglio CERCA.ORIZZ
 CERCA.ORIZZ funziona come CERCA.VERT, ma cerca i dati **in orizzontale** invece che in verticale.  
@@ -78,9 +78,9 @@ La tabella delle soglie è organizzata per righe anziché per colonne.
 6. Imposta la ricerca come approssimata.
 7. Trascina la formula verso il basso.
 8. Se compaiono errori, correggi i riferimenti rendendoli assoluti.
-## Foglio XLOOKUP
-In questo foglio impari a usare XLOOKUP.
-XLOOKUP è una funzione più moderna che sostituisce CERCA.VERT e CERCA.ORIZZ.  
+## Foglio CERCA.X
+In questo foglio impari a usare CERCA.X.
+CERCA.X è una funzione più moderna che sostituisce CERCA.VERT e CERCA.ORIZZ.  
 Permette di scegliere liberamente **dove cercare** e **cosa restituire**, senza contare colonne o righe.  
 Non è necessario che il valore cercato sia nella prima colonna.
 
@@ -88,52 +88,64 @@ Osserva la tabella degli ordini e la tabella di riferimento dei prodotti.
 Nota che la colonna su cui cercare non è la prima.
 
 1. Clicca nella cella Revenue per cookie.
-2. Scrivi una formula che inizi con =XLOOKUP(.
+2. Scrivi una formula che inizi con =CERCA.X(.
 3. Seleziona il prodotto come valore di ricerca.
 4. Seleziona la colonna dei prodotti come intervallo di ricerca.
 5. Seleziona la colonna del ricavo come intervallo risultato.
 6. Inserisci un messaggio testuale da mostrare se il valore non viene trovato.
 7. Conferma e trascina la formula verso il basso.
 8. Ripeti lo stesso procedimento per la colonna Cost per cookie.
-## Foglio XLOOKUP – profit
-XLOOKUP può essere usata all’interno di formule più complesse.  
-In questo caso viene usata per recuperare dati, che poi vengono combinati con operazioni matematiche.  
-Una formula può quindi svolgere più passaggi in un’unica espressione.
+9. Calcola il prezzo totale con i valori ottenuti. Oppure, se vuoi fare ancora pratica, prova a ottenere la formula usando direttamente CERCA.X senza utilizzare i cost e revenue calcolati.
 
-Nella colonna Order Profit calcola il profitto totale.
-Scrivi una formula che:
-
-* recuperi revenue e cost con XLOOKUP
-* calcoli la differenza
-* moltiplichi il risultato per la quantità venduta
-
-Usa una sola formula e verifica il risultato su più righe.
-## Foglio XLOOKUP – multiple return values
-XLOOKUP può restituire **più valori contemporaneamente** sotto forma di array.  
+Nota che se hai convertito la tabella, puoi fare riferimento direttamente ai nomi delle colonne della tabella invece che selezionare l'intera colonna.
+## Foglio CERCA.X – multiple return values
+CERCA.X può restituire **più valori contemporaneamente** sotto forma di array.  
 Quando questo succede, i risultati si distribuiscono automaticamente nelle celle adiacenti.  
 Questo comportamento si chiama **spill** ed è normale nelle funzioni moderne.
 
-1. Scrivi una formula XLOOKUP che cerchi il prodotto.
+1. Scrivi una formula CERCA.X che cerchi il prodotto.
 2. Seleziona sia la colonna del revenue sia quella del cost come intervallo risultato.
 3. Osserva come i valori vengono distribuiti automaticamente.
 4. Trascina la formula sulle altre righe correggendo i riferimenti.
-## Foglio XLOOKUP – wildcard match
-XLOOKUP può cercare anche testi **non completi** usando caratteri speciali.  
-Il carattere `*` rappresenta una qualsiasi sequenza di caratteri.  
-Questo tipo di ricerca è utile quando si conosce solo una parte del testo.
+## Foglio CERCA.X – wildcard match
+CERCA.X può permettermi anche di cercare testi utilizzando le wildcard.
+Come chiave di ricerca quindi posso inserire una stringa con una wildcard.
+Wildcard si usano soprattutto con funzioni come `CERCA.X`, `CERCA`, `CONFRONTA`, `FILTRO`, `CONTA.SE`, `CONTA.PIÙ.SE`.  
 
-Scrivi una formula XLOOKUP che cerchi un nome che inizi con una lettera specifica usando il carattere \*.
-Imposta correttamente la modalità di confronto.
-Osserva il risultato.
-## Foglio XLOOKUP – search mode
-Di default XLOOKUP cerca dall’alto verso il basso.  
-È possibile cambiare la direzione della ricerca per partire dall’ultima riga.  
+Le wildcard supportate sono tre.
+-  Asterisco *
+	Rappresenta **zero o più caratteri qualsiasi**.  
+	Esempi:  
+	`"*test*"` → contiene la parola `test`  
+	`"abc*"` → inizia con `abc`  
+	`"*.pdf"` → termina con `.pdf`  
+	È la wildcard più usata.
+- Punto interrogativo ?
+	Rappresenta **esattamente un carattere qualsiasi**.  
+	Esempi:  
+	`"file?"` → `file1`, `fileA` ma non `file10`  
+	`"A??"` → `ABC`, `A12`  
+	Serve per vincolare la lunghezza del testo.
+- Tilde ~
+	Serve per **disattivare il significato speciale** di `*` e `?` quando vuoi cercarli come caratteri normali.  
+	Esempi:  
+	`"~*"` → cerca proprio l’asterisco `*`  
+	`"~?"` → cerca il punto interrogativo `?`  
+	Fondamentale quando i dati contengono simboli letterali.
+
+Se voglio utilizzare le wildcard in CERCA.X, devo ricordarmi di mettere la stringa tra doppi apici, e inserire come modalità corrispondenza il numero 2, appunto quello che mi permette di utilizzare la wildcard.
+Come faccio dunque a sapere quale cliente inizia con la lettera W?
+## Foglio CERCA.X – search mode
+Di default CERCA.X cerca dall’alto verso il basso.  
+È possibile cambiare la direzione della ricerca per partire dall’ultima riga. 
 Questo permette, ad esempio, di trovare l’**ultimo valore** invece del primo.
+Questo posso farlo con la modalità ricerca, dove:
 
-Un cliente ha effettuato più ordini in date diverse.
-Scrivi una formula XLOOKUP che:
-* cerchi il nome del cliente
-* restituisca la data dell’ordine
+- `1` cerca a partire dal primo valore
+- `-1` cerca a partire dall'ultimo valore
+- `2` fa la stessa cosa di `1` ma usando la ricerca binaria
+- `-2` fa la stessa cosa di `-1` ma usando la ricerca binaria
 
-Imposta la modalità di ricerca in modo che la ricerca parta dall’ultima riga.
-Verifica che venga restituita la data più recente.
+La ricerca binaria funziona solo se l'intervallo di ricerca è ordinato, in tal caso, la ricerca diventa molto più veloce ed efficiente in termini di risorse utilizzate.
+
+Come faccio a trovare l'ultimo ordine fatto da Lola? Posso ottenerlo con la ricerca binaria?

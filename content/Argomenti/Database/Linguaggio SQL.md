@@ -46,6 +46,8 @@ Lo scopo principale dell’apprendimento di SQL è acquisire la capacità di est
 * individuare i mezzi con meno di quattro ruote
 * contare quanti modelli appartengono a una determinata categoria
 * analizzare la distribuzione dei veicoli per tipologia
+# DQL: Data Query Language
+Il Data Query Language mi permette di interrogare il database, ovvero di richiedere i dati che voglio leggere.
 ## Interrogazioni SELECT
 ### Concetto di query SELECT
 Per recuperare dati da un database relazionale si utilizza l’istruzione `SELECT`. Una query `SELECT` è un’istruzione dichiarativa che specifica:
@@ -422,6 +424,9 @@ WHERE paese = 'Stati Uniti'
 ORDER BY popolazione DESC
 LIMIT 2 OFFSET 2;
 ```
+
+## Esercizi
+[[Esercizi SQL su select]]
 ## Query su più tabelle con JOIN
 ### Normalizzazione dei database
 Nei database reali, le informazioni relative a una stessa entità vengono spesso suddivise in più tabelle attraverso un processo chiamato **normalizzazione**.
@@ -581,6 +586,9 @@ LEFT JOIN employees AS e
     ON b.building_name = e.edificio
 GROUP BY b.building_name, e.ruolo;
 ```
+
+## Esercizi su Join
+[[Esercizi SQL su Join]]
 ## Valori NULL nei database SQL
 ### Significato dei valori NULL
 In SQL, il valore `NULL` rappresenta l’assenza di un dato. Non indica né zero né una stringa vuota, ma semplicemente che l’informazione non è disponibile o non è stata ancora inserita.
@@ -721,6 +729,9 @@ SELECT titolo, anno
 FROM movies
 WHERE anno % 2 = 0;
 ```
+
+## Esercizi
+[[Esercizi SQL su null ed espressioni]]
 ## Query con funzioni di aggregazione (Pt. 1)
 ### Funzioni di aggregazione
 Oltre alle espressioni semplici, SQL mette a disposizione le **funzioni di aggregazione**, che permettono di riassumere informazioni relative a un insieme di righe.
@@ -880,6 +891,9 @@ FROM employees
 GROUP BY ruolo
 HAVING COUNT(DISTINCT edificio) > 1;
 ```
+
+## Esercizi
+[[Esercizi SQL su funzioni di aggregazione]]
 ## Ordine di esecuzione di una query SQL
 ### Struttura completa di una query SELECT
 ```sql
@@ -969,7 +983,188 @@ INNER JOIN boxoffice AS b
 GROUP BY m.regista;
 ```
 Calcola il totale degli incassi (domestici + internazionali) attribuibili a ciascun regista.
-
+## Subquery (sottoquery)
+### Concetto di subquery
+Una **subquery** è una query SQL annidata all’interno di un’altra query.
+Viene utilizzata quando una singola interrogazione non è sufficiente a rispondere a una domanda e sarebbe altrimenti necessario un pre-processing o post-processing dei dati.
+Una subquery è sempre racchiusa tra parentesi e può comparire:
+* nella clausola `WHERE`
+* nella clausola `HAVING`
+* nella clausola `FROM`
+* nella clausola `SELECT`
+### Subquery semplice
+Una subquery semplice restituisce un valore (o un insieme di valori) che viene poi utilizzato dalla query esterna.
+Esempio concettuale: selezionare gli elementi che superano una media calcolata dinamicamente.
+```sql
+SELECT *
+FROM sales_associates
+WHERE salary >
+    (SELECT AVG(revenue_generated)
+     FROM sales_associates);
+```
+La subquery interna calcola la media del fatturato, mentre la query esterna confronta ogni riga con quel valore.
+### Ordine logico di esecuzione
+La subquery viene eseguita **nel contesto della clausola in cui si trova**.
+Se la subquery è nella `WHERE`, viene valutata durante la fase di filtraggio delle righe; se è nella `FROM`, viene trattata come una tabella temporanea.
+### Subquery nella clausola WHERE
+Una subquery nella `WHERE` consente di applicare condizioni basate su dati calcolati dinamicamente.
+Esempio con il database dei film: selezionare i film con una valutazione superiore alla media.
+```sql
+SELECT titolo
+FROM movies AS m
+INNER JOIN boxoffice AS b
+    ON m.id = b.movie_id
+WHERE b.rating >
+    (SELECT AVG(rating)
+     FROM boxoffice);
+```
+La subquery calcola la valutazione media, mentre la query esterna filtra i film che la superano.
+### Subquery correlate
+Una **subquery correlata** dipende dalla riga corrente della query esterna.
+In questo caso, la subquery viene eseguita **una volta per ogni riga** della query principale.
+Esempio concettuale: trovare gli elementi che performano peggio della media del proprio gruppo.
+```sql
+SELECT *
+FROM employees
+WHERE salary >
+    (SELECT AVG(revenue_generated)
+     FROM employees AS dept_employees
+     WHERE dept_employees.department = employees.department);
+```
+La subquery utilizza una colonna della query esterna (`employees.department`), rendendola dipendente dalla riga corrente.
+### Caratteristiche delle subquery correlate
+* sono più espressive rispetto alle subquery semplici
+* possono essere meno efficienti
+* richiedono alias chiari per migliorare la leggibilità
+* sono spesso sostituibili da `JOIN` + `GROUP BY` in DBMS avanzati
+### Subquery nella clausola FROM
+Una subquery nella `FROM` viene trattata come una tabella temporanea.
+Esempio: calcolare prima un valore aggregato e poi interrogarlo.
+```sql
+SELECT regista, incasso_totale
+FROM (
+    SELECT m.regista,
+           SUM(b.domestic_sales + b.international_sales) AS incasso_totale
+    FROM movies AS m
+    INNER JOIN boxoffice AS b
+        ON m.id = b.movie_id
+    GROUP BY m.regista
+) AS incassi_registi
+WHERE incasso_totale > 1000000000;
+```
+### Test di esistenza con IN e NOT IN
+Le subquery possono produrre un elenco dinamico di valori da utilizzare con `IN` o `NOT IN`.
+Sintassi generale:
+```sql
+SELECT *
+FROM tabella
+WHERE colonna IN (
+    SELECT altra_colonna
+    FROM altra_tabella
+);
+```
+Esempio: selezionare i film che hanno dati di box office disponibili.
+```sql
+SELECT titolo
+FROM movies
+WHERE id IN (
+    SELECT movie_id
+    FROM boxoffice
+);
+```
+### Considerazioni sull’uso delle subquery
+* migliorano l’espressività delle query
+* riducono la necessità di elaborazioni esterne
+* possono peggiorare le prestazioni se mal progettate
+* richiedono attenzione nella lettura e manutenzione del codice
+L’uso di alias significativi e una struttura chiara è essenziale per mantenere le subquery comprensibili e corrette.
+## Operatori di insieme: UNION, INTERSECT, EXCEPT
+### Concetto di operatori di insieme
+Gli **operatori di insieme** permettono di combinare i risultati di più query `SELECT` senza utilizzare `JOIN`.
+Essi operano sui **risultati delle query**, non sulle tabelle direttamente, e richiedono che le query coinvolte siano **compatibili**.
+Due query sono compatibili se:
+* restituiscono lo **stesso numero di colonne**
+* le colonne sono nello **stesso ordine**
+* le colonne hanno **tipi di dato compatibili**
+### Sintassi generale
+```sql
+SELECT colonna1, colonna2
+FROM tabella1
+UNION | UNION ALL | INTERSECT | EXCEPT
+SELECT colonna1, colonna2
+FROM tabella2
+ORDER BY colonna1 DESC
+LIMIT n;
+```
+L’operatore di insieme viene applicato **prima** di `ORDER BY` e `LIMIT`.
+### UNION
+L’operatore `UNION` combina i risultati di due query e **rimuove automaticamente le righe duplicate**.
+Esempio concettuale:
+```sql
+SELECT director
+FROM movies
+WHERE year < 2005
+UNION
+SELECT director
+FROM movies
+WHERE year >= 2010;
+```
+Il risultato contiene l’elenco dei registi coinvolti, senza duplicati.
+### UNION ALL
+`UNION ALL` funziona come `UNION`, ma **non elimina i duplicati**.
+È più veloce di `UNION` perché non richiede il controllo delle ripetizioni.
+```sql
+SELECT director
+FROM movies
+WHERE year < 2005
+UNION ALL
+SELECT director
+FROM movies
+WHERE year >= 2010;
+```
+Se un regista compare in entrambe le query, apparirà due volte nel risultato.
+### INTERSECT
+L’operatore `INTERSECT` restituisce **solo le righe comuni** a entrambi i result set.
+```sql
+SELECT director
+FROM movies
+WHERE year < 2005
+INTERSECT
+SELECT director
+FROM movies
+WHERE year > 2000;
+```
+Il risultato include solo i registi presenti **in entrambe** le selezioni.
+Anche `INTERSECT` elimina automaticamente i duplicati.
+### EXCEPT
+L’operatore `EXCEPT` restituisce le righe presenti **nel primo result set ma non nel secondo**.
+È **sensibile all’ordine** delle query.
+```sql
+SELECT director
+FROM movies
+WHERE year < 2005
+EXCEPT
+SELECT director
+FROM movies
+WHERE year < 2000;
+```
+Il risultato contiene i registi dei film precedenti al 2005 **escludendo** quelli già presenti prima del 2000.
+Come `UNION` e `INTERSECT`, anche `EXCEPT` elimina i duplicati.
+### Versioni ALL
+Alcuni DBMS supportano:
+* `INTERSECT ALL`
+* `EXCEPT ALL`
+Queste varianti **mantengono i duplicati**, ma non sono parte dello standard SQL supportato universalmente.
+### Quando usare gli operatori di insieme
+Gli operatori di insieme sono utili quando:
+* i dati provengono da **tabelle non direttamente collegabili**
+* si vogliono combinare risultati logici diversi
+* si desidera evitare query multiple lato applicazione
+In molti casi, tuttavia, `JOIN` e `GROUP BY` risultano più leggibili ed efficienti.
+## Esercizi
+[[Esercizi SQL su subquery e operatori di insieme]]
+# DML: Data Manipulation Language
+Queste query servono per modificare i **dati** in database già esistenti, aggiungendo dati, rimuovendoli o modificandoli. Non modificano la struttura del database.
 ## Inserimento di nuove righe (INSERT)
 ### Schema di un database
 In SQL, lo **schema** descrive la struttura delle tabelle di un database:
@@ -1147,6 +1342,8 @@ DELETE FROM movies
 WHERE director = 'Andrew Stanton';
 ```
 In entrambi i casi, le righe che soddisfano la condizione vengono rimosse definitivamente dalla tabella.
+# DDL: Data Definition Language
+Queste query permettono di modificare la struttura del database, quindi di aggiungere o rimuovere tabelle e di modificarne le colonne.
 ## Creazione di tabelle (CREATE TABLE)
 ### Definizione di una nuova tabella
 Quando è necessario memorizzare nuove entità o relazioni, SQL permette di creare una nuova tabella tramite l’istruzione `CREATE TABLE`.
@@ -1335,181 +1532,3 @@ DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS boxoffice;
 ```
 Dopo l’esecuzione di questi comandi, le tabelle e tutti i dati in esse contenuti vengono rimossi definitivamente dal database.
-## Subquery (sottoquery)
-### Concetto di subquery
-Una **subquery** è una query SQL annidata all’interno di un’altra query.
-Viene utilizzata quando una singola interrogazione non è sufficiente a rispondere a una domanda e sarebbe altrimenti necessario un pre-processing o post-processing dei dati.
-Una subquery è sempre racchiusa tra parentesi e può comparire:
-* nella clausola `WHERE`
-* nella clausola `HAVING`
-* nella clausola `FROM`
-* nella clausola `SELECT`
-### Subquery semplice
-Una subquery semplice restituisce un valore (o un insieme di valori) che viene poi utilizzato dalla query esterna.
-Esempio concettuale: selezionare gli elementi che superano una media calcolata dinamicamente.
-```sql
-SELECT *
-FROM sales_associates
-WHERE salary >
-    (SELECT AVG(revenue_generated)
-     FROM sales_associates);
-```
-La subquery interna calcola la media del fatturato, mentre la query esterna confronta ogni riga con quel valore.
-### Ordine logico di esecuzione
-La subquery viene eseguita **nel contesto della clausola in cui si trova**.
-Se la subquery è nella `WHERE`, viene valutata durante la fase di filtraggio delle righe; se è nella `FROM`, viene trattata come una tabella temporanea.
-### Subquery nella clausola WHERE
-Una subquery nella `WHERE` consente di applicare condizioni basate su dati calcolati dinamicamente.
-Esempio con il database dei film: selezionare i film con una valutazione superiore alla media.
-```sql
-SELECT titolo
-FROM movies AS m
-INNER JOIN boxoffice AS b
-    ON m.id = b.movie_id
-WHERE b.rating >
-    (SELECT AVG(rating)
-     FROM boxoffice);
-```
-La subquery calcola la valutazione media, mentre la query esterna filtra i film che la superano.
-### Subquery correlate
-Una **subquery correlata** dipende dalla riga corrente della query esterna.
-In questo caso, la subquery viene eseguita **una volta per ogni riga** della query principale.
-Esempio concettuale: trovare gli elementi che performano peggio della media del proprio gruppo.
-```sql
-SELECT *
-FROM employees
-WHERE salary >
-    (SELECT AVG(revenue_generated)
-     FROM employees AS dept_employees
-     WHERE dept_employees.department = employees.department);
-```
-La subquery utilizza una colonna della query esterna (`employees.department`), rendendola dipendente dalla riga corrente.
-### Caratteristiche delle subquery correlate
-* sono più espressive rispetto alle subquery semplici
-* possono essere meno efficienti
-* richiedono alias chiari per migliorare la leggibilità
-* sono spesso sostituibili da `JOIN` + `GROUP BY` in DBMS avanzati
-### Subquery nella clausola FROM
-Una subquery nella `FROM` viene trattata come una tabella temporanea.
-Esempio: calcolare prima un valore aggregato e poi interrogarlo.
-```sql
-SELECT regista, incasso_totale
-FROM (
-    SELECT m.regista,
-           SUM(b.domestic_sales + b.international_sales) AS incasso_totale
-    FROM movies AS m
-    INNER JOIN boxoffice AS b
-        ON m.id = b.movie_id
-    GROUP BY m.regista
-) AS incassi_registi
-WHERE incasso_totale > 1000000000;
-```
-### Test di esistenza con IN e NOT IN
-Le subquery possono produrre un elenco dinamico di valori da utilizzare con `IN` o `NOT IN`.
-Sintassi generale:
-```sql
-SELECT *
-FROM tabella
-WHERE colonna IN (
-    SELECT altra_colonna
-    FROM altra_tabella
-);
-```
-Esempio: selezionare i film che hanno dati di box office disponibili.
-```sql
-SELECT titolo
-FROM movies
-WHERE id IN (
-    SELECT movie_id
-    FROM boxoffice
-);
-```
-### Considerazioni sull’uso delle subquery
-* migliorano l’espressività delle query
-* riducono la necessità di elaborazioni esterne
-* possono peggiorare le prestazioni se mal progettate
-* richiedono attenzione nella lettura e manutenzione del codice
-L’uso di alias significativi e una struttura chiara è essenziale per mantenere le subquery comprensibili e corrette.
-## Operatori di insieme: UNION, INTERSECT, EXCEPT
-### Concetto di operatori di insieme
-Gli **operatori di insieme** permettono di combinare i risultati di più query `SELECT` senza utilizzare `JOIN`.
-Essi operano sui **risultati delle query**, non sulle tabelle direttamente, e richiedono che le query coinvolte siano **compatibili**.
-Due query sono compatibili se:
-* restituiscono lo **stesso numero di colonne**
-* le colonne sono nello **stesso ordine**
-* le colonne hanno **tipi di dato compatibili**
-### Sintassi generale
-```sql
-SELECT colonna1, colonna2
-FROM tabella1
-UNION | UNION ALL | INTERSECT | EXCEPT
-SELECT colonna1, colonna2
-FROM tabella2
-ORDER BY colonna1 DESC
-LIMIT n;
-```
-L’operatore di insieme viene applicato **prima** di `ORDER BY` e `LIMIT`.
-### UNION
-L’operatore `UNION` combina i risultati di due query e **rimuove automaticamente le righe duplicate**.
-Esempio concettuale:
-```sql
-SELECT director
-FROM movies
-WHERE year < 2005
-UNION
-SELECT director
-FROM movies
-WHERE year >= 2010;
-```
-Il risultato contiene l’elenco dei registi coinvolti, senza duplicati.
-### UNION ALL
-`UNION ALL` funziona come `UNION`, ma **non elimina i duplicati**.
-È più veloce di `UNION` perché non richiede il controllo delle ripetizioni.
-```sql
-SELECT director
-FROM movies
-WHERE year < 2005
-UNION ALL
-SELECT director
-FROM movies
-WHERE year >= 2010;
-```
-Se un regista compare in entrambe le query, apparirà due volte nel risultato.
-### INTERSECT
-L’operatore `INTERSECT` restituisce **solo le righe comuni** a entrambi i result set.
-```sql
-SELECT director
-FROM movies
-WHERE year < 2005
-INTERSECT
-SELECT director
-FROM movies
-WHERE year > 2000;
-```
-Il risultato include solo i registi presenti **in entrambe** le selezioni.
-Anche `INTERSECT` elimina automaticamente i duplicati.
-### EXCEPT
-L’operatore `EXCEPT` restituisce le righe presenti **nel primo result set ma non nel secondo**.
-È **sensibile all’ordine** delle query.
-```sql
-SELECT director
-FROM movies
-WHERE year < 2005
-EXCEPT
-SELECT director
-FROM movies
-WHERE year < 2000;
-```
-Il risultato contiene i registi dei film precedenti al 2005 **escludendo** quelli già presenti prima del 2000.
-Come `UNION` e `INTERSECT`, anche `EXCEPT` elimina i duplicati.
-### Versioni ALL
-Alcuni DBMS supportano:
-* `INTERSECT ALL`
-* `EXCEPT ALL`
-Queste varianti **mantengono i duplicati**, ma non sono parte dello standard SQL supportato universalmente.
-### Quando usare gli operatori di insieme
-Gli operatori di insieme sono utili quando:
-* i dati provengono da **tabelle non direttamente collegabili**
-* si vogliono combinare risultati logici diversi
-* si desidera evitare query multiple lato applicazione
-In molti casi, tuttavia, `JOIN` e `GROUP BY` risultano più leggibili ed efficienti.
