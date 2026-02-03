@@ -516,6 +516,42 @@ LEFT JOIN employees ON building_name=edificio;
 ```
 
 **Nota:** posso usare AS per abbreviare i nomi delle tabelle come mostrato nelle query precedenti.
+## NATURAL JOIN
+Il NATURAL JOIN unisce due tabelle usando automaticamente tutte le colonne con lo stesso nome e tipo, senza dover specificare la condizione di join.
+### Tabelle di partenza
+Tabella studenti
+```sql
+id_studente | nome
+------------+--------
+1           | Luca
+2           | Marta
+3           | Giulia
+```
+
+Tabella iscrizioni
+```sql
+id_studente | corso
+------------+---------
+1           | Matematica
+2           | Informatica
+4           | Fisica
+```
+### Query con NATURAL JOIN
+```sql
+SELECT *
+FROM studenti
+NATURAL JOIN iscrizioni;
+```
+### Risultato
+```sql
+id_studente | nome  | corso
+------------+-------+-------------
+1           | Luca  | Matematica
+2           | Marta | Informatica
+```
+### Cosa succede
+Il DBMS individua automaticamente la colonna in comune id_studente e fa il join su quella.La riga con id_studente = 3 viene esclusa perché non ha corrispondenza in iscrizioni.Quella con id_studente = 4 viene esclusa perché non esiste in studenti.
+**Nota bene:** basta rinominare una colonna o aggiungerne una omonima per rompere la query in modo silenzioso. Un INNER JOIN esplicito è quasi sempre più sicuro e leggibile.
 ## JOIN esterni (OUTER JOIN)
 ### Limiti dell’INNER JOIN
 L’`INNER JOIN` restituisce solo le righe per cui esiste una corrispondenza in entrambe le tabelle coinvolte. In presenza di dati **asimmetrici** (ad esempio record presenti in una tabella ma assenti nell’altra), questo tipo di join può escludere informazioni rilevanti.

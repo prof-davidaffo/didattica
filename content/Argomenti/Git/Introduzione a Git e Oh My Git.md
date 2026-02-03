@@ -26,4 +26,5 @@ Git è uno degli strumenti fondamentali nel mondo della programmazione moderna. 
 ### Come iniziare in modo semplice: *Oh My Git!*
 Per rendere l’apprendimento di Git più divertente e interattivo, puoi iniziare con il gioco gratuito **[Oh My Git!](https://ohmygit.org/)**.
 È un videogioco open source che ti guida passo passo nei comandi fondamentali di Git, usando una grafica semplice e un approccio ludico. Ideale per chi parte da zero!
-👉 Gioca subito a Oh My Git!: [https://ohmygit.org](https://ohmygit.org)
+Se vuoi la mia versione italiana, la trovi qui:
+[Download Oh My Git Ita](https://github.com/prof-davidaffo/oh-my-git-ita/releases/latest)
