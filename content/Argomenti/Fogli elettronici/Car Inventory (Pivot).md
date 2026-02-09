@@ -174,15 +174,6 @@ Prova a cambiare la pivot table.
 Guarda come il grafico si aggiorna da solo.
 
 ---
-## Aggiornamento differito
-Attiva **Defer Layout Update**.
-Ora trascina alcuni campi:
-* la tabella non si aggiorna subito
-Premi **Update** solo alla fine.
-Questo serve quando:
-* i dati sono molti
-* i calcoli richiedono tempo
----
 ## Conclusione
 Una pivot table non serve a trovare **una risposta giusta**.
 Serve a **fare domande diverse agli stessi dati**.
