@@ -1016,6 +1016,48 @@ GROUP BY m.regista;
 ```
 Calcola il totale degli incassi (domestici + internazionali) attribuibili a ciascun regista.
 ## Subquery (sottoquery)
+### Tabelle necessarie
+#### Tabella movies
+
+|id|titolo|regista|director|year|durata_minuti|
+|---|---|---|---|---|---|
+|1|Inception|Christopher Nolan|Christopher Nolan|2010|148|
+|2|Interstellar|Christopher Nolan|Christopher Nolan|2014|169|
+|3|Pulp Fiction|Quentin Tarantino|Quentin Tarantino|1994|154|
+|4|The Grand Budapest Hotel|Wes Anderson|Wes Anderson|2014|100|
+|5|Parasite|Bong Joon-ho|Bong Joon-ho|2019|132|
+|6|The Dark Knight|Christopher Nolan|Christopher Nolan|2008|152|
+
+#### Tabella boxoffice
+
+|movie_id|domestic_sales|international_sales|rating|
+|---|---|---|---|
+|1|292000000|535000000|8.8|
+|2|188000000|489000000|8.6|
+|3|107000000|106000000|8.9|
+|4|59000000|115000000|8.1|
+|5|53000000|205000000|8.5|
+|6|535000000|469000000|9.0|
+
+#### Tabella sales_associates
+
+|id|nome|department|salary|revenue_generated|
+|---|---|---|---|---|
+|1|Alice|Electronics|30000|120000|
+|2|Bob|Electronics|32000|90000|
+|3|Charlie|Home|28000|70000|
+|4|Diana|Home|35000|150000|
+|5|Eve|Sports|29000|60000|
+
+#### Tabella employees
+
+| id  | nome  | department | salary | revenue_generated |
+| --- | ----- | ---------- | ------ | ----------------- |
+| 1   | Marco | IT         | 40000  | 200000            |
+| 2   | Luca  | IT         | 38000  | 150000            |
+| 3   | Anna  | HR         | 35000  | 90000             |
+| 4   | Sara  | HR         | 36000  | 120000            |
+| 5   | Paolo | Finance    | 42000  | 300000            |
 ### Concetto di subquery
 Una **subquery** è una query SQL annidata all’interno di un’altra query.
 Viene utilizzata quando una singola interrogazione non è sufficiente a rispondere a una domanda e sarebbe altrimenti necessario un pre-processing o post-processing dei dati.
