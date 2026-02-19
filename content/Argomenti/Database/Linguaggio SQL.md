@@ -1019,14 +1019,14 @@ Calcola il totale degli incassi (domestici + internazionali) attribuibili a cias
 ### Tabelle necessarie
 #### Tabella movies
 
-|id|titolo|regista|director|year|durata_minuti|
-|---|---|---|---|---|---|
-|1|Inception|Christopher Nolan|Christopher Nolan|2010|148|
-|2|Interstellar|Christopher Nolan|Christopher Nolan|2014|169|
-|3|Pulp Fiction|Quentin Tarantino|Quentin Tarantino|1994|154|
-|4|The Grand Budapest Hotel|Wes Anderson|Wes Anderson|2014|100|
-|5|Parasite|Bong Joon-ho|Bong Joon-ho|2019|132|
-|6|The Dark Knight|Christopher Nolan|Christopher Nolan|2008|152|
+| id  | titolo                   | regista           | year | durata_minuti |
+| --- | ------------------------ | ----------------- | ---- | ------------- |
+| 1   | Inception                | Christopher Nolan | 2010 | 148           |
+| 2   | Interstellar             | Christopher Nolan | 2014 | 169           |
+| 3   | Pulp Fiction             | Quentin Tarantino | 1994 | 154           |
+| 4   | The Grand Budapest Hotel | Wes Anderson      | 2014 | 100           |
+| 5   | Parasite                 | Bong Joon-ho      | 2019 | 132           |
+| 6   | The Dark Knight          | Christopher Nolan | 2008 | 152           |
 
 #### Tabella boxoffice
 
@@ -1041,13 +1041,13 @@ Calcola il totale degli incassi (domestici + internazionali) attribuibili a cias
 
 #### Tabella sales_associates
 
-|id|nome|department|salary|revenue_generated|
-|---|---|---|---|---|
-|1|Alice|Electronics|30000|120000|
-|2|Bob|Electronics|32000|90000|
-|3|Charlie|Home|28000|70000|
-|4|Diana|Home|35000|150000|
-|5|Eve|Sports|29000|60000|
+| id  | nome    | department  | salary | revenue_generated |
+| --- | ------- | ----------- | ------ | ----------------- |
+| 1   | Alice   | Electronics | 30000  | 10000             |
+| 2   | Bob     | Electronics | 32000  | 35000             |
+| 3   | Charlie | Home        | 28000  | 20000             |
+| 4   | Diana   | Home        | 35000  | 15000             |
+| 5   | Eve     | Sports      | 29000  | 37000             |
 
 #### Tabella employees
 
