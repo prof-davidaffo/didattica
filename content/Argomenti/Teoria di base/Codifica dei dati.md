@@ -1,1 +1,1 @@
-[Apri la dispensa](./codifiche.html)
+[Apri la dispensa](.pages/codifiche)
