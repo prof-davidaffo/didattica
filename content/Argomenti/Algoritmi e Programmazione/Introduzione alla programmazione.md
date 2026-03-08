@@ -1,4 +1,4 @@
-## Siti e appunti consigliati e utilizzati
+ob## Siti e appunti consigliati e utilizzati
 Per programmare senza dover installare nulla sul proprio computer, è possibile utilizzare **GitHub Codespaces**. Per farlo è necessario creare un account su GitHub. Dopo la registrazione, si può aprire un nuovo progetto (anche vuoto) e si avvierà una versione online di **Visual Studio Code**, uno degli ambienti di sviluppo più completi e gratuiti disponibili, che può essere scaricato e installato anche sul PC in versione desktop.  Include un terminale in ambiente linux che potete utilizzare per interagire con i file e compilare manualmente.
 [https://github.com/codespaces](https://github.com/codespaces)
 
@@ -569,13 +569,13 @@ Come vediamo nell'esempio, `cin` e `cout` utilizzano rispettivamente `>>` e `<<`
 
 Quando utilizzi **`cout`** per stampare a schermo, puoi includere caratteri speciali usando il carattere di escape `\` per rappresentare simboli o comportamenti particolari. Ecco un elenco dei più comuni:
 
-| Carattere speciale | Significato                      | Esempio                            | Output              |
-| ------------------ | -------------------------------- | ---------------------------------- | ------------------- |
-| `\n`               | Nuova riga                       | `cout << "Ciao\nMondo";`           | Ciao<br>Mondo       |
-| `\t`               | Tabulazione orizzontale          | `cout << "Ciao\tMondo";`           | Ciao     Mondo      |
-| `\\`               | Barra rovesciata (`\`)           | `cout << "C:\\Documenti";`         | C:\Documenti        |
-| `\'`               | Apice singolo                    | `cout << "L\'utente";`             | L'utente            |
-| `\"`               | Apice doppio                     | `cout << "\"C++\" è fantastico!";` | "C++" è fantastico! |
+| Carattere speciale | Significato             | Esempio                            | Output              |
+| ------------------ | ----------------------- | ---------------------------------- | ------------------- |
+| `\n`               | Nuova riga              | `cout << "Ciao\nMondo";`           | Ciao<br>Mondo       |
+| `\t`               | Tabulazione orizzontale | `cout << "Ciao\tMondo";`           | Ciao     Mondo      |
+| `\\`               | Barra rovesciata (`\`)  | `cout << "C:\\Documenti";`         | C:\Documenti        |
+| `\'`               | Apice singolo           | `cout << "L\'utente";`             | L'utente            |
+| `\"`               | Apice doppio            | `cout << "\"C++\" è fantastico!";` | "C++" è fantastico! |
 
 
 ---
@@ -632,13 +632,13 @@ ABC45
 
 Le **operazioni aritmetiche** in C++ seguono i simboli standard:
 
-|Operazione|Simbolo|Esempio|Risultato|
-|---|---|---|---|
-|Addizione|`+`|`5 + 3`|`8`|
-|Sottrazione|`-`|`5 - 3`|`2`|
-|Moltiplicazione|`*`|`5 * 3`|`15`|
-|Divisione|`/`|`6 / 3`|`2`|
-|Modulo|`%`|`5 % 3`|`2`|
+| Operazione      | Simbolo | Esempio | Risultato |
+| --------------- | ------- | ------- | --------- |
+| Addizione       | `+`     | `5 + 3` | `8`       |
+| Sottrazione     | `-`     | `5 - 3` | `2`       |
+| Moltiplicazione | `*`     | `5 * 3` | `15`      |
+| Divisione       | `/`     | `6 / 3` | `2`       |
+| Modulo          | `%`     | `5 % 3` | `2`       |
 
 
 ```cpp
@@ -702,8 +702,8 @@ int main() {
 
 ### Introduzione  
 In un programma imperativo, le **strutture di controllo del flusso** sono fondamentali per prendere decisioni e ripetere blocchi di codice:  
-1. **Strutture condizionali**: consentono di eseguire porzioni di codice solo se una condizione è soddisfatta.  
-2. **Strutture iterative (cicli)**: permettono di ripetere un blocco di istruzioni più volte finché una determinata condizione è soddisfatta (è l'unico modo "legale" che abbiamo per tornare indietro nel codice).  
+1. **Strutture condizionali**: consentono di eseguire porzioni di codice solo se una condizione è soddisfatta.
+2. **Strutture iterative (cicli)**: permettono di ripetere un blocco di istruzioni più volte finché una determinata condizione è soddisfatta (è l'unico modo "legale" che abbiamo per tornare indietro nel codice).
 
 ---
 
@@ -1918,7 +1918,7 @@ Ogni algoritmo ha vantaggi e svantaggi in termini di complessità computazionale
 >     Scrivi un programma che calcola il prodotto scalare di due vettori di dimensione n, dove n è fornito dall'utente.
 ### Stringhe
 
-Una **stringa** in C++ è una sequenza di caratteri terminata dal carattere speciale `\0`. Esistono due modi principali per lavorare con le stringhe:
+Una **stringa** in C è una sequenza di caratteri terminata dal carattere speciale `\0`. Esistono due modi principali per lavorare con le stringhe:
 
 1. **Array di caratteri**
 2. **Classe `string` della libreria standard**

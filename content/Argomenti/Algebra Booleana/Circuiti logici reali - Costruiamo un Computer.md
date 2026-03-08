@@ -1,5 +1,5 @@
 > [!warning] Attenzione
-> Prima di studiare questa dispensa, hai bisogno di studiare le basi dell'algebra di Boole: [[Dispensa sull'algebra di Boole e circuiti logici]] e dei sistemi di numerazione [[Codifica delle informazioni#2. Sistemi di numerazione]]
+> Prima di studiare questa dispensa, hai bisogno di studiare le basi dell'algebra di Boole: [[Dispensa sull'algebra di Boole e circuiti logici]] e dei sistemi di numerazione [[Codifica dei numeri#2. Sistemi di numerazione]]
 ## Introduzione
 Questa dispensa segue un percorso completo per comprendere e costruire tutti i circuiti logici fondamentali che costituiscono l’architettura di un computer. L’obiettivo è mostrare come, partendo esclusivamente da porte logiche elementari, sia possibile arrivare a realizzare unità aritmetiche, dispositivi di memoria, sistemi di controllo e infine un processore funzionante. Il metodo è incrementale: ogni circuito introduce un concetto nuovo e fornisce il blocco costruttivo necessario per il successivo. In questo modo l’intero sistema emerge in modo naturale, come risultato della composizione di componenti semplici ma estremamente potenti.
 La progressione di questa dispensa segue quella del gioco [nandgame.com]().
@@ -348,7 +348,7 @@ Questo schema permette quindi di realizzare:
 * full-adder
 * linee di controllo
 #### Complemento a 2 e numeri negativi
-Come visto nei sistemi digitali, i numeri interi relativi si rappresentano con il [[Codifica delle informazioni#2.6 Rappresentazione dei numeri negativi il complemento a 2|complemento a 2]], utilizzando il bit più pesante come bit di segno:
+Come visto nei sistemi digitali, i numeri interi relativi si rappresentano con il [[Codifica dei numeri#2.6 Rappresentazione dei numeri negativi il complemento a 2|complemento a 2]], utilizzando il bit più pesante come bit di segno:
 0 → numero positivo
 1 → numero negativo
 Nel complemento a 2, il range di valori rappresentabili non è simmetrico: con 4 bit, ad esempio, si possono rappresentare i numeri da −8 a +7. I numeri negativi non sono memorizzati con un “segno” separato, ma come particolari configurazioni di bit che si ottengono complementando a 2 il corrispondente valore positivo.

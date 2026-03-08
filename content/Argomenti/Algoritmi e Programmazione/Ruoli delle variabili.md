@@ -65,7 +65,7 @@ Cosa fa il programma? ******____******
 
 Si tratta del "miglior" valore che ho trovato fino a questo momento.
 
-```
+```python
 L = [3, 1, 4, 10, 2, 7]
 massimo = L[0]
 for e in L[1:]:
@@ -83,7 +83,7 @@ Cosa fa il programma? ******____******
 
 Un accumulatore accumula tutti i valori che ho trovato fino a questo momento. Solitamente, va inizializzato con l'elemento neutro dell'operazione di accumulazione (es. 0 se somma, 1 se prodotto, collezione vuota se collezione, stringa vuota, True o False...).
 
-```
+```python
 s = 0
 n = 0
 i = int(input("Pioggia caduta: "))
