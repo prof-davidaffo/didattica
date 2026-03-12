@@ -45,13 +45,6 @@ Formato: scelta multipla (1 risposta corretta). La risposta corretta è indicata
 
 ## File e staging area (index)
 
-7. Hai un file tracciato da Git che vuoi eliminare dal progetto in modo che la sua rimozione sia inclusa nel prossimo commit. Quale comando conviene usare?
-
-- A. Elimini il file dal filesystem e poi esegui `git add .`
-- B. `git untrack <file>`
-- **C. `git rm <file>`**
-- D. `git clean -f <file>`
-
 8. Per aggiungere file alla staging area in vista del prossimo commit, qual è il comando base?
 
 - A. `git track`
@@ -154,7 +147,28 @@ Formato: scelta multipla (1 risposta corretta). La risposta corretta è indicata
 - C. `git branch --move <nome>`
 - D. `git reset --branch <nome>`
 
+15. Quale descrizione rappresenta meglio un branch?
+	1. È una serie di commit separata da quella principale
+	2. **È un segnaposto per viaggiare velocemente in un determinato commit (solitamente l'ultimo di una serie)**
+	3. È solo il ramo main
+	4. È come il commento in un codice, non ha effetto sulla repository ma serve per annotazioni
+
+16. Quale procedura permette di spostare un branch su un commit diverso e aggiornare la working directory?
+
+	1. **`git checkout <branch>` + `git reset --hard <commit>`**
+	2. `git branch -f <branch> <commit>`
+	3. `git checkout --move <branch> <commit>`
+	4. `git branch --set-commit <branch> <commit>`
+
 ---
+
+## Files
+
+22. Su Linux, cosa fa il comando `rm *pdf*`
+	1. **Elimina tutti i files che includono pdf nel nome**
+	2. Elimina tutti i files con estensione pdf
+	3. Elimina tutti i filese che iniziano per pdf
+	4. Elimina tutti i files che finiscono per pdf
 
 ## Merge, conflitti e sincronizzazione
 
@@ -232,7 +246,7 @@ Formato: scelta multipla (1 risposta corretta). La risposta corretta è indicata
 31. Quale comando può ripristinare un file allo stato dell'ultimo commit, scartando le modifiche locali?
 
 - A. `git reset --file-only <file>`
-- **B. `git checkout -- <file>`**
+- **B. `git checkout <file>`**
 - C. `git log --file <file>`
 - D. `git branch --restore <file>`
 
@@ -250,12 +264,12 @@ Formato: scelta multipla (1 risposta corretta). La risposta corretta è indicata
 - **C. `git reset [commit]`**
 - D. `git checkout --hard`
 
-34. Perché `git revert` è spesso preferibile a `git reset` quando hai già pushato?
+31. Perché `git revert` è spesso preferibile a `git reset` quando hai già pushato?
 
-- A. Perché non richiede mai di risolvere conflitti
-- **B. Perché annulla con un nuovo commit senza riscrivere la storia condivisa**
-- C. Perché funziona anche senza connessione al remote
-- D. Perché riscrive la cronologia in modo più efficiente
+	- A. **Perché non riscrive la storia, aggiungendo un nuovo commit che annulla le modifiche**
+	- B. Perché sposta il branch a un commit precedente senza lasciare traccia
+	- C. Perché riscrive la storia in modo che gli altri collaboratori non se ne accorgano
+	- D. Perché annulla le modifiche solo nella working directory senza toccare la history
 
 35. A cosa serve `git reflog`?
 
@@ -271,6 +285,11 @@ Formato: scelta multipla (1 risposta corretta). La risposta corretta è indicata
 - C. Ripristina i file eliminati accidentalmente
 - **D. Trova un commit problematico più rapidamente della ricerca lineare**
 
+31. Cosa vuol dire "eliminare una serie di commit" in git?
+	1. Eliminarlo definitivamente
+	2. Sovrascriverli con un nuovi commit
+	3. **Spostare e resettare i branch in modo da "dimenticarsi" dei commit
+	4. Nessuna delle risposte
 ---
 
 ## Stash
