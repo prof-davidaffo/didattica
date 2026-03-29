@@ -28,6 +28,9 @@ Immaginate di lanciare un sasso in uno stagno fermo: si formano cerchi che si al
 
 Tutto ciò che chiamiamo "radiazione elettromagnetica" — la luce del sole, il calore di un fornello, i raggi X dal dentista, il segnale WiFi del router — è la stessa cosa. Cambiano solo le caratteristiche dell'onda.
 
+> 🔎 Attenzione
+> In un’onda elettromagnetica non si spostano elettroni dal trasmettitore al ricevitore attraverso l’aria: a propagarsi nello spazio è la perturbazione dei campi elettrico e magnetico.
+
 ### I tre parametri fondamentali
 
 Per descrivere un'onda elettromagnetica si usano tre grandezze strettamente legate tra loro:
@@ -60,7 +63,14 @@ In uno spazio aperto e libero, le onde radio si propagano in linea retta, esatta
 
 **Penetrazione:** le onde radio riescono ad attraversare i materiali non metallici (muri, legno, vetro, plastica), ma vengono indebolite. La regola fondamentale è: **più bassa è la frequenza, meglio penetra**. Ecco perché il 4G (800 MHz) arriva meglio al piano interrato rispetto al 5G (28 GHz): le onde più lunghe si infilano più facilmente attraverso i muri.
 
+> 💡 Intuizione
+> Le onde a frequenza più alta si attenuano di più nei materiali perché oscillano più rapidamente e interagiscono maggiormente con le cariche presenti nel mezzo.  
+> Le onde a frequenza più bassa, invece, perdono meno energia e quindi penetrano meglio.
+
 **Diffrazione:** se un'onda incontra un ostacolo solido con uno spigolo vivo (l'angolo di un muro, di un edificio), si "piega" leggermente attorno allo spigolo, riuscendo a propagarsi anche dietro l'angolo dove geometricamente non dovrebbe arrivare. Se invece incontra un'apertura piccola rispetto alla sua lunghezza d'onda (una fessura, un buco), si "spalma" e si diffonde in molte direzioni, come l'acqua che passa attraverso un piccolo foro in una diga.
+
+> 💡 Intuizione
+> La capacità di aggirare un ostacolo dipende dal rapporto tra la dimensione dell’ostacolo e la lunghezza d’onda: se la lunghezza d’onda è grande rispetto all’ostacolo, l’onda riesce a “girargli attorno” più facilmente.
 
 ---
 
@@ -95,7 +105,15 @@ Questo legame reciproco tra i due campi è la chiave di tutto. Immaginate cosa s
 
 I due campi si autosostentano: ognuno rigenera l'altro, e il tutto si propaga nello spazio come un'**onda**. Questo è esattamente ciò che chiamiamo **onda elettromagnetica**: non è altro che un campo elettrico e un campo magnetico che oscillano perpendicolarmente tra loro e si trascinano avanti nello spazio alla velocità della luce.
 
+> 🔎 Cosa significa davvero che i campi “si propagano”?
+> Non significa che si staccano fisicamente dal filo come un oggetto che si rompe.  
+> Significa che la variazione di un campo genera l’altro anche nei punti vicini dello spazio: in questo modo la perturbazione si trasmette da una zona all’altra e continua ad avanzare anche lontano dall’antenna.
+
 Se la corrente oscilla lentamente (pochi Hz), i campi cambiano troppo piano per staccarsi e propagarsi — restano "incollati" al filo. Ma se la corrente oscilla molto rapidamente — milioni o miliardi di volte al secondo — i campi riescono a staccarsi e a viaggiare via da soli nello spazio. È come una corda che si agita lentamente fa onde che muoiono subito, mentre una corda agitata velocissimamente crea onde che si propagano in avanti con forza.
+
+> 💡 Chiarimento
+> Con una corrente continua, o comunque troppo lenta, il campo magnetico non varia abbastanza nel tempo da generare un campo elettrico variabile capace di propagarsi.  
+> Per questo attorno al filo esiste un campo, ma non si forma un’onda radio efficace.
 
 Questa è la fisica alla base di ogni comunicazione radio. E l'antenna è esattamente il dispositivo progettato per fare questa cosa nel modo più efficiente possibile.
 
@@ -109,9 +127,15 @@ Ora che sappiamo cosa sono i campi elettrico e magnetico e come interagiscono, c
 
 Immaginate un filo elettrico percorso da corrente alternata ad alta frequenza — milioni di oscillazioni al secondo. Come abbiamo appena visto, quella corrente che oscilla crea attorno al filo due campi variabili che si autosostengono e si propagano nello spazio sotto forma di onda elettromagnetica. In pratica, l'energia elettrica che entra nel filo si trasforma in un'onda radio che viaggia alla velocità della luce.
 
+> 📘 In sintesi
+> Un’antenna è un dispositivo che trasforma un segnale elettrico in un’onda elettromagnetica quando trasmette, e compie il processo inverso quando riceve.
+
 Questo è esattamente quello che fa un'**antenna in trasmissione**: prende un segnale elettrico (prodotto da un circuito trasmettitore) e lo converte in un'onda elettromagnetica che si irradia nello spazio.
 
 Il processo inverso funziona altrettanto bene: quando un'onda elettromagnetica colpisce un pezzo di metallo, fa oscillare gli elettroni al suo interno, generando una piccola corrente elettrica. Questa corrente è il segnale ricevuto, che poi viene amplificato e interpretato dall'elettronica. Questo è quello che fa un'**antenna in ricezione**.
+
+> 💡 Idea chiave
+> In trasmissione è l’antenna a far oscillare gli elettroni e a generare l’onda; in ricezione è l’onda incidente a far oscillare gli elettroni del metallo, producendo un piccolo segnale elettrico.
 
 La cosa affascinante è che lo stesso oggetto fisico — un semplice pezzo di filo metallico — può fare entrambe le cose. Per questo in ogni sistema radio ci sono almeno due antenne: una sull'apparato trasmittente e una su quello ricevente.
 
@@ -121,7 +145,22 @@ Ma non tutti i pezzi di filo funzionano ugualmente bene come antenne. Ci sono tr
 
 La cosa forse più sorprendente delle antenne è che le loro dimensioni fisiche non sono casuali: dipendono direttamente dalla frequenza del segnale che devono trasmettere o ricevere. Più alta è la frequenza (e quindi più corta è la lunghezza d'onda), più piccola deve essere l'antenna.
 
+> 💡 Conseguenza pratica
+> Se la frequenza raddoppia, la lunghezza d’onda si dimezza; di conseguenza anche una tipica antenna in λ/4 diventa circa la metà.
+
 Il motivo fisico è che un'antenna funziona al meglio quando la sua lunghezza è esattamente un quarto della lunghezza d'onda del segnale (λ/4). In quel caso, la corrente elettrica nell'antenna entra in risonanza con l'onda, e tutta l'energia elettrica si trasforma efficientemente in onda elettromagnetica.
+
+> 🔎 Cosa significa davvero “risonanza” in un’antenna?
+> 
+> Quando un segnale percorre un filo, non si trasmette istantaneamente: l’oscillazione si propaga lungo l’antenna con un certo ritardo.  
+> Questo significa che gli elettroni nelle diverse parti del filo non si muovono esattamente nello stesso istante.
+> 
+> Ogni punto dell’antenna genera quindi un piccolo campo elettromagnetico.  
+> Se la lunghezza dell’antenna è quella giusta rispetto alla lunghezza d’onda, questi contributi risultano in fase e si sommano tra loro, producendo un’onda forte ed efficiente.
+> 
+> Se invece la lunghezza non è corretta, le diverse parti dell’antenna risultano parzialmente fuori fase: alcuni contributi si annullano tra loro e l’energia non viene irradiata in modo efficace.
+> 
+> In altre parole: un’antenna in risonanza è “accordata” alla lunghezza d’onda del segnale e permette alle diverse parti del filo di lavorare insieme invece che ostacolarsi.
 
 Partiamo dall'**antenna hertziana** (o dipolo a mezz'onda). Immaginate due bacchette metalliche allineate, ognuna lunga λ/4, aperte a 180° come una "T" rovesciata. Quando vengono alimentate, irradiano energia in tutte le direzioni orizzontali (come una ciambella/toroide attorno all'antenna), mentre verso l'alto e il basso non irradia nulla. Questo tipo di emissione circolare si chiama **omnidirezionale**.
 
@@ -169,6 +208,9 @@ Un'antenna con un angolo di apertura piccolo (es. 15°) concentra tutta l'energi
 Il **guadagno d'antenna (_G_)** è il parametro che quantifica quanto un'antenna è brava a concentrare la potenza in una direzione rispetto al radiatore isotropico ideale.
 
 Per capirlo con un'analogia: se avete una torcia con riflettore parabolico e una lampadina senza riflettore, entrambe consumano la stessa energia — ma la torcia illumina in modo molto più intenso nella direzione in cui la puntate, perché concentra tutta la luce in un fascio stretto. Il "guadagno" della torcia rispetto alla lampadina nuda è questo fattore di concentrazione.
+
+> 🔎 Attenzione
+> Il guadagno non crea potenza dal nulla: concentra la potenza disponibile in una direzione preferenziale, riducendola nelle altre.
 
 Formalmente: il guadagno G = 2 significa che, nella direzione di massima emissione, l'antenna irradia il doppio della densità di potenza rispetto a un radiatore isotropico con la stessa potenza in ingresso.
 
@@ -228,6 +270,9 @@ Le **antenne verticali omnidirezionali con guadagno** sono una via di mezzo: irr
 Finora abbiamo sempre parlato di antenne che trasmettono. Ma come si comporta la stessa antenna quando invece deve ricevere?
 
 Intuitivamente si potrebbe pensare che un'antenna più grande cattura più segnale — come un secchio più grande raccoglie più pioggia. Ed è esattamente così. Quando un'onda radio arriva su un'antenna, induce una corrente elettrica proporzionale a quanta energia riesce a "intercettare". Questa capacità di cattura si chiama **area efficace**: è una superficie virtuale, espressa in m², che rappresenta quanto spazio di cielo l'antenna "vede" in ricezione. Un'antenna con area efficace di 1 m² raccoglie tutta la potenza dell'onda che attraversa 1 metro quadrato di spazio.
+
+> 💡 Idea chiave
+> Un’antenna molto efficace nel concentrare l’energia in trasmissione è anche molto efficace nel raccoglierla in ricezione.
 
 La cosa interessante è che l'area efficace non dipende solo dalle dimensioni fisiche dell'antenna, ma anche dalla sua forma e dal guadagno. E c'è una simmetria elegante: un'antenna con alto guadagno in trasmissione ha anche una grande area efficace in ricezione. La formula che lega i due parametri è:
 
@@ -447,140 +492,3 @@ La differenza rispetto all'RFID classico è la distanza di funzionamento: l'NFC 
 Le applicazioni più note dell'NFC sono i pagamenti contactless (Google Pay, Apple Pay), la validazione dei biglietti sui mezzi pubblici, l'accesso controllato ad aree riservate e la condivisione rapida di informazioni tra smartphone.
 
 ![[Media/image-046.jpg]]
-
----
-
-## 10. Verifica
-
-### ✅ Scegli la Risposta Corretta
-
-**1.** L'esistenza delle onde elettromagnetiche fu intuita per la prima volta da:
-
-- A) Niels Bohr
-- B) Heinrich Rudolph Hertz
-- **C) James Clerk Maxwell** ✓
-- D) Guglielmo Marconi
-
-**2.** Un'onda elettromagnetica:
-
-- **A) si propaga in modo rettilineo nello spazio libero** ✓
-- B) è completamente assorbita da una superficie metallica
-- C) penetra i materiali tanto più facilmente quanto maggiore è la sua frequenza
-- D) in presenza di ostacoli non subisce flessioni
-
-**3.** Trattando delle antenne è corretto dire che:
-
-- **A) sono dispositivi in grado di irraggiare onde elettromagnetiche nello spazio e di captarle** ✓
-- B) maggiore è la frequenza di lavoro e più lunga è l'antenna
-- C) il diagramma di radiazione rappresenta gli assi del solido di emissione
-- D) l'angolo di apertura è pari all'angolo solido entro il quale la densità di potenza si mantiene superiore al 90% del valore massimo
-
-**4.** In merito alle caratteristiche delle diverse antenne:
-
-- A) il dipolo marconiano è detto dipolo in λ/2
-- B) la parabola è detta antenna a dipolo
-- **C) il dipolo hertziano è detto dipolo in λ/2** ✓
-- D) l'antenna Yagi contiene un certo numero di elementi direttori attivi
-
-**5.** In ambito applicativo:
-
-- A) per le applicazioni mobili sono indispensabili le antenne a parabola
-- **B) per le connessioni fisse sono preferibili le antenne direzionali** ✓
-- C) le antenne a frusta sono unidirezionali
-- D) le antenne a chip sono omnidirezionali
-
-**6.** Quando un'antenna è in ricezione presenta un'area efficace il cui valore:
-
-- A) si riduce aumentando il guadagno dell'antenna
-- B) aumenta proporzionalmente con la lunghezza d'onda del segnale
-- **C) aumenta con il quadrato della lunghezza d'onda del segnale** ✓
-- D) aumenta con il cubo della lunghezza d'onda del segnale
-
-**7.** In merito alla classificazione delle reti wireless, **non** è vero dire che:
-
-- A) le WWAN sono grandi reti di dati, progettate per coprire aree estese
-- **B) WiMAX è uno standard per WLAN** ✓ _(WiMAX è standard per WMAN)_
-- C) le WPAN consentono una comunicazione entro un raggio limitato
-- D) le WWAN sono gestite da un fornitore di servizi
-
-**8.** Utilizzando un modem GSM governato mediante comandi AT non è possibile:
-
-- A) comporre un numero di telefono per inviare uno squillo di avviso
-- B) gestire l'invio di un SMS verso il numero di reperibilità aziendale
-- **C) attivare da distanza particolari uscite del PLC** ✓
-- D) conoscere lo status della macchina
-
-**9.** Trattando delle bande ISM, si può affermare che:
-
-- **A) si tratta di bande libere, utilizzabili senza licenza** ✓
-- B) sono le medesime in tutti gli Stati
-- C) le prescrizioni ETS 300 328 permettono di irradiare potenza in banda libera fino a un EIRP di 30 dBm solo con modalità spread spectrum
-- D) le norme ETS 300 328 sono le stesse per tutte le bande ISM
-
-**10.** Per quanto riguarda le bande libere da 433 a 868 MHz, è vero che:
-
-- A) la banda 433 MHz non può essere utilizzata per controlli remoti fino a 100 m
-- B) in banda 458 MHz si può trasmettere fino a 500 m
-- **C) in banda 434 MHz si può trasmettere fino a 1 km** ✓
-- D) la banda 868 MHz può essere utilizzata per controlli remoti fino a 10 km
-
-**11.** In merito allo standard Bluetooth non è vero che:
-
-- A) opera a 2,4 GHz
-- B) lavora con 1 mW di potenza trasmessa su distanze tipiche di 100 m
-- C) è un protocollo adatto per la trasmissione di voce e dati
-- **D) usa la tecnica frequency hopping tra 80 differenti canali da 1 MHz ciascuno** ✓ _(i canali sono 79)_
-
----
-
-### 📐 Risolvi i Seguenti Esercizi
-
-**E1 —** Determinare i seguenti valori:
-
-- **A)** La frequenza di lavoro di un'antenna marconiana, in rame, lunga 7,125 cm.
-- **B)** La frequenza di lavoro di un'antenna marconiana, in rame, lunga 2,97 cm.
-- **C)** La lunghezza di un'antenna in λ/4 in alluminio per Bluetooth a 2,4 GHz.
-- **D)** La densità di potenza rilevabile a 2 km di distanza da un radiatore isotropico che irradia una potenza di 10 W.
-- **E)** La potenza emessa da un radiatore isotropico sapendo che a 1 km di distanza si rileva una densità di potenza S = 100 µW/m².
-- **F)** L'EIRP di un'antenna che trasmette 10 mW con guadagno 15,85 dB.
-
-**E2 —** Un trasmettitore da 200 mW è collegato a un'antenna con guadagno 63,1, mediante un cavo coassiale che attenua il segnale di un fattore 2,51. Calcolare l'EIRP.
-
-**E3 —** Nel quadro normativo sulla protezione della popolazione dai campi elettromagnetici, l'articolo 4 del DPCM 8 luglio 2003 prescrive che la densità di potenza nelle aree intensamente frequentate non deve superare gli 0,1 W/m². Poiché un dispositivo Bluetooth presenta un EIRP di 100 mW, determinare a quale distanza, nella direzione di massima radiazione, la densità di potenza risulta < 100 mW/m².
-
-**E4 —** Determinare il massimo valore di EIRP per un dispositivo che soddisfi le specifiche sui campi elettromagnetici in aree intensamente frequentate (S < 100 mW/m²), a una distanza di 5 cm nella direzione di massima radiazione.
-
-**E5 —** Un'antenna per ponte radio irradia 10 W, con guadagno G = 25.120. Determinare a quale distanza dall'antenna, nella direzione di massima radiazione, la densità di potenza risulta minore di 0,1 W/m².
-
-**E6 —** Un trasmettitore da 5 W impiega un'antenna direttiva con guadagno 1.000. Determinare a quale distanza dall'antenna, nella direzione di massima radiazione, la densità di potenza risulta minore di 0,1 W/m².
-
-**E7 —** Determinare area efficace e guadagno di una parabola:
-
-- **A)** con diametro 0,4 m ed efficienza 0,55, che lavora a 10 GHz;
-- **B)** con diametro 0,6 m ed efficienza 0,55, che lavora a 12 GHz.
-
-**E8 —** Lo standard 802.11b/g prevede 14 canali da 22 MHz (dei quali solo i primi 13 sono ammessi in Europa), con frequenze centrali allocate a partire da 2412 MHz e distanziate di 5 MHz (tranne l'ultima). Dovendo settare la frequenza centrale di tre access point che condividono il medesimo ambiente, individuare i canali utilizzabili, tali da minimizzare le interferenze reciproche ed evitare sovrapposizioni con la banda del canale 14. Determinare il valore della banda di sicurezza intercanale ottenuta. Ripetere i calcoli supponendo di accettare anche una sovrapposizione con il canale 14.
-
-**E9 —** Determinare la distanza teorica sostenibile in aria libera da un sistema Bluetooth di classe 1 (P_t = 100 mW), utilizzando il valore di sensibilità minima del ricevitore prevista dallo standard (P_r = 100 pW) e supponendo unitario il guadagno d'antenna.
-
-**E10 —** Un dispositivo mobile usa un modulo ZigBee che consuma 25 mA in ricezione e 5 µA in sleep mode, alimentato a 3 V con pile a stilo da 1200 mAh. Determinare la durata delle batterie, considerato che il dispositivo entra in ricezione per 1,5 ms ogni 200 ms e che è utilizzato 8 ore al giorno per 220 giorni/anno.
-
-**E11 —** Un dispositivo mobile dispone di un modulo ZigBee che consuma 25 mA in ricezione e 5 µA in sleep mode, alimentato a 3 V con pile a stilo da 1200 mAh. Determinare la durata delle batterie, considerato che il dispositivo entra in ricezione per 1,2 ms ogni 150 ms e che è utilizzato 8 ore al giorno per 220 giorni/anno.
-
----
-
-### 🌐 Esercitazioni HTML
-
-**1 —** Creare una pagina web per uno snack bar, seguendo esattamente la struttura e lo stile indicati in figura. In particolare, creare un collegamento interno a fondo pagina che riporti immediatamente a inizio pagina.
-
-![[Media/image-057.jpg]]
-
-**2 —** Utilizzare parte del codice dell'esercitazione precedente per creare tre pagine distinte: Esercizio2A, Esercizio2B e Esercizio2C. Utilizzare opportunamente i tag di relative hyperlink per collegare le pagine tra di loro.
-
-![[Media/image-058.jpg]]
-
-![[Media/image-059.jpg]]
-
----
-
-_© Editrice San Marco_
