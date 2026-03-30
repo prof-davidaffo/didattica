@@ -26,6 +26,14 @@ Guida completa passo passo per installare tutto lato utente (senza admin).
 ```powershell
 git --version
 ```
+
+
+> [!warning] Primo commit in VS Code
+> Se visual studio code vi da errore sul primo commit dicendo che dovete configurare name email, aprite il terminale di code e inserite i seguenti comandi (modificando le parti che vanno modificate)  
+> 
+git config --global user.name "vostro username"  
+git config --global user.email "vostra email"
+  
 ## 4. Installare MSYS2
 1. Vai su: [https://www.msys2.org/](https://www.msys2.org/)
 2. Scarica l’installer `msys2-x86_64-...exe`
