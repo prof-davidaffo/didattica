@@ -82,13 +82,28 @@ Prima di parlare di antenne, bisogna capire due concetti che stanno alla base di
 
 Avete mai strofinato un palloncino sui capelli e poi visto che attira pezzettini di carta? Quello che avete creato è un **campo elettrico**: una zona di spazio attorno a un oggetto carico elettricamente, in cui altre cariche elettriche "sentono" una forza.
 
-Il campo elettrico non è una cosa che si vede, ma è reale: è la "zona di influenza" di una carica. Se mettete una carica positiva e una negativa vicine, il campo elettrico fra di loro tira le due cariche l'una verso l'altra. Se le cariche sono dello stesso segno, il campo le respinge. Ogni volta che c'è tensione elettrica — tra i due poli di una batteria, tra i fili di una presa di corrente — c'è un campo elettrico nello spazio tra di essi.
+Il campo elettrico non è una cosa che si vede, ma è reale: è la "zona di influenza" di una carica.
+
+> 🔎 Perché esiste il campo elettrico?
+> Una carica elettrica modifica lo spazio attorno a sé: invece di dover “toccare” un’altra carica per esercitare una forza, crea una zona in cui questa forza può agire a distanza.
+> Il campo elettrico è quindi il modo in cui la forza elettrica si trasmette nello spazio.
+
+Se mettete una carica positiva e una negativa vicine, il campo elettrico fra di loro tira le due cariche l'una verso l'altra. Se le cariche sono dello stesso segno, il campo le respinge. Ogni volta che c'è tensione elettrica — tra i due poli di una batteria, tra i fili di una presa di corrente — c'è un campo elettrico nello spazio tra di essi.
 
 La cosa importante da ricordare: **un campo elettrico che cambia nel tempo genera un campo magnetico**. Questo è il punto chiave che ci porterà alle onde radio.
 
 ### Il campo magnetico
 
 Il campo magnetico lo conoscete già, anche se magari non con questo nome. È quello che fa sì che una calamita attiri il ferro, o che un ago di bussola punti sempre a nord. Ma non è solo una proprietà delle calamite permanenti: **qualsiasi filo percorso da corrente elettrica crea un campo magnetico attorno a sé**.
+
+> 🔎 Che cos’è davvero un “campo”?
+> Un campo è una proprietà dello spazio che si manifesta quando un oggetto posto in quella zona subisce una forza.
+> 
+> La differenza tra campo elettrico e magnetico è nel tipo di effetto:
+> - il campo elettrico agisce su cariche elettriche anche se sono ferme
+> - il campo magnetico agisce solo su cariche in movimento o su oggetti magnetici
+> 
+> In altre parole: il campo magnetico “si vede” solo quando c’è movimento.
 
 Potete immaginarlo come una serie di cerchi invisibili che si avvolgono attorno al filo, come gli anelli attorno a un tronco d'albero. Più corrente scorre nel filo, più il campo è intenso. Se la corrente si inverte di direzione, il campo si inverte anch'esso.
 
