@@ -354,7 +354,7 @@ In ambito industriale, le reti WPAN per sensori si chiamano **WSN (Wireless Sens
 
 Nell'automazione industriale moderna, molti sistemi devono comunicare tra loro o con una centrale di controllo remota senza intervento umano diretto. Queste comunicazioni si chiamano **M2M (Machine To Machine)**: macchina parla con macchina, attraverso la rete mobile.
 
-Pensate a un distributore automatico di caffè in una stazione ferroviaria: quando il caffè sta per finire, la macchina manda automaticamente un messaggio alla centrale di rifornimento. Oppure a un ascensore che segnala al centro assistenza un guasto prima ancora che qualcuno rimanga bloccato. O ancora a un camion che comunica in tempo reale la sua posizione GPS e i km percorsi alla sede centrale — è il **Vehicle Tracking**.
+Pensate a un distributore automatico di caffè in una stazione ferroviaria: quando il caffè sta per finire, la macchina manda automaticamente un messaggio alla centrale di rifornimento. Oppure a un ascensore che segnala al centro assistenza un guasto prima ancora che qualcuno rimanga bloccato. O ancora a un camion che comunica in tempo reale la sua posizione GPS e i km percorsi alla sede centrale.
 
 Per capire come funziona la rete che gestisce tutto questo, occorre sapere che una **rete mobile** divide il territorio in celle, ognuna gestita da una **stazione base (BS)**. Quando un dispositivo si sposta da una cella all'altra, la connessione passa automaticamente alla stazione base più vicina — questo si chiama **handover**. Il coordinamento tra tutte le stazioni base è gestito da una centrale chiamata **MSC (Mobile services Switching Center)**.
 
@@ -362,31 +362,97 @@ Per capire come funziona la rete che gestisce tutto questo, occorre sapere che u
 
 ### 6.1 Modem GSM/GPRS
 
-Nella pratica, come fa concretamente una macchina industriale a connettersi alla rete mobile? La risposta è il **modem GSM/GPRS**: un piccolo modulo elettronico — grande quanto un francobollo — che contiene una SIM card, un ricetrasmettitore radio e tutta l'elettronica per agganciare la rete del gestore. Fisicamente si collega al microcontrollore o al PLC della macchina tramite una porta seriale, esattamente come si collegava un vecchio modem dial-up al computer. Una volta connesso, il microcontrollore può "parlargli" inviandogli semplici comandi testuali: i **comandi AT**.
+Nella pratica, come fa concretamente una macchina industriale a connettersi alla rete mobile? La risposta è il **modem GSM/GPRS**: un piccolo modulo elettronico — grande quanto un francobollo — che contiene una SIM card, un ricetrasmettitore radio e tutta l'elettronica per agganciare la rete del gestore.
+
+Per capire come una macchina industriale si connette alla rete mobile, bisogna chiarire una cosa importante: **GSM e GPRS non sono due reti diverse**, ma due modalità di utilizzo della stessa rete.
+
+Il **GSM (Global System for Mobile Communications)** è la rete di telefonia mobile tradizionale. È una rete radio che permette di effettuare chiamate e inviare SMS.
+
+Il **GPRS (General Packet Radio Service)** è un’estensione del GSM che permette di trasmettere dati.
+
+> 🔎 Attenzione: GSM non è Internet  
+> Il GSM è una rete radio che collega il dispositivo all’operatore.  
+> Internet è una rete globale di server.  
+> Il GPRS fa da collegamento tra queste due cose.
+
+In altre parole:
+- GSM → voce e SMS  
+- GPRS → dati
+
+Un dispositivo può usare entrambe le modalità a seconda di cosa deve fare.  
+Per esempio:
+- inviare un SMS di allarme → GSM  
+- trasmettere dati continuamente (posizione, sensori, ecc.) → GPRS  
+
+Un normale telefono cellulare utilizza automaticamente entrambe le modalità: quando fai una chiamata usa il GSM, quando navighi su Internet usa il GPRS (o tecnologie più moderne come 3G, 4G, 5G).
+
+> 🔎 Come viaggiano davvero i dati?
+> 
+> Quando un dispositivo usa il GPRS, il percorso dei dati è questo:
+> 
+> 1. Il dispositivo invia i dati via radio alla stazione base (antenna dell’operatore)
+> 2. La rete dell’operatore riceve questi dati
+> 3. L’operatore li inoltra sulla rete Internet
+> 4. I dati raggiungono il server di destinazione
+> 
+> In pratica: la rete mobile è il collegamento radio, mentre l’operatore è il ponte verso Internet.
+
+Fisicamente il modem si collega al microcontrollore o al PLC della macchina tramite una porta seriale, esattamente come si collegava un vecchio modem dial-up al computer.
+
+Una volta connesso, il microcontrollore può "parlargli" inviandogli semplici comandi testuali: i **comandi AT**.
 
 Il nome "AT" viene da "ATtention": ogni comando inizia con le lettere AT, seguite da un codice che specifica l'operazione. È un protocollo nato negli anni '80 per i modem telefonici e sopravvissuto fino ad oggi perché è semplicissimo da implementare anche su microcontrollori con poche risorse.
+
+> 🔎 Cosa fanno davvero i comandi AT?
+> I comandi AT non trasmettono i dati veri e propri.  
+> Servono per controllare il modem, ad esempio:
+> - aprire una connessione
+> - inviare un SMS
+> - iniziare una trasmissione dati  
+> 
+> Una volta stabilita la connessione, i dati vengono inviati automaticamente dal modem sotto forma di pacchetti.
 
 Ecco alcuni esempi pratici:
 
 ```
-at+cmgl="REC_UNREAD"    → visualizza i messaggi non ancora letti  (l = list)
-at+cmgd=1,4             → cancella tutti i messaggi presenti      (d = delete)
-at+cmgs="340987654"     → invia un messaggio al numero specificato (s = send)
+
+at+cmgl="REC_UNREAD" → visualizza i messaggi non ancora letti  
+at+cmgd=1,4 → cancella tutti i messaggi presenti  
+at+cmgs="340987654" → invia un messaggio al numero specificato
+
 ```
 
-Il **GSM** (con SIM per la fonia) è ideale per comunicazioni sporadiche: inviare un SMS di allarme, rispondere a una chiamata di verifica. Il **GPRS** richiede una SIM abilitata ai dati, ma permette connessioni dati sempre attive, più veloci, ideali per trasmissioni continue (posizione GPS in tempo reale, lettura di contatori energetici, ecc.).
+Il **GSM** è ideale per comunicazioni sporadiche (SMS, allarmi).  
+Il **GPRS** è usato quando serve trasmettere dati in modo continuo.
 
-Un esempio concreto: un modem GSM installato su un distributore automatico permette alla centrale di gestione di sapere in tempo reale quando un prodotto è esaurito o quando c'è un guasto, evitando sopralluoghi inutili. In modo analogo funzionano i sistemi su ascensori, fotocopiatrici e stampanti.
+Un esempio concreto: un modem GSM installato su un distributore automatico permette alla centrale di sapere quando un prodotto è esaurito o quando c'è un guasto.
 
-L'applicazione più nota nel trasporto è il **Vehicle Tracking**: ogni veicolo ha a bordo un'unità (OBU) con GPS e modem GSM/GPRS. La OBU invia continuamente posizione, velocità e chilometraggio a un software in sede, che permette al responsabile della flotta di vedere tutti i veicoli su una mappa in tempo reale.
+Nel **Vehicle Tracking**, ogni veicolo ha un’unità OBU con GPS e modem GSM/GPRS che invia continuamente posizione e stato alla centrale.
 
-In ambito sanitario, la **Remote Healthcare Diagnostic** permette ai pazienti cronici di trasmettere automaticamente i propri parametri vitali (pressione, glicemia, ecc.) verso una piattaforma ospedaliera di telemedicina, senza dover andare fisicamente all'ospedale.
+---
 
 ### Visibilità tra Terminali
 
-Un aspetto tecnico importante: mentre ogni SIM GSM ha un numero di telefono univoco e raggiungibile direttamente, i dispositivi GPRS non sono raggiungibili direttamente da Internet come se fossero un server. Il motivo è pratico: gli indirizzi IP pubblici sono scarsi e costosi, quindi gli operatori assegnano indirizzi IP privati ai loro clienti GPRS, usano un meccanismo chiamato **NAT (Network Address Translation)** per farli uscire su Internet con un singolo IP pubblico condiviso.
+Un aspetto tecnico importante riguarda la **raggiungibilità dei dispositivi**.
 
-Questo ha una conseguenza: l'indirizzo IP del dispositivo GPRS è **dinamico** — cambia ogni volta che si connette. Per costruire una rete privata virtuale tra dispositivi GPRS si usa quindi una soluzione diversa: ogni dispositivo si connette attivamente a un server con indirizzo IP fisso (tipicamente quello aziendale), mantenendo sempre aperta la connessione.
+> 🔎 Perché i dispositivi GPRS non sono raggiungibili direttamente?
+> 
+> Quando un dispositivo si connette tramite GPRS, riceve un indirizzo IP privato (non pubblico).
+> 
+> Questo significa che:
+> - può inviare dati verso Internet  
+> - ma non può essere contattato direttamente dall’esterno  
+
+Il motivo è che gli operatori utilizzano il **NAT (Network Address Translation)** per condividere pochi indirizzi IP pubblici tra molti dispositivi.
+
+Inoltre, l’indirizzo IP del dispositivo è **dinamico**, cioè cambia ogni volta che si connette.
+
+Per questo motivo, nei sistemi industriali si usa una soluzione diversa:
+- ogni dispositivo si connette a un server con IP fisso  
+- mantiene la connessione attiva  
+- comunica attraverso quel server  
+
+In questo modo, anche se i dispositivi non sono direttamente raggiungibili, possono comunque scambiarsi dati in modo affidabile.
 
 ---
 
