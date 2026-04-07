@@ -930,6 +930,22 @@ U2 -|> U0
 @enduml
 ```
 
+Posso generalizzare anche gli attori:
+
+```plantuml
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam actorStyle awesome
+
+actor Cliente
+actor "Cliente privato" as CP
+actor "Ditta con P.IVA" as DP
+
+CP -|> Cliente
+DP -|> Cliente
+@enduml
+```
 
 ---
 
@@ -1715,6 +1731,22 @@ Spezzare le interfacce grandi in interfacce più piccole e coese. Ogni classe im
 > **"Entities must depend on abstractions, not on concretions."** _I moduli di alto livello non devono dipendere da quelli di basso livello. Entrambi devono dipendere da astrazioni._
 
 Anche se è il quinto principio in ordine alfabetico, per importanza concettuale è tra i più significativi.
+
+```plantuml
+@startuml
+skinparam shadowing false
+skinparam roundcorner 10
+
+class GestoreOrdini
+interface DatabaseRepository
+class MySQLRepository
+class PostgreSQLRepository
+
+GestoreOrdini --> DatabaseRepository
+MySQLRepository ..|> DatabaseRepository
+PostgreSQLRepository ..|> DatabaseRepository
+@enduml
+```
 
 **Il problema:**
 
@@ -2618,8 +2650,18 @@ Un buon VCS garantisce tre proprietà fondamentali:
 
 Git gestisce il codice attraverso **tre aree**:
 
-```
-Working Directory  →[git add]→  Index (Stage)  →[git commit]→  HEAD (Local Repository)
+```plantuml
+@startuml
+skinparam shadowing false
+skinparam roundcorner 10
+
+rectangle "Working Directory" as WD
+rectangle "Index (Stage)" as ST
+rectangle "HEAD / Local Repository" as LR
+
+WD --> ST : git add
+ST --> LR : git commit
+@enduml
 ```
 
 |Area|Descrizione|
@@ -2762,12 +2804,24 @@ git push origin --delete feature/login-utente
 
 #### Schema visuale del flusso
 
-```
-main      ●─────────────────────────────────●──────────●
-           \                               /            \
-feature/    ●──●──●──●  (sviluppo)        /              ●── (prossima feature)
-login-utente          \                  /
-                       ●── PR ──────────● (merge dopo revisione)
+```plantuml
+@startuml
+skinparam shadowing false
+skinparam roundcorner 10
+
+start
+:checkout main;
+:pull origin main;
+:create branch feature/login-utente;
+:sviluppo e commit;
+:fetch / rebase;
+:push branch;
+:Pull Request;
+:merge in main;
+:push origin main;
+:elimina branch;
+stop
+@enduml
 ```
 
 ---
@@ -2878,13 +2932,35 @@ git commit -a
 
 **Schema dell'architettura con repository remoto:**
 
-```
-Developer A                          Developer B
-  Working Dir                          Working Dir
-  Index (Stage)                        Index (Stage)
-  Local Repository  ←→  Remote Repository  ←→  Local Repository
-      ↑ commit              push / pull              commit ↑
-      ↓ checkout            fetch                    checkout ↓
+```plantuml
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam roundcorner 10
+
+node "Developer A" {
+  rectangle "Working Dir A" as WDA
+  rectangle "Index A" as IA
+  rectangle "Local Repo A" as LRA
+}
+
+node "Remote Repository" as RR
+
+node "Developer B" {
+  rectangle "Local Repo B" as LRB
+  rectangle "Index B" as IB
+  rectangle "Working Dir B" as WDB
+}
+
+WDA --> IA : git add
+IA --> LRA : git commit
+
+WDB --> IB : git add
+IB --> LRB : git commit
+
+LRA <--> RR : push / pull
+LRB <--> RR : push / pull
+@enduml
 ```
 
 ---
@@ -2894,8 +2970,6 @@ Developer A                          Developer B
 Git è oggi lo strumento di versioning più usato nella comunità dei programmatori. Le sue possibilità sono molto più ampie di quanto trattato qui; questa introduzione copre i concetti essenziali.
 
 Per la documentazione completa: https://git-scm.com/doc
-
-Un'alternativa open source a Git è **Bazaar** (http://bazaar.canonical.com/en/), più giovane ma progettato per evitare i limiti dei sistemi precedenti, con ottima portabilità e interoperabilità.
 
 ### Mettiti alla prova
 
