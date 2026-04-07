@@ -1,4 +1,4 @@
-# Unità 4 — I requisiti software
+# I requisiti software
 
 ### Obiettivi dell'unità
 
@@ -133,16 +133,18 @@ La norma indica di definire:
 
 I requisiti si classificano secondo due criteri ortogonali:
 
+```plantuml
+@startmindmap
+* Requisiti software
+** Livello di dettaglio
+*** Requisiti utente
+*** Requisiti di sistema
+** Tipo di requisito
+*** Requisiti funzionali
+*** Requisiti non funzionali
+*** Requisiti di dominio
+@endmindmap
 ```
-                    REQUISITI SOFTWARE
-                          │
-          ┌───────────────┴───────────────┐
-     Livello di dettaglio           Tipo di requisito
-          │                               │
-    ┌─────┴─────┐             ┌───────────┼───────────┐
-  Utente    Sistema      Funzionali  Non funzionali  Dominio
-```
-
 #### Classificazione per livello di dettaglio
 
 **Requisiti utente** — Descrivono le esigenze dell'utente finale nel suo linguaggio. Sono meno formali, lasciano spazio a diverse soluzioni implementative, e vengono anche detti _requisiti aperti_.
@@ -698,13 +700,20 @@ Per descrivere completamente un caso d'uso bisogna individuare tutti i suoi scen
 
 Uno scenario può essere descritto anche come un "dialogo" tra sistema e attore:
 
-```
-Il cliente richiede l'elenco dei prodotti
-→ Il sistema propone i prodotti disponibili
-Il cliente sceglie i prodotti desiderati
-→ Il sistema fornisce il costo totale
-Il cliente conferma l'ordine
-→ Il sistema comunica l'accettazione dell'ordine
+```plantuml
+@startuml
+actor Cliente
+participant Sistema
+
+Cliente -> Sistema: Richiede l'elenco dei prodotti
+Sistema --> Cliente: Propone i prodotti disponibili
+
+Cliente -> Sistema: Sceglie i prodotti desiderati
+Sistema --> Cliente: Fornisce il costo totale
+
+Cliente -> Sistema: Conferma l'ordine
+Sistema --> Cliente: Comunica l'accettazione dell'ordine
+@enduml
 ```
 
 #### Tipi di scenari
@@ -745,76 +754,89 @@ La freccia nell'associazione indica l'attore principale solo quando c'è ambigui
 Un diagramma che mostra _tutti_ i casi d'uso del sistema si chiama **diagramma di contesto**: indica i confini del sistema e tutti gli attori che lo utilizzano.
 
 #### Notazione grafica UML — elementi base
+```plantuml
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam actorStyle awesome
 
-```
-  Attore umano         Attore non umano       Caso d'uso
-  (persona fisica)     (altro sistema)
+actor "Attore umano" as AH
+actor "Sistema esterno" as SE
 
-      O                    O
-      |                    |               ( Acquista prodotto )
-     /|\                  /|\
-     / \                  / \
-    Nome               <<sistema>>
+rectangle "Sistema" {
+  usecase "Caso d'uso" as UC
+}
 
-  Associazione: segmento semplice tra attore e caso d'uso
-  Attore ————————————————— ( Caso d'uso )
-
-  Sistema: rettangolo che contiene i casi d'uso
-  ┌─────────────────────────────────────┐
-  │          Nome del sistema           │
-  │                                     │
-  │   ( Caso d'uso A )                  │
-  │   ( Caso d'uso B )                  │
-  │                                     │
-  └─────────────────────────────────────┘
-  Attore ————┤ (collegato al bordo del rettangolo)
+AH --> UC
+SE --> UC
+@enduml
 ```
 
 #### Esempio completo — Diagramma di contesto negozio online
+```plantuml
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam actorStyle awesome
 
-```
-                    ┌──────────────────────────────────────────────┐
-                    │              Negozio Online                  │
-                    │                                              │
-  O                 │   ( Ricerca prodotto )                       │
-  |  ───────────────┤   ( Registra nuovo utente )                  │
- /|\                │   ( Acquista prodotto )                      │
- / \                │   ( Visualizza profilo utente )              │
-Utente              │                                              │
-Visitatore          │   ( Inserisci nuovo prodotto )              │
-                    │   ( Modifica prodotto )                      │
-  O                 │                                              │
-  |  ───────────────┤   ( Acquista prodotto ) ─────────────────────┤───  O
- /|\                │                                              │     |
- / \                │                                              │    /|\
-Utente              │                                              │    / \
-Registrato          │                                              │  Sistema
-                    │                                              │  bancario
-  O                 │                                              │
-  |  ───────────────┤   ( Inserisci nuovo prodotto )              │
- /|\                │   ( Modifica prodotto )                      │
- / \                │                                              │
-Amministratore      └──────────────────────────────────────────────┘
+actor "Utente visitatore" as UV
+actor "Utente registrato" as UR
+actor Amministratore as A
+actor "Sistema bancario" as SB
+
+rectangle "Negozio Online" {
+  usecase "Ricerca prodotto" as UC1
+  usecase "Registra nuovo utente" as UC2
+  usecase "Acquista prodotto" as UC3
+  usecase "Visualizza profilo utente" as UC4
+  usecase "Inserisci nuovo prodotto" as UC5
+  usecase "Modifica prodotto" as UC6
+}
+
+UV --> UC1
+UV --> UC2
+
+UR --> UC1
+UR --> UC3
+UR --> UC4
+
+A --> UC5
+A --> UC6
+
+SB --> UC3
+@enduml
 ```
 
-> **Esempio — Diagramma di contesto: centralino telefonico**
-> 
-> ```
->                  ┌─────────────────────────────────────────┐
->                  │         Centralino Telefonico           │
->                  │                                         │
->   O              │   ( Effettua chiamata diretta )         │
->   |  ────────────┤   ( Effettua chiamata indiretta )       │
->  /|\             │   ( Accetta chiamata )                  │
->  / \             │                                         │
-> Utente           │   ( Trasferisce chiamata )              │
->                  │   ( Interrompe chiamata )               │
->   O              │                                         │
->   |  ────────────┤                                         │
->  /|\             │                                         │
->  / \             │                                         │
-> Centralinista    └─────────────────────────────────────────┘
-> ```
+#### Esempio — Diagramma di contesto: centralino telefonico
+```plantuml
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam roundcorner 10
+skinparam actorStyle awesome
+
+actor Utente
+actor Centralinista
+
+rectangle "Centralino Telefonico" {
+  usecase "Effettua chiamata diretta" as UC1
+  usecase "Effettua chiamata indiretta" as UC2
+  usecase "Accetta chiamata" as UC3
+  usecase "Trasferisce chiamata" as UC4
+  usecase "Interrompe chiamata" as UC5
+}
+
+Utente --> UC1
+Utente --> UC2
+Utente --> UC3
+
+Centralinista --> UC3
+Centralinista --> UC4
+Centralinista --> UC5
+@enduml
+```
 
 ---
 
@@ -830,10 +852,19 @@ Si usa quando una sequenza di passi è **comune a più casi d'uso** e il suo uti
 
 La freccia tratteggiata va **dal caso che include verso il caso incluso** (dal caso più esterno verso il caso comune).
 
-```
-  ( Acquista prodotto )  - - -<<include>>- - →  ( Autenticazione )
+```plantuml
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam roundcorner 10
 
-  ( Verifica stato ordine )  - - -<<include>>- - →  ( Autenticazione )
+usecase "Acquista prodotto" as U1
+usecase "Verifica stato ordine" as U2
+usecase "Autenticazione" as U3
+
+U1 ..> U3 : <<include>>
+U2 ..> U3 : <<include>>
+@enduml
 ```
 
 Lettura: "Acquista prodotto _include sempre_ Autenticazione."
@@ -851,8 +882,17 @@ Si usa per aggiungere **comportamento opzionale o alternativo** a un caso d'uso 
 
 La freccia tratteggiata va **dal caso variante verso il caso standard**.
 
-```
-  ( Help on Line )  - - -<<extend>>- - →  ( Acquista prodotto )
+```plantuml
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam roundcorner 10
+
+usecase "Help on Line" as U1
+usecase "Acquista prodotto" as U2
+
+U1 ..> U2 : <<extend>>
+@enduml
 ```
 
 Lettura: "Help on Line _estende opzionalmente_ Acquista prodotto."
@@ -875,20 +915,21 @@ Come l'ereditarietà nelle classi OOP: un caso d'uso figlio **eredita** il compo
 
 La freccia **continua con triangolo aperto** va dal figlio al padre (come in UML per le classi).
 
+```plantuml
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam roundcorner 10
+
+usecase "Acquista prodotto" as U0
+usecase "Acquista libro" as U1
+usecase "Acquista CD" as U2
+
+U1 -|> U0
+U2 -|> U0
+@enduml
 ```
-  Tra casi d'uso:
 
-  ( Acquista libro ) ──────────▷
-                                  ( Acquista prodotto )
-  ( Acquista CD )   ──────────▷
-
-
-  Tra attori:
-
-  Cliente privato ──────────▷
-                                  Cliente
-  Ditta con P.IVA ──────────▷
-```
 
 ---
 
@@ -928,8 +969,7 @@ Frequenza di utilizzo: <utile per stabilire priorità di sviluppo>
 Criticità:             <rischio associato al requisito>
 ```
 
-> **Esempio completo — Acquisto di uno o più prodotti (negozio online)**
-> 
+**Esempio completo — Acquisto di uno o più prodotti (negozio online)** 
 > |Campo|Valore|
 > |---|---|
 > |Descrizione|Un utente registrato effettua un acquisto online|
@@ -1139,14 +1179,37 @@ ShopFacile si interfaccia con tre sistemi esterni:
 - **Sistema gestionale RetailSrl (SAP)**: per la sincronizzazione del magazzino
 - **Servizio e-mail (SendGrid)**: per le notifiche agli utenti
 
-```
-           ┌─────────────────────────────────┐
-           │           ShopFacile            │
-           │                                 │
-Utente ────┤  Catalogo  Carrello  Ordini     ├──── Stripe (pagamenti)
-           │  Utenti    Admin                ├──── SAP (magazzino)
-           │                                 ├──── SendGrid (e-mail)
-           └─────────────────────────────────┘
+```plantuml
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam roundcorner 10
+
+actor Utente
+
+component Stripe
+component SAP
+component SendGrid
+
+rectangle "ShopFacile" {
+  component Catalogo
+  component Carrello
+  component Ordini
+  component Utenti
+  component Admin
+}
+
+Utente --> Catalogo
+Utente --> Carrello
+Utente --> Ordini
+Utente --> Utenti
+Utente --> Admin
+
+Ordini --> Stripe : pagamenti
+Catalogo --> SAP : magazzino
+Ordini --> SendGrid : notifiche
+Utenti --> SendGrid : e-mail account
+@enduml
 ```
 
 **2.2 Funzioni del prodotto (riepilogo)**
@@ -2015,34 +2078,34 @@ ArgoUML è un tool open source per la modellizzazione UML (standard UML 1.4), sc
 
 Prima di entrare nell'Unità 5 è utile capire come i documenti e le attività dell'Unità 4 alimentano concretamente il lavoro dell'Unità 5. Non sono due argomenti separati: sono fasi consecutive dello stesso processo.
 
+```plantuml
+@startuml
+skinparam shadowing false
+skinparam roundcorner 10
+
+start
+:Raccolta requisiti;
+:Casi d'uso (UCD);
+:SRS - Specifica dei Requisiti;
+
+fork
+  :Piano delle prove;
+fork again
+  :Analisi dei requisiti;
+fork again
+  :Specifica architetturale;
+fork again
+  :Specifica di dettaglio;
+end fork
+
+:Principi S.O.L.I.D.;
+:Documentazione del codice;
+:Sviluppo del software;
+:Controllo delle versioni;
+stop
+@enduml
 ```
-UNITÀ 4 — Requisiti                    UNITÀ 5 — Documentazione
-─────────────────────────────────────────────────────────────────────
-  Raccolta requisiti
-  (interviste, scenari)
-       │
-       ▼
-  Casi d'uso (UCD)  ──────────────────►  Piano delle prove
-  (Lezione 3)                            (ogni caso d'uso = un caso di test)
-       │
-       ▼
-  SRS — Specifica dei Requisiti  ──────►  Analisi dei requisiti (doc. nel progetto)
-  (Lezione 4)                            (Lezione 1, Unità 5)
-       │
-       ├──────────────────────────────►  Specifica architetturale
-       │                                 (i requisiti guidano la progettazione)
-       │
-       └──────────────────────────────►  Specifica di dettaglio
-                                         (i requisiti funzionali → descrizione componenti)
-       │
-       ▼
-  Principi S.O.L.I.D.  ────────────────►  Documentazione del codice
-  (Lezione 5)                            (Javadoc, Doxygen — Lab L1, L2)
-       │
-       ▼
-  Sviluppo del software  ──────────────►  Controllo delle versioni
-                                          (Git, SVN — Lab L3, L4)
-```
+
 
 ### I punti di connessione chiave
 

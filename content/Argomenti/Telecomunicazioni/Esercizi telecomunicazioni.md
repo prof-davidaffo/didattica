@@ -47,7 +47,7 @@
 **7.** In merito alla classificazione delle reti wireless, **non** è vero dire che:
 
 - A) le WWAN sono grandi reti di dati, progettate per coprire aree estese
-- B) WiMAX è uno standard per WLAN _(WiMAX è standard per WMAN)_
+- B) WiMAX è uno standard per WLAN
 - C) le WPAN consentono una comunicazione entro un raggio limitato
 - D) le WWAN sono gestite da un fornitore di servizi
 
@@ -77,13 +77,8 @@
 - A) opera a 2,4 GHz
 - B) lavora con 1 mW di potenza trasmessa su distanze tipiche di 100 m
 - C) è un protocollo adatto per la trasmissione di voce e dati
-- D) usa la tecnica frequency hopping tra 80 differenti canali da 1 MHz ciascuno _(i canali sono 79)_
+- D) usa la tecnica frequency hopping tra 80 differenti canali da 1 MHz ciascuno
 
----
-
-Hai ragione. Così com’era era una lista piatta di calcoli quasi tutti dello stesso tipo, e didatticamente perde valore.
-Ti propongo una riorganizzazione completa della parte esercizi, dividendo quelli già presenti per categoria e aggiungendo esercizi più sensati, inclusi alcuni problemi meno meccanici e più ragionati.
-Puoi sostituire l’attuale blocco “Risolvi i seguenti esercizi” con questo.
 ## 📐 Esercizi
 ### 1. Frequenza, lunghezza d’onda e dimensionamento delle antenne
 **E1 —** Determinare i seguenti valori:
