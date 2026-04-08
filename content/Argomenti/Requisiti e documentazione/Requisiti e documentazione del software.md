@@ -133,17 +133,18 @@ La norma indica di definire:
 
 I requisiti si classificano secondo due criteri ortogonali:
 
-```plantuml
-@startmindmap
-* Requisiti software
-** Livello di dettaglio
-*** Requisiti utente
-*** Requisiti di sistema
-** Tipo di requisito
-*** Requisiti funzionali
-*** Requisiti non funzionali
-*** Requisiti di dominio
-@endmindmap
+```mermaid
+flowchart TD
+    A[Requisiti software]
+    A --> B[Livello di dettaglio]
+    A --> C[Tipo di requisito]
+
+    B --> B1[Requisiti utente]
+    B --> B2[Requisiti di sistema]
+
+    C --> C1[Requisiti funzionali]
+    C --> C2[Requisiti non funzionali]
+    C --> C3[Requisiti di dominio]
 ```
 #### Classificazione per livello di dettaglio
 
@@ -437,25 +438,25 @@ Utili per raccogliere informazioni in modo strutturato su grandi numeri di utent
 
 Limite principale: l'**attendibilità è generalmente bassa**, e devono essere progettati con estrema cura per produrre risposte utili. Vengono usati principalmente in fase di consuntivazione (giudizio sul sistema appena realizzato).
 
-> **Esempio — Questionario per la valutazione di un sistema di e-commerce**
-> 
-> Per ciascuna affermazione indicare il proprio grado di accordo: **1** = Completamente in disaccordo   **5** = Completamente d'accordo
-> 
-> |#|Affermazione|1|2|3|4|5|
-> |---|---|:-:|:-:|:-:|:-:|:-:|
-> |1|Trovare un prodotto nel catalogo è semplice e veloce|○|○|○|○|○|
-> |2|Il processo di acquisto è chiaro e guidato|○|○|○|○|○|
-> |3|Le informazioni sul prodotto sono complete e accurate|○|○|○|○|○|
-> |4|Il sistema risponde rapidamente alle mie azioni|○|○|○|○|○|
-> |5|Mi sento sicuro inserendo i dati della mia carta di credito|○|○|○|○|○|
-> |6|Userei di nuovo questo sistema per i miei acquisti|○|○|○|○|○|
-> 
-> _Domande aperte (facoltative):_
-> 
-> - Qual è la cosa che trovi più difficile da fare nel sistema?
-> - C'è qualche funzionalità che ti aspettavi di trovare e non hai trovato?
-> 
-> La media delle risposte a domande 1–3 misura l'**usabilità**, la domanda 4 le **prestazioni percepite**, la domanda 5 la **sicurezza percepita**, la domanda 6 la **soddisfazione generale**.
+**Esempio — Questionario per la valutazione di un sistema di e-commerce**
+
+Per ciascuna affermazione indicare il proprio grado di accordo: **1** = Completamente in disaccordo  **5** = Completamente d'accordo
+
+|#|Affermazione|1|2|3|4|5|
+|---|---|:-:|:-:|:-:|:-:|:-:|
+|1|Trovare un prodotto nel catalogo è semplice e veloce|○|○|○|○|○|
+|2|Il processo di acquisto è chiaro e guidato|○|○|○|○|○|
+|3|Le informazioni sul prodotto sono complete e accurate|○|○|○|○|○|
+|4|Il sistema risponde rapidamente alle mie azioni|○|○|○|○|○|
+|5|Mi sento sicuro inserendo i dati della mia carta di credito|○|○|○|○|○|
+|6|Userei di nuovo questo sistema per i miei acquisti|○|○|○|○|○|
+
+_Domande aperte (facoltative):_
+
+- Qual è la cosa che trovi più difficile da fare nel sistema?
+- C'è qualche funzionalità che ti aspettavi di trovare e non hai trovato?
+
+La media delle risposte a domande 1–3 misura l'**usabilità**, la domanda 4 le **prestazioni percepite**, la domanda 5 la **sicurezza percepita**, la domanda 6 la **soddisfazione generale**.
 
 #### Focus group
 
@@ -665,16 +666,16 @@ Un caso d'uso:
 > - inserire un nuovo prodotto in catalogo
 > - modificare i dati di un prodotto
 > 
-> Attori e loro casi d'uso:
-> 
-> |Attore|Casi d'uso|
-> |---|---|
-> |Utente visitatore|Ricercare un prodotto, Registrarsi|
-> |Utente registrato|Ricercare un prodotto, Modificare i dati, Acquistare un prodotto|
-> |Amministratore del sistema|Inserire nuovo prodotto, Modificare prodotto|
-> |Sistema bancario|Regolare l'acquisto (attore secondario)|
-> 
-> Quando un caso d'uso coinvolge più attori, quello che persegue l'obiettivo del caso d'uso è l'**attore principale**. In "Acquistare un prodotto", l'utente registrato è l'attore principale, il sistema bancario è l'attore secondario.
+Attori e loro casi d'uso:
+
+|Attore|Casi d'uso|
+|---|---|
+|Utente visitatore|Ricercare un prodotto, Registrarsi|
+|Utente registrato|Ricercare un prodotto, Modificare i dati, Acquistare un prodotto|
+|Amministratore del sistema|Inserire nuovo prodotto, Modificare prodotto|
+|Sistema bancario|Regolare l'acquisto (attore secondario)|
+
+Quando un caso d'uso coinvolge più attori, quello che persegue l'obiettivo del caso d'uso è l'**attore principale**. In "Acquistare un prodotto", l'utente registrato è l'attore principale, il sistema bancario è l'attore secondario.
 
 ---
 
@@ -700,20 +701,19 @@ Per descrivere completamente un caso d'uso bisogna individuare tutti i suoi scen
 
 Uno scenario può essere descritto anche come un "dialogo" tra sistema e attore:
 
-```plantuml
-@startuml
-actor Cliente
-participant Sistema
+```mermaid
+sequenceDiagram
+    actor Cliente
+    participant Sistema
 
-Cliente -> Sistema: Richiede l'elenco dei prodotti
-Sistema --> Cliente: Propone i prodotti disponibili
+    Cliente->>Sistema: Richiede l'elenco dei prodotti
+    Sistema-->>Cliente: Propone i prodotti disponibili
 
-Cliente -> Sistema: Sceglie i prodotti desiderati
-Sistema --> Cliente: Fornisce il costo totale
+    Cliente->>Sistema: Sceglie i prodotti desiderati
+    Sistema-->>Cliente: Fornisce il costo totale
 
-Cliente -> Sistema: Conferma l'ordine
-Sistema --> Cliente: Comunica l'accettazione dell'ordine
-@enduml
+    Cliente->>Sistema: Conferma l'ordine
+    Sistema-->>Cliente: Comunica l'accettazione dell'ordine
 ```
 
 #### Tipi di scenari
@@ -754,88 +754,66 @@ La freccia nell'associazione indica l'attore principale solo quando c'è ambigui
 Un diagramma che mostra _tutti_ i casi d'uso del sistema si chiama **diagramma di contesto**: indica i confini del sistema e tutti gli attori che lo utilizzano.
 
 #### Notazione grafica UML — elementi base
-```plantuml
-@startuml
-left to right direction
-skinparam shadowing false
-skinparam roundcorner 10
-skinparam actorStyle awesome
-
-actor "Attore umano" as AH
-actor "Sistema esterno" as SE
-
-rectangle "Sistema" {
-  usecase "Caso d'uso" as UC
-}
-
-AH --> UC
-SE --> UC
-@enduml
+```mermaid
+flowchart LR
+    AH[Attore umano] --- UC((Caso d'uso))
+    SE[Sistema esterno] --- UC
+    subgraph S[Sistema]
+        UC
+    end
 ```
 
 #### Esempio completo — Diagramma di contesto negozio online
-```plantuml
-@startuml
-left to right direction
-skinparam shadowing false
-skinparam roundcorner 10
-skinparam actorStyle awesome
+```mermaid
+flowchart LR
+    UV[Utente visitatore]
+    UR[Utente registrato]
+    A[Amministratore]
+    SB[Sistema bancario]
 
-actor "Utente visitatore" as UV
-actor "Utente registrato" as UR
-actor Amministratore as A
-actor "Sistema bancario" as SB
+    subgraph NO[Negozio Online]
+        UC1((Ricerca prodotto))
+        UC2((Registra nuovo utente))
+        UC3((Acquista prodotto))
+        UC4((Visualizza profilo utente))
+        UC5((Inserisci nuovo prodotto))
+        UC6((Modifica prodotto))
+    end
 
-rectangle "Negozio Online" {
-  usecase "Ricerca prodotto" as UC1
-  usecase "Registra nuovo utente" as UC2
-  usecase "Acquista prodotto" as UC3
-  usecase "Visualizza profilo utente" as UC4
-  usecase "Inserisci nuovo prodotto" as UC5
-  usecase "Modifica prodotto" as UC6
-}
+    UV --- UC1
+    UV --- UC2
 
-UV --> UC1
-UV --> UC2
+    UR --- UC1
+    UR --- UC3
+    UR --- UC4
 
-UR --> UC1
-UR --> UC3
-UR --> UC4
+    A --- UC5
+    A --- UC6
 
-A --> UC5
-A --> UC6
-
-SB --> UC3
-@enduml
+    SB --- UC3
 ```
 
 #### Esempio — Diagramma di contesto: centralino telefonico
-```plantuml
-@startuml
-left to right direction
-skinparam shadowing false
-skinparam roundcorner 10
-skinparam actorStyle awesome
+```mermaid
+flowchart LR
+    U[Utente]
+    C[Centralinista]
 
-actor Utente
-actor Centralinista
+    subgraph CT[Centralino Telefonico]
+        UC1((Effettua chiamata diretta))
+        UC2((Effettua chiamata indiretta))
+        UC3((Accetta chiamata))
+        UC4((Trasferisce chiamata))
+        UC5((Interrompe chiamata))
+    end
 
-rectangle "Centralino Telefonico" {
-  usecase "Effettua chiamata diretta" as UC1
-  usecase "Effettua chiamata indiretta" as UC2
-  usecase "Accetta chiamata" as UC3
-  usecase "Trasferisce chiamata" as UC4
-  usecase "Interrompe chiamata" as UC5
-}
+    U --- UC1
+    U --- UC2
+    U --- UC5
 
-Utente --> UC1
-Utente --> UC2
-Utente --> UC3
-
-Centralinista --> UC3
-Centralinista --> UC4
-Centralinista --> UC5
-@enduml
+    C --- UC3
+    C --- UC4
+    C --- UC5
 ```
 
 ---
@@ -852,28 +830,26 @@ Si usa quando una sequenza di passi è **comune a più casi d'uso** e il suo uti
 
 La freccia tratteggiata va **dal caso che include verso il caso incluso** (dal caso più esterno verso il caso comune).
 
-```plantuml
-@startuml
-left to right direction
-skinparam shadowing false
-skinparam roundcorner 10
+```mermaid
+flowchart LR
+    U1((Acquista prodotto))
+    U2((Verifica stato ordine))
+    U3((Autenticazione))
 
-usecase "Acquista prodotto" as U1
-usecase "Verifica stato ordine" as U2
-usecase "Autenticazione" as U3
-
-U1 ..> U3 : <<include>>
-U2 ..> U3 : <<include>>
-@enduml
+    U1 -. &lt;&lt;include&gt;&gt; .-> U3
+    U2 -. &lt;&lt;include&gt;&gt; .-> U3
 ```
 
 Lettura: "Acquista prodotto _include sempre_ Autenticazione."
 
 > ⚠️ Errore tipico: mettere la freccia al contrario. Deve andare dal caso _esterno_ al caso _comune_, non viceversa.
 
-```
-  ✅ CORRETTO:   ( Caso esterno ) - - -<<include>>- - → ( Caso comune )
-  ❌ SBAGLIATO:  ( Caso comune ) - - -<<include>>- - → ( Caso esterno )
+```mermaid
+flowchart LR
+    UC1((Caso esterno))
+    UC2((Caso comune))
+
+    UC1 -. &lt;&lt;include&gt;&gt; .-> UC2
 ```
 
 #### 2. Estensione `<<extend>>`
@@ -882,17 +858,12 @@ Si usa per aggiungere **comportamento opzionale o alternativo** a un caso d'uso 
 
 La freccia tratteggiata va **dal caso variante verso il caso standard**.
 
-```plantuml
-@startuml
-left to right direction
-skinparam shadowing false
-skinparam roundcorner 10
+```mermaid
+flowchart LR
+    U1((Help on Line))
+    U2((Acquista prodotto))
 
-usecase "Help on Line" as U1
-usecase "Acquista prodotto" as U2
-
-U1 ..> U2 : <<extend>>
-@enduml
+    U1 -. &lt;&lt;extend&gt;&gt; .-> U2
 ```
 
 Lettura: "Help on Line _estende opzionalmente_ Acquista prodotto."
@@ -915,36 +886,26 @@ Come l'ereditarietà nelle classi OOP: un caso d'uso figlio **eredita** il compo
 
 La freccia **continua con triangolo aperto** va dal figlio al padre (come in UML per le classi).
 
-```plantuml
-@startuml
-left to right direction
-skinparam shadowing false
-skinparam roundcorner 10
+```mermaid
+flowchart LR
+    U0((Acquista prodotto))
+    U1((Acquista libro))
+    U2((Acquista CD))
 
-usecase "Acquista prodotto" as U0
-usecase "Acquista libro" as U1
-usecase "Acquista CD" as U2
-
-U1 -|> U0
-U2 -|> U0
-@enduml
+    U1 -->|generalizzazione| U0
+    U2 -->|generalizzazione| U0
 ```
 
 Posso generalizzare anche gli attori:
 
-```plantuml
-@startuml
-left to right direction
-skinparam shadowing false
-skinparam actorStyle awesome
+```mermaid
+flowchart LR
+    C[Cliente]
+    CP[Cliente privato]
+    DP[Ditta con P.IVA]
 
-actor Cliente
-actor "Cliente privato" as CP
-actor "Ditta con P.IVA" as DP
-
-CP -|> Cliente
-DP -|> Cliente
-@enduml
+    CP -->|generalizzazione| C
+    DP -->|generalizzazione| C
 ```
 
 ---
@@ -986,44 +947,45 @@ Criticità:             <rischio associato al requisito>
 ```
 
 **Esempio completo — Acquisto di uno o più prodotti (negozio online)** 
-> |Campo|Valore|
-> |---|---|
-> |Descrizione|Un utente registrato effettua un acquisto online|
-> |Scopo|Scelta prodotto, aggiornamento carrello, pagamento|
-> |Attori|Utente registrato, Sistema bancario|
-> |Attore primario|Utente registrato|
-> |Use Case d'extend|Organizzazione spedizione, fatturazione|
-> 
-> **Scenario principale: Acquisto andato a buon fine**
-> 
-> _Precondizione:_ L'utente deve essere registrato e autenticato.
-> 
-> _Flusso di eventi:_
-> 
-> 1. Il cliente cerca nel catalogo e aggiunge uno o più articoli al carrello
-> 2. Il cliente accede alla cassa
-> 3. Il sistema mostra il riepilogo degli articoli selezionati
-> 4. Il cliente inserisce indirizzo e modalità di spedizione
-> 5. Il sistema calcola e mostra il totale (articoli + spedizione)
-> 6. Il cliente inserisce i dati della carta di credito
-> 7. Il sistema verifica la carta e autorizza il pagamento
-> 8. Il sistema conferma l'ordine
-> 9. Il sistema invia e-mail di conferma al cliente
-> 
-> _Postcondizione:_ Se confermato, l'ordine viene trasmesso al magazzino. Se annullato, il sistema rimane inalterato.
-> 
-> **Scenari alternativi (eccezioni):**
-> 
-> - **a) Carta non valida**: al passo 7, il sistema rifiuta l'autorizzazione e invita il cliente a reinserire i dati
-> - **b) Credito insufficiente**: al passo 7, il sistema segnala il credito esaurito e propone una carta alternativa
-> - **c) Servizi interbancari non disponibili**: il sistema salva il carrello e invita il cliente a riprovare in seguito
-> 
-> |Campo|Valore|
-> |---|---|
-> |Requisiti speciali|Inoltro al magazzino entro 24h; articoli disponibili in magazzino almeno nel 90% dei casi|
-> |Extension Points|Sistema di consegna della merce|
-> |Frequenza|~1 utente al minuto|
-> |Criticità|Tempo di risposta|
+
+|Campo|Valore|
+|---|---|
+|Descrizione|Un utente registrato effettua un acquisto online|
+|Scopo|Scelta prodotto, aggiornamento carrello, pagamento|
+|Attori|Utente registrato, Sistema bancario|
+|Attore primario|Utente registrato|
+|Use Case d'extend|Organizzazione spedizione, fatturazione|
+
+**Scenario principale: Acquisto andato a buon fine**
+
+_Precondizione:_ L'utente deve essere registrato e autenticato.
+
+_Flusso di eventi:_
+
+1. Il cliente cerca nel catalogo e aggiunge uno o più articoli al carrello
+2. Il cliente accede alla cassa
+3. Il sistema mostra il riepilogo degli articoli selezionati
+4. Il cliente inserisce indirizzo e modalità di spedizione
+5. Il sistema calcola e mostra il totale (articoli + spedizione)
+6. Il cliente inserisce i dati della carta di credito
+7. Il sistema verifica la carta e autorizza il pagamento
+8. Il sistema conferma l'ordine
+9. Il sistema invia e-mail di conferma al cliente
+
+_Postcondizione:_ Se confermato, l'ordine viene trasmesso al magazzino. Se annullato, il sistema rimane inalterato.
+
+**Scenari alternativi (eccezioni):**
+
+- **a) Carta non valida**: al passo 7, il sistema rifiuta l'autorizzazione e invita il cliente a reinserire i dati
+- **b) Credito insufficiente**: al passo 7, il sistema segnala il credito esaurito e propone una carta alternativa
+- **c) Servizi interbancari non disponibili**: il sistema salva il carrello e invita il cliente a riprovare in seguito
+
+|Campo|Valore|
+|---|---|
+|Requisiti speciali|Inoltro al magazzino entro 24h; articoli disponibili in magazzino almeno nel 90% dei casi|
+|Extension Points|Sistema di consegna della merce|
+|Frequenza|~1 utente al minuto|
+|Criticità|Tempo di risposta|
 
 > **Consiglio di Alistair Cockburn:** Lo scenario principale non dovrebbe mai superare i 9 passi. Il vero valore di un caso d'uso sta negli scenari alternativi. Uno scenario principale da 35 passi produce un caso d'uso illeggibile che "viene soltanto firmato — di solito con sgradevoli conseguenze sul progetto, alcuni mesi più tardi."
 
@@ -1195,37 +1157,31 @@ ShopFacile si interfaccia con tre sistemi esterni:
 - **Sistema gestionale RetailSrl (SAP)**: per la sincronizzazione del magazzino
 - **Servizio e-mail (SendGrid)**: per le notifiche agli utenti
 
-```plantuml
-@startuml
-left to right direction
-skinparam shadowing false
-skinparam roundcorner 10
+```mermaid
+flowchart LR
+    U[Utente]
+    Stripe[Stripe]
+    SAP[SAP]
+    SendGrid[SendGrid]
 
-actor Utente
+    subgraph ShopFacile
+        Catalogo[Catalogo]
+        Carrello[Carrello]
+        Ordini[Ordini]
+        Utenti[Utenti]
+        Admin[Admin]
+    end
 
-component Stripe
-component SAP
-component SendGrid
+    U --> Catalogo
+    U --> Carrello
+    U --> Ordini
+    U --> Utenti
+    U --> Admin
 
-rectangle "ShopFacile" {
-  component Catalogo
-  component Carrello
-  component Ordini
-  component Utenti
-  component Admin
-}
-
-Utente --> Catalogo
-Utente --> Carrello
-Utente --> Ordini
-Utente --> Utenti
-Utente --> Admin
-
-Ordini --> Stripe : pagamenti
-Catalogo --> SAP : magazzino
-Ordini --> SendGrid : notifiche
-Utenti --> SendGrid : e-mail account
-@enduml
+    Ordini -->|pagamenti| Stripe
+    Catalogo -->|magazzino| SAP
+    Ordini -->|notifiche| SendGrid
+    Utenti -->|e-mail account| SendGrid
 ```
 
 **2.2 Funzioni del prodotto (riepilogo)**
@@ -1732,20 +1688,18 @@ Spezzare le interfacce grandi in interfacce più piccole e coese. Ogni classe im
 
 Anche se è il quinto principio in ordine alfabetico, per importanza concettuale è tra i più significativi.
 
-```plantuml
-@startuml
-skinparam shadowing false
-skinparam roundcorner 10
+```mermaid
+classDiagram
+    class GestoreOrdini
+    class DatabaseRepository {
+        <<interface>>
+    }
+    class MySQLRepository
+    class PostgreSQLRepository
 
-class GestoreOrdini
-interface DatabaseRepository
-class MySQLRepository
-class PostgreSQLRepository
-
-GestoreOrdini --> DatabaseRepository
-MySQLRepository ..|> DatabaseRepository
-PostgreSQLRepository ..|> DatabaseRepository
-@enduml
+    GestoreOrdini --> DatabaseRepository
+    DatabaseRepository <|.. MySQLRepository
+    DatabaseRepository <|.. PostgreSQLRepository
 ```
 
 **Il problema:**
@@ -2110,32 +2064,26 @@ ArgoUML è un tool open source per la modellizzazione UML (standard UML 1.4), sc
 
 Prima di entrare nell'Unità 5 è utile capire come i documenti e le attività dell'Unità 4 alimentano concretamente il lavoro dell'Unità 5. Non sono due argomenti separati: sono fasi consecutive dello stesso processo.
 
-```plantuml
-@startuml
-skinparam shadowing false
-skinparam roundcorner 10
+```mermaid
+flowchart TD
+    A([Inizio]) --> B[Raccolta requisiti]
+    B --> C[Casi d'uso (UCD)]
+    C --> D[SRS - Specifica dei Requisiti]
 
-start
-:Raccolta requisiti;
-:Casi d'uso (UCD);
-:SRS - Specifica dei Requisiti;
+    D --> E[Piano delle prove]
+    D --> F[Analisi dei requisiti]
+    D --> G[Specifica architetturale]
+    D --> H[Specifica di dettaglio]
 
-fork
-  :Piano delle prove;
-fork again
-  :Analisi dei requisiti;
-fork again
-  :Specifica architetturale;
-fork again
-  :Specifica di dettaglio;
-end fork
+    E --> I[Principi S.O.L.I.D.]
+    F --> I
+    G --> I
+    H --> I
 
-:Principi S.O.L.I.D.;
-:Documentazione del codice;
-:Sviluppo del software;
-:Controllo delle versioni;
-stop
-@enduml
+    I --> J[Documentazione del codice]
+    J --> K[Sviluppo del software]
+    K --> L[Controllo delle versioni]
+    L --> M([Fine])
 ```
 
 
@@ -2650,18 +2598,14 @@ Un buon VCS garantisce tre proprietà fondamentali:
 
 Git gestisce il codice attraverso **tre aree**:
 
-```plantuml
-@startuml
-skinparam shadowing false
-skinparam roundcorner 10
+```mermaid
+flowchart LR
+    WD[Working Directory]
+    ST[Index (Stage)]
+    LR[HEAD / Local Repository]
 
-rectangle "Working Directory" as WD
-rectangle "Index (Stage)" as ST
-rectangle "HEAD / Local Repository" as LR
-
-WD --> ST : git add
-ST --> LR : git commit
-@enduml
+    WD -->|git add| ST
+    ST -->|git commit| LR
 ```
 
 |Area|Descrizione|
@@ -2804,24 +2748,19 @@ git push origin --delete feature/login-utente
 
 #### Schema visuale del flusso
 
-```plantuml
-@startuml
-skinparam shadowing false
-skinparam roundcorner 10
-
-start
-:checkout main;
-:pull origin main;
-:create branch feature/login-utente;
-:sviluppo e commit;
-:fetch / rebase;
-:push branch;
-:Pull Request;
-:merge in main;
-:push origin main;
-:elimina branch;
-stop
-@enduml
+```mermaid
+flowchart TD
+    A([Inizio]) --> B[checkout main]
+    B --> C[pull origin main]
+    C --> D[create branch feature/login-utente]
+    D --> E[sviluppo e commit]
+    E --> F[fetch / rebase]
+    F --> G[push branch]
+    G --> H[Pull Request]
+    H --> I[merge in main]
+    I --> J[push origin main]
+    J --> K[elimina branch]
+    K --> L([Fine])
 ```
 
 ---
@@ -2932,35 +2871,28 @@ git commit -a
 
 **Schema dell'architettura con repository remoto:**
 
-```plantuml
-@startuml
-left to right direction
-skinparam shadowing false
-skinparam roundcorner 10
+```mermaid
+flowchart LR
+    subgraph DevA[Developer A]
+        WDA[Working Dir A]
+        IA[Index A]
+        LRA[Local Repo A]
+        WDA -->|git add| IA
+        IA -->|git commit| LRA
+    end
 
-node "Developer A" {
-  rectangle "Working Dir A" as WDA
-  rectangle "Index A" as IA
-  rectangle "Local Repo A" as LRA
-}
+    RR[Remote Repository]
 
-node "Remote Repository" as RR
+    subgraph DevB[Developer B]
+        WDB[Working Dir B]
+        IB[Index B]
+        LRB[Local Repo B]
+        WDB -->|git add| IB
+        IB -->|git commit| LRB
+    end
 
-node "Developer B" {
-  rectangle "Local Repo B" as LRB
-  rectangle "Index B" as IB
-  rectangle "Working Dir B" as WDB
-}
-
-WDA --> IA : git add
-IA --> LRA : git commit
-
-WDB --> IB : git add
-IB --> LRB : git commit
-
-LRA <--> RR : push / pull
-LRB <--> RR : push / pull
-@enduml
+    LRA <-->|push / pull| RR
+    LRB <-->|push / pull| RR
 ```
 
 ---
