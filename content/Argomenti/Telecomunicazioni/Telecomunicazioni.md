@@ -322,7 +322,7 @@ $$A_{eff} = \eta \cdot \frac{\pi d^2}{4} = G \cdot \frac{\lambda^2}{4\pi}$$
 > 
 > Prima calcoliamo l'area efficace della parabola (quanto "sente"): A_eff = η · π · d²/4 = 0,55 · π · 0,25/4 = **0,11 m²**
 > 
-> Poi moltiplichiamo per la densità di potenza del segnale: P_ric = 86,4 · 10⁻⁹ · 0,11 = **9,5 nW**
+> Poi moltiplichiamo per la densità di potenza del segnale: P_ric = 86,4 · 0,11 = **9,5 nW**
 
 ---
 
@@ -549,21 +549,76 @@ Le funzioni di rete e la radio ZigBee sono già integrate in alcuni microcontrol
 Esistono infine due tecnologie wireless pensate non per creare reti, ma per identificare oggetti o persone o stabilire connessioni rapide tra due dispositivi: **RFID** e **NFC**.
 
 ### 9.1 RFID
-
 L'**RFID (Radio Frequency IDentification)** è una tecnologia per identificare oggetti, animali o persone senza contatto fisico. Il principio è semplice: all'oggetto da identificare viene agganciato un piccolo sistema passivo — il **tag** (o transponder) — composto da un microchip e una piccola antenna. Il tag non ha batteria: si alimenta da solo sfruttando l'energia del campo radio emesso dal lettore.
 
 ![[Media/image-043.jpg]]
 
-Prima di spiegare come funziona nel dettaglio, vale la pena ricordare un principio fisico che conoscete già: l'**induzione elettromagnetica**. Un trasformatore funziona perché una bobina percorsa da corrente alternata crea un campo magnetico variabile che induce corrente in un'altra bobina vicina, senza contatto. I tag RFID funzionano esattamente con questo principio, ma a distanza di qualche centimetro invece di essere avvolti attorno allo stesso nucleo.
+> 🔎 Cos’è davvero l’induzione elettromagnetica?
+> 
+> Per capire l’RFID, dobbiamo chiarire un concetto fondamentale.
+> 
+> Immaginate due bobine di filo vicine tra loro:
+> 
+> - nella prima facciamo passare una corrente che cambia nel tempo  
+> - nella seconda non colleghiamo nulla  
+> 
+> Cosa succede?
+> 
+> 👉 La corrente nella prima bobina crea un **campo magnetico variabile**  
+> 👉 Questo campo attraversa anche la seconda bobina  
+> 👉 Il campo che cambia nel tempo “spinge” gli elettroni nella seconda bobina  
+> 
+> ➡️ Risultato: nella seconda bobina nasce una corrente, **senza alcun contatto fisico**
+> 
+> Questo fenomeno si chiama **induzione elettromagnetica**.
+> 
+> > 💡 Idea chiave  
+> > Non serve un filo collegato:  
+> > è il campo magnetico che trasporta l’energia nello spazio.
 
-La stazione base (il lettore) ha una bobina che emette un campo magnetico oscillante alla sua frequenza di lavoro (ad esempio 125 kHz). Dentro il tag c'è un altro circuito risonante (una bobina e un condensatore), accordato esattamente sulla stessa frequenza. Quando il tag entra nel campo, il circuito entra in **risonanza** — come un diapason che vibra solo se colpito dalla sua nota precisa — e in questo modo amplifica enormemente la piccola energia che arriva dal campo, raccogliendone abbastanza da alimentare il microchip interno.
+---
 
-Una volta alimentato, il microchip si sveglia, legge il codice ID memorizzato nella sua memoria e lo invia indietro al lettore in modo furbo: invece di usare un trasmettitore radio (che richiederebbe una batteria), modula il proprio consumo energetico. Questo causa piccole variazioni nel campo magnetico della stazione base — variazioni che il lettore rileva e converte nel codice digitale dell'ID.
+Prima di spiegare come funziona nel dettaglio, applichiamo il principio appena visto.
+
+Un trasformatore funziona perché una bobina percorsa da corrente alternata crea un campo magnetico variabile che induce corrente in un'altra bobina vicina, senza contatto.
+
+> 🔎 Ma perché nasce corrente?
+> 
+> Perché un campo magnetico che cambia nel tempo genera una forza sugli elettroni nei materiali conduttori, mettendoli in movimento.
+
+I tag RFID funzionano esattamente con questo principio, ma a distanza di qualche centimetro invece di essere avvolti attorno allo stesso nucleo.
+
+La stazione base (il lettore) ha una bobina che emette un campo magnetico oscillante alla sua frequenza di lavoro (ad esempio 125 kHz).
+
+Dentro il tag c'è un altro circuito risonante (una bobina e un condensatore), accordato esattamente sulla stessa frequenza.
+
+Quando il tag entra nel campo, il circuito entra in **risonanza** — come un diapason che vibra solo se colpito dalla sua nota precisa — e in questo modo amplifica enormemente la piccola energia che arriva dal campo, raccogliendone abbastanza da alimentare il microchip interno.
+
+> 🔎 Da dove arriva l’energia?
+> 
+> L’energia non nasce nel tag: arriva dal lettore.
+> 
+> Il lettore “invia” energia tramite il campo magnetico, e il tag la cattura grazie alla bobina, esattamente come una piccola antenna.
+
+Una volta alimentato, il microchip si sveglia, legge il codice ID memorizzato nella sua memoria e lo invia indietro al lettore in modo furbo: invece di usare un trasmettitore radio (che richiederebbe una batteria), modula il proprio consumo energetico.
+
+> 🔎 Come fa il tag a “mandare” l’ID senza trasmettere?
+> 
+> Il tag non invia un segnale radio attivo.
+> 
+> Invece:
+> - assorbe energia dal campo del lettore  
+> - poi cambia leggermente quanto ne assorbe (più / meno)  
+> 
+> Questo comportamento altera il campo magnetico.
+> 
+> Il lettore rileva queste variazioni e le interpreta come 0 e 1.
+
+Questo causa piccole variazioni nel campo magnetico della stazione base — variazioni che il lettore rileva e converte nel codice digitale dell'ID.
 
 È un sistema elegantissimo: il tag non ha batteria, non ha pulsanti, non richiede manutenzione — dura praticamente per sempre.
 
 Le frequenze usate sono: 125 kHz e 13,56 MHz per le persone (badge aziendali, braccialetti ospedalieri, tessere per i tornelli), e **134,2 kHz** per l'identificazione animale (il microchip sottocutaneo negli animali domestici usa questa frequenza).
-
 ### 9.2 NFC
 
 L'**NFC (Near Field Communication)** è un'evoluzione dell'RFID sviluppata da un consorzio di aziende (Philips, LG, Nokia, Sony) per gli smartphone. Lavora a **13,56 MHz** con velocità fino a **424 kbps** ed è bidirezionale: entrambi i dispositivi possono inviare e ricevere dati.
