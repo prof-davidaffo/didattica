@@ -1,3 +1,81 @@
+### ✅ Scegli la Risposta Corretta
+
+**1.** L'esistenza delle onde elettromagnetiche fu intuita per la prima volta da:
+
+- A) Niels Bohr
+- B) Heinrich Rudolph Hertz
+- C) James Clerk Maxwell
+- D) Guglielmo Marconi
+
+**2.** Un'onda elettromagnetica:
+
+- A) si propaga in modo rettilineo nello spazio libero
+- B) è completamente assorbita da una superficie metallica
+- C) penetra i materiali tanto più facilmente quanto maggiore è la sua frequenza
+- D) in presenza di ostacoli non subisce flessioni
+
+**3.** Trattando delle antenne è corretto dire che:
+
+- A) sono dispositivi in grado di irraggiare onde elettromagnetiche nello spazio e di captarle
+- B) maggiore è la frequenza di lavoro e più lunga è l'antenna
+- C) il diagramma di radiazione rappresenta gli assi del solido di emissione
+- D) l'angolo di apertura è pari all'angolo solido entro il quale la densità di potenza si mantiene superiore al 90% del valore massimo
+
+**4.** In merito alle caratteristiche delle diverse antenne:
+
+- A) il dipolo marconiano è detto dipolo in λ/2
+- B) la parabola è detta antenna a dipolo
+- C) il dipolo hertziano è detto dipolo in λ/2
+- D) l'antenna Yagi contiene un certo numero di elementi direttori attivi
+
+**5.** In ambito applicativo:
+
+- A) per le applicazioni mobili sono indispensabili le antenne a parabola
+- B) per le connessioni fisse sono preferibili le antenne direzionali
+- C) le antenne a frusta sono unidirezionali
+- D) le antenne a chip sono omnidirezionali
+
+**6.** Quando un'antenna è in ricezione presenta un'area efficace il cui valore:
+
+- A) si riduce aumentando il guadagno dell'antenna
+- B) aumenta proporzionalmente con la lunghezza d'onda del segnale
+- C) aumenta con il quadrato della lunghezza d'onda del segnale
+- D) aumenta con il cubo della lunghezza d'onda del segnale
+
+**7.** In merito alla classificazione delle reti wireless, **non** è vero dire che:
+
+- A) le WWAN sono grandi reti di dati, progettate per coprire aree estese
+- B) WiMAX è uno standard per WLAN
+- C) le WPAN consentono una comunicazione entro un raggio limitato
+- D) le WWAN sono gestite da un fornitore di servizi
+
+**8.** Utilizzando un modem GSM governato mediante comandi AT non è possibile:
+
+- A) comporre un numero di telefono per inviare uno squillo di avviso
+- B) gestire l'invio di un SMS verso il numero di reperibilità aziendale
+- C) attivare da distanza particolari uscite del PLC
+- D) conoscere lo status della macchina
+
+**9.** Trattando delle bande ISM, si può affermare che:
+
+- A) si tratta di bande libere, utilizzabili senza licenza
+- B) sono le medesime in tutti gli Stati
+- C) le prescrizioni ETS 300 328 permettono di irradiare potenza in banda libera fino a un EIRP di 30 dBm solo con modalità spread spectrum
+- D) le norme ETS 300 328 sono le stesse per tutte le bande ISM
+
+**10.** Per quanto riguarda le bande libere da 433 a 868 MHz, è vero che:
+
+- A) la banda 433 MHz non può essere utilizzata per controlli remoti fino a 100 m
+- B) in banda 458 MHz si può trasmettere fino a 500 m
+- C) in banda 434 MHz si può trasmettere fino a 1 km
+- D) la banda 868 MHz può essere utilizzata per controlli remoti fino a 10 km
+
+**11.** In merito allo standard Bluetooth non è vero che:
+
+- A) opera a 2,4 GHz
+- B) lavora con 1 mW di potenza trasmessa su distanze tipiche di 100 m
+- C) è un protocollo adatto per la trasmissione di voce e dati
+- D) usa la tecnica frequency hopping tra 80 differenti canali da 1 MHz ciascuno
 ## 📐 Esercizi
 
 ### 1. Frequenza, lunghezza d’onda e dimensionamento delle antenne
