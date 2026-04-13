@@ -13,6 +13,15 @@ $$
 $$  
 P = S \cdot 4\pi r^2  
 $$
+
+
+$$
+G_{dB} = 10 \cdot \log_{10}(G)
+ $$
+
+$$
+ G = 10^{G_{dB}/10}
+ $$
 $$  
 \mathrm{EIRP} = P_{in} \cdot G  
 $$
