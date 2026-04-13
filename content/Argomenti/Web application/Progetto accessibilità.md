@@ -282,7 +282,7 @@ Il video ha due problemi distinti: parte senza che l'utente lo abbia scelto, e n
 
 Il footer contiene un elemento visivo usato per comunicare un'informazione — ma quella informazione è veicolata solo attraverso il colore e la forma grafica, senza alcun testo alternativo o supporto semantico. Chi usa uno screen reader o ha difficoltà a percepire i colori non riceve la stessa informazione degli altri utenti. Individua l'elemento e trova un modo per rendere l'informazione accessibile indipendentemente dalla vista.
 
-### Extra (facoltativi ma consigliati)
+### Extra
 
 - Aggiungi uno skip link che permetta di saltare la navigazione e raggiungere direttamente il contenuto principale. Rendilo visibile solo quando è in focus.
 - Aggiungi una media query per rispettare le preferenze di chi ha configurato il sistema operativo per ridurre il movimento.
