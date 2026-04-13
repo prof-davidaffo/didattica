@@ -90,7 +90,13 @@ Salva il codice seguente in un file chiamato `pagina-inaccessibile.html` e april
   <!-- INTESTAZIONE CON TABELLA USATA COME LAYOUT -->
   <table>
     <tr>
-      <td><img src="logo.png"></td>
+      <td>
+        <!-- Logo -->
+        <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <rect width="60" height="60" rx="8" fill="#0055ff"/>
+          <text x="30" y="38" font-size="22" font-family="Arial" fill="white" text-anchor="middle">BT</text>
+        </svg>
+      </td>
       <td><div class="big-title">Blog di Tecnologia</div></td>
     </tr>
   </table>
@@ -106,13 +112,33 @@ Salva il codice seguente in un file chiamato `pagina-inaccessibile.html` e april
   <p>Le minacce informatiche sono in costante aumento nel panorama digitale...</p>
   <a href="articolo2.html">Leggi di più</a>
 
-  <!-- IMMAGINE SENZA ALT E SENZA DESCRIZIONE -->
+  <!-- GRAFICO SVG SENZA DESCRIZIONE -->
   <div>
-    <img src="grafico-crescita.png">
+    <svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="400" height="200" fill="#ffffff" rx="6"/>
+      <!-- Assi -->
+      <line x1="40" y1="160" x2="380" y2="160" stroke="#ccc" stroke-width="1"/>
+      <line x1="40" y1="20"  x2="40"  y2="160" stroke="#ccc" stroke-width="1"/>
+      <!-- Barre -->
+      <rect x="60"  y="120" width="40" height="40" fill="#0055ff"/>
+      <rect x="120" y="100" width="40" height="60" fill="#0055ff"/>
+      <rect x="180" y="80"  width="40" height="80" fill="#0055ff"/>
+      <rect x="240" y="50"  width="40" height="110" fill="#0055ff"/>
+      <rect x="300" y="30"  width="40" height="130" fill="#0055ff"/>
+      <!-- Etichette asse X -->
+      <text x="80"  y="178" font-size="11" font-family="Arial" fill="#888" text-anchor="middle">2020</text>
+      <text x="140" y="178" font-size="11" font-family="Arial" fill="#888" text-anchor="middle">2021</text>
+      <text x="200" y="178" font-size="11" font-family="Arial" fill="#888" text-anchor="middle">2022</text>
+      <text x="260" y="178" font-size="11" font-family="Arial" fill="#888" text-anchor="middle">2023</text>
+      <text x="320" y="178" font-size="11" font-family="Arial" fill="#888" text-anchor="middle">2024</text>
+      <!-- Titolo -->
+      <text x="200" y="14" font-size="12" font-family="Arial" fill="#555" text-anchor="middle">Crescita adozione IA (indice)</text>
+    </svg>
   </div>
 
-  <!-- VIDEO IN AUTOPLAY SENZA CONTROLLI NÉ SOTTOTITOLI -->
-  <video src="demo.mp4" autoplay loop>
+  <!-- VIDEO SENZA CONTROLLI NÉ SOTTOTITOLI -->
+  <video autoplay loop width="400">
+    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
     Il tuo browser non supporta i video.
   </video>
 
@@ -191,8 +217,8 @@ Verifica almeno questi punti e indica per ciascuno se il problema è **presente*
 - [ ] Gli elementi heading sono usati in modo gerarchico e semantico, non sostituiti da classi CSS
 - [ ] La pagina usa elementi di sezione semantici (`<nav>`, `<header>`, `<main>`, `<footer>`)
 - [ ] Nessuna `<table>` viene usata per il layout visivo
-- [ ] Tutte le immagini informative hanno un attributo `alt` descrittivo
-- [ ] Le immagini decorative hanno `alt=""` o `aria-hidden="true"`
+- [ ] Il grafico SVG ha un titolo o una descrizione accessibile (`<title>`, `role="img"`, `aria-label`)
+- [ ] Il logo SVG ha un testo alternativo o è marcato come decorativo
 - [ ] I grafici o le immagini complesse hanno una descrizione testuale nella pagina
 - [ ] Il contrasto testo/sfondo rispetta il requisito WCAG AA (≥ 4,5:1 per testo normale)
 - [ ] Il colore non è l'unico mezzo per trasmettere informazioni
@@ -228,11 +254,13 @@ Infine, c'è un elemento interattivo che non è implementato con il tag semantic
 
 Alcuni link hanno testi che non comunicano nulla fuori contesto — un utente che naviga con lo screen reader e salta da un link all'altro non capisce dove andrà a finire. Rendi ogni testo di link autoesplicativo.
 
-### Immagini
+### Grafico e logo SVG
 
-Non tutte le immagini richiedono lo stesso trattamento. Una distinzione utile: un'immagine è _informativa_ se rimuoverla impoverirebbe il contenuto della pagina; è _decorativa_ se serve solo all'aspetto visivo e il contenuto resterebbe completo senza di essa. Da questa distinzione dipende cosa scrivere nell'attributo `alt` — o come usarlo.
+Gli elementi SVG inline possono essere letti dagli screen reader, ma solo se contengono le informazioni giuste. Un SVG senza attributi di accessibilità viene ignorato, letto in modo confuso, o peggio letto carattere per carattere nel suo markup interno.
 
-Per le immagini che trasmettono informazioni complesse, come un grafico, un breve testo alternativo non è sufficiente: considera come rendere quelle stesse informazioni disponibili anche nel testo della pagina.
+Considera per ciascuno dei due SVG presenti nella pagina quale ruolo ha: trasmette un'informazione, o è puramente decorativo? La risposta determina come renderlo accessibile — o come nasconderlo correttamente agli strumenti assistivi.
+
+Per il grafico in particolare, tieni presente che un testo alternativo sintetico non sostituisce i dati: pensa a come rendere disponibile l'informazione anche a chi non può vedere il grafico.
 
 ### Contrasto
 
@@ -261,18 +289,7 @@ Il footer contiene un elemento visivo usato per comunicare un'informazione — m
 
 ---
 
-## Consegna
-
-Comprimi tutto in una cartella `cognome-accessibilita/` con questa struttura:
-
-```
-cognome-accessibilita/
-├── pagina-inaccessibile.html   ← originale, non modificata
-├── pagina-accessibile.html     ← versione corretta
-└── relazione.pdf               ← o .txt / .md
-```
-
-### Cosa deve contenere la relazione
+## Cosa deve contenere la relazione
 
 1. **Tabella di audit** — tutti i problemi trovati con le colonne indicate nella fase 1.
 2. **Descrizione delle correzioni** — per ogni problema, spiega cosa hai fatto e perché quella soluzione risolve il problema di accessibilità.
