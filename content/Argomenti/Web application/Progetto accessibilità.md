@@ -193,6 +193,9 @@ Prima di toccare il codice, analizza la pagina con questi strumenti nell'ordine 
 
 1. **Ispezione manuale del markup** — leggi il codice HTML dall'inizio alla fine e annota tutto ciò che ti sembra sbagliato o mancante dal punto di vista semantico e strutturale.
 2. **WAVE** — carica la pagina su [wave.webaim.org](https://wave.webaim.org/) oppure usa l'estensione browser. Leggi attentamente ogni errore e avviso.
+> [!warning] Attenzione
+> WAVE  funziona solo con pagine web e non con file statici. Per bypassare questo problema potete utilizzare l'estensione di WAVE sul browser, poi hostare il vostro file su localhost con `python -m http.server` e a quel punto accedere al file tramite localhost. In questo modo l'estensione di WAVE funzionerà correttamente.
+
 3. **WebAIM Contrast Checker** — verifica ogni coppia colore testo / colore sfondo presente nel CSS. Annota il rapporto di contrasto ottenuto.
 4. **Navigazione da tastiera** — apri la pagina nel browser e naviga usando solo `Tab`, `Shift+Tab`, `Enter` e `Spazio`. Prova a raggiungere tutti i link, compilare il form e cliccare il pulsante. Annota tutto ciò che non funziona o che non è visibile mentre è in focus.
 5. **Screen reader** — attiva VoiceOver (`Cmd+F5` su Mac) o Narrator (`Win+Ctrl+Invio` su Windows) e ascolta come viene letta la pagina. Prova in particolare a compilare il form.
