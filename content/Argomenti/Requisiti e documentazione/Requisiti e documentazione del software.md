@@ -272,6 +272,43 @@ Il problema spesso emerge solo a sistema completato, quando il committente si ac
 
 ---
 
+### Verifica e validazione dei requisiti
+
+I requisiti funzionali sono abbastanza semplici da verificare: si effettua il collaudo del sistema con gli utenti e si verifica se le loro aspettative sono state soddisfatte.
+
+La validazione dei requisiti deve essere eseguita **durante tutto il ciclo di sviluppo** e richiede di controllare:
+
+- **correttezza**: la specifica rappresenta perfettamente il sistema che il cliente richiede
+- **completezza**: la specifica contempla tutti i possibili scenari del sistema
+- **coerenza**: i requisiti non si contraddicono tra di loro
+- **chiarezza**: la descrizione non dà adito a interpretazioni diverse
+- **realismo**: la richiesta è realizzabile e implementabile entro i vincoli esistenti
+- **verificabilità**: una volta costruito il sistema, è possibile eseguire test per certificare che i requisiti siano soddisfatti
+- **tracciabilità**: tutte le funzioni del sistema sono messe in relazione con un requisito funzionale — fondamentale per sviluppare test e valutare l'impatto dei cambiamenti
+
+I **requisiti di dominio** si verificano collaudando le interazioni del sistema con l'esterno: integrazione con software aziendale preesistente, terze parti e rispetto delle normative di settore.
+
+I **requisiti non funzionali** sono i più difficili da verificare: spesso sono indicati in modo generico dagli utenti e risultano non quantificabili se non vengono resi espliciti. A differenza dei requisiti funzionali — per cui si può dire in modo binario se sono rispettati o no — per i requisiti non funzionali è necessario esprimere un **valore quantitativo** del grado di soddisfacimento.
+
+La tabella seguente riporta esempi di indicatori misurabili per le principali proprietà non funzionali:
+
+| Proprietà | Indicatori misurabili |
+|-----------|----------------------|
+| **Velocità** | Numero di transazioni per secondo; tempo di risposta a un evento; tempo di refresh dello schermo |
+| **Dimensione** | Occupazione disco fisso del programma; occupazione disco per i dati; occupazione memoria RAM |
+| **Semplicità d'uso** | Tempo richiesto per la formazione; dimensione della documentazione; numero di pagine di help online |
+| **Affidabilità** | Frequenza delle failure; gravità di una failure; accuratezza degli output; capacità di recupero; predicibilità del programma |
+| **Robustezza** | Tempo di riavvio dopo un guasto; percentuale di eventi che causano crash; probabilità di danneggiamento dei dati |
+| **Portabilità** | Percentuale di istruzioni dipendenti dall'hardware; percentuale di istruzioni dipendenti dal sistema operativo |
+
+> **Mettiti alla prova — Validazione dei requisiti**
+>
+> Data la seguente situazione, individua ogni tipo di requisito e, per i requisiti non funzionali, predisponi una tabella di valutazione quantitativa.
+>
+> Si deve realizzare un sistema per archiviare i dati di una biblioteca: libri, giornali, riviste, video, nastri audio e CD-ROM. Il sistema permetterà ricerche per titolo, autore, genere o ISBN tramite interfaccia browser. L'accesso avviene con smart card; ogni prestito dura al massimo 30 giorni per i libri, 7 giorni per gli altri articoli; un utente può avere contemporaneamente fino a 10 articoli in consegna. Il sistema deve gestire almeno 20 transazioni al secondo ed essere consultabile anche da smartphone.
+
+---
+
 ### Verifica di fine Lezione 1
 
 #### Scelta multipla
