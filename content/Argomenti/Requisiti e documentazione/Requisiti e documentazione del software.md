@@ -424,6 +424,8 @@ La raccolta dei requisiti dagli stakeholder è anche chiamata **requirements eli
 ---
 
 ### Tecniche di esplorazione
+Di seguito una tabella che riassume le tecniche principali di raccolta dei requisiti usate nella fase di esplorazione.
+Dopo la tabella vi sono gli approfondimenti di ogni tecnica.
 
 |Tecnica|Obiettivo|Vantaggi|Svantaggi|
 |---|---|---|---|
@@ -450,7 +452,8 @@ Più persone vengono intervistate, più informazioni si raccolgono — ma anche 
 - Chi sono gli attori esterni all'organizzazione?
 - Con quali sistemi hardware o software il sistema interagisce?
 
-**Livelli di strutturazione delle interviste:**
+#### Livelli di strutturazione delle interviste:
+Le interviste possono avere diversi livelli di strutturazione
 
 |Tipo|Caratteristiche|Quando usarla|
 |---|---|---|
@@ -548,6 +551,35 @@ Confrontarsi con prodotti simili già presenti sul mercato è fondamentale: perm
 
 Va fatta all'inizio del progetto, appena definiti gli obiettivi essenziali, e i risultati devono essere mostrati agli stakeholder per valutarne l'applicabilità al contesto specifico.
 
+#### Scenari e casi d’uso
+
+Gli **scenari** e i **casi d’uso** sono tecniche utilizzate per descrivere il comportamento di un sistema dal punto di vista degli utenti.
+
+Uno **scenario** è una sequenza concreta di azioni che descrive una situazione reale.
+
+> Esempio: uno studente prende in prestito un libro in biblioteca e il sistema registra l’operazione.
+
+Un **caso d’uso** è una descrizione più generale che raccoglie più scenari con lo stesso obiettivo.
+
+> Esempio: _Effettuare prestito libro_
+
+Un caso d’uso può includere:
+
+- flusso principale (scenario normale)
+- scenari alternativi
+- scenari di errore
+
+> Esempio: _Prenotare un viaggio_
+> 
+> Scenario principale:
+> 
+> 1. Il cliente sceglie un viaggio
+> 2. Il sistema mostra disponibilità
+> 3. Il cliente conferma
+> 4. Il sistema registra la prenotazione
+
+Seguono più dettagli nei paragrafi successivi.
+
 ---
 
 ### Problemi nella fase di esplorazione
@@ -563,14 +595,10 @@ La fase di esplorazione è tra le più delicate di tutto il processo software. I
 
 #### La metafora dell'altalena
 
-Una delle immagini più efficaci per capire i problemi di comunicazione nella raccolta dei requisiti è la cosiddetta **metafora dell'altalena**: lo stesso sistema viene interpretato in modo radicalmente diverso da:
+Una delle immagini più efficaci per capire i problemi di comunicazione nella raccolta dei requisiti è la cosiddetta **metafora dell'altalena**: 
 
-- quello che ha chiesto il cliente
-- quello che ha capito l'analista
-- quello che il progettista ha tradotto in specifiche
-- quello che il programmatore ha implementato
-- quello che il tester ha provato
-- quello che il cliente voleva davvero
+
+![[altalena.png]]
 
 Questo illustra come ogni passaggio nella catena di comunicazione introduce possibilità di fraintendimento, e perché è essenziale **coinvolgere il cliente in modo continuativo** lungo tutto il progetto.
 
@@ -702,7 +730,7 @@ Un caso d'uso:
 > - ricercare un prodotto nel catalogo
 > - inserire un nuovo prodotto in catalogo
 > - modificare i dati di un prodotto
-> 
+
 Attori e loro casi d'uso:
 
 |Attore|Casi d'uso|
@@ -755,12 +783,12 @@ sequenceDiagram
 
 #### Tipi di scenari
 
-|Tipo|Quando si usa|Scopo|
-|---|---|---|
-|**As-is scenario**|Nel re-engineering|Descrive come funziona il sistema _attuale_, per capire da dove si parte|
-|**Visionary scenario**|In greenfield o re-engineering|Descrive il sistema _futuro desiderato_, tipicamente proposto dal committente|
-|**Evaluation scenario**|Prima del collaudo|Descrive i task su cui sarà valutato il sistema; usato anche per i test|
-|**Training scenario**|Dopo il rilascio|Tutorial passo-passo per i nuovi utenti|
+| Tipo                    | Quando si usa                  | Scopo                                                                                                                                       |
+| ----------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **As-is scenario**      | Nel re-engineering             | Descrive come funziona il sistema _attuale_, per capire da dove si parte                                                                    |
+| **Visionary scenario**  | In greenfield o re-engineering | Descrive il sistema _futuro desiderato_, tipicamente proposto dal committente                                                               |
+| **Evaluation scenario** | Prima del collaudo             | Descrive i task su cui sarà valutato il sistema; usato anche per i test                                                                     |
+| **Training scenario**   | Dopo il rilascio               | Tutorial passo-passo per i nuovi utenti per imparare i corretti passaggi per utilizzare il sistema per raggiungere un determinato obiettivo |
 
 #### Individuazione degli scenari
 
@@ -781,6 +809,14 @@ Se il sistema già esiste (re-engineering o interface engineering), gli scenari 
 
 I casi d'uso si rappresentano con il **Use Case Diagram (UCD)** di UML:
 
+> [!info]
+> Per limiti tecnici di questo sito, i diagrammi qui sono simili e replicati nel linguaggio Mermaid e non in UML puro, ma rendono l'idea.
+
+
+> [!danger] Attenzione
+> A causa di un bug di Mermaid, i collegamenti senza direzione sono indicati con due punte di frecce.
+
+
 - **Attori** → omini stilizzati con il nome sotto (o `<<sistema>>` per attori non umani)
 - **Casi d'uso** → ellissi con il nome all'interno
 - **Associazione** → segmento che collega attore e caso d'uso
@@ -793,8 +829,8 @@ Un diagramma che mostra _tutti_ i casi d'uso del sistema si chiama **diagramma d
 #### Notazione grafica UML — elementi base
 ```mermaid
 flowchart LR
-    AH[Attore umano] --- UC((Caso d'uso))
-    SE[Sistema esterno] --- UC
+    AH[Attore umano] <---> UC((Caso d'uso))
+    SE[Sistema esterno] <---> UC
     subgraph S[Sistema]
         UC
     end
@@ -817,43 +853,18 @@ flowchart LR
         UC6((Modifica prodotto))
     end
 
-    UV --- UC1
-    UV --- UC2
+    UV <---> UC1
+    UV <---> UC2
 
-    UR --- UC1
-    UR --- UC3
-    UR --- UC4
+    UR <---> UC1
+    UR ---> UC3
+    UR <---> UC4
 
-    A --- UC5
-    A --- UC6
+    A <---> UC5
+    A <---> UC6
 
-    SB --- UC3
+    UC3 ---> SB
 ```
-
-#### Esempio — Diagramma di contesto: centralino telefonico
-```mermaid
-flowchart LR
-    U[Utente]
-    C[Centralinista]
-
-    subgraph CT[Centralino Telefonico]
-        UC1((Effettua chiamata diretta))
-        UC2((Effettua chiamata indiretta))
-        UC3((Accetta chiamata))
-        UC4((Trasferisce chiamata))
-        UC5((Interrompe chiamata))
-    end
-
-    U --- UC1
-    U --- UC2
-    U --- UC5
-
-    C --- UC3
-    C --- UC4
-    C --- UC5
-```
-
----
 
 ### Relazioni tra casi d'uso
 
@@ -929,8 +940,8 @@ flowchart LR
     U1((Acquista libro))
     U2((Acquista CD))
 
-    U1 -->|generalizzazione| U0
-    U2 -->|generalizzazione| U0
+    U1 --> U0
+    U2 --> U0
 ```
 
 Posso generalizzare anche gli attori:
@@ -941,8 +952,8 @@ flowchart LR
     CP[Cliente privato]
     DP[Ditta con P.IVA]
 
-    CP -->|generalizzazione| C
-    DP -->|generalizzazione| C
+    CP -->C
+    DP --> C
 ```
 
 ---
