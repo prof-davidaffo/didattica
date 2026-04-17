@@ -914,7 +914,7 @@ flowchart LR
     U1 -. &lt;&lt;extend&gt;&gt; .-> U2
 ```
 
-Lettura: "Help on Line _estende opzionalmente_ Acquista prodotto."
+Lettura: "Help on Line _estende_ Acquista prodotto."
 
 > ⚠️ Anche qui, errore tipico: la freccia va dal caso _variante_ al caso _standard_, non viceversa.
 
@@ -962,78 +962,49 @@ flowchart LR
 
 Ogni caso d'uso del diagramma va corredato da una **scheda descrittiva**, comprensibile anche a chi non ha conoscenze informatiche. Si usa il linguaggio naturale.
 
-```
-NOME DEL CASO D'USO    <identificatore univoco>
-Descrizione            <operazione effettuata>
-Scopo                  <sintesi dell'attività>
-Attori                 <tutti gli attori coinvolti>
-Attore primario        <attore che persegue l'obiettivo principale>
-Use Case d'extend      <use case che potrebbe seguire>
+| **Sezione**               | **Campo**                             | **Contenuto / Descrizione**                                                                                                                                     |
+| ------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Informazioni generali** | Nome del caso d’uso                   | `<xyz>`                                                                                                                                                         |
+|                           | Descrizione                           | `<operazione effettuata>`                                                                                                                                       |
+|                           | Scopo                                 | `<sintesi dell’attività>`                                                                                                                                       |
+|                           | Attori                                | `<descrizione degli attori coinvolti nel caso d’uso>`                                                                                                           |
+|                           | Attore primario                       | `<se un attore ha prevalenza sugli altri sull’esito del caso d’uso>`                                                                                            |
+|                           | Use Case d’extend                     | `<use case che potrebbe seguire a quello corrente>`                                                                                                             |
+|                           | Scenario principale                   | `<nome dello scenario principale>`                                                                                                                              |
+| **Scenario principale**   | 1. Entry condition (precondizione)    | È un vincolo che il sistema deve rispettare affinché il caso d’uso possa iniziare; si incomincia con _“questo caso d’uso inizia quando…”_                       |
+|                           | 2. Flusso di eventi                   | `<descrizione in linguaggio naturale informale>`                                                                                                                |
+|                           | 3. Exit condition (postcondizione)    | È una condizione verificata quando il caso d’uso termina (può variare in base allo scenario effettivo); si incomincia con _“questo caso d’uso termina quando…”_ |
+| **Scenari alternativi**   | Scenari alternativi                   | `<descrizione delle modalità alternative di esecuzione del caso>`                                                                                               |
+|                           | 1. Flussi alternativi                 | `<descrizione di cosa accade in tutte le situazioni di errore, cioè quando non va a buon fine il caso principale>`                                              |
+|                           | 2. Eccezioni                          | `<descrizione di cosa accade in tutte le situazioni di errore, cioè quando non va a buon fine il caso principale>`                                              |
+| **Altri attributi**       | Requisiti speciali                    | `<sono eventuali requisiti non funzionali (cioè non relativi alle funzionalità del sistema nell’assolvere al caso d’uso) e i vincoli>`                          |
+|                           | Extension Points                      | `<sono relazioni con eventuali altri casi d’uso correlati>`                                                                                                     |
+|                           | Frequenza stimata di utilizzo         | `<per decidere le priorità nel piano di sviluppo>`                                                                                                              |
+|                           | Criticità                             | `<per stimare il rischio legato al requisito>`                                                                                                                  |
+|                           | Specializza il caso d’uso (opzionale) | `<nome del caso d’uso generico del quale il caso d’uso corrente costituisce una specializzazione>`                                                              |
+|                           | Generalizza il caso d’uso (opzionale) | `<nome del caso d’uso specifico del quale il caso d’uso corrente costituisce una generalizzazione>`                                                             |
 
-SCENARIO PRINCIPALE    <nome dello scenario di successo>
-1. Entry condition (precondizione):
-   <condizione che deve essere vera prima che il caso d'uso inizi>
-   Formulazione: "questo caso d'uso inizia quando…"
-
-2. Flusso di eventi:
-   <sequenza numerata delle interazioni tra attore e sistema>
-
-3. Exit condition (postcondizione):
-   <stato del sistema al termine del caso d'uso>
-   Formulazione: "questo caso d'uso termina quando…"
-
-SCENARI ALTERNATIVI
-1. Flussi alternativi:
-   <percorsi validi diversi dallo scenario principale>
-2. Eccezioni:
-   <cosa succede in caso di errore o situazione anomala>
-
-Requisiti speciali:    <requisiti non funzionali rilevanti per questo caso d'uso>
-Extension Points:      <relazioni con altri casi d'uso>
-Frequenza di utilizzo: <utile per stabilire priorità di sviluppo>
-Criticità:             <rischio associato al requisito>
-```
 
 **Esempio completo — Acquisto di uno o più prodotti (negozio online)** 
 
-|Campo|Valore|
-|---|---|
-|Descrizione|Un utente registrato effettua un acquisto online|
-|Scopo|Scelta prodotto, aggiornamento carrello, pagamento|
-|Attori|Utente registrato, Sistema bancario|
-|Attore primario|Utente registrato|
-|Use Case d'extend|Organizzazione spedizione, fatturazione|
-
-**Scenario principale: Acquisto andato a buon fine**
-
-_Precondizione:_ L'utente deve essere registrato e autenticato.
-
-_Flusso di eventi:_
-
-1. Il cliente cerca nel catalogo e aggiunge uno o più articoli al carrello
-2. Il cliente accede alla cassa
-3. Il sistema mostra il riepilogo degli articoli selezionati
-4. Il cliente inserisce indirizzo e modalità di spedizione
-5. Il sistema calcola e mostra il totale (articoli + spedizione)
-6. Il cliente inserisce i dati della carta di credito
-7. Il sistema verifica la carta e autorizza il pagamento
-8. Il sistema conferma l'ordine
-9. Il sistema invia e-mail di conferma al cliente
-
-_Postcondizione:_ Se confermato, l'ordine viene trasmesso al magazzino. Se annullato, il sistema rimane inalterato.
-
-**Scenari alternativi (eccezioni):**
-
-- **a) Carta non valida**: al passo 7, il sistema rifiuta l'autorizzazione e invita il cliente a reinserire i dati
-- **b) Credito insufficiente**: al passo 7, il sistema segnala il credito esaurito e propone una carta alternativa
-- **c) Servizi interbancari non disponibili**: il sistema salva il carrello e invita il cliente a riprovare in seguito
-
-|Campo|Valore|
-|---|---|
-|Requisiti speciali|Inoltro al magazzino entro 24h; articoli disponibili in magazzino almeno nel 90% dei casi|
-|Extension Points|Sistema di consegna della merce|
-|Frequenza|~1 utente al minuto|
-|Criticità|Tempo di risposta|
+| **Sezione**               | **Campo**                          | **Contenuto**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ------------------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Informazioni generali** | Nome del caso d’uso                | **Acquisto di uno o più prodotti**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+|                           | Descrizione                        | Un utente registrato effettua un acquisto online                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+|                           | Scopo                              | Scelta prodotto, aggiornamento carrello, pagamento                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+|                           | Attori                             | Utente, Sistema bancario                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+|                           | Attore principale                  | Utente                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+|                           | Use Case d’extend                  | Organizzazione spedizione prodotti, fatturazione                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+|                           | Scenario principale                | Acquisto andato a buon fine                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| **Scenario principale**   | 1. Entry condition (precondizione) | Per poter fare un acquisto online l’utente deve essere registrato                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|                           | 2. Flusso di eventi                | 1) Il cliente ricerca nel catalogo e inserisce nel carrello uno o più articoli.2) Il cliente va “alla cassa”.3) Il sistema presenta il conto degli articoli selezionati.4) Il cliente inserisce le informazioni per la spedizione (indirizzo, tempo di consegna).5) Il sistema fornisce il conto totale, comprese le spese di spedizione.6) Il cliente inserisce le informazioni riguardo la sua carta di credito.7) Il sistema autorizza l’acquisto.8) Il sistema conferma il perfezionamento con successo dell’ordine.9) Il sistema invia una e-mail di conferma dell’acquisto all’indirizzo indicato dal cliente. |
+|                           | 3. Exit condition (postcondizione) | Se il cliente conferma l’ordine esso viene passato al magazzino, se invece l’utente lo annulla il sistema rimane inalterato                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| **Scenari alternativi**   | 1. Flussi alternativi              | Nessuno                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+|                           | 2. Eccezioni                       | **Eccezione a)** Carta di credito non valida:- Il sistema al passo 7 non autorizza l’acquisto.- Il sistema avverte l’utente e gli consente di reinserire i dati.**Eccezione b)** Credito esaurito:- Il sistema al passo 7 non autorizza l’acquisto.- Il sistema avverte l’utente e gli consente di inserire i dati di una diversa carta.**Eccezione c)** Collegamento con i servizi interbancari interrotto:- Il sistema salva il carrello dell’utente.- Invita a riprovare a perfezionare l’ordine in seguito.**Eccezione d)** <altre situazioni>                                                                   |
+| **Altri attributi**       | Requisiti speciali                 | Il sistema deve garantire che l’inoltro dell’ordine al magazzino avvenga entro le 24 ore successive alla sua conferma. Gli articoli richiesti dagli utenti devono essere presenti in magazzino almeno il 90% delle volte                                                                                                                                                                                                                                                                                                                                                                                             |
+|                           | Extension Points                   | Sistema di consegna della merce                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+|                           | Frequenza stimata di utilizzo      | Un utente al minuto                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|                           | Criticità                          | Tempo di risposta                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 
 > **Consiglio di Alistair Cockburn:** Lo scenario principale non dovrebbe mai superare i 9 passi. Il vero valore di un caso d'uso sta negli scenari alternativi. Uno scenario principale da 35 passi produce un caso d'uso illeggibile che "viene soltanto firmato — di solito con sgradevoli conseguenze sul progetto, alcuni mesi più tardi."
 

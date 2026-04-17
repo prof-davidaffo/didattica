@@ -231,32 +231,30 @@ Formalmente: il guadagno G = 2 significa che, nella direzione di massima emissio
 
 Valori tipici di guadagno: **1,64** per il dipolo hertziano (λ/2) e **3,3** per il dipolo marconiano (λ/4).
 
-> 🔎 Guadagno lineare e guadagno in decibel
-> 
-> Il guadagno può essere espresso in due modi:
-> 
-> - **forma lineare**: ad esempio \(G = 2\)
-> - **forma logaritmica in decibel**: ad esempio \(G_{dB} = 3\ \text{dB}\)
-> 
-> La conversione si fa con queste formule:
-> 
-> $$
+Il guadagno può essere espresso in due modi:
+
+- **forma lineare**: ad esempio \(G = 2\)
+- **forma logaritmica in decibel**: ad esempio \(G_{dB} = 3\ \text{dB}\)
+
+La conversione si fa con queste formule:
+
+$$
 G_{dB} = 10 \cdot \log_{10}(G)
  $$
-> 
-> $$
+
+$$
  G = 10^{G_{dB}/10}
  $$
-> 
-> Nella pratica, i costruttori di antenne indicano spesso il guadagno in dB, mentre nei calcoli della potenza conviene spesso usare il valore lineare.
 
-> **Esempio guidato —** Convertire un guadagno di 15,85 dB in valore lineare.
-> 
-> $$
-> G = 10^{15,85/10} \approx 38,5
-> $$
-> 
-> Quindi un'antenna con guadagno **15,85 dB** ha guadagno lineare **38,5**.
+Nella pratica, i costruttori di antenne indicano spesso il guadagno in dB, mentre nei calcoli della potenza conviene spesso usare il valore lineare.
+
+**Esempio guidato —** Convertire un guadagno di 15,85 dB in valore lineare.
+
+$$
+G = 10^{15,85/10} \approx 38,5
+$$
+
+Quindi un'antenna con guadagno **15,85 dB** ha guadagno lineare **38,5**.
 
 La potenza effettivamente emessa nella direzione di massima radiazione — chiamata **EIRP** (Equivalent Isotropic Radiated Power) — si calcola semplicemente moltiplicando la potenza che entra nell'antenna per il suo guadagno:
 
