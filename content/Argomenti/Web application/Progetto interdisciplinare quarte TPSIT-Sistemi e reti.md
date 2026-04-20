@@ -1,149 +1,189 @@
-# Progetto interdisciplinare
-## Analizzatore intelligente di configurazioni IP
----
-## contesto
-Il progetto coinvolge due classi quarte:
-- **TPSIT** → sviluppo software (webapp client-side in JavaScript)
-- **Sistemi e Reti** → definizione del modello tecnico di rete e delle regole di validazione
-L’obiettivo è realizzare uno strumento che analizzi configurazioni IP e ne valuti la correttezza.
----
-## obiettivo del progetto
-Realizzare una **webapp client-side (solo HTML, CSS, JavaScript)** che:
-- analizzi una configurazione IP
-- calcoli i parametri di rete
-- individui errori e criticità
-- spieghi i problemi in modo tecnico
-- confronti due host e stabilisca se possono comunicare
----
-## prodotto finale richiesto
-Una webapp funzionante che includa:
-### 1) Analisi singolo host
+# Analizzatore intelligente di configurazioni di rete
+***
+## cosa dovete realizzare
+Dovete creare una **webapp (pagina web con HTML, CSS e JavaScript, senza server)** che analizzi configurazioni di rete e risponda a queste domande:
+- La configurazione è corretta?  
+- Se non lo è, qual è l’errore?  
+- Perché è un errore?  
+- Come si può correggere?  
+- Due dispositivi possono comunicare tra loro?  
+***
+## concetti fondamentali (da conoscere)
+- **Indirizzo IP (Internet Protocol)**: identificatore numerico di un dispositivo in rete (es: 192.168.1.10)  
+- **Subnet (sottorete)**: gruppo di dispositivi nella stessa rete logica  
+- **CIDR (Classless Inter-Domain Routing)**: numero che indica la dimensione della rete (es: /24)  
+- **Netmask (maschera di rete)**: alternativa al CIDR (es: 255.255.255.0)  
+- **Gateway (porta di accesso)**: dispositivo che permette di uscire dalla propria rete  
+- **Network address (indirizzo di rete)**: identifica la rete, NON un dispositivo  
+- **Broadcast address (indirizzo broadcast)**: usato per inviare dati a tutti i dispositivi della rete  
+***
+## cosa deve fare la webapp
+***
+## 1) Analisi di un dispositivo
+L’utente inserisce:
+- indirizzo IP (Internet Protocol)  
+- subnet in formato CIDR (es: 24) oppure netmask (es: 255.255.255.0)  
+- gateway (porta di accesso)  
+La webapp deve calcolare e mostrare:
+- indirizzo di rete (network address)  
+- indirizzo broadcast  
+- primo e ultimo indirizzo utilizzabile  
+- numero di dispositivi possibili  
+- errori e avvisi  
+- spiegazione tecnica  
+- suggerimenti per correggere  
+***
+### esempio corretto
 Input:
-- indirizzo IP
-- subnet (CIDR o netmask)
-- gateway
+```
+IP: 192.168.1.10
+CIDR: 24
+Gateway: 192.168.1.1
+```
 Output:
-- network address
-- broadcast address
-- intervallo host
-- numero host disponibili
-- errori e warning
-- spiegazione tecnica
----
-### 2) Confronto tra due host
-La webapp deve stabilire:
-- se i due host sono nella stessa subnet
-- se possono comunicare direttamente
-- se serve un gateway
-- se la comunicazione è logicamente possibile
-Con spiegazione del risultato.
----
-### 3) Report finale
-Per ogni analisi:
-- riepilogo configurazione
-- elenco errori (con categoria e gravità)
-- spiegazione
-- suggerimenti di correzione
-- giudizio complessivo
----
-## vincoli tecnici obbligatori (TPSIT)
-### Architettura
-Il codice deve essere strutturato in modo modulare:
-- separazione tra dati, logica e interfaccia
-- nessun codice monolitico
----
-### Programmazione funzionale (OBBLIGATORIA)
-Devono essere utilizzati:
-- `map`
-- `filter`
-- `reduce`
-- funzioni di ordine superiore
-- almeno una **closure significativa**
-Esempio richiesto:
-- pipeline di validazione basata su array di funzioni
----
-### Motore di validazione
-Le regole NON devono essere scritte con `if` annidati, ma come:
-- insieme di funzioni indipendenti
-- applicate in sequenza
-Ogni validatore deve restituire:
-- `null` (nessun errore)
-- oppure un oggetto strutturato
----
-### Struttura degli errori
-Ogni errore deve includere:
-- codice
-- categoria (syntax, logical, design, communication)
-- gravità (error, warning, info)
-- messaggio
-- spiegazione
-- suggerimento
----
-## compiti della classe TPSIT
-- progettazione della struttura dati
-- implementazione delle funzioni di calcolo IP
-- sviluppo del motore di validazione
-- implementazione del confronto tra host
-- sviluppo interfaccia utente
-- gestione input/output
-- organizzazione modulare del codice
----
-## compiti della classe Sistemi e Reti
-La classe NON sviluppa codice, ma definisce il modello tecnico.
-Deve produrre:
-### 1) Regole di validazione
-Per ogni regola:
-- nome
-- descrizione tecnica
-- condizione di errore
-- gravità
-- spiegazione
-- suggerimento
----
-### 2) Casi di test
-Almeno:
-- 5 configurazioni corrette
-- 5 con errori
-- 5 casi di confronto tra host
----
-### 3) Spiegazioni tecniche
-Testi che la webapp utilizzerà per spiegare:
-- subnetting
-- gateway
-- comunicazione tra host
----
-## esempi di regole richieste
-Minimo obbligatorio:
-- IP non valido
-- CIDR non valido
-- netmask non valida
-- IP = network address
-- IP = broadcast address
-- gateway non valido
-- gateway fuori subnet
-- gateway uguale all’host
-- host in subnet diverse (per confronto)
----
-## funzionalità opzionali (bonus)
-- uso di netmask alternativa
-- classificazione degli errori
-- casi di test selezionabili
-- salvataggio configurazioni
-- visualizzazione percorso comunicazione
-- esportazione JSON
----
+```
+Indirizzo di rete: 192.168.1.0
+Broadcast: 192.168.1.255
+Intervallo host: 192.168.1.1 - 192.168.1.254
+✔ Configurazione corretta
+```
+***
+### esempio con errore
+Input:
+```
+IP: 192.168.1.0
+CIDR: 24
+Gateway: 192.168.1.1
+```
+Output:
+```
+❌ Errore: l'indirizzo IP coincide con l'indirizzo di rete
+Spiegazione:
+L’indirizzo di rete identifica la rete e non può essere assegnato a un dispositivo.
+Suggerimento:
+Usa un indirizzo tra 192.168.1.1 e 192.168.1.254
+```
+***
+## 2) Confronto tra due dispositivi
+L’utente inserisce due configurazioni:
+- Dispositivo A  
+- Dispositivo B  
+La webapp deve dire:
+- Sono nella stessa sottorete?  
+- Possono comunicare direttamente?  
+- Serve il gateway?  
+- La comunicazione è possibile?  
+***
+### esempio 1 — stessa rete
+```
+Dispositivo A: 192.168.1.10 /24
+Dispositivo B: 192.168.1.50 /24
+```
+Output:
+```
+✔ Comunicazione diretta possibile
+Motivo:
+I due dispositivi sono nella stessa sottorete
+```
+***
+### esempio 2 — reti diverse
+```
+Dispositivo A: 192.168.1.10 /24
+Dispositivo B: 192.168.2.10 /24
+```
+Output:
+```
+⚠ Comunicazione non diretta
+Motivo:
+I dispositivi sono in reti diverse
+Suggerimento:
+Serve un gateway per comunicare
+```
+***
+### esempio 3 — errore
+```
+Dispositivo A: 192.168.1.10 /24, gateway 192.168.2.1
+Dispositivo B: 192.168.1.20 /24
+```
+Output:
+```
+❌ Errore: gateway non valido
+Spiegazione:
+Il gateway deve appartenere alla stessa rete del dispositivo
+Conclusione:
+La comunicazione non è possibile
+```
+***
+## struttura del codice (obbligatoria)
+Il codice deve essere organizzato in modo chiaro:
+- dati (configurazione dispositivi)  
+- funzioni di calcolo  
+- funzioni di controllo (validatori)  
+- interfaccia utente  
+NON è accettato:
+- tutto il codice in un’unica funzione  
+- codice duplicato  
+- if annidati lunghi  
+***
+## programmazione funzionale (obbligatoria)
+Dovete usare:
+- Looping functions quando possibile al posto dei for
+- Oggetti Javascript
+- funzioni passate come parametri
+***
+### esempio richiesto
+```js
+const validators = [
+  validateIP,
+  validateGateway,
+  validateSubnet
+];
+const results = validators
+  .map(v => v(config))
+  .filter(r => r !== null);
+```
+***
+## struttura degli errori (obbligatoria)
+Ogni errore deve essere strutturato così:
+```js
+{
+  code: "GATEWAY_OUT_OF_SUBNET",
+  severity: "error",
+  category: "logical",
+  message: "...",
+  explanation: "...",
+  suggestion: "..."
+}
+```
+***
+## errori da gestire
+### errori di formato
+- indirizzo IP non valido  
+- subnet non valida  
+***
+### errori logici
+- IP uguale all’indirizzo di rete  
+- IP uguale al broadcast  
+- gateway fuori dalla rete  
+- gateway uguale al dispositivo  
+***
+### errori di comunicazione
+- dispositivi in reti diverse  
+- assenza di gateway  
+***
+## ruolo delle due classi
+### TPSIT
+- scrive il codice  
+- costruisce la webapp  
+- organizza la logica  
+***
+### Sistemi e Reti
+- definisce le regole  
+- stabilisce cosa è corretto o sbagliato  
+- scrive le spiegazioni  
+- crea i casi di test
+***
 ## consegna finale
-Ogni gruppo deve presentare:
-- webapp funzionante
-- breve documentazione (1 pagina)
-- spiegazione del lavoro svolto
-- dimostrazione di un caso corretto e uno errato
----
-## vincolo fondamentale
-> La webapp NON deve limitarsi a dire se una configurazione è corretta, ma deve spiegare il perché.
----
-## obiettivo didattico
-- applicare il subnetting in modo concreto
-- sviluppare software strutturato
-- usare programmazione funzionale in un contesto reale
-- integrare competenze tra discipline diverse
+- struttura HTML, CSS, JS funzionante  
+- documentazione tecnica  
+- dimostrazione

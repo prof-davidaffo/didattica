@@ -1593,10 +1593,7 @@ Questo principio va usato insieme al principio di Liskov (il prossimo).
 > **"Subtypes must be substitutable for their base types."** _Le classi derivate devono poter sostituire le classi base in modo trasparente._
 
 In qualsiasi punto del programma in cui si usa un oggetto di tipo `T`, si deve poter usare in sua vece un oggetto di tipo `S` (sottotipo di `T`) **senza che il comportamento del programma cambi**.
-
-**Perché va oltre la semplice relazione IS-A:**
-
-Il principio IS-A dice che un figlio _è un_ padre. Liskov aggiunge: il figlio deve poter _sostituire_ il padre in ogni situazione, senza eccezioni. Non basta che la relazione "abbia senso a parole" — deve funzionare anche a livello di comportamento.
+In parole povere, una classe figlia deve poter sostituire la classe padre in qualunque situazione, senza compromettere il funzionamento del programma.
 
 > **Esempio del controesempio classico:**
 > 
@@ -1644,7 +1641,7 @@ Il principio IS-A dice che un figlio _è un_ padre. Liskov aggiunge: il figlio d
 > // Entrambi implementano Forma: non si violano reciprocamente i contratti
 > ```
 
-> **Barbara Liskov** ha descritto questo problema per la prima volta nel 1988.
+> Il principio prende il nome da **Barbara Liskov**, che ha descritto questo problema per la prima volta nel 1988.
 
 ---
 
