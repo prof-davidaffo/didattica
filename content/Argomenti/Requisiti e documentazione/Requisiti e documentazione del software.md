@@ -1494,34 +1494,38 @@ Se una classe ha più responsabilità, qualsiasi cambiamento in una di esse può
 
 **Come verificarlo:** cerca di trovare più di un motivo per cui la classe potrebbe cambiare. Se ne trovi più di uno, la classe ha troppe responsabilità e va ristrutturata.
 
-> **Esempio con codice — SRP violato e corretto**
-> 
-> ```java
-> // ❌ VIOLAZIONE — una classe fa troppo
-> class Ordine {
->     private List<Prodotto> prodotti;
-> 
->     public double calcolaTotale() { ... }       // logica di business
->     public void stampaRicevuta() { ... }        // presentazione
->     public void salvasuDatabase() { ... }       // persistenza
-> }
-> 
-> // ✅ CORRETTO — tre classi, tre responsabilità separate
-> class Ordine {
->     private List<Prodotto> prodotti;
->     public double calcolaTotale() { ... }       // solo logica di business
-> }
-> 
-> class StampatoreOrdine {
->     public void stampa(Ordine o) { ... }        // solo presentazione
-> }
-> 
-> class RepositoryOrdine {
->     public void salva(Ordine o) { ... }         // solo persistenza
-> }
-> ```
-> 
-> Ora se cambia il formato della ricevuta, si tocca solo `StampatoreOrdine`. Se cambia il database, si tocca solo `RepositoryOrdine`. Le altre classi restano intatte.
+**Esempio con codice — SRP violato e corretto**
+
+❌ VIOLAZIONE — una classe fa troppo
+```java
+class Ordine {
+    private List<Prodotto> prodotti;
+
+    public double calcolaTotale() { ... }       // logica di business
+    public void stampaRicevuta() { ... }        // presentazione
+    public void salvasuDatabase() { ... }       // persistenza
+}
+```
+
+
+✅ CORRETTO — tre classi, tre responsabilità separate
+```java
+class Ordine {
+    private List<Prodotto> prodotti;
+    public double calcolaTotale() { ... }       // solo logica di business
+}
+
+class StampatoreOrdine {
+    public void stampa(Ordine o) { ... }        // solo presentazione
+}
+
+class RepositoryOrdine {
+    public void salva(Ordine o) { ... }         // solo persistenza
+}
+```
+
+
+Ora se cambia il formato della ricevuta, si tocca solo `StampatoreOrdine`. Se cambia il database, si tocca solo `RepositoryOrdine`. Le altre classi restano intatte.
 
 ---
 
@@ -1545,46 +1549,49 @@ Modificare codice esistente che funziona introduce sempre il rischio di rompere 
 
 Questo principio va usato insieme al principio di Liskov (il prossimo).
 
-> **Esempio con codice — OCP violato e corretto**
-> 
-> ```java
-> // ❌ VIOLAZIONE — per aggiungere una forma devo modificare questa classe
-> class CalcolatoreArea {
->     public double calcola(Object forma) {
->         if (forma instanceof Cerchio) {
->             return Math.PI * ((Cerchio) forma).raggio * ((Cerchio) forma).raggio;
->         } else if (forma instanceof Rettangolo) {
->             return ((Rettangolo) forma).base * ((Rettangolo) forma).altezza;
->         }
->         // ogni nuova forma richiede di modificare questo metodo
->         return 0;
->     }
-> }
-> 
-> // ✅ CORRETTO — per aggiungere una forma creo solo una nuova classe
-> interface Forma {
->     double calcolaArea();
-> }
-> 
-> class Cerchio implements Forma {
->     public double calcolaArea() { return Math.PI * raggio * raggio; }
-> }
-> 
-> class Rettangolo implements Forma {
->     public double calcolaArea() { return base * altezza; }
-> }
-> 
-> // Aggiungere Triangolo = nuova classe, zero modifiche al codice esistente
-> class Triangolo implements Forma {
->     public double calcolaArea() { return (base * altezza) / 2; }
-> }
-> 
-> class CalcolatoreArea {
->     public double calcola(Forma forma) {
->         return forma.calcolaArea();  // non cambia mai
->     }
-> }
-> ```
+**Esempio con codice — OCP violato e corretto**
+
+❌ VIOLAZIONE — per aggiungere una forma devo modificare questa classe
+```java
+class CalcolatoreArea {
+    public double calcola(Object forma) {
+        if (forma instanceof Cerchio) {
+            return Math.PI * ((Cerchio) forma).raggio * ((Cerchio) forma).raggio;
+        } else if (forma instanceof Rettangolo) {
+            return ((Rettangolo) forma).base * ((Rettangolo) forma).altezza;
+        }
+        // ogni nuova forma richiede di modificare questo metodo
+        return 0;
+    }
+}
+```
+
+✅ CORRETTO — per aggiungere una forma creo solo una nuova classe
+
+```java
+interface Forma {
+    double calcolaArea();
+}
+
+class Cerchio implements Forma {
+    public double calcolaArea() { return Math.PI * raggio * raggio; }
+}
+
+class Rettangolo implements Forma {
+    public double calcolaArea() { return base * altezza; }
+}
+
+// Aggiungere Triangolo = nuova classe, zero modifiche al codice esistente
+class Triangolo implements Forma {
+    public double calcolaArea() { return (base * altezza) / 2; }
+}
+
+class CalcolatoreArea {
+    public double calcola(Forma forma) {
+        return forma.calcolaArea();  // non cambia mai
+    }
+}
+```
 
 ---
 
@@ -1601,45 +1608,46 @@ In parole povere, una classe figlia deve poter sostituire la classe padre in qua
 
 **Attenzione alle precondizioni e postcondizioni:** una classe derivata non deve avere precondizioni più forti o postcondizioni più deboli della classe base.
 
-> **Esempio con codice — LSP violato e corretto**
-> 
-> ```java
-> // ❌ VIOLAZIONE — il Quadrato rompe il comportamento atteso del Rettangolo
-> class Rettangolo {
->     protected int altezza, larghezza;
->     public void setAltezza(int h)   { altezza = h; }
->     public void setLarghezza(int w) { larghezza = w; }
->     public int area() { return altezza * larghezza; }
-> }
-> 
-> class Quadrato extends Rettangolo {
->     // Il quadrato forza altezza == larghezza: rompe il contratto del Rettangolo
->     public void setAltezza(int h)   { altezza = h; larghezza = h; }
->     public void setLarghezza(int w) { larghezza = w; altezza = w; }
-> }
-> 
-> // Questo codice funziona con Rettangolo ma si rompe con Quadrato:
-> void testaRettangolo(Rettangolo r) {
->     r.setAltezza(5);
->     r.setLarghezza(4);
->     assert r.area() == 20;  // ❌ Fallisce se r è un Quadrato: area = 16
-> }
-> 
-> // ✅ CORRETTO — gerarchia riprogettata rispettando LSP
-> interface Forma { int area(); }
-> 
-> class Rettangolo implements Forma {
->     public Rettangolo(int altezza, int larghezza) { ... }
->     public int area() { return altezza * larghezza; }
-> }
-> 
-> class Quadrato implements Forma {
->     public Quadrato(int lato) { ... }
->     public int area() { return lato * lato; }
-> }
-> // Rettangolo e Quadrato non sono in relazione di ereditarietà
-> // Entrambi implementano Forma: non si violano reciprocamente i contratti
-> ```
+**Esempio con codice — LSP violato e corretto**
+
+❌ VIOLAZIONE — il Quadrato rompe il comportamento atteso del Rettangolo
+```java
+class Rettangolo {
+    protected int altezza, larghezza;
+    public void setAltezza(int h)   { altezza = h; }
+    public void setLarghezza(int w) { larghezza = w; }
+    public int area() { return altezza * larghezza; }
+}
+
+class Quadrato extends Rettangolo {
+    // Il quadrato forza altezza == larghezza: rompe il contratto del Rettangolo
+    public void setAltezza(int h)   { altezza = h; larghezza = h; }
+    public void setLarghezza(int w) { larghezza = w; altezza = w; }
+}
+
+// Questo codice funziona con Rettangolo ma si rompe con Quadrato:
+void testaRettangolo(Rettangolo r) {
+    r.setAltezza(5);
+    r.setLarghezza(4);
+    assert r.area() == 20;  // ❌ Fallisce se r è un Quadrato: area = 16
+}
+```
+✅ CORRETTO — gerarchia riprogettata rispettando LSP
+```java
+interface Forma { int area(); }
+
+class Rettangolo implements Forma {
+    public Rettangolo(int altezza, int larghezza) { ... }
+    public int area() { return altezza * larghezza; }
+}
+
+class Quadrato implements Forma {
+    public Quadrato(int lato) { ... }
+    public int area() { return lato * lato; }
+}
+// Rettangolo e Quadrato non sono in relazione di ereditarietà
+// Entrambi implementano Forma: non si violano reciprocamente i contratti
+```
 
 > Il principio prende il nome da **Barbara Liskov**, che ha descritto questo problema per la prima volta nel 1988.
 
@@ -1663,38 +1671,39 @@ Spezzare le interfacce grandi in interfacce più piccole e coese. Ogni classe im
 > 
 > Un'interfaccia `Animale` con metodi `nuota()`, `vola()`, `corre()` è sbagliata: i pesci non volano, gli uccelli non nuotano ecc. Meglio tre interfacce separate: `Nuotatore`, `Volatore`, `Corridore`, implementate solo dalle classi appropriate.
 
-> **Esempio con codice — ISP violato e corretto**
-> 
-> ```java
-> // ❌ VIOLAZIONE — interfaccia "grassa" che forza implementazioni vuote
-> interface Stampante {
->     void stampa(Documento d);
->     void scansiona(Documento d);
->     void invia(Documento d);    // fax
-> }
-> 
-> // La stampante semplice deve implementare metodi che non usa
-> class StampanteSemplice implements Stampante {
->     public void stampa(Documento d) { /* OK */ }
->     public void scansiona(Documento d) { throw new UnsupportedOperationException(); }
->     public void invia(Documento d)    { throw new UnsupportedOperationException(); }
-> }
-> 
-> // ✅ CORRETTO — interfacce separate per ruoli separati
-> interface Stampabile  { void stampa(Documento d); }
-> interface Scansionabile { void scansiona(Documento d); }
-> interface Faxabile    { void invia(Documento d); }
-> 
-> class StampanteSemplice implements Stampabile {
->     public void stampa(Documento d) { /* OK, solo quello che serve */ }
-> }
-> 
-> class StampanteMultifunzione implements Stampabile, Scansionabile, Faxabile {
->     public void stampa(Documento d)   { ... }
->     public void scansiona(Documento d){ ... }
->     public void invia(Documento d)    { ... }
-> }
-> ```
+**Esempio con codice — ISP violato e corretto**
+
+❌ VIOLAZIONE — interfaccia "grassa" che forza implementazioni vuote
+```java
+interface Stampante {
+    void stampa(Documento d);
+    void scansiona(Documento d);
+    void invia(Documento d);    // fax
+}
+
+// La stampante semplice deve implementare metodi che non usa
+class StampanteSemplice implements Stampante {
+    public void stampa(Documento d) { /* OK */ }
+    public void scansiona(Documento d) { throw new UnsupportedOperationException(); }
+    public void invia(Documento d)    { throw new UnsupportedOperationException(); }
+}
+```
+✅ CORRETTO — interfacce separate per ruoli separati
+```java
+interface Stampabile  { void stampa(Documento d); }
+interface Scansionabile { void scansiona(Documento d); }
+interface Faxabile    { void invia(Documento d); }
+
+class StampanteSemplice implements Stampabile {
+    public void stampa(Documento d) { /* OK, solo quello che serve */ }
+}
+
+class StampanteMultifunzione implements Stampabile, Scansionabile, Faxabile {
+    public void stampa(Documento d)   { ... }
+    public void scansiona(Documento d){ ... }
+    public void invia(Documento d)    { ... }
+}
+```
 
 ---
 
@@ -1736,67 +1745,54 @@ Entrambi i livelli dipendono da un'**astrazione** (interfaccia). I dettagli conc
 - sostituibilità delle implementazioni concrete senza impatto sui livelli superiori
 - maggiore testabilità (si possono usare mock/stub per le dipendenze)
 
-> **Esempio con codice — DIP violato e corretto**
-> 
-> ```java
-> // ❌ VIOLAZIONE — la logica di business dipende da un database specifico
-> class GestoreOrdini {
->     private MySQLDatabase db = new MySQLDatabase();  // dipendenza diretta!
-> 
->     public void salvaOrdine(Ordine o) {
->         db.insert("ordini", o);   // se cambia database, cambia questa classe
->     }
-> }
-> 
-> // ✅ CORRETTO — entrambi i livelli dipendono dall'astrazione
-> 
-> // 1. Definire l'astrazione (interfaccia)
-> interface DatabaseRepository {
->     void salva(String tabella, Object dato);
-> }
-> 
-> // 2. La logica di business dipende dall'interfaccia, non dall'implementazione
-> class GestoreOrdini {
->     private DatabaseRepository db;   // dipende dall'astrazione
-> 
->     public GestoreOrdini(DatabaseRepository db) {
->         this.db = db;   // la dipendenza viene "iniettata" dall'esterno
->     }
-> 
->     public void salvaOrdine(Ordine o) {
->         db.salva("ordini", o);   // non cambia mai, indipendente dal DB usato
->     }
-> }
-> 
-> // 3. Le implementazioni concrete dipendono dall'interfaccia
-> class MySQLRepository implements DatabaseRepository {
->     public void salva(String tabella, Object dato) { /* MySQL */ }
-> }
-> 
-> class PostgreSQLRepository implements DatabaseRepository {
->     public void salva(String tabella, Object dato) { /* PostgreSQL */ }
-> }
-> 
-> // Passare da MySQL a PostgreSQL: zero modifiche a GestoreOrdini
-> GestoreOrdini g = new GestoreOrdini(new PostgreSQLRepository());
-> ```
-> 
+**Esempio con codice — DIP violato e corretto**
+
+❌ VIOLAZIONE — la logica di business dipende da un database specifico
+```java
+class GestoreOrdini {
+    private MySQLDatabase db = new MySQLDatabase();  // dipendenza diretta!
+
+    public void salvaOrdine(Ordine o) {
+        db.insert("ordini", o);   // se cambia database, cambia questa classe
+    }
+}
+```
+✅ CORRETTO — entrambi i livelli dipendono dall'astrazione
+```java
+// 1. Definire l'astrazione (interfaccia)
+interface DatabaseRepository {
+    void salva(String tabella, Object dato);
+}
+
+// 2. La logica di business dipende dall'interfaccia, non dall'implementazione
+class GestoreOrdini {
+    private DatabaseRepository db;   // dipende dall'astrazione
+
+    public GestoreOrdini(DatabaseRepository db) {
+        this.db = db;   // la dipendenza viene "iniettata" dall'esterno
+    }
+
+    public void salvaOrdine(Ordine o) {
+        db.salva("ordini", o);   // non cambia mai, indipendente dal DB usato
+    }
+}
+
+// 3. Le implementazioni concrete dipendono dall'interfaccia
+class MySQLRepository implements DatabaseRepository {
+    public void salva(String tabella, Object dato) { /* MySQL */ }
+}
+
+class PostgreSQLRepository implements DatabaseRepository {
+    public void salva(String tabella, Object dato) { /* PostgreSQL */ }
+}
+
+// Passare da MySQL a PostgreSQL: zero modifiche a GestoreOrdini
+GestoreOrdini g = new GestoreOrdini(new PostgreSQLRepository());
+```
+
 > Questo pattern si chiama **Dependency Injection (DI)** ed è la forma più comune di applicare il DIP.
 
 ---
-
-### Riepilogo S.O.L.I.D.
-
-|Sigla|Principio|In una frase|
-|---|---|---|
-|**S**|Single Responsibility|Una classe, una responsabilità, un solo motivo per cambiare|
-|**O**|Open/Closed|Aperta alle estensioni, chiusa alle modifiche|
-|**L**|Liskov Substitution|I sottotipi devono essere sostituibili ai loro supertipi in modo trasparente|
-|**I**|Interface Segregation|Molte interfacce specifiche sono meglio di una sola interfaccia generale|
-|**D**|Dependency Inversion|Dipendi dalle astrazioni, non dalle implementazioni concrete|
-
----
-
 ### Conclusione
 
 Conoscere S.O.L.I.D. è importante, ma lo è ancora di più saper **riconoscere quando si sta violando un principio**. I principi si applicano con giudizio: non sono dogmi, ma strumenti che — usati bene — portano a un codice più flessibile, estendibile, testabile e mantenibile.
@@ -1804,197 +1800,6 @@ Conoscere S.O.L.I.D. è importante, ma lo è ancora di più saper **riconoscere 
 Applicati sia durante la progettazione iniziale che durante il **refactoring** di sistemi legacy, i principi S.O.L.I.D. aiutano gli sviluppatori a governare la complessità nel tempo.
 
 ---
-
-### Esempio integrato — tutti i principi S.O.L.I.D. su un sistema coerente
-
-I cinque principi non sono indipendenti: si rinforzano a vicenda. L'esempio seguente mostra una piccola parte del sistema negozio online progettata applicandoli tutti insieme, partendo da un design sbagliato e migliorandolo passo per passo.
-
-#### Punto di partenza — design problematico
-
-```java
-// ❌ Classe monolitica che viola tutti i principi S.O.L.I.D.
-class GestoreOrdini {
-
-    // Viola SRP: gestisce logica, notifiche, pagamento e persistenza
-    public void processaOrdine(Ordine ordine) {
-
-        // Viola DIP: dipende da implementazioni concrete
-        MySQLDatabase db = new MySQLDatabase();
-        StripePayment stripe = new StripePayment();
-        GmailNotifier gmail = new GmailNotifier();
-
-        // Paga
-        stripe.addebita(ordine.getTotale(), ordine.getCartaDiCredito());
-
-        // Salva
-        db.insert("ordini", ordine);
-
-        // Notifica — viola OCP: aggiungere SMS richiede modificare questo metodo
-        if (ordine.getPreferenzaNotifica().equals("email")) {
-            gmail.invia(ordine.getEmail(), "Ordine confermato");
-        } else if (ordine.getPreferenzaNotifica().equals("sms")) {
-            // TODO: aggiungere SMS... ma devo modificare questa classe!
-        }
-    }
-
-    // Viola ISP: questo metodo non c'entra con la gestione ordini
-    public void generaReportVendite() { ... }
-    public void sincronizzaMagazzino() { ... }
-}
-```
-
-#### Dopo l'applicazione di S.O.L.I.D.
-
-```java
-// ─────────────────────────────────────────────
-// S — Single Responsibility
-// Ogni classe ha una sola responsabilità
-// ─────────────────────────────────────────────
-
-class Ordine {
-    // Solo dati e logica di business dell'ordine
-    private List<RigaOrdine> righe;
-    private Cliente cliente;
-
-    public double calcolaTotale() {
-        return righe.stream().mapToDouble(RigaOrdine::getSubtotale).sum();
-    }
-    public boolean isValido() { return !righe.isEmpty() && cliente != null; }
-}
-
-class ProcessatoreOrdini {
-    // Solo orchestrazione del flusso di elaborazione ordine
-    private final PagamentoService pagamento;
-    private final OrdineRepository repository;
-    private final NotificaService notifica;
-
-    // D — Dependency Inversion: dipende da interfacce, non da implementazioni
-    public ProcessatoreOrdini(PagamentoService p, OrdineRepository r, NotificaService n) {
-        this.pagamento = p;
-        this.repository = r;
-        this.notifica = n;
-    }
-
-    public void processa(Ordine ordine) {
-        pagamento.addebita(ordine.calcolaTotale(), ordine.getCliente());
-        repository.salva(ordine);
-        notifica.notifica(ordine);
-    }
-}
-
-// ─────────────────────────────────────────────
-// I — Interface Segregation
-// Interfacce piccole e specifiche per ruolo
-// ─────────────────────────────────────────────
-
-interface PagamentoService {
-    void addebita(double importo, Cliente cliente);
-}
-
-interface OrdineRepository {
-    void salva(Ordine ordine);
-    Ordine trovaById(int id);
-}
-
-interface NotificaService {
-    void notifica(Ordine ordine);
-}
-
-// ─────────────────────────────────────────────
-// O — Open/Closed + D — Dependency Inversion
-// Aggiungere un nuovo metodo di pagamento = nuova classe, zero modifiche
-// ─────────────────────────────────────────────
-
-class StripePagamentoService implements PagamentoService {
-    public void addebita(double importo, Cliente cliente) {
-        // integrazione specifica Stripe
-    }
-}
-
-class PayPalPagamentoService implements PagamentoService {
-    public void addebita(double importo, Cliente cliente) {
-        // integrazione specifica PayPal — aggiunta senza toccare ProcessatoreOrdini
-    }
-}
-
-// ─────────────────────────────────────────────
-// O — Open/Closed per le notifiche
-// Aggiungere SMS o push notification = nuova classe
-// ─────────────────────────────────────────────
-
-class EmailNotificaService implements NotificaService {
-    public void notifica(Ordine ordine) {
-        // invia email di conferma
-    }
-}
-
-class SmsNotificaService implements NotificaService {
-    public void notifica(Ordine ordine) {
-        // invia SMS — aggiunto senza modificare nulla di esistente
-    }
-}
-
-// Notifica via più canali contemporaneamente: Open/Closed in azione
-class MultiNotificaService implements NotificaService {
-    private List<NotificaService> servizi;
-
-    public MultiNotificaService(List<NotificaService> servizi) {
-        this.servizi = servizi;
-    }
-
-    public void notifica(Ordine ordine) {
-        servizi.forEach(s -> s.notifica(ordine));
-    }
-}
-
-// ─────────────────────────────────────────────
-// L — Liskov Substitution
-// MySQLRepository e PostgreSQLRepository sono intercambiabili
-// ─────────────────────────────────────────────
-
-class MySQLOrdineRepository implements OrdineRepository {
-    public void salva(Ordine o) { /* MySQL */ }
-    public Ordine trovaById(int id) { /* MySQL */ return null; }
-}
-
-class PostgreSQLOrdineRepository implements OrdineRepository {
-    public void salva(Ordine o) { /* PostgreSQL */ }
-    public Ordine trovaById(int id) { /* PostgreSQL */ return null; }
-}
-// Sostituire MySQLOrdineRepository con PostgreSQLOrdineRepository
-// non rompe nessun codice che dipende da OrdineRepository — LSP rispettato
-
-// ─────────────────────────────────────────────
-// Composizione finale — configurazione dell'applicazione
-// ─────────────────────────────────────────────
-
-// Configurazione per produzione
-ProcessatoreOrdini processatore = new ProcessatoreOrdini(
-    new StripePagamentoService(),
-    new MySQLOrdineRepository(),
-    new MultiNotificaService(List.of(
-        new EmailNotificaService(),
-        new SmsNotificaService()
-    ))
-);
-
-// Passare a PayPal + PostgreSQL + solo email: zero modifiche alla logica
-ProcessatoreOrdini processatore2 = new ProcessatoreOrdini(
-    new PayPalPagamentoService(),
-    new PostgreSQLOrdineRepository(),
-    new EmailNotificaService()
-);
-```
-
-#### Cosa si è ottenuto applicando tutti i principi insieme
-
-|Vantaggio|Come si manifesta in questo esempio|
-|---|---|
-|**Modificabilità**|Cambiare database, metodo di pagamento o canale di notifica richiede solo creare una nuova classe|
-|**Testabilità**|Si può testare `ProcessatoreOrdini` con implementazioni false (mock) di `PagamentoService`, `OrdineRepository`, `NotificaService`|
-|**Leggibilità**|Ogni classe è breve, fa una cosa sola, il nome dice già cosa fa|
-|**Riutilizzabilità**|`EmailNotificaService` può essere usata in altri contesti senza modifiche|
-|**Estendibilità**|Aggiungere pagamento con bonifico = aggiungere `Bonifico PagamentoService`, nient'altro|
 
 #### Scelta multipla
 
@@ -2083,7 +1888,7 @@ Prima di entrare nell'Unità 5 è utile capire come i documenti e le attività d
 ```mermaid
 flowchart TD
     A([Inizio]) --> B[Raccolta requisiti]
-    B --> C[Casi d'uso (UCD)]
+    B --> C[Casi d'uso UCD]
     C --> D[SRS - Specifica dei Requisiti]
 
     D --> E[Piano delle prove]
@@ -2091,7 +1896,7 @@ flowchart TD
     D --> G[Specifica architetturale]
     D --> H[Specifica di dettaglio]
 
-    E --> I[Principi S.O.L.I.D.]
+    E --> I[Principi SOLID]
     F --> I
     G --> I
     H --> I
@@ -2120,8 +1925,6 @@ I principi S.O.L.I.D. producono classi con singola responsabilità, interfacce c
 **Diario di progetto → Git**
 
 Il diario di progetto (documento del management) tiene traccia di tutte le versioni dei documenti e del software. Git è lo strumento tecnico che implementa questa tracciabilità per il codice: ogni commit è una voce del "diario" del codice, con autore, data, descrizione della modifica.
-
----
 
 ---
 
@@ -2184,14 +1987,6 @@ Prima di iniziare il progetto, il responsabile deve definire **tre tipi di stand
 #### A — Standard per la produzione
 
 Definiscono struttura, contenuto, editing e presentazione visiva dei documenti (font, stili, logo).
-
-> **Esempio — Contenuto minimo obbligatorio per ogni documento:**
-> 
-> - nome e logo della società
-> - elenco dei redattori con firma e data
-> - elenco di chi ha approvato il documento con firma e data
-> - oggetto del contenuto ed eventualmente un sommario
-> - numerazione progressiva delle pagine con indicazione del totale (es. "pag. 4 di 10")
 
 #### B — Standard per la manutenzione
 
