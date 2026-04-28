@@ -1,13 +1,3 @@
-# Scienze e Tecnologie Elettriche
-
-### Dispensa di studio — Settore Tecnologico Elettrico
-
----
-
-> **Come usare questa dispensa.** Il testo è organizzato in cinque sezioni progressive. Si parte dal panorama del settore e di chi ci lavora (Focus 1), poi si entra nel dettaglio dei fenomeni fisici che stanno alla base di tutto (Focus 2), si sale di scala fino all'impianto di casa (Focus 3), si studia la logica digitale che governa i dispositivi moderni (Focus 4) e si finisce con la programmazione pratica di un microcontrollore reale (Focus 5). Ogni sezione può essere studiata in modo autonomo, ma l'ordine proposto è quello che permette di costruire la comprensione in modo progressivo.
-
----
-
 # FOCUS 1 — Il Settore Tecnologico Elettrico
 
 ## 1. Tre discipline, un unico ecosistema
@@ -70,9 +60,12 @@ Accanto alle grandi centrali, il comparto comprende impianti di piccola e media 
 
 L'elemento base è la **cella fotovoltaica** (tipicamente 15,6 × 15,6 cm), che produce circa 3 A a tensioni molto basse (0,4÷0,5 V). Per ottenere valori utili, le celle vengono collegate in serie e in parallelo secondo una gerarchia precisa:
 
+
 ```
 Celle  →  Modulo  →  Pannello  →  Stringhe (serie)  →  Generatore fotovoltaico (stringhe in parallelo)
 ```
+
+
 
 Le celle producono corrente **continua** (DC), mentre la rete domestica funziona in corrente **alternata** (AC): tra il generatore fotovoltaico e la rete è quindi indispensabile un **inverter** che esegua la conversione. Completano l'impianto i quadri di protezione (quadro DC, quadro AC, quadro generale) e i contatori.
 
@@ -151,6 +144,8 @@ Il protagonista dell'automazione moderna è spesso un **sistema embedded** (lett
 #### Il PLC — Programmable Logic Controller
 
 Quando le esigenze di automazione diventano più complesse — molti ingressi da leggere, molte uscite da controllare, ambienti industriali difficili — entra in gioco il **PLC**. Nella sua forma minima è composto da un alimentatore, una scheda CPU con il microprocessore, vari tipi di memoria (flash per il programma, RAM di lavoro, RAM con batteria tampone per le variabili con memoria) e una o più schede di interfaccia I/O per collegare sensori (ingressi) e attuatori (uscite).
+
+
 
 Il funzionamento è ciclico: il microprocessore percorre continuamente la sequenza del programma, legge i valori degli ingressi, elabora la logica e aggiorna le uscite. Il tempo impiegato per completare questo ciclo è detto **tempo di ciclo**: in applicazioni real-time è un parametro critico, perché un ciclo troppo lento si traduce in una macchina che reagisce con ritardo agli eventi.
 
@@ -298,6 +293,7 @@ Per un dato conduttore, la corrente che lo attraversa è **proporzionale alla te
 
 $$\boxed{R = \frac{V}{I}} \quad \Leftrightarrow \quad V = R \cdot I \quad \Leftrightarrow \quad I = \frac{V}{R}$$
 
+![[The_Modern_Electrical_Blueprint_page_3_1.jpg]]
 Un resistore ha 1 Ω quando, sottoposto a 1 V, viene attraversato da 1 A.
 
 > **Esempio risolto**
@@ -498,6 +494,8 @@ I cavi vengono infilati all'interno di **tubi guidacavo corrugati**: la forma a 
 
 Il centralino è il nodo di smistamento e protezione dell'impianto: un involucro isolante, solitamente vicino all'ingresso, che contiene tutti i dispositivi di protezione. Deve essere sempre presente un **interruttore generale** (per 6 kW → 32 A), più un **interruttore magnetotermico** dedicato a ogni circuito.
 
+![[The_Modern_Electrical_Blueprint_page_5_1.jpg]]
+
 L'interruttore magnetotermico è dimensionato sulla **corrente nominale I_n**: il valore massimo di corrente che può scorrere indefinitamente senza aprire i contatti. Se la corrente supera I_n per abbastanza tempo, l'interruttore scatta, proteggendo il cavo dal surriscaldamento per effetto Joule.
 
 |Circuito|Sezione cavo [mm²]|I_n interruttore [A]|
@@ -550,6 +548,8 @@ La protezione principale contro entrambi i tipi di contatto è l'**interruttore 
 
 I dispositivi ad alta sensibilità, detti **salvavita**, intervengono per correnti di dispersione ≤ **30 mA**: valore scelto come compromesso tra protezione delle persone e continuità di servizio. Il salvavita non è però infallibile: non interviene per dispersioni inferiori a 30 mA (che nel tempo possono causare tetanizzazione), né in caso di contatto simultaneo con due conduttori attivi.
 
+![[The_Modern_Electrical_Blueprint_page_6_1.jpg]]
+
 ---
 
 # FOCUS 4 — Elementi di Logica Combinatoria
@@ -570,7 +570,7 @@ Una funzione digitale può essere realizzata in due modi fondamentalmente divers
 
 Nella **logica programmabile** la stessa funzione è descritta da un programma software memorizzato in un processore. Cambiare la funzione significa modificare il programma, senza toccare l'hardware.
 
-||Logica cablata|Logica programmabile|
+| |Logica cablata|Logica programmabile|
 |---|---|---|
 |Come funziona|Componenti fisicamente connessi|Programma su un processore|
 |Flessibilità|Nulla: per cambiare serve ricablare|Alta: si modifica il software|
@@ -671,6 +671,8 @@ La porta **EXOR** (OR esclusivo) restituisce 1 se gli ingressi sono **diversi** 
 |1|0|1|
 |1|1|0|
 
+![[The_Modern_Electrical_Blueprint_page_7_1.jpg]]
+
 ---
 
 ## 5. Forme canoniche: dalla tabella della verità al circuito
@@ -698,6 +700,8 @@ La stessa logica si può rappresentare con uno **schema a contatti**: la tecnica
 Le porte logiche non si costruiscono una ad una: vengono prodotte industrialmente come **circuiti integrati** — chip di silicio che ne contengono molte all'interno. Introdotti poco prima del 1960 dalla Texas Instruments, sono oggi la famiglia di componenti elettronici più numerosa al mondo.
 
 Fisicamente, un circuito integrato è un contenitore plastico o ceramico (il _package_) con terminali metallici esterni chiamati **pin**. All'interno, una piastrina di silicio ospita i componenti realizzati con processi di fotolitografia di estrema precisione.
+
+![[The_Modern_Electrical_Blueprint_page_8_1.jpg]]
 
 Riguardo alla tecnologia, si distinguono gli integrati **bipolari (TTL)** e gli integrati **unipolari CMOS**: i CMOS consumano meno e tollerano meglio il rumore, motivo per cui sono diventati lo standard dominante. Riguardo alla complessità, la classificazione va da **SSI** (meno di 12 porte) a **MSI** (fino a 100), **LSI** (fino a 1.000) e **VLSI** (oltre 1.000 porte). Gli integrati SSI — come il **74HC08** (quattro porte AND a due ingressi) o il **74HC32** (quattro porte OR) — sono i mattoni elementari su cui si impara a costruire circuiti logici.
 
@@ -728,6 +732,8 @@ La scheda più diffusa è la **Arduino UNO**, basata sul microcontrollore **ATme
 |Corrente max per pin|40 mA|
 |Clock|16 MHz|
 |Alimentazione esterna|7÷12 V|
+
+![[The_Modern_Electrical_Blueprint_page_9_1.jpg]]
 
 Le tre memorie hanno ruoli distinti. La **Flash** conserva il programma anche a scheda spenta (non volatile) ed è pre-programmata con un _bootloader_ che permette il caricamento del programma via USB senza hardware aggiuntivo. La **EEPROM** conserva parametri fissi come tarature e configurazioni. La **SRAM** è la memoria di lavoro durante l'esecuzione — volatile, si svuota allo spegnimento — ed è la risorsa più limitata: soli 2 kB, da usare con attenzione.
 
@@ -1046,5 +1052,3 @@ Lo **schema avanzato con relè passo-passo** è il più completo: linea ausiliar
 |Frequenza|$f = 1/T$|Hz (hertz)|
 |Valore efficace|$V = V_M / \sqrt{2}$|V|
 |Generatori in serie|$E_{tot} = E_1 + E_2 + \ldots$ (somma algebrica)|V|
-
----
