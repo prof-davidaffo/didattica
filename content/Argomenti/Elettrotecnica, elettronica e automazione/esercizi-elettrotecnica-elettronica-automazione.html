@@ -1765,6 +1765,54 @@ void loop() {
         ],
         answer: 0,
         explanation: "Il while è il ciclo naturale quando il numero di iterazioni non è noto in anticipo."
+      },
+      {
+        id: "f5-21",
+        focus: "focus5",
+        type: "open",
+        difficulty: "media",
+        title: "Progetto Tinkercad - semaforo",
+        prompt: "Apri <a href=\"https://www.tinkercad.com/circuits\" target=\"_blank\" rel=\"noopener noreferrer\">Tinkercad Circuits</a> e realizza un semaforo con tre LED su Arduino UNO. Usa tre pin digitali, una resistenza per ciascun LED e una sequenza rosso -> verde -> giallo con tempi diversi. Descrivi in breve come hai distribuito i pin e come si comporta il ciclo.",
+        keywordGroups: [["rosso"], ["verde"], ["giallo"], ["pin"], ["ciclo", "sequenza", "loop"]],
+        minimumGroups: 3,
+        modelAnswer: "Ho collegato tre LED a tre pin digitali distinti, ciascuno con la propria resistenza. Nel loop il rosso resta acceso per alcuni secondi, poi si accende il verde, infine il giallo e la sequenza ricomincia.",
+        explanation: "L'esercizio verifica cablaggio di piu uscite, uso di `pinMode`, `digitalWrite` e temporizzazione con `delay`."
+      },
+      {
+        id: "f5-22",
+        focus: "focus5",
+        type: "open",
+        difficulty: "media",
+        title: "Progetto Tinkercad - pulsante uomo presente",
+        prompt: "Realizza un circuito in cui un pulsante collegato al pin 10 controlla un LED sul pin 13: il LED deve restare acceso solo mentre il pulsante e premuto. Usa `INPUT_PULLUP`. Spiega che cosa legge Arduino a pulsante aperto e a pulsante premuto.",
+        keywordGroups: [["input pullup", "pullup"], ["high"], ["low"], ["pulsante"], ["led"]],
+        minimumGroups: 4,
+        modelAnswer: "Con `INPUT_PULLUP` il pin legge HIGH quando il pulsante e aperto. Quando il pulsante viene premuto, il pin va a massa e Arduino legge LOW; il programma allora accende il LED solo durante la pressione.",
+        explanation: "L'esercizio controlla il cablaggio corretto di un ingresso digitale e la comprensione della logica invertita con pull-up interna."
+      },
+      {
+        id: "f5-23",
+        focus: "focus5",
+        type: "open",
+        difficulty: "media",
+        title: "Progetto Tinkercad - termostato di allarme",
+        prompt: "Costruisci in Tinkercad un piccolo allarme temperatura con Arduino, sensore analogico e LED o buzzer. Definisci una soglia: sotto soglia il sistema resta normale, sopra soglia si attiva l'allarme. Descrivi quali componenti hai usato e quale logica hai scritto.",
+        keywordGroups: [["sensore", "temperatura", "tmp36"], ["analog", "analogread", "ingresso analogico"], ["soglia"], ["allarme", "led", "buzzer"]],
+        minimumGroups: 3,
+        modelAnswer: "Ho usato un sensore di temperatura analogico collegato a un ingresso analogico di Arduino e un LED/buzzer come uscita di allarme. Il programma legge il valore con `analogRead`, lo confronta con una soglia e attiva l'allarme quando la temperatura supera il limite impostato.",
+        explanation: "L'esercizio collega lettura analogica, confronto logico e comando di un'uscita."
+      },
+      {
+        id: "f5-24",
+        focus: "focus5",
+        type: "open",
+        difficulty: "media",
+        title: "Progetto Tinkercad - contatore con monitor seriale",
+        prompt: "Realizza un contatore di pressioni: ogni volta che premi un pulsante, Arduino incrementa un conteggio e lo invia al Monitor Seriale. In Tinkercad monta il circuito e prova la simulazione. Spiega quali variabili e quali istruzioni servono per evitare ambiguita nella lettura del pulsante e mostrare il conteggio.",
+        keywordGroups: [["variabile", "contatore"], ["serial"], ["pulsante"], ["stato", "fronte", "debounce", "pressione"], ["incremento", "++"]],
+        minimumGroups: 3,
+        modelAnswer: "Serve una variabile contatore che aumenti a ogni pressione valida del pulsante, una gestione dello stato precedente o un piccolo debounce per non contare piu volte la stessa pressione, e l'invio del valore con `Serial.print` o `Serial.println` al Monitor Seriale.",
+        explanation: "L'esercizio porta dentro lo stesso progetto ingressi digitali, stato del programma e debug seriale."
       }
     ];
 

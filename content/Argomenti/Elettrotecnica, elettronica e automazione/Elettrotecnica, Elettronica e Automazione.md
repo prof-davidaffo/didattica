@@ -8,6 +8,14 @@ Quando si parla di "settore elettrico" si intende in realtà un insieme di tre d
 
 Il punto di partenza storico è l'**elettrologia**: la branca della fisica che studia i fenomeni nei quali intervengono le cariche elettriche. Già nell'antichità (circa 600 a.C.) erano note alcune proprietà elettriche dell'ambra strofinata, ma si trattava di curiosità senza applicazione pratica. L'elettricità rimase un fenomeno affascinante e in larga parte incompreso per molti secoli, finché nel **1799** Alessandro Volta (1745–1827) costruì la prima pila elettrica: per la prima volta era possibile produrre e controllare una corrente elettrica in modo continuativo e ripetibile. Quella data segna convenzionalmente la nascita dell'**elettrotecnica**, la disciplina che non studia la fisica dell'elettricità in sé, ma le sue applicazioni su larga scala: produzione di energia nelle centrali, trasporto attraverso le reti, conversione in movimento nei motori. In sintesi, l'elettrotecnica lavora con grandi quantità di energia e con le macchine che la gestiscono.
 
+Un modo semplice per distinguere elettrotecnica ed elettronica è pensare a **cosa si vuole ottenere dall'elettricità**.
+
+Nell’elettrotecnica l’obiettivo è **trasferire e convertire energia** (accendere un motore, alimentare una casa, trasportare potenza su una rete).
+
+Nell’elettronica, invece, l’obiettivo è **trasferire e trattare informazione** (misurare, comunicare, elaborare segnali).
+
+Questa distinzione è fondamentale: stessa grandezza fisica (corrente elettrica), ma due utilizzi completamente diversi.
+
 ### Elettronica
 
 L'**elettronica** nasce da un'esigenza diversa e complementare: trattare segnali elettrici molto deboli — spesso proporzionali a grandezze fisiche come temperatura, pressione o luminosità rilevate da sensori — che non possono essere usati direttamente perché troppo piccoli. L'oggetto dell'elettronica è quindi il segnale a bassa potenza: acquisirlo, amplificarlo, elaborarlo, trasmetterlo.
@@ -19,6 +27,14 @@ La storia dell'elettronica è una storia di miniaturizzazione progressiva. Nel *
 L'**automazione** studia le tecniche per far funzionare macchine e processi in modo autonomo, riducendo o eliminando l'intervento diretto dell'uomo. Nata con la prima rivoluzione industriale per migliorare la produttività e ridurre errori e difetti, ha assunto nel tempo anche una dimensione etica: sottrarre l'uomo ai lavori più pericolosi, faticosi e ripetitivi.
 
 L'automazione moderna è per sua natura **interdisciplinare**: per controllare un processo produttivo servono la potenza tipica dell'elettrotecnica, la capacità di elaborare segnali dell'elettronica e gli algoritmi di controllo dell'informatica. Il dispositivo che mette tutto insieme è tipicamente il **PLC** (Programmable Logic Controller), affiancato da microcontrollori e calcolatori dedicati.
+
+Si può quindi leggere l’automazione come il punto di incontro tra le tre discipline:
+
+- l’elettrotecnica fornisce l’energia necessaria al funzionamento
+- l’elettronica acquisisce e tratta i segnali provenienti dai sensori
+- l’informatica prende decisioni attraverso algoritmi di controllo
+
+Un sistema automatico reale è sempre il risultato della collaborazione di queste tre componenti.
 
 ---
 
@@ -34,7 +50,7 @@ Il comparto elettrotecnico copre l'intera catena dell'energia: dalla produzione 
 
 #### Produzione di energia nelle centrali elettriche
 
-Nelle centrali elettriche, qualunque sia la fonte usata, il principio di funzionamento è sempre lo stesso: trasformare l'energia di una fonte primaria in energia elettrica attraverso una catena di conversioni.
+Nelle centrali elettriche, qualunque sia la fonte utilizzata, il principio di funzionamento è sempre lo stesso: trasformare l'energia di una fonte primaria in energia elettrica attraverso una catena di conversioni.
 
 ![[Media/Power_Generation_Engineering_2.jpg]]
 
@@ -44,19 +60,123 @@ Il primo passaggio riguarda la **turbina**. Una fonte di energia esterna — l'a
 
 ![[Media/Power_Generation_Engineering_5.jpg]]
 
-Il secondo passaggio è la conversione di questa energia meccanica in elettricità, compito affidato all'**alternatore**: una macchina collegata direttamente all'albero della turbina. L'alternatore ha una struttura semplice nella sua eleganza: una parte fissa, lo **statore**, ospita tre matasse di conduttori disposte a 120° l'una dall'altra; al suo interno ruota il **rotore**, dotato di poli magnetici. Quando la turbina mette in rotazione il rotore, i poli magnetici spazzano continuamente i conduttori dello statore.
+Il secondo passaggio è la conversione di questa energia meccanica in elettricità, compito affidato all'**alternatore**, una macchina collegata direttamente all'albero della turbina.
+
+L’alternatore è composto da due parti principali:
+
+- lo **statore**, la parte fissa, che contiene gli avvolgimenti di rame;
+- il **rotore**, la parte mobile, che genera un campo magnetico.
+
+Quando la turbina fa ruotare l’albero, il rotore genera un **campo magnetico rotante**. Le bobine dello statore sono ferme, ma vengono attraversate da questo campo magnetico che cambia continuamente nel tempo.
 
 ![[Media/Power_Generation_Engineering_8.jpg]]
+È qui che entra in gioco l’induzione elettromagnetica, descritta dalla legge di Faraday: una tensione elettrica si genera quando varia nel tempo il flusso magnetico che attraversa una bobina.
 
-È qui che entra in gioco l'**induzione elettromagnetica**: il movimento relativo tra un campo magnetico e un conduttore genera una tensione elettrica. Poiché i tre avvolgimenti dello statore sono sfasati di 120° nello spazio, le tensioni indotte risultano sfasate di 120° anche nel tempo. Il risultato è la **corrente alternata trifase**: la forma di energia standard immessa nella rete di distribuzione.
+![[Media/alternatore.jpeg]]
 
+Non è quindi il semplice movimento a generare la tensione, ma la **variazione del campo magnetico**. Nel caso dell’alternatore, questa variazione è causata dalla rotazione del rotore.
+
+Questo è uno dei punti più importanti da capire.
+
+Se il campo magnetico fosse **fermo rispetto alla bobina**, anche con il rotore in movimento non si genererebbe alcuna tensione.
+
+Serve sempre una **variazione del flusso magnetico nel tempo**. Nel caso dell’alternatore questa variazione è ottenuta nel modo più pratico possibile: facendo ruotare un campo magnetico davanti a conduttori fermi.
+
+Qui è importante non confondersi con l'immagine della pila. In una pila o in un generatore in corrente continua si pensa a due morsetti, positivo e negativo, tra cui le cariche vengono separate. Nell’alternatore, invece, la tensione **non** nasce perché un polo elettrico "tira" le cariche e l'altro le "spinge": nasce perché il **campo magnetico variabile induce una forza elettrica nel filo**.
+
+Si può immaginare la bobina come una superficie attraversata da linee di campo magnetico. Durante la rotazione del rotore:
+
+- il flusso magnetico aumenta
+- poi diminuisce
+- poi si inverte
+
+Questa variazione ciclica genera una tensione che cambia nel tempo, dando origine alla **corrente alternata**.
+
+Gli avvolgimenti dello statore non sono costituiti da poche bobine isolate, ma da molte bobine distribuite lungo la circonferenza e inserite nelle cave dello statore. Ogni bobina occupa due zone dello statore, spesso opposte, in modo da intercettare efficacemente il campo magnetico.
+
+Dire che i due lati della bobina sono in posizioni opposte non significa che "si annullano". Significa che i due tratti attivi del filo si trovano in due zone diverse del campo magnetico rotante. Su entrambi i lati il campo variabile induce una tensione; poiché i due lati sono collegati tra loro nello stesso avvolgimento, e orientati in modo opportuno, queste tensioni **si sommano** ai capi della bobina invece di annullarsi.
+
+In altre parole: i poli del rotore sono **poli magnetici**, non morsetti elettrici della bobina. Il loro compito è creare un campo magnetico che cambia rispetto al filo fermo dello statore; è questo cambiamento che mette in moto le cariche nel conduttore.
+
+Le bobine appartenenti alla stessa fase sono collegate tra loro in serie, formando un unico avvolgimento continuo. Dal punto di vista elettrico, quindi, ciascuna fase si comporta come una singola bobina equivalente.
+
+![[Media/Three_Phase_Power_Geometry_page_3_1.jpg]]
+
+Le bobine sono organizzate in tre gruppi distinti:
+
+- fase A
+- fase B
+- fase C
+
+Questi gruppi sono disposti nello statore in modo intercalato e sfasato di 120° nello spazio. Poiché il campo magnetico rotante li attraversa in istanti diversi, le tensioni generate risultano sfasate di 120° anche nel tempo.
+
+Il risultato è la **corrente alternata trifase**: tre tensioni distinte, sfasate tra loro di 120°.
+
+La scelta di usare tre fasi non è casuale.
+
+Un sistema trifase permette di:
+
+- trasportare più potenza a parità di materiale conduttore
+- ottenere campi magnetici rotanti naturali (fondamentali nei motori elettrici)
+- ridurre le perdite e migliorare l’efficienza complessiva del sistema
+
+Per questo motivo la trifase è lo standard nella produzione e distribuzione dell’energia elettrica.
+
+Ogni fase ha due estremi. In totale, quindi, si hanno sei terminali: due per ciascuna fase. Questi terminali possono essere collegati tra loro secondo diverse configurazioni.
 ![[Media/Power_Generation_Engineering_9.jpg]]
+
+Nella produzione e distribuzione dell’energia elettrica è molto comune il collegamento a **stella**. In questa configurazione, un estremo di ciascuna fase viene collegato agli altri due in un unico punto comune chiamato **neutro**.
+
+![[Media/Three_Phase_Power_Geometry_page_9_1.jpg]]
+
+Questo punto non è un centro fisico dell’alternatore, ma un nodo elettrico in cui tre conduttori sono collegati tra loro.
+
+L’altro estremo di ciascuna fase rimane separato e costituisce le tre uscite della rete:
+
+- fase A
+- fase B
+- fase C
+
+Le tre fasi non si mescolano tra loro: restano tre segnali distinti, ciascuno con il proprio andamento nel tempo, ma riferiti a un punto comune, il neutro.
+
+Il neutro ha il ruolo di riferimento e di conduttore di ritorno. In un sistema trifase perfettamente bilanciato, le correnti delle tre fasi si compensano e nel neutro non scorre corrente. Nella pratica, invece, i carichi non sono mai perfettamente uguali, e quindi nel neutro circola la corrente dovuta allo squilibrio tra le fasi.
+
+È importante non interpretare il neutro come un "filo sempre senza corrente".
+
+Il neutro è un conduttore reale: semplicemente, in condizioni ideali di equilibrio tra le tre fasi, le correnti si compensano e quindi la corrente risultante è nulla.
+
+Appena il sistema si sbilancia, il neutro torna a essere percorso da corrente.
+
+L’energia elettrica prodotta viene poi inviata a un trasformatore che ne aumenta la tensione per il trasporto su lunghe distanze. La rete di trasmissione è quindi costituita da tre fasi separate.
+
+Quando l’energia arriva alle abitazioni, la rete resta trifase, ma normalmente ogni casa utilizza una sola fase più il neutro. Le abitazioni vengono distribuite tra le tre fasi in modo da bilanciare il carico complessivo della rete.
+In questo modo, anche se ogni utenza domestica utilizza una sola fase, l’intero sistema elettrico continua a funzionare come un sistema trifase bilanciato.
+
+
+Dal punto di vista dell'utente finale, questa organizzazione si traduce in due tipi di fornitura. La **fornitura monofase** (tipica delle abitazioni civili, 230 V) usa tre conduttori: la **fase (L)**, che porta la tensione; il **neutro (N)**, collegato a terra in prossimità del trasformatore; il **conduttore di protezione (PE)**, che collega le masse metalliche dell'impianto alla terra dell'edificio. La **fornitura trifase** (per utenze industriali o servizi condominiali) usa invece tre fasi (L₁, L₂, L₃) più il neutro e mette a disposizione **400 V** tra due fasi qualsiasi e **230 V** tra una fase e il neutro.
+
+![[Media/Three_Phase_Power_Geometry_page_13_1.jpg]]
+
+In pratica, quando si collega un elettrodomestico alla presa di casa, si sta utilizzando **una sola fase del sistema trifase generale**.
+
+La complessità della produzione e distribuzione dell’energia resta quindi nascosta all’utente finale, che vede semplicemente una tensione "costante" di 230 V, ma che in realtà è parte di un sistema molto più articolato.
+
+La tensione tra fase e neutro si chiama **tensione di fase**; quella tra due fasi si chiama **tensione concatenata**. In un sistema trifase simmetrico vale la relazione:
+
+$$\boxed{V_{conc} = \sqrt{3} \cdot V_{fase}} \quad \Rightarrow \quad 400 \text{ V} \approx \sqrt{3} \cdot 230 \text{ V}$$
+
+![[Media/Three_Phase_Power_Geometry_page_11_1.jpg]]
+
 
 ![[Media/Power_Generation_Engineering_10.jpg]]
 
 #### Produzione di energia da fonti rinnovabili: impianti fotovoltaici
 
 Accanto alle grandi centrali, il comparto comprende impianti di piccola e media dimensione per la produzione da fonti rinnovabili. Il più diffuso in ambito civile è l'**impianto fotovoltaico**, che si basa sull'**effetto fotovoltaico**: alcuni materiali semiconduttori, quando esposti alla luce solare, liberano elettroni che scorrono attraverso il materiale generando corrente. Non ci sono parti in movimento: è la luce a spingere direttamente gli elettroni.
+
+A differenza delle centrali tradizionali, qui non c’è alcuna conversione in energia meccanica: l’energia della luce viene trasformata direttamente in energia elettrica.
+
+Questo rende gli impianti fotovoltaici più semplici dal punto di vista meccanico, ma introduce complessità nella gestione elettronica e nell’integrazione con la rete.
 
 L'elemento base è la **cella fotovoltaica** (tipicamente 15,6 × 15,6 cm), che produce circa 3 A a tensioni molto basse (0,4÷0,5 V). Per ottenere valori utili, le celle vengono collegate in serie e in parallelo secondo una gerarchia precisa:
 
@@ -94,6 +214,8 @@ Al cuore di qualsiasi sistema di elaborazione c'è un processore. Il termine per
 Per capire la differenza, si parte dallo schema a blocchi di un computer generico: è composto da una CPU (che esegue le istruzioni), una memoria (che le conserva insieme ai dati) e interfacce di I/O (che permettono al sistema di comunicare col mondo esterno). Tutte queste unità sono collegate da **bus**, cioè percorsi comuni per i segnali.
 
 Un **microprocessore** è soltanto la CPU: contiene l'unità di calcolo, ma memoria e I/O devono essere aggiunti esternamente. È la soluzione giusta per un computer potente e flessibile. Un **microcontrollore** integra invece in un unico chip la CPU, le memorie e le interfacce di I/O, richiedendo pochissimi componenti esterni, consumando poca energia (meno di 1 W) e costando molto poco. È la soluzione ideale per sistemi dedicati a una funzione specifica, dove non serve la flessibilità di un computer general-purpose.
+
+In pratica, un **PC** o uno **smartphone** lavorano con microprocessori perché devono gestire sistemi operativi, molte applicazioni e grandi quantità di dati. Un **forno a microonde**, una **lavatrice**, un **termostato** o una **centralina elettronica** usano invece microcontrollori: devono leggere sensori, prendere poche decisioni ben definite e pilotare attuatori in modo affidabile e continuo.
 
 | |Microprocessore (CPU)|Microcontrollore|
 |---|---|---|
@@ -166,6 +288,8 @@ L'automazione non riguarda solo le fabbriche: anche gli edifici civili e commerc
 
 In entrambi i casi il principio fondamentale è lo stesso: tutti i dispositivi comunicano attraverso un unico **bus** (doppino di rame, fibra ottica o wireless), e il **comando è separato dall'attuatore** — le pulsantiere inviano messaggi sul bus, gli attuatori li ricevono e agiscono di conseguenza. Questo permette di riconfigurare l'impianto via software, senza toccare i cavi.
 
+Un esempio tipico in abitazione è il comando di una luce: con un impianto tradizionale ogni pulsante deve essere cablato direttamente al punto luce; in un impianto domotico, invece, il pulsante invia un messaggio sul bus e l'attuatore nel quadro accende la lampada. Lo stesso principio si estende a tapparelle, climatizzazione, allarmi e scenari automatici come "esco di casa" o "notte".
+
 Il protocollo standard europeo condiviso dai principali costruttori è **KNX**, nato dal consorzio EIB: i componenti di produttori diversi sono interoperabili senza interfacce aggiuntive. Il software di configurazione ufficiale è **ETS** (EIB Tools Software).
 
 ---
@@ -185,6 +309,8 @@ Chi sceglie l'**automazione** può diventare **progettista di sistemi automatici
 # FOCUS 2 — Fondamenti di Elettricità ed Energia Elettrica
 
 Il Focus 1 ha mostrato cosa fa il settore elettrico e come è organizzato. Per capire _perché_ funziona in quel modo — perché i cavi hanno una portata, perché esistono i trasformatori, perché un impianto ha bisogno di protezioni — bisogna scendere al livello dei fenomeni fisici di base. Questo Focus costruisce quelle basi partendo dall'atomo, con un percorso in cui ogni concetto apre la strada al successivo.
+
+![[Media/Photon_to_Code_page_4_1.jpg]]
 
 ## 1. L'equilibrio elettrico della materia
 
@@ -221,6 +347,8 @@ Nella pratica industriale servono i **generatori elettrici**: dispositivi che co
 La grandezza che quantifica questa "riserva di energia" è la **tensione elettrica** (o differenza di potenziale): il lavoro compiuto per separare le cariche, diviso per la quantità di carica separata.
 
 $$\boxed{V = \frac{L}{Q}} \quad \Rightarrow \quad L = V \cdot Q$$
+
+![[Media/Three_Phase_Power_Geometry_page_2_1.jpg]]
 
 L'unità di misura è il **volt (V)**: un generatore a 1 V compie 1 J di lavoro per spostare 1 C di carica. La grandezza interna che descrive la capacità del generatore di mantenere le cariche separate è la **forza elettromotrice (f.e.m.)**, simbolo **E**, che coincide con la tensione ai morsetti a circuito aperto.
 
@@ -316,6 +444,8 @@ $$\boxed{R = \rho \cdot \frac{l}{S}}$$
 
 dove **ρ** (rho) è la **resistività** del materiale [Ω·mm²/m], **l** è la lunghezza [m] e **S** è la sezione trasversale [mm²]. Un filo lungo e sottile oppone più resistenza di uno corto e spesso — esattamente come un tubo lungo e stretto oppone più resistenza al flusso dell'acqua.
 
+![[Media/The_Modern_Electrical_Blueprint_page_4_1.jpg]]
+
 > **Esempio risolto — Calcolo della sezione**
 > 
 > Una matassa di rame (ρ = 0,0173 Ω·mm²/m), lunga 100 m, ha una resistenza di 0,692 Ω.
@@ -372,6 +502,8 @@ Tutta la potenza dissipata in una resistenza si trasforma in **calore**: è l'**
 
 Con le grandezze appena definite si possono analizzare reti elettriche complete. I **circuiti resistivi** — reti di sole resistenze collegate a un generatore — sono il caso più semplice, ma sufficiente per capire i principi che governano qualsiasi rete.
 
+![[Media/Photon_to_Code_page_5_1.jpg]]
+
 ### Resistenze in serie
 
 Nel collegamento in **serie** le resistenze si trovano sullo stesso ramo e sono percorse dalla **stessa corrente**: le cariche non hanno percorsi alternativi. Le tensioni ai capi di ogni resistenza si sommano:
@@ -427,6 +559,8 @@ Il percorso è articolato in quattro livelli:
 3. **Cabine di trasformazione** → abbassano la tensione da AT a **media tensione (MT)**, poi da MT a **bassa tensione (BT)** (230/400 V) tramite trasformatori da palo vicini all'utenza.
 4. **Impianto dell'utente** → distribuisce l'energia all'interno dell'edificio.
 
+![[Media/Photon_to_Code_page_7_1.jpg]]
+
 ### Classificazione degli impianti per livello di tensione
 
 |Categoria|Tensione nominale|Descrizione|
@@ -442,7 +576,9 @@ Il percorso è articolato in quattro livelli:
 
 L'energia viene distribuita in **corrente alternata sinusoidale**: un segnale che oscilla ritmicamente tra valori positivi e negativi. Capire i suoi parametri è necessario per interpretare le specifiche di qualsiasi componente dell'impianto.
 
-Il **periodo T** è il tempo per completare un'oscillazione completa; la **frequenza f** è il numero di oscillazioni al secondo ($f = 1/T$). Il **valore massimo V_M** è l'ampiezza di picco. Il **valore efficace V** è il parametro più utile in pratica: è il valore di tensione continua che, applicata allo stesso resistore per lo stesso tempo, svilupperebbe la stessa quantità di calore.
+![[Media/Photon_to_Code_page_6_1.jpg]]
+
+Il **periodo T** è il tempo per completare un'oscillazione completa; la **frequenza f** è il numero di oscillazioni al secondo ($f = 1/T$). Il **valore massimo V_M** è l'ampiezza di picco. Il **valore efficace V** è il parametro più utile in pratica: è il valore di tensione continua che, applicata allo stesso resistore per lo stesso tempo, svilupperebbe la stessa quantità di calore. Lo stesso ragionamento vale per la corrente: anche in AC si usano normalmente i **valori efficaci** di tensione e corrente.
 
 $$\boxed{V = \frac{V_M}{\sqrt{2}}} \approx 0{,}707 \cdot V_M$$
 
@@ -452,17 +588,13 @@ In Europa la frequenza è **50 Hz** (T = 20 ms). La tensione efficace di rete è
 
 ## 3. La fornitura elettrica: monofase e trifase
 
-L'energia arriva all'utente attraverso due tipi di fornitura.
-
-La **fornitura monofase** (tipica delle abitazioni civili, 230 V) usa tre conduttori: la **fase (L)** — colore nero, grigio o marrone — che porta la tensione; il **neutro (N)** — colore blu — collegato fisicamente a terra in prossimità del trasformatore; il **conduttore di protezione (PE)** — colore giallo-verde — che collega le parti metalliche degli apparecchi alla terra dell'edificio, proteggendo le persone in caso di guasto.
-
-La **fornitura trifase** (per utenze industriali o servizi condominiali) usa quattro conduttori: tre fasi (L₁, L₂, L₃) e il neutro. Offre due livelli di tensione: **400 V** tra due fasi qualsiasi (per i motori) e **230 V** tra una fase e il neutro (per i circuiti ordinari). Il sistema di distribuzione italiano è detto **TT** (Terra-Terra): due maglie di terra indipendenti, una del distributore e una dell'utente.
+La distinzione tra **fornitura monofase** e **fornitura trifase** è già stata introdotta nel Focus 1, nel punto in cui si segue il passaggio dall'alternatore alla distribuzione verso le utenze. Nel contesto dell'impianto residenziale basta ricordare che l'abitazione ordinaria riceve normalmente una **fase + neutro + PE** a **230 V**, mentre utenze più impegnative possono richiedere una fornitura **trifase**.
 
 ---
 
 ## 4. L'impianto elettrico residenziale e i suoi componenti
 
-L'impianto residenziale è dimensionato dalla norma per una potenza minima di **6 kW** e si sviluppa come una catena di componenti, ognuno con un ruolo preciso. Seguirla dall'ingresso dell'edificio all'ultimo punto luce è il modo migliore per capirla.
+L'impianto residenziale è dimensionato in funzione della **potenza impegnata** e dei carichi previsti, e si sviluppa come una catena di componenti, ognuno con un ruolo preciso. Seguirla dall'ingresso dell'edificio all'ultimo punto luce è il modo migliore per capirla.
 
 ### Il contatore
 
@@ -492,7 +624,7 @@ I cavi vengono infilati all'interno di **tubi guidacavo corrugati**: la forma a 
 
 ### Il centralino (QUA — Quadro di Unità Abitativa)
 
-Il centralino è il nodo di smistamento e protezione dell'impianto: un involucro isolante, solitamente vicino all'ingresso, che contiene tutti i dispositivi di protezione. Deve essere sempre presente un **interruttore generale** (per 6 kW → 32 A), più un **interruttore magnetotermico** dedicato a ogni circuito.
+Il centralino è il nodo di smistamento e protezione dell'impianto: un involucro isolante, solitamente vicino all'ingresso, che contiene tutti i dispositivi di protezione. Deve essere sempre presente un **interruttore generale**, dimensionato in base alla potenza contrattuale dell'utenza, più un **interruttore magnetotermico** dedicato a ogni circuito.
 
 ![[Media/The_Modern_Electrical_Blueprint_page_5_1.jpg]]
 
@@ -540,19 +672,26 @@ Un impianto elettrico mal progettato o danneggiato può essere pericoloso. L'**e
 
 Si parla di **contatto diretto** quando la persona tocca una parte normalmente in tensione (un conduttore scoperto, un morsetto). Si parla di **contatto indiretto** quando tocca una massa metallica — la carcassa di un elettrodomestico — che in condizioni normali non è in tensione ma lo è diventata per un guasto o per il cedimento dell'isolamento. La distinzione è importante perché i due tipi richiedono strategie di protezione diverse.
 
+Negli impianti civili italiani è tipico il sistema **TT**: il neutro del distributore è collegato a terra da un lato, mentre l'utente ha un proprio impianto di terra indipendente a cui sono collegate le masse metalliche tramite il conduttore **PE**. In caso di guasto verso massa, questa struttura offre alla corrente di dispersione un percorso verso terra e rende efficace l'intervento del differenziale.
+
 ### L'interruttore differenziale (salvavita)
 
 Per progettare e verificare le protezioni si utilizzano gli **schemi funzionali**: rappresentazioni grafiche dell'impianto in cui due linee orizzontali (i conduttori di alimentazione) sono collegate da linee verticali e orizzontali che mostrano i collegamenti tra gli apparecchi, indipendentemente dalla loro posizione fisica reale. Le apparecchiature sono disegnate nella condizione di riposo (contatti aperti).
 
 La protezione principale contro entrambi i tipi di contatto è l'**interruttore differenziale**. Il suo funzionamento si basa su un principio semplice: misura continuamente la corrente che _entra_ nel circuito e quella che _ritorna_. In condizioni normali le due sono uguali. Se si verifica una dispersione verso terra — qualcuno si prende una scossa, o l'isolamento di un cavo è ceduto — la corrente di ritorno diventa minore di quella di andata. Il differenziale rileva questa differenza e **apre il circuito in pochi millisecondi**.
 
-I dispositivi ad alta sensibilità, detti **salvavita**, intervengono per correnti di dispersione ≤ **30 mA**: valore scelto come compromesso tra protezione delle persone e continuità di servizio. Il salvavita non è però infallibile: non interviene per dispersioni inferiori a 30 mA (che nel tempo possono causare tetanizzazione), né in caso di contatto simultaneo con due conduttori attivi.
+I dispositivi ad alta sensibilità, detti **salvavita**, intervengono per correnti di dispersione ≤ **30 mA**: valore scelto come compromesso tra protezione delle persone e continuità di servizio. Il differenziale non sostituisce però il magnetotermico: il primo protegge soprattutto dalle **correnti di dispersione verso terra**, il secondo da **sovraccarichi e cortocircuiti**. Il salvavita non è inoltre infallibile: non interviene per dispersioni inferiori a 30 mA (che nel tempo possono causare tetanizzazione), né in caso di contatto simultaneo con due conduttori attivi.
 
 ![[Media/The_Modern_Electrical_Blueprint_page_6_1.jpg]]
 
 ---
 
 # FOCUS 4 — Elementi di Logica Combinatoria
+
+
+> [!warning] Nota bene
+> Il contenuto di questa dispensa è molto sintetico, fatto per dare una semplice idea sulla logica combinatoria. Per una dispensa più approfondita, si rimanda alla [[Dispensa sull'algebra di Boole e circuiti logici]].
+
 
 I Focus 2 e 3 si sono occupati dell'energia: come si genera, come si distribuisce, come si usa in un impianto. Esiste però un altro livello di funzionamento dei sistemi elettrici moderni — PLC, microcontrollori, dispositivi digitali in genere — che riguarda non l'energia ma la **logica**: come un sistema decide cosa fare in base agli ingressi che riceve. Questo Focus costruisce le basi di quel ragionamento.
 
@@ -671,7 +810,7 @@ La porta **EXOR** (OR esclusivo) restituisce 1 se gli ingressi sono **diversi** 
 |1|0|1|
 |1|1|0|
 
-![[Media/The_Modern_Electrical_Blueprint_page_7_1.jpg]]
+![[Media/Photon_to_Code_page_10_1.jpg]]
 
 ---
 
@@ -688,6 +827,9 @@ La **prima forma canonica** (somma di mintermini, SOM) si usa quando le righe co
 La **seconda forma canonica** (prodotto di maxtermini, POM) è duale: si usa quando le righe con Y = 0 sono poche. Per ogni riga con uscita 0 si scrive un **maxtermine**: un OR di tutte le variabili, in forma diretta se il valore è 0, in forma negata se è 1. La funzione finale è l'AND di tutti i maxtermini.
 
 Una volta ottenuta l'espressione, la si semplifica con le proprietà dell'algebra di Boole per ridurre il numero di porte necessarie, poi si realizza il circuito. Il percorso completo è sempre: **problema → tabella della verità → forma canonica → semplificazione → circuito**.
+
+
+![[Media/Photon_to_Code_page_9_1.jpg]]
 
 ### Logica combinatoria a contatti
 
@@ -741,6 +883,8 @@ L'alimentazione durante lo sviluppo viene normalmente dalla porta USB del PC. L'
 
 L'IDE si scarica da **http://www.arduino.cc** e riunisce in un unico programma editor, compilatore, loader e Monitor Seriale per il debug.
 
+Per le prime prove è utile anche un simulatore online. **Tinkercad Circuits** permette di costruire un circuito virtuale trascinando **Arduino, breadboard, LED, resistenze, pulsanti e altri componenti**, collegandoli con i fili come in laboratorio. È quindi adatto per verificare rapidamente cablaggi e logica del programma prima di passare alla scheda reale.
+
 ---
 
 ## 3. Struttura di un programma Arduino
@@ -763,6 +907,8 @@ void loop() {
 
 Regole sintattiche di base: ogni istruzione termina con `;`; i blocchi sono racchiusi tra `{ }`; i commenti su riga singola iniziano con `//`, quelli multiriga tra `/* */`; `void` davanti a una funzione indica che non restituisce alcun valore.
 
+![[Media/Photon_to_Code_page_13_1.jpg]]
+
 ---
 
 ## 4. Gestione dei pin digitali
@@ -771,8 +917,8 @@ Arduino UNO ha 14 pin digitali (numerati 0–13), ognuno configurabile come ingr
 
 ```c
 // Configurazione (nel setup)
-pinMode(13, OUTPUT);    // pin 13 = uscita (es. LED)
-pinMode(10, INPUT);     // pin 10 = ingresso (es. pulsante)
+pinMode(13, OUTPUT);        // pin 13 = uscita (es. LED)
+pinMode(10, INPUT_PULLUP);  // pin 10 = ingresso con pull-up interno
 
 // Controllo delle uscite (nel loop)
 digitalWrite(13, HIGH); // porta il pin 13 a 5 V
@@ -782,10 +928,28 @@ digitalWrite(13, LOW);  // porta il pin 13 a 0 V
 int stato = digitalRead(10);  // legge HIGH o LOW dal pin 10
 ```
 
-Per gli ingressi collegati a un pulsante (che chiude il pin a massa), è necessaria una resistenza di **pull-up** per mantenere il pin a livello alto quando il pulsante è aperto — senza di essa il pin fluttua in uno stato indeterminato. Arduino dispone di resistenze di pull-up interne (20÷50 kΩ) attivabili così:
+Per gli ingressi collegati a un pulsante (che chiude il pin a massa), è necessaria una resistenza di **pull-up** per mantenere il pin a livello alto quando il pulsante è aperto — senza di essa il pin fluttua in uno stato indeterminato. Arduino dispone di resistenze di pull-up interne (20÷50 kΩ), attivabili direttamente con la modalità `INPUT_PULLUP`.
+
+**Mini progetto — Pulsante che accende un LED**
+
+Questo è il primo esempio davvero utile per collegare subito **ingresso**, **uscita** e **logica**. Il pulsante è collegato tra pin 10 e massa; il LED è sul pin 13. Con `INPUT_PULLUP`, il pin legge `HIGH` a pulsante rilasciato e `LOW` a pulsante premuto.
 
 ```c
-digitalWrite(10, HIGH); // attiva il pull-up interno sul pin 10 (già dichiarato INPUT)
+const int LED_PIN = 13;
+const int BTN_PIN = 10;
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(BTN_PIN, INPUT_PULLUP);
+}
+
+void loop() {
+  if (digitalRead(BTN_PIN) == LOW) {  // pulsante premuto
+    digitalWrite(LED_PIN, HIGH);
+  } else {
+    digitalWrite(LED_PIN, LOW);
+  }
+}
 ```
 
 Le temporizzazioni si gestiscono con due funzioni:
@@ -839,9 +1003,9 @@ In C/C++ ogni variabile deve essere dichiarata con il proprio **tipo** prima del
 |`long`|4 byte|−2.147.483.648 ÷ +2.147.483.647|
 |`unsigned long`|4 byte|0 ÷ +4.294.967.295|
 |`float`|4 byte|±3,4 · 10³⁸|
-|`double`|8 byte|±1,797 · 10³⁰⁸|
+|`double`|4 byte su Arduino UNO|uguale a `float` sull'ATmega328|
 
-Una trappola frequente è l'**overflow**: un `byte` vale al massimo 255; sommando 1 si ottiene 0, senza alcun messaggio di errore. Allo stesso modo, `float` e `double` vanno usati con parsimonia: le operazioni in virgola mobile sono molto più lente di quelle intere su un microcontrollore piccolo come l'ATmega328.
+Una trappola frequente è l'**overflow**: un `byte` vale al massimo 255; sommando 1 si ottiene 0, senza alcun messaggio di errore. Sulla scheda Arduino UNO, inoltre, `double` **non** offre più precisione di `float`: sull'ATmega328 occupa gli stessi 4 byte. Le operazioni in virgola mobile vanno quindi usate con parsimonia su un microcontrollore piccolo.
 
 Le costanti si possono esprimere in basi diverse:
 
@@ -851,6 +1015,8 @@ int b = B101;   // binario  → 5
 int c = 0101;   // ottale   → 65
 int d = 0x101;  // esadecimale → 257
 ```
+
+![[Media/Photon_to_Code_page_14_1.jpg]]
 
 ---
 
@@ -997,7 +1163,7 @@ Scrivere un programma non garantisce che funzioni subito: il debug è parte ordi
 ```c
 // Nel setup():
 Serial.begin(9600);        // inizializza la comunicazione a 9600 bit/s
-Serial.flush();            // svuota l'eventuale coda di ricezione
+Serial.flush();            // attende la trasmissione dei dati già inviati
 
 // Nel loop():
 Serial.print("Valore: ");  // invia testo senza andare a capo
@@ -1030,9 +1196,15 @@ Il software **CADe_SIMU** permette di disegnare e simulare schemi di impianti el
 
 Lo **schema base** prevede una suoneria e un ronzatore attivabili separatamente da pulsanti distinti, con un deviatore che seleziona quale delle due linee può essere attivata. È il punto di partenza per prendere confidenza con i simboli degli schemi funzionali.
 
+![[Media/sim-1.png]]
+
 Lo **schema con doppia linea** aggiunge una linea luce per il comando di una lampada da tre punti (due deviatori + un invertitore) e una linea ausiliaria a 12 V per suoneria e ronzatore. Si mettono qui in pratica i dispositivi di comando descritti nel Focus 3.
 
+![[Media/sim-2.png]]
+
 Lo **schema avanzato con relè passo-passo** è il più completo: linea ausiliaria per il comando luci da tre punti tramite relè interruttore; linea luce per tre lampade tramite relè passo-passo; comando di una luce da due punti con deviatori. Questo schema integra impianto, logica e automazione in un unico progetto.
+
+![[Media/sim-3.png]]
 
 ---
 
