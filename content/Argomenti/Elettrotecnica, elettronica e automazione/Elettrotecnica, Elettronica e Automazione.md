@@ -36,23 +36,23 @@ Il comparto elettrotecnico copre l'intera catena dell'energia: dalla produzione 
 
 Nelle centrali elettriche, qualunque sia la fonte usata, il principio di funzionamento è sempre lo stesso: trasformare l'energia di una fonte primaria in energia elettrica attraverso una catena di conversioni.
 
-![[Power_Generation_Engineering_2.jpg]]
+![[Media/Power_Generation_Engineering_2.jpg]]
 
 Il primo passaggio riguarda la **turbina**. Una fonte di energia esterna — l'acqua in caduta nelle centrali idroelettriche, il vento in quelle eoliche, il vapore prodotto nelle centrali termoelettriche — viene convogliata sulle pale di una turbina, mettendola in rotazione. L'energia della fonte si trasforma così in **energia meccanica rotatoria**.
 
-![[Power_Generation_Engineering_3.jpg]]
+![[Media/Power_Generation_Engineering_3.jpg]]
 
-![[Power_Generation_Engineering_5.jpg]]
+![[Media/Power_Generation_Engineering_5.jpg]]
 
 Il secondo passaggio è la conversione di questa energia meccanica in elettricità, compito affidato all'**alternatore**: una macchina collegata direttamente all'albero della turbina. L'alternatore ha una struttura semplice nella sua eleganza: una parte fissa, lo **statore**, ospita tre matasse di conduttori disposte a 120° l'una dall'altra; al suo interno ruota il **rotore**, dotato di poli magnetici. Quando la turbina mette in rotazione il rotore, i poli magnetici spazzano continuamente i conduttori dello statore.
 
-![[Power_Generation_Engineering_8.jpg]]
+![[Media/Power_Generation_Engineering_8.jpg]]
 
 È qui che entra in gioco l'**induzione elettromagnetica**: il movimento relativo tra un campo magnetico e un conduttore genera una tensione elettrica. Poiché i tre avvolgimenti dello statore sono sfasati di 120° nello spazio, le tensioni indotte risultano sfasate di 120° anche nel tempo. Il risultato è la **corrente alternata trifase**: la forma di energia standard immessa nella rete di distribuzione.
 
-![[Power_Generation_Engineering_9.jpg]]
+![[Media/Power_Generation_Engineering_9.jpg]]
 
-![[Power_Generation_Engineering_10.jpg]]
+![[Media/Power_Generation_Engineering_10.jpg]]
 
 #### Produzione di energia da fonti rinnovabili: impianti fotovoltaici
 
@@ -293,7 +293,7 @@ Per un dato conduttore, la corrente che lo attraversa è **proporzionale alla te
 
 $$\boxed{R = \frac{V}{I}} \quad \Leftrightarrow \quad V = R \cdot I \quad \Leftrightarrow \quad I = \frac{V}{R}$$
 
-![[The_Modern_Electrical_Blueprint_page_3_1.jpg]]
+![[Media/The_Modern_Electrical_Blueprint_page_3_1.jpg]]
 Un resistore ha 1 Ω quando, sottoposto a 1 V, viene attraversato da 1 A.
 
 > **Esempio risolto**
@@ -494,7 +494,7 @@ I cavi vengono infilati all'interno di **tubi guidacavo corrugati**: la forma a 
 
 Il centralino è il nodo di smistamento e protezione dell'impianto: un involucro isolante, solitamente vicino all'ingresso, che contiene tutti i dispositivi di protezione. Deve essere sempre presente un **interruttore generale** (per 6 kW → 32 A), più un **interruttore magnetotermico** dedicato a ogni circuito.
 
-![[The_Modern_Electrical_Blueprint_page_5_1.jpg]]
+![[Media/The_Modern_Electrical_Blueprint_page_5_1.jpg]]
 
 L'interruttore magnetotermico è dimensionato sulla **corrente nominale I_n**: il valore massimo di corrente che può scorrere indefinitamente senza aprire i contatti. Se la corrente supera I_n per abbastanza tempo, l'interruttore scatta, proteggendo il cavo dal surriscaldamento per effetto Joule.
 
@@ -548,7 +548,7 @@ La protezione principale contro entrambi i tipi di contatto è l'**interruttore 
 
 I dispositivi ad alta sensibilità, detti **salvavita**, intervengono per correnti di dispersione ≤ **30 mA**: valore scelto come compromesso tra protezione delle persone e continuità di servizio. Il salvavita non è però infallibile: non interviene per dispersioni inferiori a 30 mA (che nel tempo possono causare tetanizzazione), né in caso di contatto simultaneo con due conduttori attivi.
 
-![[The_Modern_Electrical_Blueprint_page_6_1.jpg]]
+![[Media/The_Modern_Electrical_Blueprint_page_6_1.jpg]]
 
 ---
 
@@ -671,7 +671,7 @@ La porta **EXOR** (OR esclusivo) restituisce 1 se gli ingressi sono **diversi** 
 |1|0|1|
 |1|1|0|
 
-![[The_Modern_Electrical_Blueprint_page_7_1.jpg]]
+![[Media/The_Modern_Electrical_Blueprint_page_7_1.jpg]]
 
 ---
 
@@ -701,7 +701,7 @@ Le porte logiche non si costruiscono una ad una: vengono prodotte industrialment
 
 Fisicamente, un circuito integrato è un contenitore plastico o ceramico (il _package_) con terminali metallici esterni chiamati **pin**. All'interno, una piastrina di silicio ospita i componenti realizzati con processi di fotolitografia di estrema precisione.
 
-![[The_Modern_Electrical_Blueprint_page_8_1.jpg]]
+![[Media/The_Modern_Electrical_Blueprint_page_8_1.jpg]]
 
 Riguardo alla tecnologia, si distinguono gli integrati **bipolari (TTL)** e gli integrati **unipolari CMOS**: i CMOS consumano meno e tollerano meglio il rumore, motivo per cui sono diventati lo standard dominante. Riguardo alla complessità, la classificazione va da **SSI** (meno di 12 porte) a **MSI** (fino a 100), **LSI** (fino a 1.000) e **VLSI** (oltre 1.000 porte). Gli integrati SSI — come il **74HC08** (quattro porte AND a due ingressi) o il **74HC32** (quattro porte OR) — sono i mattoni elementari su cui si impara a costruire circuiti logici.
 
@@ -733,7 +733,7 @@ La scheda più diffusa è la **Arduino UNO**, basata sul microcontrollore **ATme
 |Clock|16 MHz|
 |Alimentazione esterna|7÷12 V|
 
-![[The_Modern_Electrical_Blueprint_page_9_1.jpg]]
+![[Media/The_Modern_Electrical_Blueprint_page_9_1.jpg]]
 
 Le tre memorie hanno ruoli distinti. La **Flash** conserva il programma anche a scheda spenta (non volatile) ed è pre-programmata con un _bootloader_ che permette il caricamento del programma via USB senza hardware aggiuntivo. La **EEPROM** conserva parametri fissi come tarature e configurazioni. La **SRAM** è la memoria di lavoro durante l'esecuzione — volatile, si svuota allo spegnimento — ed è la risorsa più limitata: soli 2 kB, da usare con attenzione.
 
