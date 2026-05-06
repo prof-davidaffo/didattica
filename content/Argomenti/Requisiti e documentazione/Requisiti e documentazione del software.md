@@ -598,7 +598,7 @@ La fase di esplorazione è tra le più delicate di tutto il processo software. I
 Una delle immagini più efficaci per capire i problemi di comunicazione nella raccolta dei requisiti è la cosiddetta **metafora dell'altalena**: 
 
 
-![[altalena.png]]
+![[Media/altalena.png]]
 
 Questo illustra come ogni passaggio nella catena di comunicazione introduce possibilità di fraintendimento, e perché è essenziale **coinvolgere il cliente in modo continuativo** lungo tutto il progetto.
 
