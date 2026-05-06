@@ -1,4 +1,4 @@
-# FOCUS 1 — Il Settore Tecnologico Elettrico
+# FOCUS 1 — Il Settore Tecnologico Elettrico e l'Impianto Residenziale
 
 ## 1. Tre discipline, un unico ecosistema
 
@@ -21,6 +21,8 @@ Questa distinzione è fondamentale: stessa grandezza fisica (corrente elettrica)
 L'**elettronica** nasce da un'esigenza diversa e complementare: trattare segnali elettrici molto deboli — spesso proporzionali a grandezze fisiche come temperatura, pressione o luminosità rilevate da sensori — che non possono essere usati direttamente perché troppo piccoli. L'oggetto dell'elettronica è quindi il segnale a bassa potenza: acquisirlo, amplificarlo, elaborarlo, trasmetterlo.
 
 La storia dell'elettronica è una storia di miniaturizzazione progressiva. Nel **1904** Fleming inventò la valvola termoionica, primo dispositivo capace di amplificare un segnale, ma ingombrante e fragile. Nel **1948** arrivò il transistor a semiconduttore: stesso principio, dimensioni nettamente ridotte. Intorno al **1958** transistor e altri componenti iniziarono a essere integrati insieme in un unico chip di silicio, dando vita ai **circuiti integrati** e alla microelettronica. Il passo successivo, nel **1971**, fu il primo **microprocessore** commercializzato da Intel: una CPU completa su un singolo chip. Da quel momento l'elettronica digitale ha trasformato ogni aspetto della vita quotidiana e industriale.
+
+![[Media/img_3.jpeg]]
 
 ### Automazione
 
@@ -155,6 +157,8 @@ In questo modo, anche se ogni utenza domestica utilizza una sola fase, l’inter
 
 Dal punto di vista dell'utente finale, questa organizzazione si traduce in due tipi di fornitura. La **fornitura monofase** (tipica delle abitazioni civili, 230 V) usa tre conduttori: la **fase (L)**, che porta la tensione; il **neutro (N)**, collegato a terra in prossimità del trasformatore; il **conduttore di protezione (PE)**, che collega le masse metalliche dell'impianto alla terra dell'edificio. La **fornitura trifase** (per utenze industriali o servizi condominiali) usa invece tre fasi (L₁, L₂, L₃) più il neutro e mette a disposizione **400 V** tra due fasi qualsiasi e **230 V** tra una fase e il neutro.
 
+La **terra dell'edificio**, o **impianto di terra**, non è un conduttore usato per alimentare normalmente gli apparecchi. È un sistema di sicurezza formato da elementi metallici infissi nel terreno, detti **dispersori**, e da conduttori che collegano a questi dispersori le parti metalliche accessibili dell'impianto. Il suo scopo è offrire alla corrente di guasto un percorso verso il terreno, in modo che una carcassa metallica non resti pericolosamente in tensione e che i dispositivi di protezione possano intervenire.
+
 ![[Media/Three_Phase_Power_Geometry_page_13_1.jpg]]
 
 In pratica, quando si collega un elettrodomestico alla presa di casa, si sta utilizzando **una sola fase del sistema trifase generale**.
@@ -171,35 +175,313 @@ $$\boxed{V_{conc} = \sqrt{3} \cdot V_{fase}} \quad \Rightarrow \quad 400 \text{ 
 ![[Media/Power_Generation_Engineering_10.jpg]]
 
 #### Produzione di energia da fonti rinnovabili: impianti fotovoltaici
-
 Accanto alle grandi centrali, il comparto comprende impianti di piccola e media dimensione per la produzione da fonti rinnovabili. Il più diffuso in ambito civile è l'**impianto fotovoltaico**, che si basa sull'**effetto fotovoltaico**: alcuni materiali semiconduttori, quando esposti alla luce solare, liberano elettroni che scorrono attraverso il materiale generando corrente. Non ci sono parti in movimento: è la luce a spingere direttamente gli elettroni.
+
 
 A differenza delle centrali tradizionali, qui non c’è alcuna conversione in energia meccanica: l’energia della luce viene trasformata direttamente in energia elettrica.
 
+![[Media/The_Flow_of_Light_page_2_1.jpg]]
+
 Questo rende gli impianti fotovoltaici più semplici dal punto di vista meccanico, ma introduce complessità nella gestione elettronica e nell’integrazione con la rete.
 
-L'elemento base è la **cella fotovoltaica** (tipicamente 15,6 × 15,6 cm), che produce circa 3 A a tensioni molto basse (0,4÷0,5 V). Per ottenere valori utili, le celle vengono collegate in serie e in parallelo secondo una gerarchia precisa:
+L'elemento base è la **cella fotovoltaica**. Una cella è una piccola superficie di materiale semiconduttore che, quando viene illuminata, genera una tensione molto bassa. Da sola produce poca energia: non basta per alimentare un'abitazione o un apparecchio significativo.
 
+![[Media/The_Flow_of_Light_page_3_1.jpg]]
+
+Per questo motivo le celle non si usano quasi mai isolate. Molte celle vengono collegate e racchiuse in una struttura rigida e protetta: quello che nel linguaggio comune chiamiamo **pannello solare**. In modo più preciso si parla di **modulo fotovoltaico**.
+
+![[Media/The_Flow_of_Light_page_4_1.jpg]]
+
+Un impianto reale è quindi costruito per livelli successivi:
 
 ```
-Celle  →  Modulo  →  Pannello  →  Stringhe (serie)  →  Generatore fotovoltaico (stringhe in parallelo)
+Celle  →  Pannello/modulo  →  Gruppo di pannelli  →  Impianto fotovoltaico
 ```
 
+Il principio è lo stesso già visto nei circuiti elettrici: collegando più elementi si ottengono valori più adatti all'uso pratico. Se più pannelli vengono collegati in **serie**, le loro tensioni si sommano: ad esempio, pannelli che producono ciascuno una certa tensione possono formare insieme una tensione complessiva più alta. Se più gruppi vengono collegati in **parallelo**, invece, la tensione resta la stessa ma aumenta la corrente disponibile. In questo modo si passa dalla piccola energia prodotta da una singola cella alla potenza utile di un impianto.
+
+![[Media/The_Flow_of_Light_page_5_1.jpg]]
+
+La corrente prodotta dai pannelli è **continua** (DC): i morsetti positivo e negativo restano sempre gli stessi e la corrente scorre sempre nello stesso verso. La rete domestica, invece, funziona in **corrente alternata** (AC): fase e neutro sono alimentati da una tensione sinusoidale che cambia continuamente valore e verso, 50 volte al secondo in Europa.
+
+![[Media/The_Flow_of_Light_page_6_1.jpg]]
+
+Per collegare i pannelli alla casa e alla rete serve quindi un **inverter**. Il suo compito è trasformare la corrente continua dei pannelli in corrente alternata utilizzabile dagli apparecchi domestici.
+
+![[Media/The_Flow_of_Light_page_7_1.jpg]]
+
+A livello di principio, l'inverter lavora in tre passaggi:
+
+1. riceve l'energia in corrente continua dai pannelli;
+2. tramite interruttori elettronici di potenza, commuta molto rapidamente la corrente, trasformandola in una forma alternata;
+3. regola questa forma d'onda in modo che abbia tensione, frequenza e sincronismo compatibili con la rete elettrica.
+
+![[Media/The_Flow_of_Light_page_8_1.jpg]]
+
+L'idea di base è quindi questa: l'inverter non "crea" energia nuova, ma **modifica il modo in cui l'energia elettrica si presenta**. Dai pannelli arriva energia in DC; all'uscita dell'inverter esce energia in AC, adatta agli utilizzatori domestici e alla rete.
+
+Per questo l'inverter non è un semplice adattatore: è un'apparecchiatura di **elettronica di potenza**, perché deve convertire e controllare energia elettrica con tensioni e correnti significative. Il fotovoltaico appartiene quindi all'elettrotecnica per la produzione di energia, ma richiede anche elettronica per la conversione e il controllo.
+
+Completano l'impianto i **quadri di protezione** e i contatori. Un quadro di protezione è un piccolo quadro elettrico che contiene dispositivi di sezionamento e sicurezza: serve a interrompere il circuito in caso di manutenzione o di guasto, e a proteggere le linee da sovratensioni, sovracorrenti o dispersioni.
+
+Nel fotovoltaico ci sono normalmente più punti da proteggere, perché l'energia attraversa parti diverse dell'impianto:
+
+- il **quadro DC** si trova tra pannelli e inverter, quindi lavora sul lato in corrente continua;
+- il **quadro AC** si trova dopo l'inverter, quindi lavora sul lato in corrente alternata;
+- il **quadro generale** collega l'impianto fotovoltaico all'impianto elettrico dell'edificio e alla rete.
+
+In questo modo ogni tratto del percorso viene protetto con dispositivi adatti al tipo di corrente che lo attraversa. Non si protegge allo stesso modo il lato DC dei pannelli e il lato AC collegato alla rete domestica.
+
+![[Media/The_Flow_of_Light_page_9_1.jpg]]
+
+Negli impianti **grid-connected** — collegati in parallelo alla rete del distributore — due contatori svolgono ruoli distinti: il **contatore di scambio** (bidirezionale) misura quanta energia viene immessa in rete e quanta ne viene prelevata; il **contatore di produzione** registra tutta l'energia generata dall'impianto.
+
+![[Media/The_Flow_of_Light_page_10_1.jpg]]
+
+Il funzionamento pratico è semplice: quando la produzione dei pannelli supera il consumo della casa, l'eccedenza viene immessa in rete; quando invece i pannelli non producono abbastanza, ad esempio di sera o con poca luce, l'abitazione preleva energia dalla rete. I moderni impianti possono includere anche un **sistema di accumulo** (batterie sul lato DC) per stoccare l'energia prodotta in eccesso, aumentare l'autoconsumo e ridurre la dipendenza dalla rete.
+
+![[Media/The_Flow_of_Light_page_11_1.jpg]]
+
+Lo schema complessivo riassume il percorso dell'energia: luce solare, pannelli, inverter, protezioni, utenze domestiche e rete elettrica.
+
+![[Media/The_Flow_of_Light_page_12_1.jpg]]
+
+#### Dalla distribuzione all'utilizzo dell'energia
+
+Una volta prodotta, l'energia elettrica deve essere **trasportata, distribuita, protetta, comandata e infine utilizzata**. Questa parte del comparto elettrotecnico non riguarda quindi un solo prodotto, ma una catena di oggetti collegati tra loro. Per non perdere il filo, conviene leggerli sempre in base alla posizione che occupano nel percorso dell'energia.
+
+##### Componenti per distribuire, comandare, proteggere e utilizzare
+
+I componenti elettrotecnici si possono leggere a partire dalla funzione che svolgono nell'impianto.
+
+|Componente|Funzione principale|Esempio d'uso|
+|---|---|---|
+|Conduttori|Trasportano energia elettrica|Linee di alimentazione, montanti, circuiti luce e prese|
+|Quadri elettrici|Raccolgono e coordinano protezioni, comandi e linee|Centralino domestico, quadro di distribuzione industriale|
+|Interruttori|Aprono o chiudono un circuito|Sezionamento generale o comando di una linea|
+|Contattori|Comandano carichi di potenza con un circuito di comando|Motori, linee industriali, carichi automatici|
+|Relè|Separano comando e circuito controllato|Automazioni, comandi a distanza, logiche semplici|
+|Salvamotori|Proteggono i motori da sovraccarichi e anomalie|Avviamento e protezione di motori elettrici|
+|Apparecchi utilizzatori|Trasformano l'energia elettrica in un effetto utile|Lampade, elettrodomestici, motori|
+
+La tabella non va interpretata come un elenco di oggetti separati. In un impianto reale questi elementi lavorano insieme: i conduttori portano energia, il quadro la suddivide e la protegge, gli apparecchi di comando decidono quando alimentare un carico e gli utilizzatori trasformano l'energia in luce, movimento, calore o lavoro meccanico. Lo stesso percorso si ritrova in scala ridotta nell'impianto residenziale, che è il caso più vicino all'esperienza quotidiana.
+
+#### Caso studio: l'impianto elettrico residenziale
+
+Un'abitazione non è solo un insieme di prese e interruttori: è un piccolo sistema di distribuzione dell'energia. Riceve potenza dalla rete pubblica, la porta al centralino, la divide in circuiti, la protegge dai guasti e la rende disponibile agli utilizzatori finali.
+
+Studiare l'impianto residenziale permette di vedere in forma concreta molti concetti fisici che saranno ripresi nel Focus 2 — carica, tensione, corrente, resistenza, potenza ed effetto Joule — perché ogni scelta impiantistica dipende da questi fenomeni.
+
+##### 1. Dalla rete all'abitazione
+
+L'energia elettrica viene prodotta nelle centrali ad altissima tensione e trasportata su lunghe distanze prima di essere trasformata in una forma adatta agli impianti civili. Trasmettere a tensione elevata riduce drasticamente le perdite per effetto Joule nei cavi: a parità di potenza trasportata, una tensione più alta implica una corrente più bassa, e le perdite dipendono da $R \cdot I^2$.
+
+Il percorso dalla centrale all'utente può essere schematizzato in quattro livelli:
+
+1. **Centrale elettrica** → produce energia in **alta tensione (AT)**, decine o centinaia di kV.
+2. **Rete di trasmissione nazionale** → trasporta l'energia su grandi distanze.
+3. **Cabine di trasformazione** → abbassano la tensione da AT a **media tensione (MT)**, poi da MT a **bassa tensione (BT)** (230/400 V) tramite trasformatori da palo vicini all'utenza.
+4. **Impianto dell'utente** → distribuisce l'energia all'interno dell'edificio.
+
+![[Media/Photon_to_Code_page_7_1.jpg]]
+
+###### Classificazione degli impianti per livello di tensione
+
+|Categoria|Tensione nominale|Descrizione|
+|---|---|---|
+|0|V_n ≤ 50 V|Bassissima tensione|
+|1|50 V < V_n ≤ 1.000 V|Bassa tensione (civile/industriale leggero)|
+|2|1.000 V < V_n ≤ 30.000 V|Media tensione|
+|3|V_n > 30.000 V|Alta tensione|
+
+---
+
+##### 2. La corrente alternata distribuita in rete
+
+L'energia viene distribuita in **corrente alternata sinusoidale**: un segnale che oscilla ritmicamente tra valori positivi e negativi. Capire i suoi parametri è necessario per interpretare le specifiche di qualsiasi componente dell'impianto.
+
+Dire che la corrente è **alternata** significa che il moto delle cariche cambia verso periodicamente. Gli elettroni nel conduttore non viaggiano una volta per tutte dalla centrale fino all'elettrodomestico: oscillano avanti e indietro attorno alla loro posizione. Quello che si trasferisce lungo il circuito è l'**energia elettrica**.
+
+Gli utilizzatori sfruttano entrambe le semionde della corrente. Una resistenza, per esempio, si riscalda sia quando la corrente scorre in un verso sia quando scorre nel verso opposto, perché l'effetto Joule dipende dall'intensità della corrente e non dal suo verso. Altri apparecchi, come alimentatori e dispositivi elettronici, trasformano poi internamente la corrente alternata in corrente continua.
+
+![[Media/Photon_to_Code_page_6_1.jpg]]
+
+Il **periodo T** è il tempo per completare un'oscillazione completa; la **frequenza f** è il numero di oscillazioni al secondo ($f = 1/T$). Il **valore massimo V_M** è l'ampiezza di picco. Il **valore efficace V** è il parametro più utile in pratica: è il valore di tensione continua che, applicata allo stesso resistore per lo stesso tempo, svilupperebbe la stessa quantità di calore. Lo stesso ragionamento vale per la corrente: anche in AC si usano normalmente i **valori efficaci** di tensione e corrente.
+
+$$\boxed{V = \frac{V_M}{\sqrt{2}}} \approx 0{,}707 \cdot V_M$$
+
+In Europa la frequenza è **50 Hz** (T = 20 ms). La tensione efficace di rete è **230 V**, quindi il valore di picco è $V_M = 230 \cdot \sqrt{2} \approx 325 \text{ V}$: valore molto più elevato di quello indicato sui componenti, ma che dura solo un istante.
+
+---
+
+##### 3. Fornitura monofase, trifase e conduttori principali
+
+La distinzione tra **fornitura monofase** e **fornitura trifase** è già stata introdotta in precedenza, nel punto in cui si segue il passaggio dall'alternatore alla distribuzione verso le utenze. Nel contesto dell'impianto residenziale basta ricordare che l'abitazione ordinaria riceve normalmente una **fase + neutro + PE (_Protective Earth_)** a **230 V**, mentre utenze più impegnative possono richiedere una fornitura **trifase**.
+
+La **fase** è il conduttore attivo: rispetto al neutro presenta la tensione alternata di rete. Il **neutro** è il conduttore di ritorno del circuito. Il **PE** (_Protective Earth_) non serve invece al funzionamento ordinario degli apparecchi: è un conduttore di sicurezza, collegato alle masse metalliche, che deve offrire un percorso controllato alla corrente in caso di guasto.
+
+---
+
+##### 4. Dal contatore ai circuiti interni
+
+L'impianto residenziale è dimensionato in funzione della **potenza impegnata** e dei carichi previsti. Per capirlo non conviene partire dai singoli componenti isolati, ma dal percorso dell'energia dentro l'abitazione: ingresso dalla rete, protezione nel centralino, distribuzione nei locali, comando degli utilizzatori.
+
+Il primo elemento è il **contatore**, che segna il confine tra la rete del distributore e l'impianto privato. Misura l'energia consumata in **kWh** e comunica i dati al gestore attraverso la stessa linea elettrica di distribuzione, con la tecnica delle "onde convogliate", senza bisogno di una rete dati separata.
+
+Il contatore è anche associato alla **potenza contrattuale** disponibile. In una fornitura domestica ordinaria, se la potenza assorbita supera per troppo tempo quella impegnata, può interrompere l'alimentazione. Questa funzione non va però confusa con la protezione dell'impianto: il contatore limita la fornitura, mentre la protezione dei cavi e delle persone è affidata ai dispositivi del centralino.
+
+Dal contatore parte il **montante**, cioè il cavo multipolare che alimenta il centralino dell'abitazione. Come tutti i conduttori, è formato da rame rivestito da materiale isolante ed è caratterizzato da due grandezze fondamentali: la **sezione** del cavo, espressa in mm², e la **portata I_Z**, cioè la corrente massima che può scorrere in modo permanente senza provocare surriscaldamento per effetto Joule.
+
+|Sezione [mm²]|Portata [A]|
+|---|---|
+|1,5|15,5|
+|2,5|21|
+|4|28|
+|6|36|
+|10|50|
+
+La scelta della sezione non dipende solo dalla corrente, ma anche dalla lunghezza del collegamento: più un cavo è lungo, maggiore è la sua resistenza e quindi maggiore è la caduta di tensione lungo il percorso. Per questo il montante deve essere dimensionato tenendo conto della distanza tra contatore e centralino.
+
+|Lunghezza massima [m]|Sezione [mm²]|
+|---|---|
+|17|6|
+|29|10|
+|45|16|
+
+I cavi non vengono murati direttamente: scorrono dentro **tubi guidacavo corrugati**, posati nelle pareti prima dell'infilaggio dei conduttori. La forma a onde rende il tubo flessibile nelle curve e resistente dal punto di vista meccanico, permettendo anche eventuali sostituzioni o aggiunte successive.
+
+Il montante arriva al **centralino**, o **QUA** (_Quadro di Unità Abitativa_), che è il vero nodo dell'impianto domestico. Il centralino è un esempio concreto di **quadro elettrico di bassa tensione (BT)**: un contenitore, metallico o isolante, nel quale vengono montati e collegati in modo ordinato i dispositivi di protezione, sezionamento e distribuzione. In bassa tensione si lavora fino a **1.000 V in corrente alternata** e **1.500 V in corrente continua**; l'impianto domestico, con i suoi 230 V, rientra quindi in questa categoria.
+
+La funzione del quadro non è solo "contenere interruttori". Da qui l'energia viene distribuita ai circuiti interni e, soprattutto, viene protetta. Nel centralino devono essere presenti un **interruttore generale**, dimensionato in base alla potenza contrattuale, e più **interruttori magnetotermici**, ognuno associato a un circuito.
+
+La suddivisione in circuiti è una scelta tecnica essenziale. Una linea luci, una linea prese e una linea per un carico impegnativo non assorbono la stessa corrente e non usano cavi della stessa sezione; quindi non possono essere protette nello stesso modo. Separare le linee permette anche di isolare un guasto o un sovraccarico senza togliere alimentazione a tutta l'abitazione.
+
+In un quadro, quindi, i dispositivi non vengono scelti a caso: devono essere coordinati con le linee che proteggono. La corrente nominale degli interruttori deve essere compatibile con la sezione dei cavi, le protezioni devono intervenire nel punto giusto dell'impianto e i circuiti devono essere separati in modo da evitare che un problema locale fermi tutta la casa.
+
+![[Media/The_Modern_Electrical_Blueprint_page_5_1.jpg]]
+
+![[Media/img_26.jpeg]]
+
+L'interruttore magnetotermico è dimensionato sulla **corrente nominale I_n**: il valore massimo di corrente che può scorrere indefinitamente senza aprire i contatti. Se la corrente supera I_n per abbastanza tempo, l'interruttore scatta, proteggendo il cavo dal surriscaldamento per effetto Joule.
+
+Un magnetotermico non è quindi solo un interruttore comandato a mano. Dentro contiene:
+
+- una coppia di **contatti elettrici**, che normalmente sono chiusi e lasciano passare la corrente;
+- una **leva di comando**, usata per aprire o richiudere manualmente il circuito;
+- un meccanismo di **sgancio automatico**, che separa i contatti quando rileva una corrente pericolosa;
+- due organi di controllo: uno **termico** e uno **magnetico**.
+
+La parte **termica** è legata al calore prodotto dalla corrente. In genere è realizzata con una **lamina bimetallica**, cioè una lamina formata da due metalli diversi saldati insieme. Quando la corrente è troppo alta per un certo tempo, la lamina si scalda, si deforma e aziona il meccanismo di sgancio. Questo intervento non è immediato: serve per i **sovraccarichi**, per esempio quando su una linea prese sono collegati troppi apparecchi e il cavo rischia di scaldarsi lentamente.
+
+La parte **magnetica** è invece una piccola **bobina** attraversata dalla corrente del circuito. Se la corrente aumenta bruscamente, il campo magnetico generato dalla bobina diventa molto intenso e attira rapidamente un elemento mobile, provocando lo sgancio quasi istantaneo. Questo intervento serve per i **cortocircuiti**, nei quali la corrente cresce in modo violento e deve essere interrotta subito.
+
+Il nome **magnetotermico** indica quindi l'unione di questi due meccanismi: **termico** per correnti troppo alte ma prolungate, **magnetico** per correnti enormi e improvvise. In entrambi i casi l'obiettivo è proteggere soprattutto i conduttori, non l'apparecchio collegato alla presa.
+
+![[Media/img_27.jpeg]]
+
+|Circuito|Sezione cavo [mm²]|I_n interruttore [A]|
+|---|---|---|
+|Luci|1,5|10|
+|Prese|2,5|16|
+|Piano cottura a induzione|4|25|
+
+Oltre agli interruttori magnetotermici, la norma prescrive almeno due **interruttori differenziali** per la protezione delle persone dall'**elettrocuzione**, cioè dal passaggio di corrente attraverso il corpo umano. Il rischio può nascere da un **contatto diretto**, quando si tocca una parte normalmente in tensione, oppure da un **contatto indiretto**, quando si tocca una massa metallica che è diventata in tensione a causa di un guasto dell'isolamento.
+
+L'interruttore differenziale, detto anche **salvavita** quando è ad alta sensibilità, non controlla quanta corrente assorbe il circuito come fa il magnetotermico. Controlla invece se la corrente che entra dalla fase è uguale a quella che ritorna dal neutro. In condizioni normali le due correnti sono uguali; se una parte della corrente si disperde verso terra, per esempio attraverso una carcassa guasta o attraverso il corpo di una persona, la corrente di ritorno diventa minore. Il differenziale rileva questa differenza e apre il circuito in pochi millisecondi.
+
+![[Media/The_Modern_Electrical_Blueprint_page_6_1.jpg]]
+Negli impianti civili italiani è tipico il sistema **TT**, una sigla che indica come sono collegati a terra il distributore e l'utente. La prima **T** significa che il neutro del distributore è collegato a terra; la seconda **T** significa che anche l'impianto dell'utente ha un proprio impianto di terra, separato da quello del distributore.
+
+Il conduttore **PE** (_Protective Earth_, cioè conduttore di protezione) è il filo di terra dell'impianto. È il conduttore giallo-verde che collega le parti metalliche accessibili, per esempio la carcassa di un elettrodomestico, all'impianto di terra. Normalmente non porta corrente: serve solo in caso di guasto.
+
+Se un conduttore di fase tocca la carcassa di un elettrodomestico, il PE offre alla corrente di guasto un percorso verso terra; il differenziale rileva che una parte della corrente non sta tornando dal neutro e interviene. I differenziali ad alta sensibilità intervengono per correnti di dispersione fino a **30 mA**, valore scelto come compromesso tra protezione delle persone e continuità di servizio.
+
+Magnetotermico e differenziale rispondono quindi a problemi diversi: il **magnetotermico** protegge soprattutto i cavi da sovraccarichi e cortocircuiti, mentre il **differenziale** protegge soprattutto le persone dalle dispersioni verso terra. Il salvavita non è però infallibile: non interviene per dispersioni inferiori alla sua soglia, né in caso di contatto simultaneo con fase e neutro, perché in quel caso la corrente che entra e quella che ritorna possono risultare ancora uguali.
 
 
-Le celle producono corrente **continua** (DC), mentre la rete domestica funziona in corrente **alternata** (AC): tra il generatore fotovoltaico e la rete è quindi indispensabile un **inverter** che esegua la conversione. Completano l'impianto i quadri di protezione (quadro DC, quadro AC, quadro generale) e i contatori.
+Dopo il centralino inizia la distribuzione interna verso gli **apparecchi utilizzatori**, cioè i dispositivi che trasformano l'energia elettrica in un effetto utile: una lampada produce luce, un forno produce calore, un elettrodomestico o un motore elettrico producono movimento o lavoro meccanico. I cavi passano nei tubi corrugati e raggiungono le **scatole di derivazione**, che sono punti di smistamento nascosti nelle pareti: da una linea principale partono più diramazioni verso prese, luci e comandi. Da qui i conduttori arrivano alle **scatole portafrutti**, cioè le scatole incassate che ospitano i moduli visibili sulla parete. I **frutti** sono proprio questi moduli: prese, interruttori, deviatori, pulsanti e simili.
 
-Negli impianti **grid-connected** — collegati in parallelo alla rete del distributore — due contatori svolgono ruoli distinti: il **contatore di scambio** (bidirezionale) misura quanta energia viene immessa in rete e quanta ne viene prelevata; il **contatore di produzione** registra tutta l'energia generata dall'impianto. Quando la produzione supera il consumo l'eccedenza va in rete, quando non basta si preleva dalla rete. I moderni impianti possono includere anche un **sistema di accumulo** (batterie sul lato DC) per stoccare l'energia prodotta in eccesso, aumentare l'autoconsumo e ridurre la dipendenza dalla rete.
+![[Media/Architettura_Elettrica_page_9_1.jpg]]
 
-#### Produzione di componenti e apparecchiature per la distribuzione
+![[Media/img_30.jpeg]]
 
-Produrre energia è solo il primo passo: l'energia deve arrivare agli utenti in modo sicuro e controllato. Questo richiede una vasta gamma di componenti — conduttori, interruttori, contattori, relè, salvamotori — la cui produzione costituisce una parte fondamentale dell'industria elettrotecnica italiana.
+![[Media/img_29.jpeg]]
 
-Questi componenti vengono poi assemblati nei **quadri elettrici**, i nodi della rete di distribuzione. Un quadro di **bassa tensione (BT)** raccoglie in una struttura metallica tutte le apparecchiature di protezione e manovra necessarie a smistare e proteggere le linee a valle, per tensioni fino a 1.000 V in AC e 1.500 V in DC.
+Le **prese** servono ad alimentare utilizzatori mobili, come caricabatterie o elettrodomestici. Gli **apparecchi di comando**, invece, servono soprattutto ad accendere e spegnere utilizzatori fissi, come le lampade. Non proteggono l'impianto: modificano solo il percorso della fase verso il carico. La protezione resta affidata agli interruttori nel centralino.
 
-#### Produzione di apparecchi utilizzatori
+![[Media/img_28.jpeg]]
 
-In fondo alla catena ci sono gli **apparecchi utilizzatori**: i dispositivi che convertono l'energia elettrica in qualcosa di utile. I **motori elettrici** la convertono in movimento meccanico e sono fondamentali nell'industria e nei trasporti elettrificati (metropolitane, tram, treni). I prodotti **illuminotecnici** — in particolare le moderne lampade LED — la convertono in luce, con applicazioni che vanno dall'illuminazione domestica agli impianti per eventi sportivi e spettacoli all'aperto.
+Il caso più semplice è l'**interruttore unipolare**, usato per comandare una luce da un solo punto. Ha due morsetti e agisce solo sulla **fase**:
+
+1. la fase arriva dal circuito luci ed entra nel primo morsetto dell'interruttore;
+2. dal secondo morsetto parte il filo che va alla lampada;
+3. il neutro non passa dall'interruttore: arriva direttamente alla lampada;
+4. il PE, se necessario, collega a terra le parti metalliche dell'apparecchio.
+
+Quando l'interruttore è chiuso, la fase può raggiungere la lampada e il circuito è completo: fase → interruttore → lampada → neutro. Quando l'interruttore è aperto, la fase si interrompe prima della lampada e la lampada resta spenta.
+
+![[Media/Architettura_Elettrica_page_11_1.jpg]]
+
+Il **deviatore** si usa quando la stessa luce deve essere comandata da due punti, per esempio all'inizio e alla fine di un corridoio. Non ha due morsetti come un interruttore, ma **tre**:
+
+- un morsetto **comune**;
+- due morsetti di uscita alternativi, spesso chiamati **navette** o **corrispondenti**.
+
+Il collegamento tipico funziona così:
+
+1. la fase entra nel morsetto comune del primo deviatore;
+2. le due uscite del primo deviatore sono collegate ai due morsetti corrispondenti del secondo deviatore con due fili intermedi;
+3. il morsetto comune del secondo deviatore va alla lampada;
+4. il neutro arriva direttamente alla lampada.
+
+Il deviatore non si limita ad aprire o chiudere: sceglie quale dei due fili intermedi collegare al proprio comune. Se i due deviatori sono "allineati" sullo stesso filo intermedio, la fase arriva alla lampada e la luce è accesa. Se sono posizionati su fili diversi, il percorso si interrompe e la luce è spenta. Azionando uno qualunque dei due deviatori, si cambia sempre lo stato della lampada.
+
+![[Media/deviatore.png]]
+
+L'**invertitore** si usa quando i punti di comando diventano tre o più. I due deviatori restano sempre alle estremità del circuito; l'invertitore si inserisce in mezzo, sui due fili intermedi che collegano i deviatori. Ha quindi **quattro morsetti**: due in ingresso e due in uscita.
+
+Il suo compito è scambiare i due percorsi:
+
+1. in una posizione collega i fili in modo diretto: alto con alto, basso con basso;
+2. nell'altra posizione li incrocia: alto con basso, basso con alto.
+
+Per questo si chiama invertitore: non porta direttamente la fase alla lampada e non lavora da solo, ma **inverte** il collegamento tra i due deviatori. Quando viene azionato, modifica l'allineamento dei percorsi intermedi e quindi cambia lo stato della luce. Per aggiungere altri punti di comando, si inseriscono altri invertitori in serie tra i due deviatori.
+
+![[Media/invertitore.png]]
+
+Fin qui il comando della lampada avviene con interruttori, deviatori e invertitori: sono apparecchi che restano nella posizione in cui vengono lasciati. Esiste però anche un'altra soluzione, usata spesso quando i punti di comando sono molti: **pulsanti monostabili + relè passo-passo**.
+
+Il **pulsante monostabile** è il classico pulsante da parete che chiude il contatto solo mentre viene premuto e poi torna da solo nella posizione iniziale. Da solo non rimane acceso o spento: dà solo un comando momentaneo. Per questo si usa per campanelli, suonerie e ronzatori.
+
+Per comandare una lampada con un pulsante serve un **relè passo-passo**. Il pulsante, infatti, non deve alimentare direttamente la lampada: deve alimentare solo per un istante la **bobina del relè**. Quando la bobina riceve corrente, si comporta come un piccolo elettromagnete e fa scattare un contatto interno. Quel contatto, non il pulsante, apre o chiude il circuito della lampada.
+
+La cosa da ricordare è che nel relè ci sono sempre due parti:
+
+1. il **circuito di comando**, dove sono collegati i pulsanti e la bobina del relè;
+2. il **circuito comandato**, dove il contatto del relè alimenta o disalimenta la lampada.
+
+Qui è importante distinguere due casi. In un **relè normale**, quando la bobina non è più alimentata, il contatto torna nella posizione di riposo. Quindi un relè normale non è adatto, da solo, a mantenere una lampada accesa dopo che il pulsante è stato rilasciato.
+
+Nel **relè passo-passo**, invece, l'impulso alla bobina fa avanzare un piccolo meccanismo interno. Il contatto cambia posizione e poi rimane in quella posizione anche quando la bobina non è più alimentata. Per questo il relè passo-passo può "ricordare" se la lampada deve restare accesa o spenta.
+
+Il funzionamento si può leggere così:
+
+1. si preme il pulsante;
+2. il pulsante chiude per un attimo il circuito di comando;
+3. per quell'istante la bobina del relè viene alimentata;
+4. il relè passo-passo scatta e cambia la posizione del suo contatto;
+5. si lascia il pulsante e la bobina non è più alimentata;
+6. il contatto del relè resta però nella nuova posizione.
+
+In pratica:
+
+1. al primo impulso il contatto del relè si chiude e la lampada resta accesa;
+2. al secondo impulso il contatto del relè si apre e la lampada resta spenta;
+3. agli impulsi successivi continua ad alternare acceso e spento.
+
+Si chiama "passo-passo" proprio perché avanza di uno stato a ogni pressione del pulsante. Questa soluzione è comoda quando la stessa luce deve essere comandata da molti punti: invece di usare due deviatori e uno o più invertitori, si collegano molti pulsanti al circuito di comando del relè, mentre il relè gestisce il circuito della lampada.
+
+Per rappresentare questi collegamenti si usano gli **schemi funzionali**. Non mostrano dove si trovano fisicamente scatole e tubi, ma come sono collegati elettricamente fase, neutro, comandi e lampade. Servono quindi a seguire il percorso della corrente e a capire che cosa cambia quando un interruttore, un deviatore o un invertitore viene azionato.
 
 ---
 
@@ -231,6 +513,8 @@ Qualunque circuito elettronico è costruito con componenti che si dividono in du
 
 Avere i componenti giusti non basta: bisogna anche collegarli in modo preciso e affidabile. Il **PCB** (Printed Circuit Board, circuito stampato) è una basetta di materiale isolante — tipicamente fibra di vetro — su cui sono incise piste di rame che formano le connessioni tra i componenti. La progettazione avviene con software **ECAD** dedicati.
 
+![[Media/img_37.jpeg]]
+
 A seconda della complessità del circuito, il PCB può essere **monofaccia** (piste su un solo lato), **a doppia faccia** (piste su entrambi i lati) o **multistrato** (più strati sovrapposti, fino a spessori di 0,05 mm ciascuno), quest'ultimo usato dove la densità di componenti è molto elevata.
 
 #### Elettronica di consumo
@@ -253,6 +537,8 @@ L'elettronica di potenza è presente ovunque: negli inverter degli impianti foto
 
 Un settore importante del comparto elettronico è quello degli **impianti di sicurezza**, progettati per proteggere beni e persone attraverso componenti elettronici e software specifici. Si articolano in tre famiglie: i **sistemi di controllo accessi** (badge, lettori biometrici, telecamere di lettura targhe), gli **impianti antintrusione** (una centrale collegata a sensori perimetrali e volumetrici) e gli **impianti di videosorveglianza** (sistemi TVCC con telecamere che registrano e trasmettono il segnale video).
 
+![[Media/img_12.jpeg]]
+
 ---
 
 ### 2.3 Comparto dell'Automazione
@@ -267,7 +553,7 @@ Il protagonista dell'automazione moderna è spesso un **sistema embedded** (lett
 
 Quando le esigenze di automazione diventano più complesse — molti ingressi da leggere, molte uscite da controllare, ambienti industriali difficili — entra in gioco il **PLC**. Nella sua forma minima è composto da un alimentatore, una scheda CPU con il microprocessore, vari tipi di memoria (flash per il programma, RAM di lavoro, RAM con batteria tampone per le variabili con memoria) e una o più schede di interfaccia I/O per collegare sensori (ingressi) e attuatori (uscite).
 
-
+![[Media/img_36.jpeg]]
 
 Il funzionamento è ciclico: il microprocessore percorre continuamente la sequenza del programma, legge i valori degli ingressi, elabora la logica e aggiorna le uscite. Il tempo impiegato per completare questo ciclo è detto **tempo di ciclo**: in applicazioni real-time è un parametro critico, perché un ciclo troppo lento si traduce in una macchina che reagisce con ritardo agli eventi.
 
@@ -287,6 +573,8 @@ L'automazione non riguarda solo le fabbriche: anche gli edifici civili e commerc
 - **Building Automation**: edifici collettivi (alberghi, ospedali, uffici, centri commerciali) dove la gestione è centralizzata attraverso un _building manager_ specializzato.
 
 In entrambi i casi il principio fondamentale è lo stesso: tutti i dispositivi comunicano attraverso un unico **bus** (doppino di rame, fibra ottica o wireless), e il **comando è separato dall'attuatore** — le pulsantiere inviano messaggi sul bus, gli attuatori li ricevono e agiscono di conseguenza. Questo permette di riconfigurare l'impianto via software, senza toccare i cavi.
+
+![[Media/img_15.jpeg]]
 
 Un esempio tipico in abitazione è il comando di una luce: con un impianto tradizionale ogni pulsante deve essere cablato direttamente al punto luce; in un impianto domotico, invece, il pulsante invia un messaggio sul bus e l'attuatore nel quadro accende la lampada. Lo stesso principio si estende a tapparelle, climatizzazione, allarmi e scenari automatici come "esco di casa" o "notte".
 
@@ -494,7 +782,7 @@ $$P = V \cdot I = R \cdot I^2 = \frac{V^2}{R}$$
 > 
 > $$V_{max} = \sqrt{P \cdot R} = \sqrt{0{,}25 \cdot 100} = \mathbf{5 \text{ V}}$$
 
-Tutta la potenza dissipata in una resistenza si trasforma in **calore**: è l'**effetto Joule**, individuato dal fisico inglese James Joule (1818–1889). È lo stesso principio che riscalda la resistenza di una stufa elettrica, ma è anche la causa del surriscaldamento indesiderato dei cavi percorsi da correnti eccessive. Questo riscaldamento è il motivo per cui ogni cavo ha una portata massima — concetto che riprenderemo nel Focus 3.
+Tutta la potenza dissipata in una resistenza si trasforma in **calore**: è l'**effetto Joule**, individuato dal fisico inglese James Joule (1818–1889). È lo stesso principio che riscalda la resistenza di una stufa elettrica, ma è anche la causa del surriscaldamento indesiderato dei cavi percorsi da correnti eccessive. Questo riscaldamento è il motivo per cui ogni cavo ha una portata massima — concetto già collegato all'impianto residenziale nel Focus 1.
 
 ---
 
@@ -544,156 +832,14 @@ Aggiungere resistenze in parallelo _riduce_ la resistenza equivalente, perché s
 
 ---
 
-# FOCUS 3 — Impianto Elettrico Residenziale
-
-Il Focus 2 ha fornito le basi fisiche: carica, tensione, corrente, resistenza, potenza, effetto Joule. Questo Focus mostra dove si ritrovano tutti questi concetti nella pratica quotidiana: nell'impianto elettrico di un'abitazione. Si seguirà il percorso dell'energia dalla centrale fino alla presa a muro, poi si vedrà come l'impianto è costruito componente per componente e, infine, come è protetto.
-
-## 1. Come arriva l'energia a casa nostra
-
-L'energia elettrica viene prodotta nelle centrali ad altissima tensione e trasportata su lunghe distanze prima di essere trasformata in una forma adatta agli impianti civili. Trasmettere a tensione elevata riduce drasticamente le perdite per effetto Joule nei cavi: a parità di potenza trasportata, una tensione più alta implica una corrente più bassa, e le perdite dipendono da $R \cdot I^2$.
-
-Il percorso è articolato in quattro livelli:
-
-1. **Centrale elettrica** → produce energia in **alta tensione (AT)**, decine o centinaia di kV.
-2. **Rete di trasmissione nazionale** → trasporta l'energia su grandi distanze.
-3. **Cabine di trasformazione** → abbassano la tensione da AT a **media tensione (MT)**, poi da MT a **bassa tensione (BT)** (230/400 V) tramite trasformatori da palo vicini all'utenza.
-4. **Impianto dell'utente** → distribuisce l'energia all'interno dell'edificio.
-
-![[Media/Photon_to_Code_page_7_1.jpg]]
-
-### Classificazione degli impianti per livello di tensione
-
-|Categoria|Tensione nominale|Descrizione|
-|---|---|---|
-|0|V_n ≤ 50 V|Bassissima tensione|
-|1|50 V < V_n ≤ 1.000 V|Bassa tensione (civile/industriale leggero)|
-|2|1.000 V < V_n ≤ 30.000 V|Media tensione|
-|3|V_n > 30.000 V|Alta tensione|
-
----
-
-## 2. La corrente alternata sinusoidale
-
-L'energia viene distribuita in **corrente alternata sinusoidale**: un segnale che oscilla ritmicamente tra valori positivi e negativi. Capire i suoi parametri è necessario per interpretare le specifiche di qualsiasi componente dell'impianto.
-
-![[Media/Photon_to_Code_page_6_1.jpg]]
-
-Il **periodo T** è il tempo per completare un'oscillazione completa; la **frequenza f** è il numero di oscillazioni al secondo ($f = 1/T$). Il **valore massimo V_M** è l'ampiezza di picco. Il **valore efficace V** è il parametro più utile in pratica: è il valore di tensione continua che, applicata allo stesso resistore per lo stesso tempo, svilupperebbe la stessa quantità di calore. Lo stesso ragionamento vale per la corrente: anche in AC si usano normalmente i **valori efficaci** di tensione e corrente.
-
-$$\boxed{V = \frac{V_M}{\sqrt{2}}} \approx 0{,}707 \cdot V_M$$
-
-In Europa la frequenza è **50 Hz** (T = 20 ms). La tensione efficace di rete è **230 V**, quindi il valore di picco è $V_M = 230 \cdot \sqrt{2} \approx 325 \text{ V}$: valore molto più elevato di quello indicato sui componenti, ma che dura solo un istante.
-
----
-
-## 3. La fornitura elettrica: monofase e trifase
-
-La distinzione tra **fornitura monofase** e **fornitura trifase** è già stata introdotta nel Focus 1, nel punto in cui si segue il passaggio dall'alternatore alla distribuzione verso le utenze. Nel contesto dell'impianto residenziale basta ricordare che l'abitazione ordinaria riceve normalmente una **fase + neutro + PE** a **230 V**, mentre utenze più impegnative possono richiedere una fornitura **trifase**.
-
----
-
-## 4. L'impianto elettrico residenziale e i suoi componenti
-
-L'impianto residenziale è dimensionato in funzione della **potenza impegnata** e dei carichi previsti, e si sviluppa come una catena di componenti, ognuno con un ruolo preciso. Seguirla dall'ingresso dell'edificio all'ultimo punto luce è il modo migliore per capirla.
-
-### Il contatore
-
-Il **contatore** è il punto di confine tra la rete del distributore e l'impianto privato. Misura l'energia consumata in **kWh** e comunica i dati al gestore attraverso la stessa linea elettrica di distribuzione — tecnica delle "onde convogliate" — senza bisogno di una rete dati separata.
-
-### I conduttori
-
-Dal contatore l'energia viene trasportata attraverso i **conduttori**: cavi in rame rivestiti di materiale isolante. Ogni cavo è caratterizzato dalla sua **sezione** (in mm²) e dalla sua **portata I_Z**: la corrente massima che può scorrere in modo permanente senza che il cavo si surriscaldi per effetto Joule.
-
-|Sezione [mm²]|Portata [A]|
-|---|---|
-|1,5|15,5|
-|2,5|21|
-|4|28|
-|6|36|
-|10|50|
-
-Il cavo multipolare che collega il contatore al centralino si chiama **montante**. La sua sezione si sceglie anche in base alla lunghezza: più è lungo, più alta è la resistenza e quindi la caduta di tensione (seconda legge di Ohm).
-
-|Lunghezza massima [m]|Sezione [mm²]|
-|---|---|
-|17|6|
-|29|10|
-|45|16|
-
-I cavi vengono infilati all'interno di **tubi guidacavo corrugati**: la forma a onde coniuga flessibilità (si piegano facilmente in curva) e resistenza meccanica, permettendo di infilare i cavi dopo aver già posato i tubi a muro.
-
-### Il centralino (QUA — Quadro di Unità Abitativa)
-
-Il centralino è il nodo di smistamento e protezione dell'impianto: un involucro isolante, solitamente vicino all'ingresso, che contiene tutti i dispositivi di protezione. Deve essere sempre presente un **interruttore generale**, dimensionato in base alla potenza contrattuale dell'utenza, più un **interruttore magnetotermico** dedicato a ogni circuito.
-
-![[Media/The_Modern_Electrical_Blueprint_page_5_1.jpg]]
-
-L'interruttore magnetotermico è dimensionato sulla **corrente nominale I_n**: il valore massimo di corrente che può scorrere indefinitamente senza aprire i contatti. Se la corrente supera I_n per abbastanza tempo, l'interruttore scatta, proteggendo il cavo dal surriscaldamento per effetto Joule.
-
-|Circuito|Sezione cavo [mm²]|I_n interruttore [A]|
-|---|---|---|
-|Luci|1,5|10|
-|Prese|2,5|16|
-|Piano cottura a induzione|4|25|
-
-Oltre agli interruttori magnetotermici, la norma prescrive almeno due **interruttori differenziali** per la protezione delle persone dall'elettrocuzione — dispositivi che vedremo in dettaglio nella sezione successiva.
-
-### Scatole di derivazione e scatole portafrutti
-
-Dal centralino i cavi si diramano attraverso le **scatole di derivazione**, i nodi interni dell'impianto. Da lì raggiungono le **scatole portafrutti**: le terminazioni incassate a parete che ospitano gli apparecchi modulari agganciati a scatto su appositi supporti. Le scatole "503" contengono fino a 3 moduli, le "504" fino a 4, le "506" fino a 6.
-
-### Spine e prese
-
-Le prese domestiche italiane sono di due tipi — da **10 A** e da **16 A** — con il contatto di terra al centro. Sono diffuse anche le prese **schuko** (con contatti di terra laterali). Per accettare entrambe le tipologie si usa la presa multistandard **UNEL bipasso**.
-
-### Dispositivi di comando
-
-L'**interruttore unipolare** è il più semplice: seziona la fase per il comando da un solo punto, con due posizioni stabili (aperto/chiuso). Il **deviatore** aggiunge un morsetto (tre in totale) e permette il comando da **due punti** — tipicamente all'inizio e alla fine di un corridoio. L'**invertitore**, con quattro morsetti, si inserisce tra due deviatori e porta il comando a **tre o più punti**: ogni invertitore aggiunto estende il sistema di un punto ulteriore.
-
-Il **pulsante** è **monostabile**: l'unica posizione di riposo è con i contatti aperti, e la chiusura dura solo mentre si preme. Si usa per il campanello (suoneria) e per il **ronzatore** — avvisatore acustico di forte intensità per chiamate di servizio o di soccorso (es. pulsante a tirante nel bagno).
-
-### Il relè
-
-Quando si vuole controllare un circuito ad alta potenza con un segnale debole, o automatizzare sequenze di comando, si usa il **relè**: un dispositivo composto da una **bobina** (l'elettromagnete eccitato dalla corrente di comando), un'**ancora mobile** (attratta dall'elettromagnete) e dei **contatti** che si aprono o si chiudono con il movimento dell'ancora. Il segnale di comando è fisicamente separato dal circuito controllato — questo isolamento è il vantaggio principale del relè.
-
-Il **relè interruttore** (o passo-passo) è una variante ciclica: cambia stato a ogni impulso ricevuto, alternando apertura e chiusura. È la soluzione ideale per il comando luci da cinque o più punti, dove usare molti invertitori richiederebbe troppi conduttori.
-
-### Lampade LED
-
-Le lampade a **LED** (Light Emitting Diode) hanno quasi completamente sostituito le lampade a incandescenza grazie a lunga durata (oltre 50.000 ore) ed elevata efficienza luminosa. Si basano sulla capacità di particolari materiali semiconduttori di emettere luce quando percorsi dalla corrente. Sono disponibili in varie forme — a bulbo con filamenti (~320°), a bulbo con cupola (~180°), a faretto con riflettore (24°÷60°) — per adattarsi a ogni esigenza illuminotecnica.
-
----
-
-## 5. Il pericolo dell'elettrocuzione e i dispositivi di protezione
-
-Un impianto elettrico mal progettato o danneggiato può essere pericoloso. L'**elettrocuzione** è il danno causato dal passaggio di corrente attraverso il corpo umano: i suoi effetti vanno dal formicolio fino all'arresto cardiaco, e dipendono dall'intensità della corrente, dalla durata del contatto, dal percorso seguito nel corpo (il percorso mano-piede attraversa il cuore ed è il più pericoloso), dal tipo di corrente e dalle condizioni fisiche della persona.
-
-### Contatti diretti e indiretti
-
-Si parla di **contatto diretto** quando la persona tocca una parte normalmente in tensione (un conduttore scoperto, un morsetto). Si parla di **contatto indiretto** quando tocca una massa metallica — la carcassa di un elettrodomestico — che in condizioni normali non è in tensione ma lo è diventata per un guasto o per il cedimento dell'isolamento. La distinzione è importante perché i due tipi richiedono strategie di protezione diverse.
-
-Negli impianti civili italiani è tipico il sistema **TT**: il neutro del distributore è collegato a terra da un lato, mentre l'utente ha un proprio impianto di terra indipendente a cui sono collegate le masse metalliche tramite il conduttore **PE**. In caso di guasto verso massa, questa struttura offre alla corrente di dispersione un percorso verso terra e rende efficace l'intervento del differenziale.
-
-### L'interruttore differenziale (salvavita)
-
-Per progettare e verificare le protezioni si utilizzano gli **schemi funzionali**: rappresentazioni grafiche dell'impianto in cui due linee orizzontali (i conduttori di alimentazione) sono collegate da linee verticali e orizzontali che mostrano i collegamenti tra gli apparecchi, indipendentemente dalla loro posizione fisica reale. Le apparecchiature sono disegnate nella condizione di riposo (contatti aperti).
-
-La protezione principale contro entrambi i tipi di contatto è l'**interruttore differenziale**. Il suo funzionamento si basa su un principio semplice: misura continuamente la corrente che _entra_ nel circuito e quella che _ritorna_. In condizioni normali le due sono uguali. Se si verifica una dispersione verso terra — qualcuno si prende una scossa, o l'isolamento di un cavo è ceduto — la corrente di ritorno diventa minore di quella di andata. Il differenziale rileva questa differenza e **apre il circuito in pochi millisecondi**.
-
-I dispositivi ad alta sensibilità, detti **salvavita**, intervengono per correnti di dispersione ≤ **30 mA**: valore scelto come compromesso tra protezione delle persone e continuità di servizio. Il differenziale non sostituisce però il magnetotermico: il primo protegge soprattutto dalle **correnti di dispersione verso terra**, il secondo da **sovraccarichi e cortocircuiti**. Il salvavita non è inoltre infallibile: non interviene per dispersioni inferiori a 30 mA (che nel tempo possono causare tetanizzazione), né in caso di contatto simultaneo con due conduttori attivi.
-
-![[Media/The_Modern_Electrical_Blueprint_page_6_1.jpg]]
-
----
-
-# FOCUS 4 — Elementi di Logica Combinatoria
+# FOCUS 3 — Elementi di Logica Combinatoria
 
 
 > [!warning] Nota bene
 > Il contenuto di questa dispensa è molto sintetico, fatto per dare una semplice idea sulla logica combinatoria. Per una dispensa più approfondita, si rimanda alla [[Dispensa sull'algebra di Boole e circuiti logici]].
 
 
-I Focus 2 e 3 si sono occupati dell'energia: come si genera, come si distribuisce, come si usa in un impianto. Esiste però un altro livello di funzionamento dei sistemi elettrici moderni — PLC, microcontrollori, dispositivi digitali in genere — che riguarda non l'energia ma la **logica**: come un sistema decide cosa fare in base agli ingressi che riceve. Questo Focus costruisce le basi di quel ragionamento.
+Il Focus 1 ha mostrato il settore elettrico anche attraverso l'impianto residenziale, mentre il Focus 2 ha fornito le basi fisiche dell'energia: come si genera, come si distribuisce, come si usa in un impianto. Esiste però un altro livello di funzionamento dei sistemi elettrici moderni — PLC, microcontrollori, dispositivi digitali in genere — che riguarda non l'energia ma la **logica**: come un sistema decide cosa fare in base agli ingressi che riceve. Questo Focus costruisce le basi di quel ragionamento.
 
 ## 1. Segnali analogici e digitali
 
@@ -833,7 +979,7 @@ Una volta ottenuta l'espressione, la si semplifica con le proprietà dell'algebr
 
 ### Logica combinatoria a contatti
 
-La stessa logica si può rappresentare con uno **schema a contatti**: la tecnica grafica usata per gli schemi funzionali degli impianti elettrici vista nel Focus 3. I contatti in **serie** corrispondono all'AND, quelli in **parallelo** all'OR, un contatto normalmente chiuso al NOT. Il linguaggio ladder del PLC (Focus 1) è direttamente questa logica a contatti trasferita nel software: la connessione tra le tre aree di studio non è casuale ma strutturale.
+La stessa logica si può rappresentare con uno **schema a contatti**: la tecnica grafica usata per gli schemi funzionali degli impianti elettrici vista nel Focus 1. I contatti in **serie** corrispondono all'AND, quelli in **parallelo** all'OR, un contatto normalmente chiuso al NOT. Il linguaggio ladder del PLC (Focus 1) è direttamente questa logica a contatti trasferita nel software: la connessione tra le tre aree di studio non è casuale ma strutturale.
 
 ---
 
@@ -849,9 +995,9 @@ Riguardo alla tecnologia, si distinguono gli integrati **bipolari (TTL)** e gli 
 
 ---
 
-# FOCUS 5 — Arduino e Programmazione Embedded
+# FOCUS 4 — Arduino e Programmazione Embedded
 
-Il Focus 1 ha mostrato che i microcontrollori sono al cuore dell'automazione moderna. Il Focus 4 ha introdotto la logica digitale con cui questi dispositivi ragionano. Questo Focus scende al livello pratico: come si programma davvero un microcontrollore. Lo strumento scelto è **Arduino**, perché abbatte la barriera tecnica che storicamente rendeva questo mondo accessibile solo agli specialisti.
+Il Focus 1 ha mostrato che i microcontrollori sono al cuore dell'automazione moderna. Il Focus 3 ha introdotto la logica digitale con cui questi dispositivi ragionano. Questo Focus scende al livello pratico: come si programma davvero un microcontrollore. Lo strumento scelto è **Arduino**, perché abbatte la barriera tecnica che storicamente rendeva questo mondo accessibile solo agli specialisti.
 
 ## 1. Cos'è Arduino
 
@@ -862,6 +1008,8 @@ Il Focus 1 ha mostrato che i microcontrollori sono al cuore dell'automazione mod
 ## 2. La scheda Arduino UNO
 
 La scheda più diffusa è la **Arduino UNO**, basata sul microcontrollore **ATmega328**. Oltre al microcontrollore, la scheda include un'interfaccia USB per la comunicazione col PC, un oscillatore al quarzo da 16 MHz, una presa per l'alimentazione esterna (7÷12 V) e un tasto di reset.
+
+![[Media/img_42.jpeg]]
 
 |Risorsa|Valore|
 |---|---|
@@ -882,6 +1030,8 @@ Le tre memorie hanno ruoli distinti. La **Flash** conserva il programma anche a 
 L'alimentazione durante lo sviluppo viene normalmente dalla porta USB del PC. L'alimentazione esterna (tramite jack da 7÷12 V) serve quando la scheda è usata nell'applicazione finale, scollegata dal computer.
 
 L'IDE si scarica da **http://www.arduino.cc** e riunisce in un unico programma editor, compilatore, loader e Monitor Seriale per il debug.
+
+![[Media/img_43.jpeg]]
 
 Per le prime prove è utile anche un simulatore online. **Tinkercad Circuits** permette di costruire un circuito virtuale trascinando **Arduino, breadboard, LED, resistenze, pulsanti e altri componenti**, collegandoli con i fili come in laboratorio. È quindi adatto per verificare rapidamente cablaggi e logica del programma prima di passare alla scheda reale.
 
@@ -1016,13 +1166,12 @@ int c = 0101;   // ottale   → 65
 int d = 0x101;  // esadecimale → 257
 ```
 
-![[Media/Photon_to_Code_page_14_1.jpg]]
 
 ---
 
 ## 6. Strutture di controllo
 
-Le strutture di controllo permettono di prendere decisioni e ripetere azioni in base alle condizioni del sistema — sono la traduzione in codice della logica booleana vista nel Focus 4.
+Le strutture di controllo permettono di prendere decisioni e ripetere azioni in base alle condizioni del sistema — sono la traduzione in codice della logica booleana vista nel Focus 3.
 
 ### Selezione con if-else
 
@@ -1102,6 +1251,9 @@ do {
 
 La scelta dipende dal caso: `for` quando il numero di iterazioni è noto; `while` quando potrebbe essere zero; `do-while` quando almeno un'esecuzione è necessaria. All'interno di qualsiasi ciclo, `break` esce immediatamente; `continue` salta le istruzioni rimanenti nel corpo e torna al controllo della condizione.
 
+
+![[Media/Photon_to_Code_page_14_1.jpg]]
+
 ---
 
 ## 8. Operatori aritmetici e bit a bit
@@ -1160,6 +1312,8 @@ x /= y;   // x = x / y
 
 Scrivere un programma non garantisce che funzioni subito: il debug è parte ordinaria del lavoro. Lo strumento principale di Arduino è la **comunicazione seriale**: la scheda può inviare messaggi al PC attraverso la porta USB, leggibili aprendo il **Monitor Seriale** dall'IDE (Strumenti → Monitor Seriale). La tecnica di debug più semplice consiste nell'inserire stampe strategiche nel codice per monitorare il valore delle variabili nei punti critici.
 
+![[Media/img_44.jpeg]]
+
 ```c
 // Nel setup():
 Serial.begin(9600);        // inizializza la comunicazione a 9600 bit/s
@@ -1192,19 +1346,15 @@ if (Serial.available() > 0) {
 
 ## 10. Esercitazioni pratiche con CADe_SIMU
 
-Il software **CADe_SIMU** permette di disegnare e simulare schemi di impianti elettrici senza componenti fisici — come un simulatore virtuale dell'impianto visto nel Focus 3. Le esercitazioni proposte crescono in complessità.
+Il software **CADe_SIMU** permette di disegnare e simulare schemi di impianti elettrici senza componenti fisici — come un simulatore virtuale dell'impianto visto nel Focus 1. Le esercitazioni proposte crescono in complessità.
+
+![[Media/img_48.jpeg]]
 
 Lo **schema base** prevede una suoneria e un ronzatore attivabili separatamente da pulsanti distinti, con un deviatore che seleziona quale delle due linee può essere attivata. È il punto di partenza per prendere confidenza con i simboli degli schemi funzionali.
 
-![[Media/sim-1.png]]
-
-Lo **schema con doppia linea** aggiunge una linea luce per il comando di una lampada da tre punti (due deviatori + un invertitore) e una linea ausiliaria a 12 V per suoneria e ronzatore. Si mettono qui in pratica i dispositivi di comando descritti nel Focus 3.
-
-![[Media/sim-2.png]]
+Lo **schema con doppia linea** aggiunge una linea luce per il comando di una lampada da tre punti (due deviatori + un invertitore) e una linea ausiliaria a 12 V per suoneria e ronzatore. Si mettono qui in pratica i dispositivi di comando descritti nel Focus 1.
 
 Lo **schema avanzato con relè passo-passo** è il più completo: linea ausiliaria per il comando luci da tre punti tramite relè interruttore; linea luce per tre lampade tramite relè passo-passo; comando di una luce da due punti con deviatori. Questo schema integra impianto, logica e automazione in un unico progetto.
-
-![[Media/sim-3.png]]
 
 ---
 
