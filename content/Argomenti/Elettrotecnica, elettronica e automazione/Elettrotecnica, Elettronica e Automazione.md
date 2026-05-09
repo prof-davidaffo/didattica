@@ -487,17 +487,43 @@ Per rappresentare questi collegamenti si usano gli **schemi funzionali**. Non mo
 
 ### 2.2 Comparto Elettronico
 
-Mentre il comparto elettrotecnico si occupa di energia — produrla, trasportarla, convertirla — il comparto elettronico si occupa di **informazione**: acquisirla, elaborarla, trasmetterla. Sono due livelli diversi di lavoro con l'elettricità, e tenere chiara questa distinzione aiuta a capire perché esistano due comparti separati.
+Nel comparto elettrotecnico l'attenzione era rivolta soprattutto all'energia: produrla, distribuirla, proteggerla e usarla. Nel comparto elettronico cambia il punto di vista. L'elettricità non serve prima di tutto a trasferire potenza, ma a rappresentare **informazioni**: una temperatura misurata da un sensore, un comando premuto da un utente, un dato salvato in memoria, un segnale video trasmesso da una telecamera.
+
+Il punto chiave è questo: un segnale elettrico non interessa solo perché "porta corrente", ma perché il suo valore significa qualcosa. Una tensione può indicare che una porta è chiusa, che una stanza è calda, che un motore gira troppo lentamente, che una telecamera sta inviando un'immagine. L'elettronica serve a rendere questi segnali leggibili, affidabili e utilizzabili.
+
+Per capire il comparto elettronico conviene seguire la costruzione di un dispositivo reale. Prima c'è qualcosa da misurare o comandare; poi servono componenti che trasformano e adattano i segnali; poi serve un dispositivo programmabile che li interpreti; infine tutto deve essere montato su una scheda e integrato in un prodotto o in un impianto.
+
+Il percorso logico è quindi:
+
+```
+Grandezza fisica  →  segnale elettrico  →  componenti  →  elaborazione  →  scheda  →  prodotto
+```
+
+Un esempio semplice è la scheda di controllo di una lavatrice. I sensori rilevano livello dell'acqua, temperatura, chiusura dello sportello e velocità del motore. I componenti elettronici adattano questi segnali, il programma li interpreta e il sistema decide quando caricare acqua, riscaldarla, avviare il cestello o bloccare il ciclo. Dentro un apparecchio che sembra soprattutto meccanico ed elettrico c'è quindi un sistema elettronico che misura, decide e comanda.
+
+#### Dal mondo fisico al segnale
+
+Molti segnali elettronici nascono da una misura. Un sensore trasforma una grandezza fisica in una grandezza elettrica: una temperatura può diventare una tensione, una pressione può diventare una variazione di resistenza, la luce può diventare una corrente molto piccola. Questi segnali sono spesso deboli, disturbati o non direttamente adatti all'elaborazione digitale.
+
+Per questo, prima di arrivare al "cervello" del sistema, il segnale deve spesso essere condizionato: amplificato, filtrato, confrontato con una soglia o convertito in forma digitale. È qui che si capisce la differenza rispetto all'elettrotecnica: non si sta cercando di trasferire molta energia, ma di non perdere il significato del segnale.
+
+#### Componenti elettronici: attivi e passivi
+
+Per condizionare, proteggere e manipolare un segnale servono componenti elettronici. Alcuni svolgono funzioni semplici ma indispensabili: limitano correnti, filtrano disturbi, accumulano energia per brevi istanti. Altri permettono di commutare, amplificare o realizzare funzioni logiche.
+
+Da qui nasce la distinzione tra **componenti passivi** e **componenti attivi**. I componenti passivi — per esempio resistenze e condensatori — non creano né amplificano un segnale: possono solo dissipare, limitare o immagazzinare energia. I componenti attivi — transistor, diodi, circuiti integrati — possono invece controllare il passaggio della corrente, amplificare un segnale o commutare tra due stati. Sono questi ultimi a rendere possibile l'elaborazione elettronica vera e propria.
 
 #### Microprocessori e microcontrollori: qual è la differenza?
 
-Al cuore di qualsiasi sistema di elaborazione c'è un processore. Il termine però è ambiguo, perché in commercio esistono due tipi di dispositivi spesso confusi: il **microprocessore** e il **microcontrollore**.
+Dopo essere stato adattato, il segnale deve essere interpretato. Bisogna confrontarlo con una soglia, trasformarlo in un numero, memorizzarlo, inviare una risposta. Al centro di questo lavoro c'è spesso un dispositivo programmabile, ma non tutti i dispositivi programmabili sono uguali.
 
-Per capire la differenza, si parte dallo schema a blocchi di un computer generico: è composto da una CPU (che esegue le istruzioni), una memoria (che le conserva insieme ai dati) e interfacce di I/O (che permettono al sistema di comunicare col mondo esterno). Tutte queste unità sono collegate da **bus**, cioè percorsi comuni per i segnali.
+Un computer generico può essere pensato come l'insieme di tre blocchi: una **CPU**, che esegue le istruzioni; una **memoria**, che conserva programma e dati; alcune interfacce di **I/O**, che permettono al sistema di comunicare con tastiere, schermi, sensori, motori o reti di comunicazione. Questi blocchi scambiano segnali attraverso i **bus**, cioè percorsi elettrici condivisi organizzati per funzione. La differenza tra microprocessore e microcontrollore dipende da quanti di questi blocchi sono integrati nello stesso chip.
 
-Un **microprocessore** è soltanto la CPU: contiene l'unità di calcolo, ma memoria e I/O devono essere aggiunti esternamente. È la soluzione giusta per un computer potente e flessibile. Un **microcontrollore** integra invece in un unico chip la CPU, le memorie e le interfacce di I/O, richiedendo pochissimi componenti esterni, consumando poca energia (meno di 1 W) e costando molto poco. È la soluzione ideale per sistemi dedicati a una funzione specifica, dove non serve la flessibilità di un computer general-purpose.
+Un **microprocessore** contiene essenzialmente la CPU: è potente e flessibile, ma per funzionare ha bisogno di memorie, interfacce e molti altri circuiti esterni. È la scelta tipica dei sistemi general-purpose, cioè dispositivi che devono eseguire molti programmi diversi, come PC e smartphone.
 
-In pratica, un **PC** o uno **smartphone** lavorano con microprocessori perché devono gestire sistemi operativi, molte applicazioni e grandi quantità di dati. Un **forno a microonde**, una **lavatrice**, un **termostato** o una **centralina elettronica** usano invece microcontrollori: devono leggere sensori, prendere poche decisioni ben definite e pilotare attuatori in modo affidabile e continuo.
+Un **microcontrollore**, invece, integra nello stesso chip CPU, memorie e interfacce di I/O. Richiede pochi componenti esterni, consuma poca energia e costa poco. Non nasce per fare tutto, ma per fare bene una funzione precisa e ripeterla in modo affidabile: leggere un sensore, prendere una decisione, pilotare un attuatore.
+
+Per questo un forno a microonde, una lavatrice, un termostato o una centralina elettronica usano microcontrollori. Non devono comportarsi come computer completi: devono eseguire sempre lo stesso programma, reagendo agli ingressi e comandando le uscite.
 
 | |Microprocessore (CPU)|Microcontrollore|
 |---|---|---|
@@ -505,25 +531,33 @@ In pratica, un **PC** o uno **smartphone** lavorano con microprocessori perché 
 |Componenti esterni necessari|Molti|Pochissimi|
 |Applicazione tipica|Computer general-purpose|Sistemi embedded, automazione|
 
-#### Componenti elettronici: attivi e passivi
-
-Qualunque circuito elettronico è costruito con componenti che si dividono in due categorie. I **componenti passivi** — resistenze, condensatori — possono solo assorbire o immagazzinare energia: non amplificano segnali. I **componenti attivi** — transistor, circuiti integrati, diodi — possono amplificare segnali o commutare stati, e sono per questo i mattoni fondamentali dell'elaborazione elettronica.
-
 #### PCB — Circuiti stampati
 
-Avere i componenti giusti non basta: bisogna anche collegarli in modo preciso e affidabile. Il **PCB** (Printed Circuit Board, circuito stampato) è una basetta di materiale isolante — tipicamente fibra di vetro — su cui sono incise piste di rame che formano le connessioni tra i componenti. La progettazione avviene con software **ECAD** dedicati.
+A questo punto ci sono sensori, componenti e dispositivi di elaborazione, ma non esiste ancora un prodotto reale. Perché un circuito funzioni in modo stabile, i collegamenti devono essere precisi, ripetibili e robusti. Nei prototipi si possono usare fili volanti o breadboard, ma un'apparecchiatura destinata all'uso reale ha bisogno di una struttura stabile. Questa struttura è il **PCB** (Printed Circuit Board), cioè il circuito stampato.
+
+Un PCB è una basetta di materiale isolante — tipicamente fibra di vetro — su cui sono realizzate piste di rame. Le piste sostituiscono i fili: collegano elettricamente i terminali dei componenti seguendo lo schema progettato. In questo modo il circuito diventa compatto, ordinato e producibile in serie. La progettazione avviene con software **ECAD** dedicati, che permettono di passare dallo schema elettrico alla disposizione fisica dei componenti sulla scheda.
 
 ![[Media/img_37.jpeg]]
 
-A seconda della complessità del circuito, il PCB può essere **monofaccia** (piste su un solo lato), **a doppia faccia** (piste su entrambi i lati) o **multistrato** (più strati sovrapposti, fino a spessori di 0,05 mm ciascuno), quest'ultimo usato dove la densità di componenti è molto elevata.
+A seconda della complessità, il PCB può essere **monofaccia**, con piste su un solo lato; **a doppia faccia**, con piste su entrambi i lati; oppure **multistrato**, con più livelli di rame sovrapposti e isolati tra loro. Nei dispositivi più compatti, come smartphone e schede di controllo industriali, il multistrato è indispensabile perché permette di concentrare molti collegamenti in pochissimo spazio.
 
 #### Elettronica di consumo
 
-Il risultato finale di tutto questo lavoro — componenti, microchip, PCB — sono i prodotti che usiamo ogni giorno: smartphone, computer, televisori, frigoriferi, lavatrici. Questi rientrano nell'**elettronica di consumo**, tradizionalmente suddivisa in **elettrodomestici bianchi** (frigoriferi, lavatrici, lavastoviglie) e **elettrodomestici bruni** (TV, computer, telefoni, videocitofoni) — una distinzione nata decenni fa e oggi in parte superata, ma ancora utile per orientarsi nel settore.
+Una scheda elettronica, da sola, non è quasi mai un prodotto finito. Diventa un prodotto quando viene integrata con alimentazione, contenitore, connettori, pulsanti, display, software e protezioni meccaniche. Solo a quel punto l'insieme può essere usato da una persona o installato in un impianto.
+
+È il mondo dell'**elettronica di consumo**: smartphone, computer, televisori, videocitofoni, ma anche frigoriferi, lavatrici e lavastoviglie moderne, ormai sempre più ricche di sensori, schede di controllo e software.
+
+Tradizionalmente si distinguevano gli **elettrodomestici bianchi** — frigoriferi, lavatrici, lavastoviglie — dagli **elettrodomestici bruni**, come TV, computer e telefoni. La distinzione oggi è meno netta, perché quasi ogni apparecchio domestico contiene elettronica di controllo, display, connessioni di rete o funzioni automatiche. Rimane però utile per capire come il percorso dei segnali entri sia nei dispositivi informatici sia negli oggetti di uso quotidiano.
+
+In questi prodotti si ritrovano tutti i livelli precedenti: sensori, componenti attivi e passivi, microcontrollori o microprocessori, PCB, alimentazione e software.
 
 #### Elettronica di potenza
 
-C'è una zona di confine tra elettrotecnica ed elettronica che merita attenzione particolare: l'**elettronica di potenza**. È quella parte dell'elettronica dedicata alla conversione e al controllo dell'energia elettrica su scala significativa. I suoi componenti — diodi, IGBT, SCR, TRIAC, DIAC — lavorano con tensioni e correnti elevate, ma usano i principi dell'elettronica per controllare il flusso di energia con grande precisione.
+Fin qui il percorso ha riguardato soprattutto segnali deboli: misure, dati, comandi, informazioni. Esiste però una parte del comparto elettronico in cui i segnali non servono solo a rappresentare informazioni, ma a comandare il trasferimento di energia. È l'**elettronica di potenza**, il punto di confine più evidente con l'elettrotecnica.
+
+Qui il segnale non rappresenta soltanto informazione; serve anche a controllare energia elettrica con tensioni e correnti significative. L'idea di base è usare dispositivi elettronici come interruttori molto rapidi e precisi, capaci di modificare forma, valore o frequenza della tensione e della corrente.
+
+È il principio che permette a un alimentatore di trasformare la tensione di rete in una tensione continua più bassa, a un inverter fotovoltaico di convertire la corrente continua dei pannelli in corrente alternata, o a un azionamento industriale di regolare la velocità di un motore.
 
 |Componente|Funzione|
 |---|---|
@@ -531,11 +565,17 @@ C'è una zona di confine tra elettrotecnica ed elettronica che merita attenzione
 |IGBT (Insulated Gate Bipolar Transistor)|Conversione da DC ad AC (es. inverter fotovoltaici)|
 |SCR, TRIAC, DIAC|Controllo di potenza in AC (es. dimmer, regolatori di velocità)|
 
-L'elettronica di potenza è presente ovunque: negli inverter degli impianti fotovoltaici, nei caricabatteria, nei convertitori di frequenza per i motori industriali.
+Per questo l'elettronica di potenza è presente in molti sistemi già incontrati nel percorso dell'energia: inverter per fotovoltaico, caricabatteria, gruppi di continuità, convertitori di frequenza per motori industriali. È elettronica perché usa componenti e tecniche di controllo elettroniche; è vicina all'elettrotecnica perché il suo oggetto resta la gestione dell'energia.
 
 #### Impianti di sicurezza
 
-Un settore importante del comparto elettronico è quello degli **impianti di sicurezza**, progettati per proteggere beni e persone attraverso componenti elettronici e software specifici. Si articolano in tre famiglie: i **sistemi di controllo accessi** (badge, lettori biometrici, telecamere di lettura targhe), gli **impianti antintrusione** (una centrale collegata a sensori perimetrali e volumetrici) e gli **impianti di videosorveglianza** (sistemi TVCC con telecamere che registrano e trasmettono il segnale video).
+Un'altra applicazione del comparto elettronico, più vicina agli edifici e agli impianti civili, è quella degli **impianti di sicurezza**. Qui torna il percorso informazione → elaborazione → risposta: sensori e dispositivi di ingresso raccolgono dati, una centrale li interpreta, gli attuatori o i sistemi di comunicazione producono una risposta.
+
+Nei **sistemi di controllo accessi**, l'informazione può essere un badge letto da un sensore, un'impronta digitale, un volto o una targa. Il sistema decide se autorizzare il passaggio e comanda serrature, varchi o registrazioni.
+
+Negli **impianti antintrusione**, invece, la centrale riceve segnali da sensori perimetrali e volumetrici: contatti magnetici su porte e finestre, barriere a infrarossi, rilevatori di movimento. Se la combinazione dei segnali corrisponde a un'intrusione, vengono attivati sirene, avvisi remoti o altre procedure.
+
+Negli impianti di **videosorveglianza**, infine, telecamere e registratori gestiscono immagini e flussi video. I sistemi tradizionali sono indicati come **TVCC** (televisione a circuito chiuso); quelli più recenti usano spesso reti IP, archiviazione digitale e analisi automatica delle immagini.
 
 ![[Media/img_12.jpeg]]
 
@@ -567,16 +607,15 @@ La programmazione avviene con software proprietari. ABB, uno dei principali prod
 
 #### Domotica e Building Automation
 
-L'automazione non riguarda solo le fabbriche: anche gli edifici civili e commerciali possono essere gestiti in modo automatico. Questo campo è noto come **domotica** (dal francese _domotique_, fusione di _domus_ e _informatique_). La normativa tecnica usa il termine **HBES** (Home and Building Electronic Systems), distinguendo tra:
+L'automazione non riguarda solo le fabbriche. Anche un edificio può essere controllato come un sistema: luci, riscaldamento, raffrescamento, tapparelle, sicurezza e consumi energetici possono essere coordinati da una logica comune. Nel caso dell'abitazione si parla di **domotica**; negli edifici più grandi, come alberghi, ospedali, uffici e centri commerciali, si parla di **Building Automation**.
 
-- **Home Automation**: la singola abitazione, dove il sistema gestisce automaticamente luci, riscaldamento, raffrescamento, tapparelle e sicurezza.
-- **Building Automation**: edifici collettivi (alberghi, ospedali, uffici, centri commerciali) dove la gestione è centralizzata attraverso un _building manager_ specializzato.
+La normativa tecnica usa il termine **HBES** (Home and Building Electronic Systems). La differenza principale è la scala: nella **Home Automation** il sistema serve una singola abitazione; nella **Building Automation** serve edifici complessi e viene spesso supervisionato da un _building manager_.
 
-In entrambi i casi il principio fondamentale è lo stesso: tutti i dispositivi comunicano attraverso un unico **bus** (doppino di rame, fibra ottica o wireless), e il **comando è separato dall'attuatore** — le pulsantiere inviano messaggi sul bus, gli attuatori li ricevono e agiscono di conseguenza. Questo permette di riconfigurare l'impianto via software, senza toccare i cavi.
+In entrambi i casi il principio fondamentale è lo stesso: il **comando è separato dall'attuatore**. In un impianto tradizionale, il pulsante che comanda una luce è collegato direttamente al circuito della lampada. In un impianto domotico, invece, il pulsante invia un messaggio su un **bus** comune, realizzato con doppino di rame, fibra ottica o collegamenti wireless; l'attuatore riceve il messaggio e accende o spegne il carico.
 
 ![[Media/img_15.jpeg]]
 
-Un esempio tipico in abitazione è il comando di una luce: con un impianto tradizionale ogni pulsante deve essere cablato direttamente al punto luce; in un impianto domotico, invece, il pulsante invia un messaggio sul bus e l'attuatore nel quadro accende la lampada. Lo stesso principio si estende a tapparelle, climatizzazione, allarmi e scenari automatici come "esco di casa" o "notte".
+Questa separazione rende l'impianto più flessibile. Se un pulsante non chiude fisicamente il circuito della lampada, ma invia un comando digitale, la sua funzione può essere modificata via software: può comandare una luce, uno scenario, una tapparella o una combinazione di azioni. Lo stesso principio si estende alla climatizzazione, agli allarmi e agli scenari automatici come "esco di casa" o "notte".
 
 Il protocollo standard europeo condiviso dai principali costruttori è **KNX**, nato dal consorzio EIB: i componenti di produttori diversi sono interoperabili senza interfacce aggiuntive. Il software di configurazione ufficiale è **ETS** (EIB Tools Software).
 
@@ -591,6 +630,8 @@ Chi approfondisce l'**elettrotecnica** può diventare **tecnico installatore/man
 Chi si specializza nell'**elettronica** trova sbocchi come **tecnico di produzione** (gestione delle linee di montaggio di schede e apparecchiature), **tecnico in centri di vendita e assistenza** (supporto tecnico e commerciale nell'elettronica di consumo) oppure **tecnico di manutenzione** (assistenza di macchine e apparecchiature presso i clienti).
 
 Chi sceglie l'**automazione** può diventare **progettista di sistemi automatici e robot** (sviluppo di automazioni con PLC, microcontrollori e robot industriali) o **tecnico domotico** (configurazione e installazione di apparecchiature domotiche).
+
+La figura più completa è quella capace di collegare i tre livelli: capire l'impianto elettrico che alimenta la macchina, leggere i segnali elettronici che arrivano dai sensori e programmare la logica che decide cosa deve fare il sistema.
 
 ---
 

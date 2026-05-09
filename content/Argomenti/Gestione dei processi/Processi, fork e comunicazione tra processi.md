@@ -60,6 +60,12 @@ oppure:
 ps aux
 ```
 
+per ottenere il nome del processo:
+
+```sh
+ps -p 1234 -o comm=
+```
+
 Tra le informazioni piu' importanti ci sono:
 
 - **PID**: identificativo del processo;
@@ -240,9 +246,11 @@ Padre, ciclo 1
 
 Un'esecuzione successiva potrebbe produrre un ordine diverso.
 
-## 8. usleep
+## 8. Pause brevi
 
-La funzione `usleep()` sospende il processo per un certo numero di microsecondi.
+Per rallentare leggermente l'esecuzione e rendere piu' visibile l'alternanza tra padre e figlio si puo' inserire una breve pausa.
+
+Una possibilita' e' usare `usleep()`, che sospende il processo per un certo numero di microsecondi.
 
 ```cpp
 usleep(50000);
@@ -250,7 +258,7 @@ usleep(50000);
 
 `50000` microsecondi corrispondono a 50 millisecondi.
 
-La pausa rende piu' visibile l'alternanza tra padre e figlio.
+Si possono usare anche altre funzioni di pausa, per esempio `sleep()` se bastano intervalli in secondi. La pausa serve solo a osservare meglio l'esecuzione concorrente: non deve essere usata per sincronizzare padre e figlio.
 
 ## 9. Memoria dopo fork
 
@@ -280,6 +288,108 @@ Attenzione: dire che il figlio e' una copia del padre non significa che padre e 
 
 All'inizio i valori sono uguali, ma poi ogni processo lavora sulla propria memoria.
 
+### Indirizzi virtuali e indirizzi fisici
+
+Un aspetto che puo' creare confusione riguarda gli indirizzi delle variabili.
+
+Esempio:
+
+```cpp
+int a = 8;
+
+pid_t childPid = fork();
+
+cout << &a << ": " << a << endl;
+```
+
+Dopo la `fork()`, padre e figlio potrebbero stampare lo stesso valore di `&a`.
+
+Per esempio:
+
+```text
+0x7ffc1234abcd: 8
+0x7ffc1234abcd: 16
+```
+
+Questo non significa che padre e figlio stiano usando la stessa variabile fisica in memoria.
+
+L'indirizzo stampato da `&a` e' un **indirizzo virtuale**, cioe' un indirizzo visto dal processo nel proprio spazio di memoria.
+
+Ogni processo ha il proprio spazio di indirizzamento virtuale. Quindi padre e figlio possono avere una variabile allo stesso indirizzo virtuale, ma quelle variabili appartengono a due spazi di memoria separati.
+
+In pratica:
+
+```text
+padre:
+&a = 0x7ffc1234abcd
+a  = 8
+
+figlio:
+&a = 0x7ffc1234abcd
+a  = 16
+```
+
+Lo stesso indirizzo virtuale non implica la stessa memoria condivisa.
+
+Il sistema operativo, insieme alla MMU, traduce gli indirizzi virtuali in indirizzi fisici reali della RAM. Questa traduzione non e' normalmente visibile da un programma C/C++ comune.
+
+Quindi, in un programma normale:
+
+```cpp
+cout << &a << endl;
+```
+
+mostra l'indirizzo virtuale, non l'indirizzo fisico reale.
+
+L'indirizzo fisico reale puo' essere ricavato solo usando informazioni interne del sistema operativo, per esempio su Linux tramite strutture come `/proc/<pid>/pagemap`, ma e' un'operazione avanzata e spesso richiede privilegi di amministratore. Per lo studio di `fork()`, e' sufficiente sapere che gli indirizzi stampati dal programma sono indirizzi virtuali.
+
+### Copy-on-write
+
+Per motivi di efficienza, dopo una `fork()` il sistema operativo non copia immediatamente tutta la memoria del padre.
+
+Inizialmente padre e figlio possono condividere alcune pagine fisiche in sola lettura. Quando uno dei due processi prova a modificare una variabile, il sistema operativo crea una copia privata della pagina modificata.
+
+Questo meccanismo si chiama **copy-on-write**, cioe' "copia al momento della scrittura".
+
+Dal punto di vista del programmatore, pero', il risultato e' semplice:
+
+> se il figlio modifica una variabile, il padre non vede la modifica.
+
+Esempio:
+
+```cpp
+#include <iostream>
+#include <unistd.h>
+#include <sys/wait.h>
+using namespace std;
+
+int main() {
+    int a = 8;
+
+    pid_t childPid = fork();
+
+    if (childPid == 0) {
+        a = 16;
+        cout << "Figlio: " << &a << ": " << a << endl;
+        return 0;
+    } else {
+        wait(nullptr);
+        cout << "Padre: " << &a << ": " << a << endl;
+    }
+
+    return 0;
+}
+```
+
+Output possibile:
+
+```text
+Figlio: 0x7ffe7c4f5abc: 16
+Padre: 0x7ffe7c4f5abc: 8
+```
+
+L'indirizzo virtuale puo' essere lo stesso, ma i valori sono diversi perche' padre e figlio hanno memorie separate.
+
 ## 10. wait
 
 La funzione `wait()` permette al padre di aspettare la terminazione di un processo figlio.
@@ -306,6 +416,100 @@ Se invece si vuole controllare il codice di terminazione del figlio, si puo' usa
 int status;
 wait(&status);
 ```
+
+### Come usare status
+
+La variabile `status` non contiene direttamente il codice di uscita del figlio.
+
+`status` contiene un valore codificato, dentro il quale il sistema operativo salva diverse informazioni:
+
+- se il figlio e' terminato normalmente;
+- qual e' il codice di uscita del figlio;
+- se il figlio e' stato terminato da un segnale;
+- quale segnale lo ha terminato.
+
+Per questo `status` non va normalmente stampato direttamente.
+
+Esempio non consigliato:
+
+```cpp
+int status;
+wait(&status);
+
+cout << status << endl;
+```
+
+Questo stampa il valore grezzo codificato, non il vero codice di uscita.
+
+Per interpretare `status` si usano alcune macro definite in `<sys/wait.h>`.
+
+Le piu' importanti sono:
+
+```cpp
+WIFEXITED(status)
+```
+
+controlla se il figlio e' terminato normalmente, cioe' con `return`, `exit()` o `_exit()`.
+
+```cpp
+WEXITSTATUS(status)
+```
+
+estrae il codice di uscita del figlio. Va usato solo se `WIFEXITED(status)` e' vero.
+
+```cpp
+WIFSIGNALED(status)
+```
+
+controlla se il figlio e' stato terminato da un segnale, per esempio `SIGKILL`, `SIGTERM` o `SIGSEGV`.
+
+```cpp
+WTERMSIG(status)
+```
+
+estrae il numero del segnale che ha terminato il figlio. Va usato solo se `WIFSIGNALED(status)` e' vero.
+
+Esempio corretto:
+
+```cpp
+#include <iostream>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <cstdlib>
+using namespace std;
+
+int main() {
+    pid_t childPid = fork();
+
+    if (childPid == 0) {
+        cout << "Sono il figlio" << endl;
+        exit(1);
+    } else {
+        int status;
+        wait(&status);
+
+        if (WIFEXITED(status)) {
+            cout << "Il figlio e' terminato normalmente" << endl;
+            cout << "Codice di uscita: " << WEXITSTATUS(status) << endl;
+        } else if (WIFSIGNALED(status)) {
+            cout << "Il figlio e' stato terminato da un segnale" << endl;
+            cout << "Segnale: " << WTERMSIG(status) << endl;
+        }
+    }
+
+    return 0;
+}
+```
+
+Output possibile:
+
+```text
+Sono il figlio
+Il figlio e' terminato normalmente
+Codice di uscita: 1
+```
+
+Quindi `wait(&status)` serve sia ad aspettare il figlio sia a raccogliere informazioni sulla sua terminazione.
 
 ## 11. exit status
 
@@ -570,11 +774,7 @@ Ad ogni iterazione devono essere stampati:
 - il PID del processo padre;
 - il numero dell'iterazione.
 
-Dopo ogni iterazione inserire una pausa di 50 millisecondi:
-
-```cpp
-usleep(50000);
-```
+Dopo ogni iterazione inserire una breve pausa, ad esempio di circa 50 millisecondi, usando una funzione adatta.
 
 Nel documento spiegare perche' l'ordine delle stampe non e' sempre prevedibile.
 
