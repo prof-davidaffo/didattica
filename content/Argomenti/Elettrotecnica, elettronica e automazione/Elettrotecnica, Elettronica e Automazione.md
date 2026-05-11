@@ -511,11 +511,13 @@ Per questo, prima di arrivare al "cervello" del sistema, il segnale deve spesso 
 
 Per condizionare, proteggere e manipolare un segnale servono componenti elettronici. Alcuni svolgono funzioni semplici ma indispensabili: limitano correnti, filtrano disturbi, accumulano energia per brevi istanti. Altri permettono di commutare, amplificare o realizzare funzioni logiche.
 
-Da qui nasce la distinzione tra **componenti passivi** e **componenti attivi**. I componenti passivi — per esempio resistenze e condensatori — non creano né amplificano un segnale: possono solo dissipare, limitare o immagazzinare energia. I componenti attivi — transistor, diodi, circuiti integrati — possono invece controllare il passaggio della corrente, amplificare un segnale o commutare tra due stati. Sono questi ultimi a rendere possibile l'elaborazione elettronica vera e propria.
+Da qui nasce la distinzione tra **componenti passivi** e **componenti attivi**. I componenti passivi — per esempio resistenze e condensatori — non creano né amplificano un segnale: possono solo dissipare, limitare o immagazzinare energia. I componenti attivi — transistor, amplificatori operazionali, circuiti integrati — possono invece controllare il passaggio della corrente, amplificare un segnale o commutare tra due stati.
+
+Questa distinzione serve a capire cosa succede prima dell'elaborazione vera e propria: il segnale proveniente da un sensore viene limitato, filtrato, amplificato o convertito finché può essere usato da un circuito digitale. A quel punto non basta più parlare dei singoli componenti: bisogna capire quale dispositivo interpreta quei segnali e decide le uscite.
 
 #### Microprocessori e microcontrollori: qual è la differenza?
 
-Dopo essere stato adattato, il segnale deve essere interpretato. Bisogna confrontarlo con una soglia, trasformarlo in un numero, memorizzarlo, inviare una risposta. Al centro di questo lavoro c'è spesso un dispositivo programmabile, ma non tutti i dispositivi programmabili sono uguali.
+Quando il segnale è pronto per essere usato, il sistema deve confrontarlo con una soglia, trasformarlo in un numero, memorizzarlo o generare una risposta. Al centro di questo lavoro c'è spesso un dispositivo programmabile, ma non tutti i dispositivi programmabili sono uguali.
 
 Un computer generico può essere pensato come l'insieme di tre blocchi: una **CPU**, che esegue le istruzioni; una **memoria**, che conserva programma e dati; alcune interfacce di **I/O**, che permettono al sistema di comunicare con tastiere, schermi, sensori, motori o reti di comunicazione. Questi blocchi scambiano segnali attraverso i **bus**, cioè percorsi elettrici condivisi organizzati per funzione. La differenza tra microprocessore e microcontrollore dipende da quanti di questi blocchi sono integrati nello stesso chip.
 
@@ -591,13 +593,33 @@ Il protagonista dell'automazione moderna è spesso un **sistema embedded** (lett
 
 #### Il PLC — Programmable Logic Controller
 
-Quando le esigenze di automazione diventano più complesse — molti ingressi da leggere, molte uscite da controllare, ambienti industriali difficili — entra in gioco il **PLC**. Nella sua forma minima è composto da un alimentatore, una scheda CPU con il microprocessore, vari tipi di memoria (flash per il programma, RAM di lavoro, RAM con batteria tampone per le variabili con memoria) e una o più schede di interfaccia I/O per collegare sensori (ingressi) e attuatori (uscite).
+Il **PLC** (_Programmable Logic Controller_, controllore logico programmabile) è il dispositivo più usato per comandare macchine e impianti industriali. Non è alternativo al microcontrollore nel senso stretto del termine: anche un PLC contiene un'unità di elaborazione elettronica, basata su un microprocessore o su un microcontrollore. La differenza è che il PLC non è solo il chip, ma un sistema industriale completo, con alimentazione, memoria, moduli di ingresso/uscita, protezioni e strumenti di programmazione pensati per l'automazione.
+
+Serve quando il sistema deve leggere molti segnali di ingresso, prendere decisioni secondo una logica stabilita e comandare molte uscite in modo affidabile.
+
+Un esempio semplice è un nastro trasportatore: un sensore rileva la presenza di un pezzo, un pulsante avvia il ciclo, un finecorsa segnala la posizione raggiunta, un motore muove il nastro e una lampada indica lo stato della macchina. Il PLC sta in mezzo a questi elementi: riceve i segnali dai sensori e dai pulsanti, esegue il programma e comanda motori, valvole, relè, spie o altri attuatori.
+
+La logica generale è:
+
+```
+sensori e pulsanti  →  ingressi PLC  →  programma  →  uscite PLC  →  attuatori
+```
+
+Dal punto di vista hardware, un PLC comprende di solito un alimentatore, una CPU basata su un microprocessore o un microcontrollore, una memoria per il programma e una o più schede di I/O. Le schede di **input** ricevono segnali dal campo, per esempio pulsanti, sensori o finecorsa. Le schede di **output** inviano comandi verso il campo, per esempio a contattori, elettrovalvole, motori, lampade o sirene.
 
 ![[Media/img_36.jpeg]]
 
-Il funzionamento è ciclico: il microprocessore percorre continuamente la sequenza del programma, legge i valori degli ingressi, elabora la logica e aggiorna le uscite. Il tempo impiegato per completare questo ciclo è detto **tempo di ciclo**: in applicazioni real-time è un parametro critico, perché un ciclo troppo lento si traduce in una macchina che reagisce con ritardo agli eventi.
+Il PLC lavora in modo ciclico. Prima legge lo stato degli ingressi, poi esegue il programma, infine aggiorna le uscite. Subito dopo ricomincia da capo. Questo ciclo viene ripetuto continuamente finché il sistema è in funzione.
 
-Il programma del PLC si scrive con linguaggi specifici, il più noto dei quali è il **linguaggio ladder** (_ladder diagram_, diagramma a scala). Il nome deriva dalla forma visiva dello schema: due linee verticali laterali (i montanti) collegate da linee orizzontali (i pioli) che descrivono le condizioni logiche. I contatti in **serie** corrispondono alla logica AND, quelli in **parallelo** alla logica OR, un contatto normalmente chiuso alla funzione NOT. Le fasi della programmazione sono cinque, in ordine: configurazione hardware, sviluppo del programma, simulazione al PC, simulazione sul PLC e messa in servizio.
+```
+lettura ingressi  →  esecuzione programma  →  aggiornamento uscite  →  nuovo ciclo
+```
+
+Il tempo necessario per completare un giro è detto **tempo di ciclo**. È importante perché il PLC non reagisce in modo istantaneo: reagisce al ciclo successivo. Se il ciclo è troppo lento, anche la macchina risponde in ritardo.
+
+Il programma del PLC si scrive con linguaggi specifici. Il più noto è il **linguaggio ladder** (_ladder diagram_, diagramma a scala), nato per somigliare agli schemi elettrici a relè. I contatti in **serie** rappresentano una condizione AND, i contatti in **parallelo** una condizione OR, un contatto normalmente chiuso una negazione NOT. In questo modo una logica che prima veniva realizzata cablando relè e contattori può essere descritta via software.
+
+Il PLC è quindi diverso da una semplice scheda a microcontrollore: entrambi eseguono un programma su un'unità elettronica di calcolo, ma il PLC è costruito per l'ambiente industriale, usa moduli di I/O robusti e si programma con strumenti pensati per tecnici di automazione. Le fasi tipiche di lavoro sono: configurazione hardware, sviluppo del programma, simulazione, prova sul PLC e messa in servizio sull'impianto.
 
 #### Robotica industriale
 
@@ -630,8 +652,6 @@ Chi approfondisce l'**elettrotecnica** può diventare **tecnico installatore/man
 Chi si specializza nell'**elettronica** trova sbocchi come **tecnico di produzione** (gestione delle linee di montaggio di schede e apparecchiature), **tecnico in centri di vendita e assistenza** (supporto tecnico e commerciale nell'elettronica di consumo) oppure **tecnico di manutenzione** (assistenza di macchine e apparecchiature presso i clienti).
 
 Chi sceglie l'**automazione** può diventare **progettista di sistemi automatici e robot** (sviluppo di automazioni con PLC, microcontrollori e robot industriali) o **tecnico domotico** (configurazione e installazione di apparecchiature domotiche).
-
-La figura più completa è quella capace di collegare i tre livelli: capire l'impianto elettrico che alimenta la macchina, leggere i segnali elettronici che arrivano dai sensori e programmare la logica che decide cosa deve fare il sistema.
 
 ---
 
@@ -1036,9 +1056,9 @@ Riguardo alla tecnologia, si distinguono gli integrati **bipolari (TTL)** e gli 
 
 ---
 
-# FOCUS 4 — Arduino e Programmazione Embedded
+# FOCUS 4A — Microcontrollori e Arduino
 
-Il Focus 1 ha mostrato che i microcontrollori sono al cuore dell'automazione moderna. Il Focus 3 ha introdotto la logica digitale con cui questi dispositivi ragionano. Questo Focus scende al livello pratico: come si programma davvero un microcontrollore. Lo strumento scelto è **Arduino**, perché abbatte la barriera tecnica che storicamente rendeva questo mondo accessibile solo agli specialisti.
+Il Focus 1 ha mostrato che i microcontrollori sono al cuore dell'automazione moderna. Il Focus 3 ha introdotto la logica digitale con cui questi dispositivi ragionano. Il passo successivo è osservare da vicino una scheda reale: quali elementi contiene, come comunica con il computer, quali risorse mette a disposizione e perché può controllare sensori e attuatori. Lo strumento scelto è **Arduino**, perché rende visibile e sperimentabile il funzionamento di un microcontrollore senza richiedere hardware specialistico.
 
 ## 1. Cos'è Arduino
 
@@ -1074,11 +1094,57 @@ L'IDE si scarica da **http://www.arduino.cc** e riunisce in un unico programma e
 
 ![[Media/img_43.jpeg]]
 
+Con questi elementi si può leggere Arduino come un piccolo sistema embedded completo: una CPU, alcune memorie, pin di ingresso e uscita, alimentazione e collegamento al PC. La parte successiva usa questa base per costruire i primi sketch e collegare il programma al comportamento elettrico dei pin.
+
+---
+
+# FOCUS 4B — Programmazione Embedded con Arduino
+
+Dopo aver identificato la scheda e le sue risorse, si può passare al modo in cui il microcontrollore viene istruito. Programmare Arduino significa scrivere una sequenza di istruzioni che legge ingressi, prende decisioni e aggiorna uscite in modo continuo, secondo lo stesso principio generale del ciclo di controllo visto per il PLC.
+
 Per le prime prove è utile anche un simulatore online. **Tinkercad Circuits** permette di costruire un circuito virtuale trascinando **Arduino, breadboard, LED, resistenze, pulsanti e altri componenti**, collegandoli con i fili come in laboratorio. È quindi adatto per verificare rapidamente cablaggi e logica del programma prima di passare alla scheda reale.
 
 ---
 
-## 3. Struttura di un programma Arduino
+## 1. Prima del codice: montare il circuito
+
+In un esercizio con Arduino il programma funziona solo se il circuito è montato correttamente. Per questo, prima di scrivere lo sketch, bisogna sempre chiarire tre cose:
+
+1. quali componenti servono;
+2. a quali pin di Arduino sono collegati;
+3. quale percorso fa la corrente.
+
+La **breadboard** permette di costruire circuiti di prova senza saldare. I fori non sono tutti separati: sotto la plastica ci sono contatti metallici già collegati tra loro.
+
+Nella zona centrale, i fori sono collegati in gruppi da cinque sulla stessa riga. La fessura centrale separa le due metà: un componente inserito a cavallo della fessura ha i terminali su due nodi diversi. Le due linee laterali, spesso segnate con **+** e **−**, sono invece usate come linee di alimentazione: di solito il **+** si collega ai 5 V di Arduino e il **−** si collega a GND.
+
+Schema pratico da ricordare:
+
+|Parte della breadboard|Come si usa|
+|---|---|
+|Linee laterali `+` e `−`|Distribuiscono alimentazione e massa lungo la breadboard|
+|Fori centrali|Collegano tra loro i terminali dei componenti sulla stessa riga da cinque fori|
+|Fessura centrale|Separa elettricamente le due metà della breadboard|
+|Ponticelli|Portano un segnale da un pin Arduino a una riga della breadboard|
+
+Per evitare errori, conviene usare colori costanti: **rosso** per 5 V, **nero** per GND, altri colori per i segnali. Prima di alimentare il circuito si controlla che 5 V e GND non siano collegati direttamente tra loro.
+
+Alcuni componenti hanno un verso. Il **LED** è polarizzato: il terminale lungo è l'**anodo** e va verso il positivo o verso il pin di uscita; il terminale corto è il **catodo** e va verso GND. Il LED deve sempre avere una **resistenza in serie** per limitare la corrente, tipicamente da **220 Ω** o **330 Ω**. Senza resistenza il LED o il pin di Arduino possono danneggiarsi.
+
+Il **pulsante** a quattro terminali contiene due coppie di piedini già collegate internamente. Quando viene premuto, collega tra loro le due coppie. Per usarlo correttamente sulla breadboard va inserito **a cavallo della fessura centrale**, così i due lati del pulsante restano separati finché non viene premuto.
+
+Regola di lavoro per ogni esercizio:
+
+1. inserire i componenti sulla breadboard;
+2. collegare GND di Arduino alla linea `−`;
+3. collegare eventuale 5 V alla linea `+`, solo se serve;
+4. collegare i pin di segnale;
+5. controllare il percorso della corrente;
+6. caricare il programma.
+
+---
+
+## 2. Struttura di un programma Arduino
 
 Un programma Arduino si chiama **sketch** ed è costruito su due blocchi obbligatori:
 
@@ -1102,7 +1168,7 @@ Regole sintattiche di base: ogni istruzione termina con `;`; i blocchi sono racc
 
 ---
 
-## 4. Gestione dei pin digitali
+## 3. Gestione dei pin digitali
 
 Arduino UNO ha 14 pin digitali (numerati 0–13), ognuno configurabile come ingresso o uscita nel `setup()` con `pinMode`:
 
@@ -1124,6 +1190,30 @@ Per gli ingressi collegati a un pulsante (che chiude il pin a massa), è necessa
 **Mini progetto — Pulsante che accende un LED**
 
 Questo è il primo esempio davvero utile per collegare subito **ingresso**, **uscita** e **logica**. Il pulsante è collegato tra pin 10 e massa; il LED è sul pin 13. Con `INPUT_PULLUP`, il pin legge `HIGH` a pulsante rilasciato e `LOW` a pulsante premuto.
+
+Componenti:
+
+|Componente|Quantità|Note|
+|---|---:|---|
+|Arduino UNO|1|Alimentato via USB|
+|Breadboard|1|Per montare LED, resistenza e pulsante|
+|LED|1|Qualsiasi colore|
+|Resistenza 220 Ω o 330 Ω|1|In serie al LED|
+|Pulsante|1|Inserito a cavallo della fessura centrale|
+|Ponticelli|alcuni|Per GND, pin 10 e pin 13|
+
+Collegamenti:
+
+1. collegare **GND** di Arduino alla linea `−` della breadboard;
+2. inserire il LED sulla breadboard, con i due terminali su righe diverse;
+3. collegare il **catodo** del LED, terminale corto, alla linea `−`;
+4. collegare l'**anodo** del LED, terminale lungo, a una resistenza da 220 Ω o 330 Ω;
+5. collegare l'altra estremità della resistenza al **pin 13** di Arduino;
+6. inserire il pulsante a cavallo della fessura centrale della breadboard;
+7. collegare un lato del pulsante al **pin 10**;
+8. collegare il lato opposto del pulsante alla linea `−`.
+
+In questo montaggio non serve collegare il pulsante ai 5 V: la resistenza di pull-up interna tiene il pin 10 a livello alto quando il pulsante è aperto. Quando il pulsante viene premuto, il pin 10 viene collegato a GND e Arduino legge `LOW`.
 
 ```c
 const int LED_PIN = 13;
@@ -1151,6 +1241,29 @@ delayMicroseconds(500);  // pausa di 500 μs
 ```
 
 **Esempio applicativo — Semaforo:**
+
+Il semaforo usa tre LED come uscite digitali. Ogni LED deve avere la propria resistenza in serie: non si usa una sola resistenza comune, perché i LED si accendono in momenti diversi e devono essere limitati separatamente.
+
+Componenti:
+
+|Componente|Quantità|Note|
+|---|---:|---|
+|Arduino UNO|1|Alimentato via USB|
+|Breadboard|1|Per distribuire i collegamenti|
+|LED rosso, giallo, verde|3|Uno per ogni luce|
+|Resistenze 220 Ω o 330 Ω|3|Una per ogni LED|
+|Ponticelli|alcuni|Per GND e pin 11, 12, 13|
+
+Collegamenti:
+
+1. collegare **GND** di Arduino alla linea `−` della breadboard;
+2. inserire i tre LED sulla breadboard, con i terminali di ogni LED su righe diverse;
+3. collegare i tre **catodi**, terminali corti, alla linea `−`;
+4. collegare l'**anodo** del LED verde a una resistenza, poi al **pin 11**;
+5. collegare l'**anodo** del LED rosso a una resistenza, poi al **pin 12**;
+6. collegare l'**anodo** del LED giallo a una resistenza, poi al **pin 13**.
+
+Quando un pin viene portato a `HIGH`, fornisce 5 V: la corrente esce dal pin, attraversa la resistenza, attraversa il LED e torna a GND. Quando il pin è `LOW`, non c'è differenza di potenziale sufficiente e il LED resta spento.
 
 ```c
 #define Giallo 13
@@ -1180,7 +1293,7 @@ La direttiva `#define` assegna un nome leggibile a una costante numerica, renden
 
 ---
 
-## 5. Tipi di dati
+## 4. Tipi di dati
 
 In C/C++ ogni variabile deve essere dichiarata con il proprio **tipo** prima dell'uso. Il tipo determina quanta memoria SRAM occupa e quali valori può contenere: scegliere il tipo sbagliato può portare a errori sottili o a sprechi di una risorsa già scarsa.
 
@@ -1210,7 +1323,7 @@ int d = 0x101;  // esadecimale → 257
 
 ---
 
-## 6. Strutture di controllo
+## 5. Strutture di controllo
 
 Le strutture di controllo permettono di prendere decisioni e ripetere azioni in base alle condizioni del sistema — sono la traduzione in codice della logica booleana vista nel Focus 3.
 
@@ -1261,7 +1374,7 @@ switch (variabile) {
 
 ---
 
-## 7. Strutture iterative
+## 6. Strutture iterative
 
 Le strutture iterative permettono di ripetere un blocco di istruzioni. Ne esistono tre, ognuna adatta a una situazione specifica.
 
@@ -1297,7 +1410,7 @@ La scelta dipende dal caso: `for` quando il numero di iterazioni è noto; `while
 
 ---
 
-## 8. Operatori aritmetici e bit a bit
+## 7. Operatori aritmetici e bit a bit
 
 ### Operatori aritmetici standard
 
@@ -1349,7 +1462,7 @@ x /= y;   // x = x / y
 
 ---
 
-## 9. Debug con la comunicazione seriale
+## 8. Debug con la comunicazione seriale
 
 Scrivere un programma non garantisce che funzioni subito: il debug è parte ordinaria del lavoro. Lo strumento principale di Arduino è la **comunicazione seriale**: la scheda può inviare messaggi al PC attraverso la porta USB, leggibili aprendo il **Monitor Seriale** dall'IDE (Strumenti → Monitor Seriale). La tecnica di debug più semplice consiste nell'inserire stampe strategiche nel codice per monitorare il valore delle variabili nei punti critici.
 
@@ -1385,7 +1498,7 @@ if (Serial.available() > 0) {
 
 ---
 
-## 10. Esercitazioni pratiche con CADe_SIMU
+## 9. Esercitazioni pratiche con CADe_SIMU
 
 Il software **CADe_SIMU** permette di disegnare e simulare schemi di impianti elettrici senza componenti fisici — come un simulatore virtuale dell'impianto visto nel Focus 1. Le esercitazioni proposte crescono in complessità.
 
