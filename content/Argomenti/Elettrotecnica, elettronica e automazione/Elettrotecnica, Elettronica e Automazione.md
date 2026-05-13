@@ -1090,7 +1090,7 @@ Le tre memorie hanno ruoli distinti. La **Flash** conserva il programma anche a 
 
 L'alimentazione durante lo sviluppo viene normalmente dalla porta USB del PC. L'alimentazione esterna (tramite jack da 7÷12 V) serve quando la scheda è usata nell'applicazione finale, scollegata dal computer.
 
-L'IDE si scarica da **http://www.arduino.cc** e riunisce in un unico programma editor, compilatore, loader e Monitor Seriale per il debug.
+L'IDE si scarica da http://www.arduino.cc e riunisce in un unico programma editor, compilatore, loader e Monitor Seriale per il debug.
 
 ![[Media/img_43.jpeg]]
 
@@ -1114,24 +1114,84 @@ In un esercizio con Arduino il programma funziona solo se il circuito è montato
 2. a quali pin di Arduino sono collegati;
 3. quale percorso fa la corrente.
 
-La **breadboard** permette di costruire circuiti di prova senza saldare. I fori non sono tutti separati: sotto la plastica ci sono contatti metallici già collegati tra loro.
+Una volta scelti i componenti, bisogna montarli su un supporto che permetta di collegarli tra loro e ad Arduino. Nei circuiti definitivi questo supporto può essere un circuito stampato; negli esercizi e nei prototipi si usa quasi sempre la **breadboard**, perché permette di costruire circuiti di prova senza saldare.
 
-Nella zona centrale, i fori sono collegati in gruppi da cinque sulla stessa riga. La fessura centrale separa le due metà: un componente inserito a cavallo della fessura ha i terminali su due nodi diversi. Le due linee laterali, spesso segnate con **+** e **−**, sono invece usate come linee di alimentazione: di solito il **+** si collega ai 5 V di Arduino e il **−** si collega a GND.
+La breadboard non è una semplice piastra con fori separati. Sotto la plastica ci sono contatti metallici già collegati tra loro. Per usarla correttamente bisogna quindi ragionare non sul singolo foro, ma sul **nodo elettrico** che quel foro rappresenta.
+
+Un nodo è un insieme di punti collegati direttamente da metallo: tutti quei punti hanno la stessa tensione. Se due terminali di componenti sono inseriti nello stesso gruppo di fori collegati internamente, per il circuito è come se fossero uniti da un filo. Se invece sono inseriti in gruppi diversi, non sono collegati finché non si aggiunge un ponticello o un componente tra quei gruppi.
+
+Nella zona centrale, i fori sono collegati in gruppi da cinque sulla stessa colonna numerata. Una breadboard tipica ha due metà separate dal canale centrale: sopra il canale ci sono cinque fori collegati tra loro, e sotto il canale altri cinque fori collegati tra loro. I due gruppi con lo stesso numero **non** sono collegati attraverso il canale centrale.
+
+![[Media/breadboard.png]]
+
+Nell'immagine, i tratti rossi indicano gruppi di fori collegati elettricamente tra loro. Il riquadro blu indica invece il canale centrale, cioè una zona di separazione: i cinque fori sopra il canale non sono collegati ai cinque fori sotto, anche se hanno lo stesso numero.
+
+Il canale centrale serve proprio a separare elettricamente le due metà. Per questo i circuiti integrati e i pulsanti a quattro piedini si inseriscono spesso **a cavallo del canale centrale**: in questo modo i terminali che devono restare separati non finiscono nello stesso nodo. Se un pulsante fosse inserito tutto sulla stessa metà, alcuni suoi piedini potrebbero risultare già collegati dalla breadboard e il circuito non funzionerebbe come previsto.
+
+Le due linee laterali, spesso segnate con **+** e **−**, sono invece usate come linee di alimentazione. Di solito il **+** si collega ai 5 V di Arduino e il **−** si collega a **GND**.
+
+**GND** significa _ground_ ed è il riferimento a **0 V** del circuito. Nei circuiti elettronici viene chiamato spesso anche **massa**, ma in questa parte useremo soprattutto la sigla GND perché è quella scritta sulla scheda Arduino. Collegare un punto a GND significa collegarlo al riferimento 0 V, cioè al punto verso cui la corrente ritorna dopo aver attraversato i componenti.
+
+Le linee laterali funzionano come distributori: permettono di portare 5 V e GND in molti punti del circuito senza dover tornare ogni volta ai pin di Arduino. In alcune breadboard lunghe le linee laterali possono essere interrotte a metà: in quel caso, se serve continuità lungo tutta la linea, bisogna unirne le due parti con un ponticello.
+
+Quando si monta un circuito, il percorso della corrente va letto così: dal pin o dal 5 V, attraverso i componenti, fino a GND. La breadboard non "decide" il percorso: offre solo gruppi di fori già collegati. Sono i ponticelli e i terminali dei componenti a stabilire quali nodi vengono uniti.
 
 Schema pratico da ricordare:
 
 |Parte della breadboard|Come si usa|
 |---|---|
-|Linee laterali `+` e `−`|Distribuiscono alimentazione e massa lungo la breadboard|
-|Fori centrali|Collegano tra loro i terminali dei componenti sulla stessa riga da cinque fori|
-|Fessura centrale|Separa elettricamente le due metà della breadboard|
-|Ponticelli|Portano un segnale da un pin Arduino a una riga della breadboard|
+|Linee laterali `+` e `−`|Distribuiscono 5 V e GND lungo la breadboard|
+|Fori centrali|Collegano tra loro i terminali dei componenti nello stesso gruppo da cinque fori|
+|Canale centrale|Separa elettricamente le due metà della breadboard|
+|Ponticelli|Portano un segnale da un pin Arduino a un gruppo di fori della breadboard|
+
+Errori comuni da evitare:
+
+- inserire i due terminali di un LED o di una resistenza nello stesso gruppo di fori collegati: il componente viene cortocircuitato o non ha effetto;
+- collegare direttamente la linea `+` alla linea `−`: si crea un cortocircuito tra 5 V e GND;
+- mettere un pulsante sulla stessa metà della breadboard invece che a cavallo del canale centrale;
+- dimenticare che le linee laterali di alcune breadboard non sono continue da un'estremità all'altra.
 
 Per evitare errori, conviene usare colori costanti: **rosso** per 5 V, **nero** per GND, altri colori per i segnali. Prima di alimentare il circuito si controlla che 5 V e GND non siano collegati direttamente tra loro.
 
+**Esercitazione guidata — Accendere un LED sulla breadboard**
+
+Questa prova serve a vedere concretamente come la breadboard collega i fori tra loro. Non serve ancora scrivere un programma: Arduino viene usato solo come alimentatore a 5 V.
+
+Componenti:
+
+|Componente|Quantità|Note|
+|---|---:|---|
+|Arduino UNO|1|Alimentato via USB|
+|Breadboard|1|Per montare il circuito|
+|LED|1|Qualsiasi colore|
+|Resistenza 220 Ω o 330 Ω|1|In serie al LED|
+|Ponticelli|alcuni|Rosso per 5 V, nero per GND|
+
+Collegamenti:
+
+1. collegare il pin **5V** di Arduino alla linea `+` della breadboard;
+2. collegare un pin **GND** di Arduino alla linea `−` della breadboard;
+3. inserire il LED nella zona centrale, con i due terminali in **due gruppi di fori diversi**;
+4. collegare il **catodo** del LED, terminale corto, alla linea `−`;
+5. collegare l'**anodo** del LED, terminale lungo, a una resistenza da 220 Ω o 330 Ω;
+6. collegare l'altra estremità della resistenza alla linea `+`.
+
+Se il circuito è montato correttamente, il LED si accende. Il percorso della corrente è:
+
+```text
+5 V Arduino -> linea + -> resistenza -> LED -> linea - -> GND Arduino
+```
+
+Per capire meglio la breadboard, provare poi queste modifiche:
+
+- spostare un terminale della resistenza in un altro foro dello **stesso gruppo da cinque**: il LED resta acceso, perché quei fori sono già collegati;
+- spostare un terminale in un gruppo diverso senza aggiungere ponticelli: il LED si spegne, perché il circuito si apre;
+- mettere per errore i due terminali del LED nello stesso gruppo di fori: il LED non lavora correttamente, perché i suoi terminali finiscono sullo stesso nodo.
+
 Alcuni componenti hanno un verso. Il **LED** è polarizzato: il terminale lungo è l'**anodo** e va verso il positivo o verso il pin di uscita; il terminale corto è il **catodo** e va verso GND. Il LED deve sempre avere una **resistenza in serie** per limitare la corrente, tipicamente da **220 Ω** o **330 Ω**. Senza resistenza il LED o il pin di Arduino possono danneggiarsi.
 
-Il **pulsante** a quattro terminali contiene due coppie di piedini già collegate internamente. Quando viene premuto, collega tra loro le due coppie. Per usarlo correttamente sulla breadboard va inserito **a cavallo della fessura centrale**, così i due lati del pulsante restano separati finché non viene premuto.
+Il **pulsante** a quattro terminali contiene due coppie di piedini già collegate internamente. Quando viene premuto, collega tra loro le due coppie. Per usarlo correttamente sulla breadboard va inserito **a cavallo del canale centrale**, così i due lati del pulsante restano separati finché non viene premuto.
 
 Regola di lavoro per ogni esercizio:
 
@@ -1185,11 +1245,11 @@ digitalWrite(13, LOW);  // porta il pin 13 a 0 V
 int stato = digitalRead(10);  // legge HIGH o LOW dal pin 10
 ```
 
-Per gli ingressi collegati a un pulsante (che chiude il pin a massa), è necessaria una resistenza di **pull-up** per mantenere il pin a livello alto quando il pulsante è aperto — senza di essa il pin fluttua in uno stato indeterminato. Arduino dispone di resistenze di pull-up interne (20÷50 kΩ), attivabili direttamente con la modalità `INPUT_PULLUP`.
+Per gli ingressi collegati a un pulsante che, quando viene premuto, collega il pin a **GND**, è necessaria una resistenza di **pull-up** per mantenere il pin a livello alto quando il pulsante è aperto — senza di essa il pin fluttua in uno stato indeterminato. Arduino dispone di resistenze di pull-up interne (20÷50 kΩ), attivabili direttamente con la modalità `INPUT_PULLUP`.
 
 **Mini progetto — Pulsante che accende un LED**
 
-Questo è il primo esempio davvero utile per collegare subito **ingresso**, **uscita** e **logica**. Il pulsante è collegato tra pin 10 e massa; il LED è sul pin 13. Con `INPUT_PULLUP`, il pin legge `HIGH` a pulsante rilasciato e `LOW` a pulsante premuto.
+Questo è il primo esempio davvero utile per collegare subito **ingresso**, **uscita** e **logica**. Il pulsante è collegato tra pin 10 e **GND**; il LED è sul pin 13. Con `INPUT_PULLUP`, il pin legge `HIGH` a pulsante rilasciato e `LOW` a pulsante premuto.
 
 Componenti:
 
@@ -1199,7 +1259,7 @@ Componenti:
 |Breadboard|1|Per montare LED, resistenza e pulsante|
 |LED|1|Qualsiasi colore|
 |Resistenza 220 Ω o 330 Ω|1|In serie al LED|
-|Pulsante|1|Inserito a cavallo della fessura centrale|
+|Pulsante|1|Inserito a cavallo del canale centrale|
 |Ponticelli|alcuni|Per GND, pin 10 e pin 13|
 
 Collegamenti:
@@ -1209,7 +1269,7 @@ Collegamenti:
 3. collegare il **catodo** del LED, terminale corto, alla linea `−`;
 4. collegare l'**anodo** del LED, terminale lungo, a una resistenza da 220 Ω o 330 Ω;
 5. collegare l'altra estremità della resistenza al **pin 13** di Arduino;
-6. inserire il pulsante a cavallo della fessura centrale della breadboard;
+6. inserire il pulsante a cavallo del canale centrale della breadboard;
 7. collegare un lato del pulsante al **pin 10**;
 8. collegare il lato opposto del pulsante alla linea `−`.
 
@@ -1232,6 +1292,20 @@ void loop() {
   }
 }
 ```
+
+Spiegazione del codice:
+
+- `const int LED_PIN = 13;` crea un nome per il pin del LED. Da questo momento nel programma si può scrivere `LED_PIN` invece di ricordare il numero 13;
+- `const int BTN_PIN = 10;` fa la stessa cosa per il pulsante collegato al pin 10;
+- in `setup()`, `pinMode(LED_PIN, OUTPUT);` imposta il pin del LED come **uscita**, perché Arduino deve comandarlo;
+- sempre in `setup()`, `pinMode(BTN_PIN, INPUT_PULLUP);` imposta il pin del pulsante come **ingresso** e attiva la resistenza di pull-up interna;
+- `loop()` viene ripetuto continuamente. Arduino legge il pulsante molte volte al secondo;
+- `digitalRead(BTN_PIN)` legge il valore presente sul pin 10;
+- con `INPUT_PULLUP` la logica è invertita: pulsante rilasciato significa `HIGH`, pulsante premuto significa `LOW`;
+- se il pulsante è premuto, `digitalWrite(LED_PIN, HIGH);` porta il pin 13 a 5 V e accende il LED;
+- altrimenti `digitalWrite(LED_PIN, LOW);` porta il pin 13 a 0 V e spegne il LED.
+
+Il punto importante è che il programma non "vede" il pulsante direttamente: legge solo se il pin 10 si trova a livello alto (`HIGH`) o basso (`LOW`). Il cablaggio sulla breadboard decide quale valore elettrico arriva al pin.
 
 Le temporizzazioni si gestiscono con due funzioni:
 
@@ -1289,9 +1363,18 @@ void loop() {
 }
 ```
 
-La direttiva `#define` assegna un nome leggibile a una costante numerica, rendendo il codice più comprensibile e semplice da modificare.
+Spiegazione del codice:
 
----
+- `#define Giallo 13`, `#define Rosso 12` e `#define Verde 11` assegnano un nome leggibile ai pin. Il compilatore sostituisce quei nomi con i numeri corrispondenti;
+- in `setup()` i tre pin vengono impostati come `OUTPUT`, perché Arduino deve accendere e spegnere i LED;
+- in `loop()` si scrive la sequenza del semaforo nell'ordine in cui deve avvenire;
+- `digitalWrite(Rosso, HIGH);` accende il LED rosso, mentre `digitalWrite(Rosso, LOW);` lo spegne;
+- `delay(15000);` blocca il programma per 15000 ms, cioè 15 s. Durante questo tempo il LED rosso resta nello stato impostato;
+- dopo il rosso, il programma spegne il rosso, accende il verde e attende 12 s;
+- alla fine spegne il verde, accende il giallo e attende 3 s;
+- quando `loop()` termina, Arduino torna automaticamente all'inizio di `loop()` e il ciclo ricomincia.
+
+Questo sketch è una sequenza temporizzata: non legge ingressi e non prende decisioni. Esegue sempre lo stesso ordine di accensione dei LED.
 
 ## 4. Tipi di dati
 
@@ -1498,17 +1581,197 @@ if (Serial.available() > 0) {
 
 ---
 
-## 9. Esercitazioni pratiche con CADe_SIMU
+### Progetto guidato in Tinkercad — Semaforo pedonale a chiamata
 
-Il software **CADe_SIMU** permette di disegnare e simulare schemi di impianti elettrici senza componenti fisici — come un simulatore virtuale dell'impianto visto nel Focus 1. Le esercitazioni proposte crescono in complessità.
+Il progetto seguente trasforma il semaforo precedente in un piccolo sistema automatico: normalmente le auto hanno il verde; quando un pedone preme il pulsante, Arduino esegue una sequenza controllata che ferma le auto, accende il verde pedonale per alcuni secondi e poi ritorna alla condizione iniziale.
 
-![[Media/img_48.jpeg]]
+Dal punto di vista dell'automazione, il sistema contiene:
 
-Lo **schema base** prevede una suoneria e un ronzatore attivabili separatamente da pulsanti distinti, con un deviatore che seleziona quale delle due linee può essere attivata. È il punto di partenza per prendere confidenza con i simboli degli schemi funzionali.
+- un **ingresso**: il pulsante di chiamata pedonale;
+- alcune **uscite**: i LED del semaforo auto e del semaforo pedonale;
+- una **logica di controllo**: il programma che decide quando cambiare stato.
 
-Lo **schema con doppia linea** aggiunge una linea luce per il comando di una lampada da tre punti (due deviatori + un invertitore) e una linea ausiliaria a 12 V per suoneria e ronzatore. Si mettono qui in pratica i dispositivi di comando descritti nel Focus 1.
+#### Obiettivo
 
-Lo **schema avanzato con relè passo-passo** è il più completo: linea ausiliaria per il comando luci da tre punti tramite relè interruttore; linea luce per tre lampade tramite relè passo-passo; comando di una luce da due punti con deviatori. Questo schema integra impianto, logica e automazione in un unico progetto.
+Realizzare in **Tinkercad Circuits** un semaforo pedonale a chiamata con Arduino UNO. Il sistema deve comportarsi così:
+
+1. stato normale: auto verde, pedoni rosso;
+2. se il pulsante viene premuto: auto giallo per un breve tempo;
+3. poi auto rosso e pedoni verde;
+4. dopo alcuni secondi: pedoni rosso e auto verde;
+5. il ciclo resta in attesa di una nuova chiamata.
+
+#### Componenti
+
+|Componente|Quantità|Note|
+|---|---:|---|
+|Arduino UNO|1|Scheda di controllo|
+|Breadboard|1|Per montare LED e pulsante|
+|LED rosso, giallo, verde per auto|3|Semaforo veicolare|
+|LED rosso e verde per pedoni|2|Semaforo pedonale|
+|Resistenze 220 Ω o 330 Ω|5|Una in serie a ogni LED|
+|Pulsante|1|Chiamata pedonale|
+|Ponticelli|alcuni|Per alimentazione, GND e segnali|
+
+#### Collegamenti
+
+Usare una resistenza per ogni LED. I catodi dei LED, cioè i terminali corti, vanno collegati alla linea `−` della breadboard; gli anodi, cioè i terminali lunghi, vanno collegati ai pin indicati tramite resistenza.
+
+|Funzione|Pin Arduino|
+|---|---:|
+|LED verde auto|11|
+|LED giallo auto|12|
+|LED rosso auto|13|
+|LED rosso pedoni|8|
+|LED verde pedoni|7|
+|Pulsante chiamata|10|
+
+Collegare inoltre:
+
+1. **GND** di Arduino alla linea `−` della breadboard;
+2. un lato del pulsante al **pin 10**;
+3. il lato opposto del pulsante alla linea `−`.
+
+Anche qui si usa `INPUT_PULLUP`: il pulsante non va collegato ai 5 V. Quando è rilasciato Arduino legge `HIGH`; quando viene premuto legge `LOW`.
+
+#### Procedura in Tinkercad
+
+1. creare un nuovo circuito in **Tinkercad Circuits**;
+2. trascinare nell'area di lavoro Arduino UNO e una breadboard;
+3. aggiungere i cinque LED, ciascuno con la propria resistenza;
+4. collegare i LED ai pin indicati nella tabella;
+5. inserire il pulsante a cavallo del canale centrale della breadboard;
+6. collegare il pulsante tra pin 10 e GND;
+7. aprire l'editor del codice, scegliere la modalità **Testo** e inserire lo sketch;
+8. avviare la simulazione e premere il pulsante.
+
+#### Sketch
+
+```c
+const int AUTO_VERDE = 11;
+const int AUTO_GIALLO = 12;
+const int AUTO_ROSSO = 13;
+const int PEDONI_ROSSO = 8;
+const int PEDONI_VERDE = 7;
+const int PULSANTE = 10;
+
+void setup() {
+  pinMode(AUTO_VERDE, OUTPUT);
+  pinMode(AUTO_GIALLO, OUTPUT);
+  pinMode(AUTO_ROSSO, OUTPUT);
+  pinMode(PEDONI_ROSSO, OUTPUT);
+  pinMode(PEDONI_VERDE, OUTPUT);
+  pinMode(PULSANTE, INPUT_PULLUP);
+
+  statoNormale();
+}
+
+void loop() {
+  if (digitalRead(PULSANTE) == LOW) {
+    cicloPedonale();
+  }
+}
+
+void statoNormale() {
+  digitalWrite(AUTO_VERDE, HIGH);
+  digitalWrite(AUTO_GIALLO, LOW);
+  digitalWrite(AUTO_ROSSO, LOW);
+  digitalWrite(PEDONI_ROSSO, HIGH);
+  digitalWrite(PEDONI_VERDE, LOW);
+}
+
+void cicloPedonale() {
+  digitalWrite(AUTO_VERDE, LOW);
+  digitalWrite(AUTO_GIALLO, HIGH);
+  delay(2000);
+
+  digitalWrite(AUTO_GIALLO, LOW);
+  digitalWrite(AUTO_ROSSO, HIGH);
+  delay(1000);
+
+  digitalWrite(PEDONI_ROSSO, LOW);
+  digitalWrite(PEDONI_VERDE, HIGH);
+  delay(5000);
+
+  digitalWrite(PEDONI_VERDE, LOW);
+  digitalWrite(PEDONI_ROSSO, HIGH);
+  delay(1000);
+
+  digitalWrite(AUTO_ROSSO, LOW);
+  statoNormale();
+}
+```
+
+#### Spiegazione dello sketch
+
+La prima parte assegna un nome a ogni pin:
+
+```c
+const int AUTO_VERDE = 11;
+const int AUTO_GIALLO = 12;
+const int AUTO_ROSSO = 13;
+const int PEDONI_ROSSO = 8;
+const int PEDONI_VERDE = 7;
+const int PULSANTE = 10;
+```
+
+Queste righe non accendono ancora nulla: servono solo a rendere leggibile il programma. Scrivere `AUTO_VERDE` è più chiaro di scrivere sempre `11`, soprattutto quando il circuito ha molti LED.
+
+Nel `setup()` Arduino prepara i pin:
+
+- i cinque LED sono impostati come `OUTPUT`, perché Arduino deve comandarli;
+- il pulsante è impostato come `INPUT_PULLUP`, quindi legge `HIGH` quando è rilasciato e `LOW` quando viene premuto;
+- alla fine viene chiamata la funzione `statoNormale();`, che porta subito il semaforo nella condizione iniziale.
+
+La funzione `loop()` controlla continuamente il pulsante:
+
+```c
+void loop() {
+  if (digitalRead(PULSANTE) == LOW) {
+    cicloPedonale();
+  }
+}
+```
+
+`digitalRead(PULSANTE)` legge il pin 10. Se il valore è `LOW`, significa che il pulsante è premuto, perché il pulsante collega il pin a GND. In quel caso Arduino esegue `cicloPedonale();`. Se il pulsante non è premuto, non succede nulla e `loop()` continua a ripetere il controllo.
+
+La funzione `statoNormale()` descrive la situazione di riposo:
+
+- auto verde acceso;
+- auto giallo spento;
+- auto rosso spento;
+- pedoni rosso acceso;
+- pedoni verde spento.
+
+La funzione `cicloPedonale()` descrive invece cosa succede dopo la chiamata pedonale:
+
+1. spegne il verde auto e accende il giallo auto per 2 s;
+2. spegne il giallo e accende il rosso auto;
+3. dopo 1 s spegne il rosso pedoni e accende il verde pedoni per 5 s;
+4. spegne il verde pedoni e riaccende il rosso pedoni;
+5. spegne il rosso auto e richiama `statoNormale()` per tornare alla situazione iniziale.
+
+In questo esempio il codice è diviso in funzioni per renderlo più leggibile. `statoNormale()` e `cicloPedonale()` non sono comandi speciali di Arduino: sono funzioni create nel programma per raccogliere istruzioni che appartengono alla stessa fase del funzionamento.
+
+#### Controlli da fare
+
+Prima di considerare il progetto funzionante, verificare questi punti:
+
+- in partenza devono essere accesi solo **verde auto** e **rosso pedoni**;
+- premendo il pulsante, il verde auto deve spegnersi e accendersi il giallo;
+- durante l'attraversamento devono essere accesi **rosso auto** e **verde pedoni**;
+- alla fine il sistema deve tornare automaticamente allo stato iniziale;
+- ogni LED deve avere la propria resistenza in serie.
+
+#### Possibili modifiche
+
+Per rendere il progetto leggermente più ricco si può chiedere agli studenti di:
+
+- cambiare i tempi del ciclo;
+- far lampeggiare il verde pedonale negli ultimi secondi;
+- aggiungere un secondo pulsante dall'altro lato della strada;
+- usare il Monitor Seriale per stampare lo stato del sistema: `NORMALE`, `AUTO_GIALLO`, `ATTRAVERSAMENTO`.
+
 
 ---
 
@@ -1528,3 +1791,5 @@ Lo **schema avanzato con relè passo-passo** è il più completo: linea ausiliar
 |Frequenza|$f = 1/T$|Hz (hertz)|
 |Valore efficace|$V = V_M / \sqrt{2}$|V|
 |Generatori in serie|$E_{tot} = E_1 + E_2 + \ldots$ (somma algebrica)|V|
+
+---

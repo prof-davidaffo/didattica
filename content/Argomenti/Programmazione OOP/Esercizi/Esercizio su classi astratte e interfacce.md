@@ -1,131 +1,227 @@
-# Esercizio Java — Arena dei personaggi
+# Esercizio Java - Arena dei personaggi
 
-**Argomenti:** Interfacce · Classi astratte · Polimorfismo
+## Obiettivo
+
+Realizzare un piccolo programma Java che modelli alcuni personaggi di un gioco di ruolo usando:
+- una **classe astratta**
+- due **interfacce**
+- **polimorfismo**
+
+L'esercizio deve poter essere completato in circa un'ora.
 
 ---
 
-## Contesto
+## 1. Classe astratta `Personaggio`
 
-Modella i personaggi di un GDR: tutti sono _entità_ con attributi comuni, ma solo alcuni sanno combattere, solo alcuni sanno lanciare magie. Le **interfacce** descrivono le _capacità_; la **classe astratta** descrive l'_essere_.
+Crea una classe astratta `Personaggio`.
 
----
+### Attributi privati
 
-## Struttura da implementare
+|Attributo|Tipo|Significato|
+|---|---|---|
+|`nome`|`String`|Nome del personaggio|
+|`puntiVita`|`int`|Punti vita attuali|
+|`livello`|`int`|Livello del personaggio|
 
-### Interfacce (capacità)
+### Costruttore
 
-#### `interface Combattente`
-
-Chiunque sappia attaccare fisicamente. Non implica essere un eroe: anche un mostro può implementarla.
-
-|Tipo|Firma|
+|Firma|Comportamento|
 |---|---|
-|astratto|`int attacca()` — restituisce il danno inflitto|
-|astratto|`int getDifesa()`|
-|default|`String grido()` → `"Per la gloria!"` — sovrascrivibile|
+|`Personaggio(String nome, int puntiVita, int livello)`|Inizializza gli attributi comuni|
 
-#### `interface Incantatore`
+### Metodi
 
-Chiunque possa lanciare magie, consumando mana. Indipendente da `Combattente`.
+|Tipo|Firma|Comportamento|
+|---|---|---|
+|concreto|`String getNome()`|Restituisce `nome`|
+|concreto|`int getPuntiVita()`|Restituisce `puntiVita`|
+|concreto|`int getLivello()`|Restituisce `livello`|
+|concreto|`boolean isVivo()`|Restituisce `true` se `puntiVita > 0`|
+|concreto|`int subisciDanno(int danno)`|Calcola `danno - calcolaDifesa()`. Se il risultato è minore di 0 usa 0. Sottrae il danno effettivo da `puntiVita`, senza scendere sotto 0. Restituisce il danno effettivo subito|
+|concreto|`String descrivi()`|Restituisce una stringa con classe, nome, livello, punti vita e difesa|
+|astratto|`String getClassePersonaggio()`|Restituisce il nome della classe del personaggio, ad esempio `"Guerriero"`|
+|astratto|`int calcolaDifesa()`|Restituisce quanto il personaggio riduce i danni ricevuti|
 
-|Tipo|Firma|
+La classe astratta rappresenta solo ciò che è comune a tutti i personaggi.
+Non deve contenere metodi di attacco o magia.
+
+---
+
+## 2. Interfaccia `Combattente`
+
+Crea un'interfaccia `Combattente`.
+
+Un `Combattente` è un personaggio che può fare danno fisico.
+
+|Tipo|Firma|Comportamento|
+|---|---|---|
+|astratto|`int calcolaDannoFisico()`|Restituisce il danno fisico prodotto|
+|astratto|`String getArma()`|Restituisce il nome dell'arma usata|
+|default|`String descriviAttacco()`|Restituisce una stringa che contiene arma usata e danno fisico prodotto|
+
+---
+
+## 3. Interfaccia `Incantatore`
+
+Crea un'interfaccia `Incantatore`.
+
+Un `Incantatore` è un personaggio che può lanciare incantesimi consumando mana.
+
+|Tipo|Firma|Comportamento|
+|---|---|---|
+|astratto|`int lanciaIncantesimo()`|Prova a lanciare un incantesimo e restituisce il danno magico prodotto|
+|astratto|`int getMana()`|Restituisce il mana attuale|
+|default|`String descriviMana()`|Restituisce una stringa con il mana attuale|
+
+---
+
+## 4. Classi concrete
+
+Implementa queste tre classi.
+
+---
+
+### `Guerriero`
+
+`Guerriero` estende `Personaggio` e implementa `Combattente`.
+
+### Attributi privati
+
+|Attributo|Tipo|Significato|
+|---|---|---|
+|`forza`|`int`|Influenza il danno fisico|
+|`dannoArma`|`int`|Danno base dell'arma|
+|`armatura`|`int`|Influenza la difesa|
+|`arma`|`String`|Nome dell'arma usata|
+
+### Costruttore
+
+|Firma|Comportamento|
 |---|---|
-|astratto|`int lanciaIncantesimo(String nome)` — restituisce danno magico|
-|astratto|`int getManaAttuale()`|
-|astratto|`boolean haManaSufficiente(int costo)`|
-|default|`String descrizioneMagia()` → `"Mana: " + getManaAttuale()`|
+|`Guerriero(String nome, int puntiVita, int livello, int forza, int dannoArma, int armatura, String arma)`|Inizializza attributi comuni e specifici|
 
----
+### Metodi
 
-### Classe astratta (struttura comune)
-
-#### `abstract class Personaggio`
-
-Ogni personaggio ha un nome, punti vita e un livello. Sa presentarsi e sa subire danni, ma il tipo di personaggio lo definisce la sottoclasse.
-
-|Tipo|Membro|
+|Metodo|Comportamento|
 |---|---|
-|campo|`String nome`, `int pv`, `int livello`|
-|concreto|`costruttore(nome, pv, livello)`|
-|**astratto**|`abstract String classe()` — es. `"Guerriero"`, `"Mago"`, `"Negromante"`|
-|**astratto**|`abstract int getPotere()` — valore sintetico della forza del personaggio|
-|concreto|`void subisciDanno(int danno)` — riduce `pv`, minimo 0|
-|concreto|`boolean isVivo()` → `pv > 0`|
-|concreto|`String scheda()` → `"[classe] nome — Lv.livello PV:pv"`|
+|`getClassePersonaggio()`|Restituisce `"Guerriero"`|
+|`calcolaDifesa()`|Restituisce `armatura`|
+|`calcolaDannoFisico()`|Restituisce `forza + dannoArma + getLivello()`|
+|`getArma()`|Restituisce `arma`|
 
-> `scheda()` chiama `classe()` e `getPotere()` anche se sono astratti: funziona grazie al **dynamic dispatch**.
+Il `Guerriero` non ha mana e non può lanciare incantesimi.
 
 ---
 
-### Classi concrete
+### `Mago`
 
-#### `class Guerriero extends Personaggio implements Combattente`
+`Mago` estende `Personaggio` e implementa `Incantatore`.
 
-Solo fisico, niente magia. Il danno dipende dalla forza; la difesa dall'armatura.
+### Attributi privati
 
-- Campi: `int forza`, `int armatura`
-- `classe()` → `"Guerriero"`
-- `getPotere()` → `forza + armatura`
-- `attacca()` → `forza * livello / 2`
-- `getDifesa()` → `armatura`
-- `grido()` → `"Per il ferro e il sangue!"` _(override del default)_
+|Attributo|Tipo|Significato|
+|---|---|---|
+|`intelligenza`|`int`|Influenza il danno magico|
+|`potenzaMagica`|`int`|Danno base degli incantesimi|
+|`mana`|`int`|Risorsa consumata dagli incantesimi|
+|`barriera`|`int`|Influenza la difesa|
 
----
+### Costruttore
 
-#### `class Mago extends Personaggio implements Incantatore`
+|Firma|Comportamento|
+|---|---|
+|`Mago(String nome, int puntiVita, int livello, int intelligenza, int potenzaMagica, int mana, int barriera)`|Inizializza attributi comuni e specifici|
 
-Solo magia, niente attacco fisico. Il mana si esaurisce lanciando incantesimi.
+### Metodi
 
-- Campi: `int intelligenza`, `int mana`
-- `classe()` → `"Mago"`
-- `getPotere()` → `intelligenza * 2`
-- `lanciaIncantesimo(nome)` → se `mana >= 10`: `mana -= 10`, return `intelligenza * livello`; altrimenti return `0`
-- `getManaAttuale()` e `haManaSufficiente(costo)` come da interfaccia
+|Metodo|Comportamento|
+|---|---|
+|`getClassePersonaggio()`|Restituisce `"Mago"`|
+|`calcolaDifesa()`|Restituisce `barriera`|
+|`getMana()`|Restituisce `mana`|
+|`lanciaIncantesimo()`|Se `mana >= 10`, sottrae 10 mana e restituisce `intelligenza + potenzaMagica + getLivello()`. Altrimenti restituisce `0`|
 
----
-
-#### `class Paladino extends Personaggio implements Combattente, Incantatore`
-
-Ibrido: combatte fisicamente e lancia incantesimi. Mana ridotto rispetto al mago puro.
-
-- Campi: `int forza`, `int fede`, `int mana`
-- `classe()` → `"Paladino"`
-- `getPotere()` → `forza + fede`
-- `attacca()` → `forza * livello / 2`
-- `getDifesa()` → `fede / 2`
-- `lanciaIncantesimo(nome)` → se `mana >= 15`: `mana -= 15`, return `fede * livello`; altrimenti return `0`
+Il `Mago` non è un combattente fisico.
 
 ---
 
-#### `class Negromante extends Personaggio implements Incantatore, Combattente`
+### `Paladino`
 
-Villain del party. Attacco fisico debole, magia oscura potente.
+`Paladino` estende `Personaggio` e implementa sia `Combattente` sia `Incantatore`.
 
-- Campi: `int oscurita`, `int mana`
-- `classe()` → `"Negromante"`
-- `getPotere()` → `oscurita * 3`
-- `attacca()` → `2` _(attacco fisico irrisorio)_
-- `lanciaIncantesimo(nome)` → `mana -= 20`, return `oscurita * livello * 2`
-- `grido()` → `"Le tenebre vi inghiottiranno..."`
+### Attributi privati
+
+|Attributo|Tipo|Significato|
+|---|---|---|
+|`forza`|`int`|Influenza il danno fisico|
+|`dannoArma`|`int`|Danno base dell'arma|
+|`fede`|`int`|Influenza difesa e danno magico|
+|`potenzaMagica`|`int`|Danno base degli incantesimi|
+|`mana`|`int`|Risorsa consumata dagli incantesimi|
+|`arma`|`String`|Nome dell'arma usata|
+
+### Costruttore
+
+|Firma|Comportamento|
+|---|---|
+|`Paladino(String nome, int puntiVita, int livello, int forza, int dannoArma, int fede, int potenzaMagica, int mana, String arma)`|Inizializza attributi comuni e specifici|
+
+### Metodi
+
+|Metodo|Comportamento|
+|---|---|
+|`getClassePersonaggio()`|Restituisce `"Paladino"`|
+|`calcolaDifesa()`|Restituisce `fede / 2`|
+|`calcolaDannoFisico()`|Restituisce `forza + dannoArma`|
+|`getArma()`|Restituisce `arma`|
+|`getMana()`|Restituisce `mana`|
+|`lanciaIncantesimo()`|Se `mana >= 15`, sottrae 15 mana e restituisce `fede + potenzaMagica`. Altrimenti restituisce `0`|
+
+Il `Paladino` serve a mostrare che una classe può implementare più interfacce.
 
 ---
 
-## Attività da svolgere
+## 5. Main di test
 
-**1.** Implementa le interfacce `Combattente` e `Incantatore` con i metodi `default` indicati. I metodi default usano gli altri metodi dell'interfaccia — non hanno bisogno di campi.
+Il `main` serve solo a provare il comportamento delle classi.
+Non deve contenere metodi statici extra o logica complicata.
 
-**2.** Implementa la classe astratta `Personaggio` con costruttore, campi e tutti i metodi concreti. Ricorda che `scheda()` può chiamare `classe()` e `getPotere()` anche se astratti.
+|Passo|Cosa fare|
+|---|---|
+|1|Crea una `ArrayList<Personaggio>`|
+|2|Inserisci almeno un `Guerriero`, un `Mago` e un `Paladino`|
+|3|Scorri la lista e stampa `descrivi()` per ogni personaggio|
+|4|Se un personaggio è `Combattente`, stampa `descriviAttacco()`|
+|5|Se un personaggio è `Incantatore`, stampa `descriviMana()`, poi chiama `lanciaIncantesimo()` e stampa il danno magico prodotto|
+|6|Fai subire a ogni personaggio un danno fisso, ad esempio `20`, e stampa il danno effettivo restituito da `subisciDanno(...)`|
 
-**3.** Implementa le quattro classi concrete. Attenzione al `Paladino`: implementa entrambe le interfacce, quindi deve fornire tutti i metodi di entrambe.
-
-**4.** Nel `main`, crea una `List<Personaggio>` con almeno un oggetto per tipo. Poi simula un turno di combattimento: per ogni personaggio stampa `scheda()`; se è `Combattente` stampa anche il danno di `attacca()` e il suo `grido()`; se è `Incantatore` lancia un incantesimo e stampa il danno magico e il mana rimasto.
-
-**5. Bonus:** scrivi un metodo `static Personaggio piuPotente(List<Personaggio> lista)` che usa `getPotere()` per trovare il personaggio più forte. Poi scrivi separatamente `static int dannoTotale(List<Combattente> lista)` — nota che il tipo del parametro è l'**interfaccia**, non la classe astratta. Chiamalo passando solo i combattenti estratti dalla lista principale.
+Il `main` deve mostrare:
+- uso di una lista di tipo `ArrayList<Personaggio>`
+- uso di `instanceof`
+- uso dei metodi default delle interfacce
+- uso del `Paladino` sia come `Combattente` sia come `Incantatore`
 
 ---
 
-## Punto chiave da capire
+## 6. Vincoli
 
-Il `Paladino` è insieme `Personaggio`, `Combattente` e `Incantatore`. Puoi assegnarlo a una variabile di uno qualsiasi di questi tre tipi. Questo è il polimorfismo in azione: stesso oggetto, tre "facce" diverse a seconda del contesto.
+- Gli attributi devono essere `private`.
+- `Personaggio` deve essere astratta.
+- `Combattente` e `Incantatore` devono essere interfacce.
+- `Guerriero` non deve implementare `Incantatore`.
+- `Mago` non deve implementare `Combattente`.
+- `Paladino` deve implementare entrambe le interfacce.
+- Il codice deve compilare.
+- I nomi dei metodi devono essere quelli indicati.
 
-Il metodo `dannoTotale(List<Combattente>)` accetta una lista di interfaccia, non di classe astratta — dimostra che le interfacce sono _tipi_ a tutti gli effetti in Java.
+---
+
+## Cosa deve emergere
+
+La classe astratta `Personaggio` contiene solo lo stato e i comportamenti comuni: nome, punti vita, livello, difesa e descrizione.
+
+Le interfacce rappresentano capacità opzionali:
+- `Combattente` significa "può fare danno fisico"
+- `Incantatore` significa "può usare mana per fare danno magico"
+
+In questo modo non ci sono metodi inutili o duplicati: ogni metodo ha un compito diverso.
