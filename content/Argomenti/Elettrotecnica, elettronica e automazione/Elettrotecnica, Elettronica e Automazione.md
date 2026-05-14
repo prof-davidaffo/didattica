@@ -460,6 +460,8 @@ La cosa da ricordare è che nel relè ci sono sempre due parti:
 1. il **circuito di comando**, dove sono collegati i pulsanti e la bobina del relè;
 2. il **circuito comandato**, dove il contatto del relè alimenta o disalimenta la lampada.
 
+Nel circuito di comando si possono collegare **più pulsanti in parallelo**. Questo significa che ogni pulsante, anche se si trova in un punto diverso della stanza o del corridoio, può chiudere per un istante lo stesso circuito della bobina. Non importa quale pulsante viene premuto: tutti danno lo stesso impulso al relè.
+
 Qui è importante distinguere due casi. In un **relè normale**, quando la bobina non è più alimentata, il contatto torna nella posizione di riposo. Quindi un relè normale non è adatto, da solo, a mantenere una lampada accesa dopo che il pulsante è stato rilasciato.
 
 Nel **relè passo-passo**, invece, l'impulso alla bobina fa avanzare un piccolo meccanismo interno. Il contatto cambia posizione e poi rimane in quella posizione anche quando la bobina non è più alimentata. Per questo il relè passo-passo può "ricordare" se la lampada deve restare accesa o spenta.
@@ -479,9 +481,13 @@ In pratica:
 2. al secondo impulso il contatto del relè si apre e la lampada resta spenta;
 3. agli impulsi successivi continua ad alternare acceso e spento.
 
-Si chiama "passo-passo" proprio perché avanza di uno stato a ogni pressione del pulsante. Questa soluzione è comoda quando la stessa luce deve essere comandata da molti punti: invece di usare due deviatori e uno o più invertitori, si collegano molti pulsanti al circuito di comando del relè, mentre il relè gestisce il circuito della lampada.
+Si chiama "passo-passo" proprio perché avanza di uno stato a ogni pressione del pulsante. Questa soluzione è comoda quando la stessa luce deve essere comandata da molti punti: invece di usare due deviatori e uno o più invertitori collegati tra loro, si mettono semplicemente più pulsanti in parallelo sul circuito di comando. Il cablaggio diventa più semplice, perché i pulsanti devono solo inviare un impulso alla bobina; il percorso della corrente della lampada viene invece gestito dal contatto del relè.
 
 Per rappresentare questi collegamenti si usano gli **schemi funzionali**. Non mostrano dove si trovano fisicamente scatole e tubi, ma come sono collegati elettricamente fase, neutro, comandi e lampade. Servono quindi a seguire il percorso della corrente e a capire che cosa cambia quando un interruttore, un deviatore o un invertitore viene azionato.
+
+Potete provare in modo interattivo i vari tipi di interruttori qui:
+
+[Interruttori interattivi](https://prof-davidaffo.github.io/pages/esercizi-elettrotecnica-elettronica-automazione.html#comandi)
 
 ---
 
