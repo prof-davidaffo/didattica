@@ -1778,24 +1778,964 @@ Per rendere il progetto leggermente più ricco si può chiedere agli studenti di
 - aggiungere un secondo pulsante dall'altro lato della strada;
 - usare il Monitor Seriale per stampare lo stato del sistema: `NORMALE`, `AUTO_GIALLO`, `ATTRAVERSAMENTO`.
 
+# FOCUS 4C — Esercitazioni Pratiche con Arduino
+
+> Questo Focus è il complemento pratico del Focus 4A e del Focus 4B. Le esercitazioni sono organizzate in tre blocchi progressivi: si parte dai concetti più elementari — accendere un LED, leggere un pulsante — per arrivare a un progetto integrativo che mette insieme ingressi digitali, ingressi analogici, uscite e logica di controllo. Ogni esercitazione segue sempre la stessa struttura: obiettivo, componenti, schema di collegamento, sketch commentato e domande di verifica.
 
 ---
 
-# Appendice — Riepilogo delle formule principali
+## Blocco A — Fondamenta: digitale in uscita e in ingresso
 
-|Grandezza|Formula|Unità|
+Il primo blocco si concentra sui concetti minimi necessari per usare Arduino in modo autonomo: configurare i pin, gestire i tempi con `delay`, leggere un ingresso e prendere una semplice decisione con `if`. Ogni esercitazione introduce un solo concetto nuovo alla volta, costruendo sulla precedente.
+
+---
+
+### Esercitazione A1 — LED lampeggiante a frequenza variabile
+
+**Obiettivo:** montare il primo circuito su breadboard, caricare uno sketch e modificare i parametri di tempo per osservare come cambia il comportamento del sistema. Si introduce la struttura `setup / loop` e la funzione `delay`.
+
+**Componenti:**
+
+|Componente|Quantità|Note|
+|---|--:|---|
+|Arduino UNO|1|Alimentato via USB|
+|Breadboard|1||
+|LED|1|Qualsiasi colore|
+|Resistenza 220 Ω|1|In serie al LED|
+|Ponticelli|2|Rosso per il segnale, nero per GND|
+
+**Schema di collegamento:**
+
+Il LED va inserito sulla breadboard con i due terminali in gruppi di fori separati. Il catodo (terminale corto) si collega alla linea `−` della breadboard, che a sua volta è collegata a un pin **GND** di Arduino. L'anodo (terminale lungo) si collega alla resistenza da 220 Ω; l'altra estremità della resistenza si collega al **pin 13** di Arduino.
+
+```
+Pin 13 → Resistenza 220 Ω → Anodo LED → Catodo LED → GND
+```
+
+**Sketch:**
+
+```c
+// A1 — LED lampeggiante
+// Il LED collegato al pin 13 si accende e spegne con tempi definiti dalle costanti.
+
+const int LED_PIN = 13;
+const int TEMPO_ON  = 500;   // ms di accensione
+const int TEMPO_OFF = 500;   // ms di spegnimento
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);  // il pin 13 è un'uscita
+}
+
+void loop() {
+  digitalWrite(LED_PIN, HIGH);  // accende il LED
+  delay(TEMPO_ON);
+  digitalWrite(LED_PIN, LOW);   // spegne il LED
+  delay(TEMPO_OFF);
+}
+```
+
+**Cosa fare:**
+
+1. Caricare lo sketch sulla scheda e osservare il lampeggio.
+2. Modificare `TEMPO_ON` a 100 e `TEMPO_OFF` a 900: descrivere il cambiamento.
+3. Impostare `TEMPO_ON = 50` e `TEMPO_OFF = 50`: a quale frequenza lampeggia il LED? _(f = 1/T; T = 0,1 s → f = 10 Hz)_
+4. Provare a portare entrambi i valori a 10 ms: il lampeggio è ancora visibile?
+
+**Domande di verifica:**
+
+- Cosa succederebbe se si rimuovesse la resistenza da 220 Ω?
+- Perché `TEMPO_ON` e `TEMPO_OFF` sono dichiarati come `const int` invece di scrivere i numeri direttamente dentro `delay()`?
+- In quale dei due blocchi (`setup` o `loop`) si configura il pin, e perché?
+
+---
+
+### Esercitazione A2 — LED a sequenza con ciclo for
+
+**Obiettivo:** gestire tre LED con un ciclo `for`, introducendo gli array e il concetto di iterazione. Si vede concretamente come il ciclo permette di scrivere una sola volta il codice invece di ripetere le stesse istruzioni per ogni LED.
+
+**Componenti:**
+
+|Componente|Quantità|Note|
+|---|--:|---|
+|Arduino UNO|1||
+|Breadboard|1||
+|LED (colori diversi)|3|Es. rosso, giallo, verde|
+|Resistenze 220 Ω|3|Una per ogni LED|
+|Ponticelli|vari||
+
+**Schema di collegamento:**
+
+I tre LED si inseriscono sulla breadboard in posizioni separate. Ogni catodo va collegato alla linea `−`; ogni anodo va collegato alla propria resistenza, e poi al pin di Arduino corrispondente: LED 1 → **pin 11**, LED 2 → **pin 12**, LED 3 → **pin 13**. Un ponticello collega GND di Arduino alla linea `−`.
+
+**Sketch:**
+
+```c
+// A2 — Sequenza di LED con ciclo for
+// I tre LED si accendono uno alla volta in sequenza, poi si spengono
+// in ordine inverso, usando un array e un ciclo for.
+
+const int N_LED = 3;
+const int PIN_LED[N_LED] = {11, 12, 13};  // array dei pin
+const int PAUSA = 300;                     // ms tra un LED e il successivo
+
+void setup() {
+  for (int i = 0; i < N_LED; i++) {
+    pinMode(PIN_LED[i], OUTPUT);  // configura ogni pin come uscita
+  }
+}
+
+void loop() {
+  // Accende i LED uno alla volta, dal primo all'ultimo
+  for (int i = 0; i < N_LED; i++) {
+    digitalWrite(PIN_LED[i], HIGH);
+    delay(PAUSA);
+  }
+
+  // Spegne i LED uno alla volta, dall'ultimo al primo
+  for (int i = N_LED - 1; i >= 0; i--) {
+    digitalWrite(PIN_LED[i], LOW);
+    delay(PAUSA);
+  }
+}
+```
+
+**Cosa fare:**
+
+1. Caricare lo sketch e osservare la sequenza avanti/indietro.
+2. Modificare il codice per fare in modo che i LED si accendano tutti insieme e poi si spengano tutti insieme.
+3. Aggiungere un quarto LED al **pin 10** e modificare solo la costante `N_LED` e l'array `PIN_LED`: il resto del codice non deve cambiare.
+4. Modificare la sequenza di spegnimento in modo che avvenga nello stesso ordine dell'accensione (non inverso).
+
+**Domande di verifica:**
+
+- Cosa contiene `PIN_LED[0]`? E `PIN_LED[2]`?
+- Se si scrivesse `for (int i = 0; i <= N_LED; i++)` invece di `i < N_LED`, cosa succederebbe?
+- Qual è il vantaggio di usare un array rispetto a dichiarare tre variabili separate `pin1`, `pin2`, `pin3`?
+
+---
+
+### Esercitazione A3 — Pulsante con antirimbalzo software
+
+**Obiettivo:** leggere un ingresso digitale con `digitalRead` e capire il problema del rimbalzo dei contatti meccanici. Si introduce la tecnica di antirimbalzo software più semplice e si osserva la differenza nel comportamento del sistema.
+
+**Componenti:**
+
+|Componente|Quantità|Note|
+|---|--:|---|
+|Arduino UNO|1||
+|Breadboard|1||
+|LED|1||
+|Resistenza 220 Ω|1|In serie al LED|
+|Pulsante|1||
+|Ponticelli|vari||
+
+**Schema di collegamento:**
+
+Collegare il LED al **pin 13** con la sua resistenza, come nell'esercitazione A1. Inserire il pulsante a cavallo del canale centrale della breadboard. Collegare un lato del pulsante al **pin 10**; collegare il lato opposto alla linea `−`. Usare `INPUT_PULLUP`: non serve collegare il pulsante ai 5 V.
+
+**Sketch — Fase 1 (senza antirimbalzo):**
+
+```c
+// A3a — Pulsante senza antirimbalzo
+// Il LED cambia stato a ogni pressione, ma può comportarsi in modo
+// imprevedibile a causa del rimbalzo meccanico del pulsante.
+
+const int LED_PIN = 13;
+const int BTN_PIN = 10;
+
+bool statoLed = false;      // false = spento
+bool ultimoStatoBtn = HIGH; // pulsante rilasciato con INPUT_PULLUP
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(BTN_PIN, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+
+void loop() {
+  bool statoBtn = digitalRead(BTN_PIN);
+
+  // Rileva il fronte di discesa: da HIGH a LOW (pulsante appena premuto)
+  if (ultimoStatoBtn == HIGH && statoBtn == LOW) {
+    statoLed = !statoLed;              // inverte lo stato del LED
+    digitalWrite(LED_PIN, statoLed);
+    Serial.println("Cambio stato");    // stampa ogni rilevamento
+  }
+
+  ultimoStatoBtn = statoBtn;
+}
+```
+
+**Cosa osservare:** premere il pulsante lentamente e velocemente. Il LED potrebbe cambiare stato più di una volta per singola pressione. Aprire il Monitor Seriale (9600 baud) e contare quante volte viene stampato "Cambio stato" per ogni pressione.
+
+**Sketch — Fase 2 (con antirimbalzo):**
+
+```c
+// A3b — Pulsante con antirimbalzo software
+// Si introduce un ritardo minimo tra due rilevamenti consecutivi.
+// Se la variazione dura meno di DEBOUNCE_MS, viene ignorata.
+
+const int LED_PIN      = 13;
+const int BTN_PIN      = 10;
+const int DEBOUNCE_MS  = 50;  // soglia di antirimbalzo in millisecondi
+
+bool statoLed          = false;
+bool ultimoStatoBtn    = HIGH;
+unsigned long tUltimoSegnale = 0;
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(BTN_PIN, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+
+void loop() {
+  bool statoBtn = digitalRead(BTN_PIN);
+
+  if (ultimoStatoBtn == HIGH && statoBtn == LOW) {
+    unsigned long adesso = millis();  // tempo corrente in ms
+
+    if (adesso - tUltimoSegnale > DEBOUNCE_MS) {
+      statoLed = !statoLed;
+      digitalWrite(LED_PIN, statoLed);
+      Serial.println("Cambio stato valido");
+      tUltimoSegnale = adesso;
+    }
+  }
+
+  ultimoStatoBtn = statoBtn;
+}
+```
+
+**Cosa fare:**
+
+1. Caricare la Fase 1 e contare i falsi rilevamenti sul Monitor Seriale.
+2. Caricare la Fase 2 e verificare che ogni pressione produca esattamente un "Cambio stato valido".
+3. Provare a ridurre `DEBOUNCE_MS` a 5 ms: il problema del rimbalzo ricompare?
+4. Modificare il codice per rilevare invece il fronte di salita (rilascio del pulsante).
+
+**Domande di verifica:**
+
+- Perché `tUltimoSegnale` è dichiarato come `unsigned long` e non `int`?
+- Cosa fa la funzione `millis()`? In che unità restituisce il valore?
+- Perché con `INPUT_PULLUP` il pulsante legge `HIGH` quando è rilasciato e `LOW` quando è premuto?
+
+---
+
+## Blocco B — Uscite avanzate e logica di controllo
+
+Il secondo blocco introduce le uscite analogiche simulate (PWM), il display a sette segmenti come caso di mappatura tra dati e uscite, e una logica di controllo più articolata che usa funzioni separate. Si consolida l'uso del Monitor Seriale come strumento di debug.
+
+---
+
+### Esercitazione B1 — Controllo della luminosità con PWM
+
+**Obiettivo:** usare `analogWrite` per variare la luminosità di un LED tramite PWM (Pulse Width Modulation). Si introduce il concetto di duty cycle e si vede come un segnale digitale possa simulare un effetto analogico.
+
+**Cosa è il PWM:** un pin PWM non può fornire una tensione intermedia tra 0 V e 5 V. Può però alternare rapidamente tra 0 V e 5 V. Se resta a 5 V per metà del tempo e a 0 V per l'altra metà (duty cycle 50 %), il LED percepisce in media 2,5 V e appare a metà luminosità. `analogWrite(pin, valore)` riceve un valore da 0 (sempre OFF) a 255 (sempre ON).
+
+**Componenti:**
+
+|Componente|Quantità|Note|
+|---|--:|---|
+|Arduino UNO|1||
+|Breadboard|1||
+|LED|1||
+|Resistenza 220 Ω|1||
+|Pulsante|2|Per aumentare/diminuire la luminosità|
+|Ponticelli|vari||
+
+**Schema di collegamento:**
+
+Collegare il LED al **pin 11** (che supporta PWM, indicato con `~` sulla scheda) con la sua resistenza da 220 Ω. Inserire due pulsanti a cavallo del canale centrale: pulsante "+" al **pin 9**, pulsante "−" al **pin 8**. Entrambi con l'altro lato a GND e modalità `INPUT_PULLUP`.
+
+**Sketch:**
+
+```c
+// B1 — Controllo luminosità LED con PWM
+// Due pulsanti aumentano e diminuiscono la luminosità a passi di 25.
+// Il valore corrente viene stampato sul Monitor Seriale.
+
+const int LED_PIN  = 11;  // pin PWM (~)
+const int BTN_PIU  = 9;   // pulsante aumenta
+const int BTN_MENO = 8;   // pulsante diminuisce
+const int PASSO    = 25;  // variazione per ogni pressione
+const int DEBOUNCE = 50;
+
+int luminosita = 0;       // valore PWM: 0–255
+bool statoP = HIGH, statoM = HIGH;
+unsigned long tP = 0, tM = 0;
+
+void setup() {
+  pinMode(LED_PIN,  OUTPUT);
+  pinMode(BTN_PIU,  INPUT_PULLUP);
+  pinMode(BTN_MENO, INPUT_PULLUP);
+  Serial.begin(9600);
+  analogWrite(LED_PIN, luminosita);
+}
+
+void loop() {
+  bool letturaPiu  = digitalRead(BTN_PIU);
+  bool letturaMeno = digitalRead(BTN_MENO);
+  unsigned long adesso = millis();
+
+  // Pulsante +
+  if (statoP == HIGH && letturaPiu == LOW && adesso - tP > DEBOUNCE) {
+    luminosita = min(luminosita + PASSO, 255);  // non supera 255
+    aggiorna();
+    tP = adesso;
+  }
+
+  // Pulsante −
+  if (statoM == HIGH && letturaMeno == LOW && adesso - tM > DEBOUNCE) {
+    luminosita = max(luminosita - PASSO, 0);    // non scende sotto 0
+    aggiorna();
+    tM = adesso;
+  }
+
+  statoP = letturaPiu;
+  statoM = letturaMeno;
+}
+
+void aggiorna() {
+  analogWrite(LED_PIN, luminosita);
+  Serial.print("Luminosità: ");
+  Serial.print(luminosita);
+  Serial.print(" / 255  →  duty cycle: ");
+  Serial.print(luminosita * 100 / 255);
+  Serial.println(" %");
+}
+```
+
+**Cosa fare:**
+
+1. Verificare che `analogWrite` funzioni solo sui pin con il simbolo `~` sulla scheda.
+2. Portare la luminosità al massimo (255) e al minimo (0) e osservare i valori sul Monitor Seriale.
+3. Modificare `PASSO` a 5: quante pressioni servono per passare da 0 a 255?
+4. Aggiungere un terzo pulsante al **pin 7** che riporta la luminosità al 50 % (valore 127) in un solo tocco.
+
+**Domande di verifica:**
+
+- Un duty cycle del 75 % corrisponde a quale valore di `analogWrite`?
+- Perché si usa `min(luminosita + PASSO, 255)` invece di scrivere semplicemente `luminosita = luminosita + PASSO`?
+- I pin PWM di Arduino UNO sono 6: quali sono? _(risposta: 3, 5, 6, 9, 10, 11)_
+
+---
+
+### Esercitazione B2 — Display a sette segmenti
+
+**Obiettivo:** pilotare un display a sette segmenti con anodo comune, introducendo il concetto di mappatura tra dato (una cifra da 0 a 9) e un insieme di uscite digitali. Si usa un array bidimensionale per codificare le cifre.
+
+**Il display a sette segmenti:** è composto da sette LED interni (segmenti A–G) più il punto decimale. In un display ad anodo comune il pin comune va collegato a 5 V; ogni segmento si accende portando il suo pin a LOW (logica invertita). Per accendere il segmento A si manda LOW al pin corrispondente.
+
+```
+ _
+|_|   ← A (sopra), B e C (lati destra), D (sotto),
+|_|      E e F (lati sinistra), G (centro)
+```
+
+**Componenti:**
+
+|Componente|Quantità|Note|
+|---|--:|---|
+|Arduino UNO|1||
+|Breadboard|1||
+|Display 7 segmenti (anodo comune)|1||
+|Resistenze 220 Ω|7|Una per ogni segmento|
+|Ponticelli|vari||
+
+**Schema di collegamento:**
+
+|Segmento|Pin Arduino|
+|---|--:|
+|A|2|
+|B|3|
+|C|4|
+|D|5|
+|E|6|
+|F|7|
+|G|8|
+|COM (anodo comune)|5 V|
+
+Inserire una resistenza da 220 Ω in serie a ogni segmento, tra il pin Arduino e il pin del display.
+
+**Sketch:**
+
+```c
+// B2 — Display a sette segmenti
+// Il display mostra in sequenza le cifre da 0 a 9.
+// Ogni colonna dell'array corrisponde a un segmento (A–G).
+// Con anodo comune, 0 = segmento acceso, 1 = segmento spento (logica invertita).
+
+const int N_SEG = 7;
+const int SEG_PIN[N_SEG] = {2, 3, 4, 5, 6, 7, 8};  // A, B, C, D, E, F, G
+
+// Codifica delle cifre: ogni riga è una cifra (0–9),
+// ogni colonna è un segmento (A, B, C, D, E, F, G)
+// 0 = acceso, 1 = spento (anodo comune → logica invertita)
+const bool CIFRE[10][7] = {
+  {0, 0, 0, 0, 0, 0, 1},  // 0
+  {1, 0, 0, 1, 1, 1, 1},  // 1
+  {0, 0, 1, 0, 0, 1, 0},  // 2
+  {0, 0, 0, 0, 1, 1, 0},  // 3
+  {1, 0, 0, 1, 1, 0, 0},  // 4
+  {0, 1, 0, 0, 1, 0, 0},  // 5
+  {0, 1, 0, 0, 0, 0, 0},  // 6
+  {0, 0, 0, 1, 1, 1, 1},  // 7
+  {0, 0, 0, 0, 0, 0, 0},  // 8
+  {0, 0, 0, 0, 1, 0, 0},  // 9
+};
+
+void setup() {
+  for (int i = 0; i < N_SEG; i++) {
+    pinMode(SEG_PIN[i], OUTPUT);
+    digitalWrite(SEG_PIN[i], HIGH);  // tutti i segmenti spenti all'avvio
+  }
+}
+
+void mostraCifra(int cifra) {
+  for (int seg = 0; seg < N_SEG; seg++) {
+    digitalWrite(SEG_PIN[seg], CIFRE[cifra][seg]);
+  }
+}
+
+void loop() {
+  for (int c = 0; c <= 9; c++) {
+    mostraCifra(c);
+    delay(1000);
+  }
+}
+```
+
+**Cosa fare:**
+
+1. Caricare lo sketch e verificare che tutte le cifre da 0 a 9 vengano mostrate correttamente.
+2. Aggiungere un pulsante al **pin 10**: ogni pressione incrementa la cifra visualizzata di uno (con antirimbalzo).
+3. Aggiungere la visualizzazione del trattino `−` come undicesimo stato dell'array (solo il segmento G acceso).
+4. Modificare la funzione `mostraCifra` per accettare anche il carattere `-` come parametro.
+
+**Domande di verifica:**
+
+- Perché ogni segmento ha bisogno della propria resistenza, anziché una sola resistenza sul pin comune?
+- Nella codifica, la cifra 8 ha tutti gli elementi a 0: cosa significa?
+- Cosa cambierebbe nella codifica se il display fosse a catodo comune anziché anodo comune?
+
+---
+
+### Esercitazione B3 — Semaforo con stato esplicito
+
+**Obiettivo:** gestire una logica sequenziale con stati espliciti usando un `enum` e uno `switch-case`. Si impara a strutturare un programma in modo che lo stato del sistema sia sempre leggibile, evitando il problema di `delay` che blocca il processore.
+
+**Il problema di delay:** quando il programma esegue `delay(15000)` per il rosso del semaforo, il microcontrollore è completamente bloccato per 15 secondi. Non può leggere pulsanti, aggiornare display o fare altro. Questo è accettabile per esempi semplici, ma in un sistema reale è un limite grave. La soluzione è verificare il tempo trascorso con `millis()` invece di aspettare passivamente.
+
+**Componenti:**
+
+|Componente|Quantità|Note|
+|---|--:|---|
+|Arduino UNO|1||
+|Breadboard|1||
+|LED rosso, giallo, verde|3||
+|Resistenze 220 Ω|3||
+|Pulsante|1|Simula la chiamata pedonale|
+|Ponticelli|vari||
+
+**Schema di collegamento:**
+
+LED verde → **pin 11**, LED giallo → **pin 12**, LED rosso → **pin 13**. Pulsante tra **pin 10** e GND (modalità `INPUT_PULLUP`).
+
+**Sketch:**
+
+```c
+// B3 — Semaforo con stato esplicito e millis()
+// Il programma non usa delay(): controlla il tempo con millis()
+// e può quindi rispondere al pulsante in qualsiasi momento.
+
+const int PIN_VERDE  = 11;
+const int PIN_GIALLO = 12;
+const int PIN_ROSSO  = 13;
+const int PIN_BTN    = 10;
+
+// Definizione degli stati possibili del semaforo
+enum StatoSemaforo { VERDE, GIALLO, ROSSO };
+
+StatoSemaforo stato = VERDE;       // stato iniziale
+unsigned long tInizioStato = 0;    // momento in cui è iniziato lo stato corrente
+bool chiamata = false;             // il pulsante è stato premuto?
+
+// Durate degli stati in millisecondi
+const unsigned long DURATA_VERDE  = 8000;
+const unsigned long DURATA_GIALLO = 2000;
+const unsigned long DURATA_ROSSO  = 6000;
+
+void setup() {
+  pinMode(PIN_VERDE,  OUTPUT);
+  pinMode(PIN_GIALLO, OUTPUT);
+  pinMode(PIN_ROSSO,  OUTPUT);
+  pinMode(PIN_BTN,    INPUT_PULLUP);
+  Serial.begin(9600);
+  impostaPinDaStato(VERDE);
+  tInizioStato = millis();
+}
+
+void impostaPinDaStato(StatoSemaforo s) {
+  digitalWrite(PIN_VERDE,  s == VERDE);
+  digitalWrite(PIN_GIALLO, s == GIALLO);
+  digitalWrite(PIN_ROSSO,  s == ROSSO);
+
+  Serial.print("Stato → ");
+  if (s == VERDE)  Serial.println("VERDE");
+  if (s == GIALLO) Serial.println("GIALLO");
+  if (s == ROSSO)  Serial.println("ROSSO");
+}
+
+void cambiaStato(StatoSemaforo nuovo) {
+  stato = nuovo;
+  impostaPinDaStato(nuovo);
+  tInizioStato = millis();
+}
+
+void loop() {
+  // Legge il pulsante (senza antirimbalzo per semplicità)
+  if (digitalRead(PIN_BTN) == LOW) {
+    chiamata = true;
+  }
+
+  unsigned long tempoNelloStato = millis() - tInizioStato;
+
+  switch (stato) {
+    case VERDE:
+      if (tempoNelloStato >= DURATA_VERDE || chiamata) {
+        chiamata = false;
+        cambiaStato(GIALLO);
+      }
+      break;
+
+    case GIALLO:
+      if (tempoNelloStato >= DURATA_GIALLO) {
+        cambiaStato(ROSSO);
+      }
+      break;
+
+    case ROSSO:
+      if (tempoNelloStato >= DURATA_ROSSO) {
+        cambiaStato(VERDE);
+      }
+      break;
+  }
+}
+```
+
+**Cosa fare:**
+
+1. Caricare lo sketch. Osservare nel Monitor Seriale i cambi di stato.
+2. Premere il pulsante durante il VERDE: il semaforo dovrebbe anticipare il cambio al GIALLO.
+3. Verificare che durante le pause il programma non sia bloccato: aggiungere nel `loop()`, prima dello `switch`, una stampa del tipo `Serial.println("loop in esecuzione")` con `delay(200)` e verificare che i messaggi continuino anche durante le fasi più lunghe.
+4. Aggiungere allo stato ROSSO un LED aggiuntivo che lampeggia ogni 500 ms (senza usare `delay`).
+
+**Domande di verifica:**
+
+- Cos'è un `enum` e quale vantaggio offre rispetto a usare numeri interi (0 = VERDE, 1 = GIALLO, 2 = ROSSO)?
+- Cosa calcola l'espressione `millis() - tInizioStato`?
+- Perché il programma senza `delay` è preferibile in un sistema reale?
+
+---
+
+## Blocco C — Ingressi analogici e progetto integrativo
+
+Il terzo blocco introduce la conversione analogico-digitale (ADC) di Arduino, i sensori analogici più comuni e la funzione `map()` per adattare i valori letti ai range delle uscite. L'ultima esercitazione è un progetto integrativo che richiede di mettere insieme tutti i concetti precedenti.
+
+---
+
+### Esercitazione C1 — Potenziometro e Monitor Seriale
+
+**Obiettivo:** leggere un ingresso analogico con `analogRead`, capire il range dell'ADC (0–1023) e usare la funzione `map()` per scalare il valore letto in un range diverso. Si usa il Monitor Seriale per visualizzare i dati in tempo reale.
+
+**L'ADC di Arduino:** i pin A0–A5 sono ingressi analogici collegati a un convertitore ADC a 10 bit. Un segnale tra 0 V e 5 V viene trasformato in un numero intero tra 0 e 1023. La risoluzione è 5 V / 1024 ≈ 4,9 mV per unità.
+
+**Componenti:**
+
+|Componente|Quantità|Note|
+|---|--:|---|
+|Arduino UNO|1||
+|Breadboard|1||
+|Potenziometro 10 kΩ|1||
+|LED|1||
+|Resistenza 220 Ω|1||
+|Ponticelli|vari||
+
+**Schema di collegamento:**
+
+Il potenziometro ha tre pin: i due estremi vanno collegati rispettivamente a **5 V** e **GND**; il pin centrale (cursore) va collegato al **pin A0**. Il LED con la sua resistenza va al **pin 11** (PWM).
+
+**Sketch:**
+
+```c
+// C1 — Potenziometro: lettura analogica e controllo luminosità
+// Il potenziometro controlla la luminosità del LED.
+// Sul Monitor Seriale vengono stampati i valori grezzi e la percentuale.
+
+const int POT_PIN = A0;  // ingresso analogico
+const int LED_PIN = 11;  // uscita PWM
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int valoreGrezzo = analogRead(POT_PIN);  // legge un valore tra 0 e 1023
+
+  // Scala il valore da 0–1023 a 0–255 per analogWrite
+  int valorePWM = map(valoreGrezzo, 0, 1023, 0, 255);
+
+  // Calcola la percentuale per la stampa
+  int percentuale = map(valoreGrezzo, 0, 1023, 0, 100);
+
+  analogWrite(LED_PIN, valorePWM);
+
+  Serial.print("ADC grezzo: ");
+  Serial.print(valoreGrezzo);
+  Serial.print("  |  PWM: ");
+  Serial.print(valorePWM);
+  Serial.print("  |  Luminosità: ");
+  Serial.print(percentuale);
+  Serial.println(" %");
+
+  delay(100);  // rallenta le stampe per renderle leggibili
+}
+```
+
+**Cosa fare:**
+
+1. Caricare lo sketch, aprire il Monitor Seriale e ruotare lentamente il potenziometro. Osservare come i tre valori cambiano in modo proporzionale.
+2. Trovare sperimentalmente la posizione del potenziometro che dà un valore ADC di circa 512.
+3. Modificare `map(valoreGrezzo, 0, 1023, 0, 255)` in `map(valoreGrezzo, 0, 1023, 255, 0)`: cosa cambia nel comportamento del LED?
+4. Usare il **Plotter Seriale** (Strumenti → Plotter Seriale) invece del Monitor Seriale: il valore del potenziometro viene mostrato come grafico in tempo reale.
+
+**Domande di verifica:**
+
+- Qual è la risoluzione in volt dell'ADC a 10 bit con riferimento a 5 V?
+- Se `analogRead` restituisce 512, a quale tensione corrisponde approssimativamente?
+- Cosa fa `map(valore, 0, 1023, 0, 255)` se `valore` è 256?
+
+---
+
+### Esercitazione C2 — Sensore di luce (LDR) e soglia adattiva
+
+**Obiettivo:** usare un sensore LDR (Light Dependent Resistor) come ingresso analogico. Si introduce il concetto di divisore di tensione per la lettura del sensore e si implementa una soglia di attivazione configurabile via Monitor Seriale.
+
+**L'LDR:** è una resistenza che varia il suo valore in funzione della luce ricevuta: in piena luce ha resistenza bassa (poche centinaia di Ω), al buio ha resistenza alta (decine di kΩ). Da solo non produce una tensione: deve essere usato in un **divisore di tensione** con una resistenza fissa per convertire la variazione di resistenza in una variazione di tensione leggibile dall'ADC.
+
+```
+5 V → R_fissa (10 kΩ) → nodo A → LDR → GND
+                            ↑
+                          A0 di Arduino
+```
+
+Con più luce, l'LDR ha meno resistenza → il nodo A scende → `analogRead` restituisce un valore più basso.
+
+**Componenti:**
+
+|Componente|Quantità|Note|
+|---|--:|---|
+|Arduino UNO|1||
+|Breadboard|1||
+|LDR|1||
+|Resistenza 10 kΩ|1|Resistenza di pull-down del divisore|
+|LED|1|Simula una luce notturna automatica|
+|Resistenza 220 Ω|1||
+|Ponticelli|vari||
+
+**Schema di collegamento:**
+
+Costruire il divisore di tensione sulla breadboard: 5 V → resistenza 10 kΩ → nodo centrale → LDR → GND. Il nodo centrale si collega ad **A0**. Il LED con la sua resistenza va al **pin 13**.
+
+**Sketch:**
+
+```c
+// C2 — Sensore di luce con soglia adattiva
+// Il LED si accende quando la luce scende sotto la soglia.
+// La soglia può essere modificata inviando un numero via Monitor Seriale.
+
+const int LDR_PIN  = A0;
+const int LED_PIN  = 13;
+
+int soglia = 400;  // valore ADC sotto il quale il LED si accende
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+  Serial.begin(9600);
+  Serial.println("Soglia attuale: " + String(soglia));
+  Serial.println("Invia un numero (0–1023) per cambiare la soglia.");
+}
+
+void loop() {
+  // Legge la nuova soglia dal Monitor Seriale, se disponibile
+  if (Serial.available() > 0) {
+    int nuovaSoglia = Serial.parseInt();
+    if (nuovaSoglia >= 0 && nuovaSoglia <= 1023) {
+      soglia = nuovaSoglia;
+      Serial.print("Nuova soglia impostata: ");
+      Serial.println(soglia);
+    }
+  }
+
+  int luce = analogRead(LDR_PIN);
+
+  if (luce < soglia) {
+    digitalWrite(LED_PIN, HIGH);  // buio: LED acceso
+  } else {
+    digitalWrite(LED_PIN, LOW);   // luce: LED spento
+  }
+
+  Serial.print("Luce: ");
+  Serial.print(luce);
+  Serial.print("  |  Soglia: ");
+  Serial.print(soglia);
+  Serial.print("  |  LED: ");
+  Serial.println(luce < soglia ? "ACCESO" : "SPENTO");
+
+  delay(200);
+}
+```
+
+**Cosa fare:**
+
+1. Caricare lo sketch. Coprire l'LDR con la mano e verificare che il LED si accenda.
+2. Osservare nel Monitor Seriale il valore di "Luce" in condizioni normali e coperto: annotare i due valori.
+3. Inviare una nuova soglia tramite Monitor Seriale per calibrare il punto di attivazione esatto.
+4. Modificare il codice per aggiungere un'**isteresi**: il LED si accende sotto la soglia, ma si spegne solo quando la luce supera la soglia più 50 unità. Questo evita sfarfallii quando il valore ADC oscilla intorno alla soglia.
+
+**Domande di verifica:**
+
+- Cosa succederebbe se la resistenza fissa del divisore fosse 100 kΩ invece di 10 kΩ? Il sensore sarebbe più o meno sensibile alle variazioni di luce?
+- Cos'è l'isteresi e perché è utile nei sistemi di controllo con soglia?
+- `Serial.parseInt()` blocca il programma in attesa di un numero, oppure restituisce 0 se non ci sono dati? _(suggerimento: guardare il comportamento quando non si invia nulla)_
+
+---
+
+### Esercitazione C3 — Progetto integrativo: sistema di allerta ambientale
+
+**Obiettivo:** progettare e realizzare un sistema completo che integra ingressi digitali, ingressi analogici, uscite digitali e PWM, logica condizionale e comunicazione seriale. Il sistema simula un pannello di controllo ambientale con tre livelli di allerta.
+
+**Descrizione del sistema:**
+
+Il sistema monitora continuamente due grandezze: la luce ambientale (LDR sul pin A0) e un valore di "temperatura simulata" (potenziometro sul pin A1). In base alla combinazione dei valori letti, attiva uno dei tre livelli di allerta:
+
+|Livello|Condizione|LED verde|LED giallo|LED rosso|Monitor Seriale|
+|---|---|:-:|:-:|:-:|---|
+|OK|Nessuna anomalia|Acceso|Spento|Spento|"SISTEMA OK"|
+|ATTENZIONE|Una soglia superata|Lampeggia|Acceso|Spento|"ATTENZIONE"|
+|ALLARME|Entrambe le soglie superate|Spento|Spento|Lampeggia veloce|"ALLARME!"|
+
+Un pulsante di reset (**pin 10**) riporta il sistema allo stato OK azzerando temporaneamente le letture per 3 secondi.
+
+**Componenti:**
+
+|Componente|Quantità|Note|
+|---|--:|---|
+|Arduino UNO|1||
+|Breadboard|1||
+|LDR|1|Con resistenza 10 kΩ|
+|Potenziometro 10 kΩ|1|Simula la temperatura|
+|LED verde, giallo, rosso|3||
+|Resistenze 220 Ω|3||
+|Pulsante|1|Reset|
+|Ponticelli|vari||
+
+**Schema di collegamento:**
+
+|Componente|Pin Arduino|
+|---|:-:|
+|LDR (nodo centrale del divisore)|A0|
+|Potenziometro (cursore)|A1|
+|LED verde|11 (PWM)|
+|LED giallo|12|
+|LED rosso|13|
+|Pulsante reset|10|
+
+**Sketch:**
+
+```c
+// C3 — Sistema di allerta ambientale
+// Integra: analogRead, digitalRead, PWM, millis(), funzioni, Serial.
+
+const int LDR_PIN    = A0;
+const int TEMP_PIN   = A1;
+const int LED_VERDE  = 11;
+const int LED_GIALLO = 12;
+const int LED_ROSSO  = 13;
+const int BTN_RESET  = 10;
+
+const int SOGLIA_LUCE = 300;   // sotto = buio anomalo
+const int SOGLIA_TEMP = 700;   // sopra = temperatura alta
+
+enum Livello { OK, ATTENZIONE, ALLARME };
+
+Livello livelloCorrente = OK;
+unsigned long tBlink = 0;
+bool statoBlinkVerde = false;
+bool statoBlinkRosso = false;
+
+bool inReset = false;
+unsigned long tReset = 0;
+const unsigned long DURATA_RESET = 3000;
+
+void setup() {
+  pinMode(LED_VERDE,  OUTPUT);
+  pinMode(LED_GIALLO, OUTPUT);
+  pinMode(LED_ROSSO,  OUTPUT);
+  pinMode(BTN_RESET,  INPUT_PULLUP);
+  Serial.begin(9600);
+  Serial.println("=== SISTEMA DI ALLERTA AVVIATO ===");
+}
+
+void spegniTutti() {
+  digitalWrite(LED_VERDE,  LOW);
+  digitalWrite(LED_GIALLO, LOW);
+  digitalWrite(LED_ROSSO,  LOW);
+}
+
+void gestisciOK() {
+  digitalWrite(LED_VERDE,  HIGH);
+  digitalWrite(LED_GIALLO, LOW);
+  digitalWrite(LED_ROSSO,  LOW);
+}
+
+void gestisciAttenzione() {
+  // Verde lampeggia ogni 500 ms, giallo fisso
+  if (millis() - tBlink >= 500) {
+    statoBlinkVerde = !statoBlinkVerde;
+    digitalWrite(LED_VERDE, statoBlinkVerde);
+    tBlink = millis();
+  }
+  digitalWrite(LED_GIALLO, HIGH);
+  digitalWrite(LED_ROSSO,  LOW);
+}
+
+void gestisciAllarme() {
+  // Rosso lampeggia ogni 150 ms, gli altri spenti
+  digitalWrite(LED_VERDE,  LOW);
+  digitalWrite(LED_GIALLO, LOW);
+  if (millis() - tBlink >= 150) {
+    statoBlinkRosso = !statoBlinkRosso;
+    digitalWrite(LED_ROSSO, statoBlinkRosso);
+    tBlink = millis();
+  }
+}
+
+void loop() {
+  // Gestione reset
+  if (digitalRead(BTN_RESET) == LOW && !inReset) {
+    inReset = true;
+    tReset = millis();
+    spegniTutti();
+    Serial.println(">> RESET in corso per 3 secondi...");
+  }
+
+  if (inReset) {
+    if (millis() - tReset < DURATA_RESET) {
+      // Durante il reset tutti i LED lampeggiano insieme
+      if ((millis() / 200) % 2 == 0) {
+        digitalWrite(LED_VERDE,  HIGH);
+        digitalWrite(LED_GIALLO, HIGH);
+        digitalWrite(LED_ROSSO,  HIGH);
+      } else {
+        spegniTutti();
+      }
+      return;  // esce dal loop senza leggere i sensori
+    } else {
+      inReset = false;
+      Serial.println(">> Reset completato.");
+    }
+  }
+
+  // Lettura sensori
+  int luce = analogRead(LDR_PIN);
+  int temp = analogRead(TEMP_PIN);
+
+  bool anomaliaLuce = (luce < SOGLIA_LUCE);
+  bool anomaliaTemp = (temp > SOGLIA_TEMP);
+
+  // Determinazione del livello
+  Livello nuovoLivello;
+  if (anomaliaLuce && anomaliaTemp) {
+    nuovoLivello = ALLARME;
+  } else if (anomaliaLuce || anomaliaTemp) {
+    nuovoLivello = ATTENZIONE;
+  } else {
+    nuovoLivello = OK;
+  }
+
+  // Stampa sul Monitor Seriale solo se il livello cambia
+  if (nuovoLivello != livelloCorrente) {
+    livelloCorrente = nuovoLivello;
+    Serial.print("Luce: "); Serial.print(luce);
+    Serial.print("  |  Temp: "); Serial.print(temp);
+    Serial.print("  |  → ");
+    if (livelloCorrente == OK)         Serial.println("SISTEMA OK");
+    if (livelloCorrente == ATTENZIONE) Serial.println("ATTENZIONE");
+    if (livelloCorrente == ALLARME)    Serial.println("!!! ALLARME !!!");
+  }
+
+  // Gestione uscite in base al livello
+  switch (livelloCorrente) {
+    case OK:         gestisciOK();         break;
+    case ATTENZIONE: gestisciAttenzione(); break;
+    case ALLARME:    gestisciAllarme();    break;
+  }
+}
+```
+
+**Checklist di verifica del progetto:**
+
+Verificare che il sistema soddisfi tutti i requisiti prima di considerare il progetto completato:
+
+- [ ] In condizioni normali: solo il LED verde è acceso fisso.
+- [ ] Coprendo l'LDR (o portando il potenziometro sopra la soglia): il LED verde lampeggia e il giallo è fisso.
+- [ ] Con entrambe le anomalie: solo il LED rosso lampeggia velocemente.
+- [ ] Il pulsante di reset blocca il sistema per 3 secondi con tutti i LED che lampeggiano insieme.
+- [ ] Il Monitor Seriale mostra un messaggio solo quando il livello cambia, non ad ogni ciclo.
+- [ ] Il programma non usa mai `delay()` per le pause: usa sempre `millis()`.
+
+**Possibili estensioni:**
+
+1. Aggiungere un buzzer passivo al **pin 9**: in stato ALLARME emette un segnale acustico intermittente.
+2. Aggiungere la stampa del livello corrente ogni 5 secondi anche se non cambia, come "keep-alive" del sistema.
+3. Contare quante volte si è raggiunto il livello ALLARME dall'avvio e stampare il numero nel Monitor Seriale.
+4. Usare `EEPROM.write()` per salvare il contatore anche dopo lo spegnimento.
+
+---
+
+## Riepilogo delle funzioni Arduino usate nelle esercitazioni
+
+|Funzione|Descrizione|Esempio|
 |---|---|---|
-|Carica elettrica|$Q = I \cdot t$|C (coulomb)|
-|Tensione (lavoro per unità di carica)|$V = L / Q$|V (volt)|
-|Corrente|$I = Q_T / t$|A (ampere)|
-|Prima legge di Ohm|$R = V / I$|Ω (ohm)|
-|Seconda legge di Ohm|$R = \rho \cdot l / S$|Ω|
-|Potenza elettrica|$P = V \cdot I = R \cdot I^2 = V^2/R$|W (watt)|
-|Resistenze in serie|$R_{eq} = R_1 + R_2 + \ldots$|Ω|
-|Resistenze in parallelo|$1/R_{eq} = 1/R_1 + 1/R_2 + \ldots$|Ω|
-|Due resistenze in parallelo|$R_{eq} = (R_1 \cdot R_2)/(R_1 + R_2)$|Ω|
-|Frequenza|$f = 1/T$|Hz (hertz)|
-|Valore efficace|$V = V_M / \sqrt{2}$|V|
-|Generatori in serie|$E_{tot} = E_1 + E_2 + \ldots$ (somma algebrica)|V|
+|`pinMode(pin, MODE)`|Configura un pin come INPUT, OUTPUT o INPUT_PULLUP|`pinMode(13, OUTPUT)`|
+|`digitalWrite(pin, valore)`|Porta un pin digitale a HIGH (5 V) o LOW (0 V)|`digitalWrite(13, HIGH)`|
+|`digitalRead(pin)`|Legge il valore di un pin digitale: HIGH o LOW|`int s = digitalRead(10)`|
+|`analogWrite(pin, val)`|Genera un segnale PWM su un pin `~` (0–255)|`analogWrite(11, 127)`|
+|`analogRead(pin)`|Legge un ingresso analogico (0–1023)|`int v = analogRead(A0)`|
+|`delay(ms)`|Blocca il programma per un numero di millisecondi|`delay(1000)`|
+|`millis()`|Restituisce il tempo in ms dall'avvio (unsigned long)|`unsigned long t = millis()`|
+|`map(v, iMin, iMax, oMin, oMax)`|Scala un valore da un range a un altro|`map(512, 0, 1023, 0, 255)`|
+|`min(a, b)` / `max(a, b)`|Restituisce il minore / maggiore tra due valori|`min(val + 10, 255)`|
+|`Serial.begin(baud)`|Inizializza la comunicazione seriale|`Serial.begin(9600)`|
+|`Serial.print(dato)`|Invia dati al Monitor Seriale senza andare a capo|`Serial.print(valore)`|
+|`Serial.println(dato)`|Invia dati e va a capo|`Serial.println("OK")`|
+|`Serial.available()`|Restituisce il numero di byte in attesa di lettura|`if (Serial.available() > 0)`|
+|`Serial.parseInt()`|Legge un numero intero dalla porta seriale|`int n = Serial.parseInt()`|
 
 ---
+
+## Errori comuni e come evitarli
+
+|Errore|Sintomo|Soluzione|
+|---|---|---|
+|LED senza resistenza|LED bruciato o pin Arduino danneggiato|Sempre 220 Ω in serie al LED|
+|Pulsante non a cavallo del canale centrale|Il pulsante è sempre premuto o sempre rilasciato|Inserire il pulsante su entrambe le metà della breadboard|
+|`INPUT_PULLUP` dimenticato|Il pin fluttua tra HIGH e LOW senza ragione|Dichiarare `INPUT_PULLUP` nel `pinMode`|
+|`analogWrite` su pin non PWM|Il LED è sempre acceso o sempre spento|Usare solo i pin marcati `~`: 3, 5, 6, 9, 10, 11|
+|`=` invece di `==` nell'`if`|La condizione è sempre vera|Usare `==` per confrontare, `=` solo per assegnare|
+|Overflow di `int` con `millis()`|Il tempo si azzera dopo ~32 secondi|Dichiarare le variabili di tempo come `unsigned long`|
+|Due terminali dello stesso componente nello stesso gruppo di fori|Il componente non funziona o è cortocircuitato|Verificare che ogni componente occupi fori di gruppi diversi|
