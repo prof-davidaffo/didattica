@@ -358,6 +358,8 @@ La suddivisione in circuiti è una scelta tecnica essenziale. Una linea luci, un
 
 In un quadro, quindi, i dispositivi non vengono scelti a caso: devono essere coordinati con le linee che proteggono. La corrente nominale degli interruttori deve essere compatibile con la sezione dei cavi, le protezioni devono intervenire nel punto giusto dell'impianto e i circuiti devono essere separati in modo da evitare che un problema locale fermi tutta la casa.
 
+![[Media/Architettura_Elettrica_page_5_1.jpg]]
+
 ![[Media/The_Modern_Electrical_Blueprint_page_5_1.jpg]]
 
 ![[Media/img_26.jpeg]]
@@ -371,11 +373,15 @@ Un magnetotermico non è quindi solo un interruttore comandato a mano. Dentro co
 - un meccanismo di **sgancio automatico**, che separa i contatti quando rileva una corrente pericolosa;
 - due organi di controllo: uno **termico** e uno **magnetico**.
 
+![[Media/Architettura_Elettrica_page_6_1.jpg]]
+
 La parte **termica** è legata al calore prodotto dalla corrente. In genere è realizzata con una **lamina bimetallica**, cioè una lamina formata da due metalli diversi saldati insieme. Quando la corrente è troppo alta per un certo tempo, la lamina si scalda, si deforma e aziona il meccanismo di sgancio. Questo intervento non è immediato: serve per i **sovraccarichi**, per esempio quando su una linea prese sono collegati troppi apparecchi e il cavo rischia di scaldarsi lentamente.
 
 La parte **magnetica** è invece una piccola **bobina** attraversata dalla corrente del circuito. Se la corrente aumenta bruscamente, il campo magnetico generato dalla bobina diventa molto intenso e attira rapidamente un elemento mobile, provocando lo sgancio quasi istantaneo. Questo intervento serve per i **cortocircuiti**, nei quali la corrente cresce in modo violento e deve essere interrotta subito.
 
 Il nome **magnetotermico** indica quindi l'unione di questi due meccanismi: **termico** per correnti troppo alte ma prolungate, **magnetico** per correnti enormi e improvvise. In entrambi i casi l'obiettivo è proteggere soprattutto i conduttori, non l'apparecchio collegato alla presa.
+
+![[Media/Architettura_Elettrica_page_8_1.jpg]]
 
 ![[Media/img_27.jpeg]]
 
@@ -390,6 +396,7 @@ Oltre agli interruttori magnetotermici, la norma prescrive almeno due **interrut
 L'interruttore differenziale, detto anche **salvavita** quando è ad alta sensibilità, non controlla quanta corrente assorbe il circuito come fa il magnetotermico. Controlla invece se la corrente che entra dalla fase è uguale a quella che ritorna dal neutro. In condizioni normali le due correnti sono uguali; se una parte della corrente si disperde verso terra, per esempio attraverso una carcassa guasta o attraverso il corpo di una persona, la corrente di ritorno diventa minore. Il differenziale rileva questa differenza e apre il circuito in pochi millisecondi.
 
 ![[Media/The_Modern_Electrical_Blueprint_page_6_1.jpg]]
+
 Negli impianti civili italiani è tipico il sistema **TT**, una sigla che indica come sono collegati a terra il distributore e l'utente. La prima **T** significa che il neutro del distributore è collegato a terra; la seconda **T** significa che anche l'impianto dell'utente ha un proprio impianto di terra, separato da quello del distributore.
 
 Il conduttore **PE** (_Protective Earth_, cioè conduttore di protezione) è il filo di terra dell'impianto. È il conduttore giallo-verde che collega le parti metalliche accessibili, per esempio la carcassa di un elettrodomestico, all'impianto di terra. Normalmente non porta corrente: serve solo in caso di guasto.
@@ -410,6 +417,8 @@ Dopo il centralino inizia la distribuzione interna verso gli **apparecchi utiliz
 Le **prese** servono ad alimentare utilizzatori mobili, come caricabatterie o elettrodomestici. Gli **apparecchi di comando**, invece, servono soprattutto ad accendere e spegnere utilizzatori fissi, come le lampade. Non proteggono l'impianto: modificano solo il percorso della fase verso il carico. La protezione resta affidata agli interruttori nel centralino.
 
 ![[Media/img_28.jpeg]]
+
+![[Media/Architettura_Elettrica_page_10_1.jpg]]
 
 Il caso più semplice è l'**interruttore unipolare**, usato per comandare una luce da un solo punto. Ha due morsetti e agisce solo sulla **fase**:
 
@@ -437,7 +446,6 @@ Il collegamento tipico funziona così:
 Il deviatore non si limita ad aprire o chiudere: sceglie quale dei due fili intermedi collegare al proprio comune. Se i due deviatori sono "allineati" sullo stesso filo intermedio, la fase arriva alla lampada e la luce è accesa. Se sono posizionati su fili diversi, il percorso si interrompe e la luce è spenta. Azionando uno qualunque dei due deviatori, si cambia sempre lo stato della lampada.
 
 ![[Media/deviatore.png]]
-
 L'**invertitore** si usa quando i punti di comando diventano tre o più. I due deviatori restano sempre alle estremità del circuito; l'invertitore si inserisce in mezzo, sui due fili intermedi che collegano i deviatori. Ha quindi **quattro morsetti**: due in ingresso e due in uscita.
 
 Il suo compito è scambiare i due percorsi:
