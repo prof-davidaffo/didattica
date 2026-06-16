@@ -194,10 +194,10 @@ www.nandgame.com
 
 #####  Esempio 1
 
-![[circuiti.png]]
+![[Media/circuiti.png]]
 #####  Esempio 2
 
-![[esercizio_circuiti.png|400x400]]
+![[Media/esercizio_circuiti.png|400x400]]
 
 ####  Esercizi su tabelle di verità
 
@@ -391,7 +391,7 @@ Espressione semplificata:
 
 *Fonte immagini esercizi svolti: https://www.youtube.com/watch?v=qx90H7Kqh9w - Elisabetta Vannucchi*
 ##### Esercizi svolti
-![[mappe_k_2.png]]
+![[Media/mappe_k_2.png]]
 #### Mappa di Karnaugh a 3 variabili
 Tabella di verità della funzione:
 
@@ -417,7 +417,7 @@ Raggruppamenti:
 Espressione semplificata:
 **Y = C + ĀB**
 ##### Esercizi svolti
-![[mappe_k_3.png]]
+![[Media/mappe_k_3.png]]
 ##### Esercizi da svolgere
 
 |  A  |  B  |  C  | Y₁  | Y₂  | Y₃  | Y₄  | Y₅  | Y₆  | Y₇  | Y₈  | Y₉  | Y₁₀ | Y₁₁ | Y₁₂ | Y₁₃ | Y₁₄ | Y₁₅ |
@@ -462,8 +462,8 @@ Mappa (disposizione in Gray code per AB e CD: 00, 01, 11, 10):
 |   **10**  |    1   |    1   |   0    |   0    |
 $Y = \overline C D + A \overline B \ \overline C + \overline A B D + C \overline D \  \overline A$
 ##### Esercizi svolti
-![[mappe_k_4.png]]
-![[mappe_k_4p2.png]]
+![[Media/mappe_k_4.png]]
+![[Media/mappe_k_4p2.png]]
 ##### Esercizi da svolgere
 
 |  A  |  B  |  C  |  D  | Y₁  | Y₂  | Y₃  | Y₄  | Y₅  | Y₆  | Y₇  | Y₈  | Y₉  | Y₁₀ | Y₁₁ | Y₁₂ | Y₁₃ | Y₁₄ | Y₁₅ |
