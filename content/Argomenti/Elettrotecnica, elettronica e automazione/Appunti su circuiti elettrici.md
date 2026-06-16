@@ -297,11 +297,11 @@ Alla fine si ottiene un **unico resistore equivalente**, che semplifica l’anal
   > **La somma delle correnti che entrano in un nodo è uguale alla somma di quelle che escono.**
 * Metafora:
   * Se quattro cariche arrivano al bivio, se ne devono andare in totale quattro, distribuite come vuoi.
-![[Media/762270c69565a67d01e63e6e70447037_MD5.jpeg]]
+![[762270c69565a67d01e63e6e70447037_MD5.jpeg]]
 ---
 ### 2️⃣ Legge delle Maglie
 * Una **maglia** è un percorso chiuso (un giro completo nel “parco acquatico per cariche elettriche”).
-![[Media/6031ab64f3d3e2688eea864d0aec8d1f_MD5.jpeg]]
+![[6031ab64f3d3e2688eea864d0aec8d1f_MD5.jpeg]]
 * La legge dice:
   > **La somma di tutti i ΔV in una maglia è zero.**
 * Metafora:
@@ -311,7 +311,7 @@ Alla fine si ottiene un **unico resistore equivalente**, che semplifica l’anal
 * Percorri un generatore **dalla parte del + al –** → ΔV positivo.
 * Se vai **contro corrente**, inverti i segni.
 
-![[Media/1b4099dd9469f9233321e79560fa5078_MD5.jpeg]]
+![[1b4099dd9469f9233321e79560fa5078_MD5.jpeg]]
 ---
 ## 🧮 Come si usano insieme
 Combinando:

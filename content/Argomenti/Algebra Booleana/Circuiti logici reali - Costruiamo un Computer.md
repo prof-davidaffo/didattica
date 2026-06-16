@@ -35,7 +35,7 @@ Per costruire una porta NAND con relè, si possono usare **due stadi**:
 2. **Secondo stadio**: si inverte il risultato del primo stadio usando un **meccanismo invertente**, ad esempio con un relè configurato per **aprire il passaggio** quando il segnale è attivo, e viceversa.
 
 #####  Schema del circuito
-![[nand.png]]
+![[Media/nand.png]]
 
 ---
 ####  Equivalenza con i circuiti moderni
@@ -71,7 +71,7 @@ Nel simulatore *nandgame.com*, questo è il primo esempio in cui si **riutilizza
 
 ---
 ####  Schema logico
-![[invert.png]]
+![[Media/invert.png]]
 
 ---
 ####  Astrazione e semplificazione
@@ -96,7 +96,7 @@ Poiché la porta NAND è già stata implementata e può essere usata come **bloc
 2. Invertire il risultato: `NOT(NAND(A, B)) = ¬(¬(A ∧ B)) = A ∧ B`
 ---
 ####  Schema logico del circuito
-![[and.png]]
+![[Media/and.png]]
 
 ---
 ####  Considerazioni didattiche
@@ -133,7 +133,7 @@ Ovvero:
 * `NAND(NOT A, NOT B)` = `OR(A, B)`
 ---
 ####  Schema logico del circuito
-![[or.png]]
+![[Media/or.png]]
 ###  Porta logica XOR costruita con NAND e NOT
 ####  Definizione della porta XOR
 La **porta XOR** (eXclusive OR) restituisce `1` **solo se uno solo** dei due ingressi è `1`. Se entrambi gli ingressi sono uguali (entrambi `0` o entrambi `1`), l’uscita è `0`.
@@ -172,7 +172,7 @@ Questa espressione utilizza **quattro porte NAND**, e non richiede inverter espl
 
 ---
 ####  Schema logico del circuito
-![[xor.png]]
+![[Media/xor.png]]
 
 ---
 ### Conclusione – Dalla NAND al calcolatore
@@ -208,9 +208,9 @@ La somma binaria segue regole molto immediate:
 1 + 0 = 1
 1 + 1 = 0 con riporto 1
 Questa logica corrisponde esattamente al comportamento della porta XOR per la somma e della porta AND per il riporto.
-![[fcf44d3ab12f26cbb5e97443c594c43f_MD5.jpeg]]
+![[Media/fcf44d3ab12f26cbb5e97443c594c43f_MD5.jpeg]]
 Per tenere conto sia del bit di somma sia del riporto, il circuito completo del semisommatore deve rispettare la seguente tabella della verità:
-![[44e7d070f3cba39d82500c24a0917cb8_MD5.jpeg]]
+![[Media/44e7d070f3cba39d82500c24a0917cb8_MD5.jpeg]]
 * **A** e **B** sono i bit da sommare
 * **S** è il bit della somma
 * **C** è il bit del riporto
@@ -226,8 +226,8 @@ Il full-adder ha quindi:
   * S (bit di somma)
   * Cₒ (riporto in uscita)
 Il suo schema logico è il seguente:
-![[full_adder.png]]
-![[308ee129c6dc461ac15d1c95c5624572_MD5.jpeg]]
+![[Media/full_adder.png]]
+![[Media/308ee129c6dc461ac15d1c95c5624572_MD5.jpeg]]
 La somma S viene calcolata sommando prima A e B, poi aggiungendo il riporto Cᵢ.
 Osservando la tabella di verità, si può ricavare la formula finale:
 ```
@@ -243,7 +243,7 @@ Cₒ = (A AND B) OR (Cᵢ AND (A ⊕ B))
 Queste due relazioni sono fondamentali per implementare un sommatore a più bit, poiché permettono di “passarsi” il riporto da un full-adder al successivo. Nel prossimo punto vedremo come concatenare questi blocchi per ottenere un **sommatore parallelo**, capace di sommare numeri binari completi.
 #### Sommatore Parallelo
 Finora abbiamo visto come sommare singoli bit usando semisommatori e full-adder. Per sommare numeri binari composti da più bit è sufficiente mettere in cascata più full-adder, uno per ogni posizione, formando un **sommatore parallelo**.
-![[51529a5f41b1f9a0769f199e948e1693_MD5.jpeg]]
+![[Media/51529a5f41b1f9a0769f199e948e1693_MD5.jpeg]]
 Consideriamo il caso di un sommatore a 4 bit. I due numeri da sommare sono:
 * A = A₃ A₂ A₁ A₀
 * B = B₃ B₂ B₁ B₀
@@ -252,8 +252,8 @@ Consideriamo il caso di un sommatore a 4 bit. I due numeri da sommare sono:
 * il riporto in uscita viene passato al full-adder successivo, che somma A₁, B₁ e quel riporto
 * il processo continua fino al bit più significativo, che produce l’ultimo riporto C₄
   In questo modo tutti i bit dei due numeri vengono presentati **in parallelo** agli ingressi del sommatore e la somma viene calcolata contemporaneamente, con i riporti che si propagano da destra verso sinistra.
-![[multibit_adder.png]]
-  ![[1ad6471b63cd2b6c56d9303f7935b843_MD5.jpeg]]
+![[Media/multibit_adder.png]]
+  ![[Media/1ad6471b63cd2b6c56d9303f7935b843_MD5.jpeg]]
   Nel caso di un sommatore a 4 bit, le uscite saranno:
 * S₀, S₁, S₂, S₃: i bit della somma
 * C₄: il riporto finale, che può indicare un overflow se la somma esce dal range rappresentabile con 4 bit
@@ -290,7 +290,7 @@ Cin:     1
 ```
 
 Il carry iniziale avvia l’addizione con 1, e i riporti si propagano tra i bit finché necessario. Il risultato è un incremento ottenuto in modo semplice ed efficiente sfruttando esclusivamente la logica del sommatore.
-![[increment.png]]
+![[Media/increment.png]]
 
 ### Sottrattori binari
 Nei calcolatori attuali **non esiste** un circuito separato per la sottrazione. L’hardware non implementa direttamente A − B. Al contrario, la sottrazione viene trasformata in un’addizione, sfruttando la rappresentazione dei numeri in **complemento a 2**.
@@ -302,15 +302,15 @@ A − B = A + (complemento a 2 di B)
 Per ottenere il complemento a 2 di un numero occorre:
 1. invertire tutti i bit (complemento a 1)
 2. aggiungere 1 tramite il carry-in del sommatore
-![[ebd31e412d0091b89a91f851d20d5d6f_MD5.jpeg]]
-![[subtraction.png]]
+![[Media/ebd31e412d0091b89a91f851d20d5d6f_MD5.jpeg]]
+![[Media/subtraction.png]]
 In questo modo, sommando A con la versione complementata di B, il risultato binario rappresenta esattamente A − B secondo le convenzioni del complemento a 2. Il circuito sfrutta quindi un normale sommatore, con poche modifiche per gestire l’inversione di B e l’impostazione del riporto iniziale.
 Quando A è maggiore di B, il risultato è positivo e il riporto finale indica che non si è verificato overflow:
 **Caso A – minuendo maggiore del sottraendo**
-![[1482b9ef70a223cdb7cf5c5bc6f39a9e_MD5.jpeg]]
+![[Media/1482b9ef70a223cdb7cf5c5bc6f39a9e_MD5.jpeg]]
 Quando invece A è minore di B, la sottrazione produce un risultato negativo, che viene espresso direttamente in complemento a 2:
 **Caso B – minuendo minore del sottraendo**
-![[b9f4127311d9c62864e7d9d96ffffe29_MD5.jpeg]]
+![[Media/b9f4127311d9c62864e7d9d96ffffe29_MD5.jpeg]]
 In questo caso il riporto finale *non* si genera, e il bit più significativo del risultato è 1, segnalando che il numero è negativo.
 Se si desidera ottenere il valore assoluto, basta applicare nuovamente il complemento (invertire i bit e sommare 1).
 Questo meccanismo rende la struttura aritmetica molto più semplice, perché la stessa rete combinatoria può realizzare sia l’addizione sia la sottrazione con una sola modifica del percorso di ingresso di uno degli operandi.
@@ -320,23 +320,23 @@ Il primo passo è costruire un circuito che possa **invertire ogni bit di B quan
 L’idea è semplice: utilizzare una porta XOR per ciascun bit di B, controllata da un segnale P che indica se stiamo facendo una sottrazione.
 * Se **P = 0**, l’uscita è B (nessuna sottrazione).
 * Se **P = 1**, l’uscita è NOT B (primo passo per ottenere il complemento).
-![[49d000ab4f74955cd67ef59a85240cd7_MD5.jpeg]]
+![[Media/49d000ab4f74955cd67ef59a85240cd7_MD5.jpeg]]
 Il secondo passaggio consiste nell’aggiungere **il riporto iniziale** C₀.
 Quando P = 1 (sottrazione), il carry-in deve essere impostato a 1 per completare il **complemento a 2**:
 * Somma di A + (NOT B) + 1 → A − B
 Il riporto finale C₃ riportato in uscita dal bit più significativo contiene un’informazione importante:
 * se è 1, significa che **A ≥ B**
 * se è 0, significa che **A < B**, quindi il risultato è negativo
-![[ba6e7d8daf9eea442b6586d2433f879c_MD5.jpeg]]
+![[Media/ba6e7d8daf9eea442b6586d2433f879c_MD5.jpeg]]
 Per permettere al circuito di funzionare sia da sommatore sia da sottrattore, il segnale P deve:
 1. decidere se invertire B (tramite XOR)
 2. decidere se attivare il carry-in iniziale
 In questo modo, con un solo selettore è possibile controllare entrambe le operazioni.
 Il circuito completo, ottenuto sostituendo uno dei due input con la sua versione condizionatamente invertibile, è costituito da **4 full-adder collegati in cascata**, ognuno dotato del proprio XOR per l'inversione:
-![[1e1845e2fbb1989509866ffbae4a01d3_MD5.jpeg]]
+![[Media/1e1845e2fbb1989509866ffbae4a01d3_MD5.jpeg]]
 Quando il risultato è negativo (bit più significativo = 1 e riporto finale = 0), potrebbe essere necessario ottenere il valore assoluto. Anche questo si ottiene tramite la stessa tecnica: un XOR controllato più un incremento finale.
 Il circuito per la **complementazione finale** è infatti identico a quello utilizzato per invertire B:
-![[417de07d8b8d11e63b863d5c090143c6_MD5.jpeg]]
+![[Media/417de07d8b8d11e63b863d5c090143c6_MD5.jpeg]]
 Questo schema permette quindi di realizzare:
 * addizione
 * sottrazione
@@ -352,25 +352,25 @@ Come visto nei sistemi digitali, i numeri interi relativi si rappresentano con i
 0 → numero positivo
 1 → numero negativo
 Nel complemento a 2, il range di valori rappresentabili non è simmetrico: con 4 bit, ad esempio, si possono rappresentare i numeri da −8 a +7. I numeri negativi non sono memorizzati con un “segno” separato, ma come particolari configurazioni di bit che si ottengono complementando a 2 il corrispondente valore positivo.
-![[d23276f5237eed75bd9a1277ae89f675_MD5.jpeg]]
+![[Media/d23276f5237eed75bd9a1277ae89f675_MD5.jpeg]]
 Per calcolare il complemento a 2 di un numero binario si procede così:
 1. si invertono tutti i bit (complemento a 1)
 2. si aggiunge 1 al risultato utilizzando un sommatore
 Questa operazione può essere realizzata in hardware con un circuito dedicato.
-![[b7a973de578dc6120275f9df90a609f6_MD5.jpeg]]
+![[Media/b7a973de578dc6120275f9df90a609f6_MD5.jpeg]]
 Il circuito rappresentato permette di eseguire il complemento a 2 di un numero a 4 bit: se A₀ = 1 viene attivata la complementazione a 2 sui bit di ingresso X; se A₀ = 0 il numero attraversa il circuito senza essere modificato. In questo modo lo stesso blocco può essere usato sia per lasciare invariato il dato sia per trasformarlo nel suo opposto.
 Esempio:
 Numero +5 = 0101
 Dopo la complementazione (A₀ = 1):
-![[45a68b168e41b903f565a931e896e286_MD5.jpeg]]
+![[Media/45a68b168e41b903f565a931e896e286_MD5.jpeg]]
 Risultato: 1011, che in complemento a 2 rappresenta −5
 Nel sistema binario a complemento a 2, la differenza tra due numeri positivi si ottiene complementando a 2 il sottraendo e sommando il risultato al minuendo. Lo stesso circuito può però essere sfruttato anche per ricavare il modulo (valore assoluto) di un numero negativo.
-   ![[5567723d08e1b5714e520cd6bf2f2f03_MD5.jpeg]]
+   ![[Media/5567723d08e1b5714e520cd6bf2f2f03_MD5.jpeg]]
 Se il numero in ingresso è negativo, il bit più significativo X₃ vale 1. Questo bit può essere usato per pilotare direttamente l’ingresso di complementazione A₀: quando X₃ = 1 il circuito esegue automaticamente il complemento a 2, trasformando il numero negativo nel suo valore assoluto.
 Esempio: per calcolare |1101₍C2₎| si pone A₀ = X₃.
 1101₍C2₎ = −3 → il circuito restituisce 0011₍C2₎ = 3
 Questo meccanismo permette di realizzare in modo compatto operazionidel tipo A ± |B| con A positivo e B rappresentato in complemento a 2. In un sistema a 4 bit è sufficiente collegare i dispositivi visti (sommatore, circuito di complemento e logica di controllo) nel modo seguente:
-![[2120a628f152cfb8100b913b1c6fb2e8_MD5.jpeg]]
+![[Media/2120a628f152cfb8100b913b1c6fb2e8_MD5.jpeg]]
 Una volta implementate correttamente somma, sottrazione tramite complemento a 2 e calcolo del modulo, si dispone di tutti i blocchi necessari per costruire una vera e propria unità aritmetico-logica (ALU). La moltiplicazione può essere vista come una somma ripetuta, mentre la divisione come una sottrazione ripetuta: le operazioni più complesse si appoggiano quindi sempre alla struttura dei sommatori e ai circuiti di complemento.
 ###  Equal to Zero
 Questo circuito verifica se un numero binario in ingresso è uguale a zero. L’idea è semplice: se almeno uno dei bit è pari a 1, allora il numero non è zero; se tutti i bit sono 0, allora l’ingresso rappresenta effettivamente lo zero.
@@ -394,7 +394,7 @@ Il circuito finale è quindi costituito da:
 1. una serie di OR che combinano tutti i bit dell’ingresso
 2. una singola NOT sull’uscita dell’OR
 Il risultato è un segnale a 1 quando il numero è esattamente zero.
-![[equal_to_zero.png]]
+![[Media/equal_to_zero.png]]
 ###  Less than Zero
 Questo circuito determina se un numero binario rappresentato in complemento a 2 è negativo. Nei sistemi digitali il segno di un numero è indicato dal bit più significativo (MSB):
 * **0** → numero positivo
@@ -407,14 +407,14 @@ Esempio a 4 bit:
 ```
 Il circuito è quindi estremamente semplice: l’uscita corrisponde al valore del bit più significativo.
 Se l’MSB è 1, il numero è minore di zero; se è 0, è maggiore o uguale a zero.
-![[less_than_zero.png]]
+![[Media/less_than_zero.png]]
 
 ## Switching
 ###  Multiplexer (MUX) (Selector)
 
 Un **multiplexer** (abbreviato in MUX) è un circuito logico combinatorio che seleziona uno tra molteplici ingressi e lo indirizza verso una singola uscita. Questa selezione è governata da specifici segnali di controllo, detti **linee di selezione**.
 Immaginalo come un interruttore elettronico: in base a un comando (le linee di selezione), decide quale ingresso "passare" all'uscita.
-![[selector.png]]
+![[Media/selector.png]]
 ####  Come Funziona?
 
 1. **Ingressi:** $2^n$ ingressi ($A, B, C, D$), che rappresentano i dati tra cui scegliere.
@@ -424,7 +424,7 @@ Immaginalo come un interruttore elettronico: in base a un comando (le linee di s
 ---
 
 ####  Multiplexer 2-a-1
-![[mux_2_1.png]]
+![[Media/mux_2_1.png]]
 Un **multiplexer 2-a-1** è il tipo più semplice di multiplexer. Ha:
 
 - **2 ingressi**: $A$ e $B$,
@@ -456,9 +456,9 @@ $$Y=A \cdot P + B \cdot \overline{P}$$
 ---
 #### Multiplexer ottimale
 In realtà posso semplificare il circuito utilizzando solo le nand e ottenendo un comportamento analogo:
-![[selector.png]]
+![[Media/selector.png]]
 ####  Multiplexer 4-a-1
-![[mux_4_1.png]]
+![[Media/mux_4_1.png]]
 Un **multiplexer 4-a-1**:
 
 - Ha **4 ingressi** ($A, B, C, D$).
@@ -526,7 +526,7 @@ Il demultiplexer permette di:
 * costruire sistemi di memoria e registri controllati da linee di abilitazione
 * definire percorsi logici alternativi all’interno di unità di controllo
 È un blocco essenziale nei sistemi digitali perché permette al segnale di “scegliere dove andare” in base allo stato del controllo, completando il comportamento opposto rispetto al multiplexer.
-![[switch.png]]
+![[Media/switch.png]]
 ####   Demultiplexer 1-a-4
 Un demultiplexer 1-a-4 estende il comportamento del demultiplexer 1-a-2: l’ingresso unico viene inviato a una sola tra quattro uscite, selezionata tramite due linee di controllo. Le altre uscite vengono forzate a zero.
 Il circuito ha:
@@ -580,7 +580,7 @@ La Logic Unit è quindi un selettore di operazioni: tutti i risultati parziali v
 In questo modo, la struttura rimane uniforme: 16 multiplexer identici, tutti controllati dagli stessi due bit, producono l’uscita logica finale.
 
 #### Circuito completo
-![[logic_unit.png]]
+![[Media/logic_unit.png]]
 ### Arithmetic Unit
 #### Arithmetic Unit
 L’Arithmetic Unit è il blocco responsabile delle operazioni aritmetiche fondamentali eseguite dall’ALU. In questo caso opera su due ingressi a 16 bit, **X** e **Y**, e utilizza due bit di controllo (**op1** e **op0**) per determinare quale operazione eseguire. Le quattro combinazioni possibili corrispondono a quattro operazioni:
@@ -603,7 +603,7 @@ Funzionamento dei quattro casi:
   L’ingresso Y viene posto a 0, ma l’unità genera il complemento a 2 di 1 (ossia tutti 1 in ingresso al sommatore) ottenendo X + (−1), cioè X − 1.
 In tutti i casi l’unico blocco realmente utilizzato è il sommatore parallelo, reso versatile grazie al controllo sui bit op0 e op1, che determinano se invertire Y, se iniettare un carry iniziale e se ignorare Y completamente. Questa strategia mantiene il progetto hardware semplice ed efficiente, evitando circuiti separati per ogni operazione.
 #### Circuito completo
-![[arithmetic_unit.png]]
+![[Media/arithmetic_unit.png]]
 
 ### ALU
 #### Introduzione
@@ -661,7 +661,7 @@ Il risultato del multiplexer è l’uscita finale dell’ALU.
 | 1 | 0   | 1   | X + 1             |
 | 1 | 1   | 1   | X − 1             |
 I flag **zx** e **sw** agiscono *prima* della selezione delle otto operazioni, modificando gli operandi e quindi influenzando qualunque operazione aritmetica o logica.
-![[alu.png]]
+![[Media/alu.png]]
 ### Condition
 #### Introduzione
 Il blocco **Condition** valuta il risultato numerico **X** prodotto dall’ALU e stabilisce se soddisfa una o più condizioni logiche. Queste condizioni sono codificate tramite tre flag in ingresso:
@@ -704,9 +704,9 @@ Questa struttura permette di ottenere con pochi segnali tutte le condizioni nece
 * salto incondizionato
 Il blocco Condition funziona come un decoder di condizioni, trasformando i flag lt/eq/gt in un singolo segnale di controllo utilizzabile per determinare il flusso di esecuzione del programma.
 #### Circuito
-![[condition_my.png]]
+![[Media/condition_my.png]]
 #### Circuito ottimizzato
-![[condition.png]]
+![[Media/condition.png]]
 
 ## Memory
 ### SR Latch
@@ -730,7 +730,7 @@ Tabella di funzionamento:
 | 1 | 1 | Valore precedente |
 | 0 | 0 | Indefinita        |
 Lo SR Latch rappresenta il primo passo verso l’introduzione della **memoria sequenziale**, poiché consente di conservare uno stato nel tempo e costituisce la base per circuiti più complessi come latch abilitati e flip-flop.
-![[latch.png]]
+![[Media/latch.png]]
 #### Dal SR Latch al D Latch: perché serve un’evoluzione
 Lo SR Latch è il componente più semplice capace di memorizzare un bit, ma presenta due problemi strutturali:
 La combinazione s = 0 e r = 0 è indeterminata: l’uscita non è definita.
@@ -754,7 +754,7 @@ Tabella di funzionamento:
 | 0  | 0 | Valore precedente |
 | 0  | 1 | Valore precedente |
 Il D Latch viene spesso utilizzato come blocco base per la costruzione di registri e memorie, poiché consente di controllare in maniera pulita quando il dato deve essere aggiornato e quando invece mantenuto stabile.
-![[d_latch.png]]
+![[Media/d_latch.png]]
 ### Data Flip-Flop (DFF)
 Il **Data Flip-Flop (DFF)** è il componente fondamentale della memoria sincrona. A differenza dei latch, che aggiornano immediatamente l’uscita quando cambia l’ingresso, il DFF utilizza un **clock** per controllare *esattamente quando* memorizzare un valore e quando renderlo disponibile in uscita. Questo meccanismo evita le problematiche presenti nei sistemi basati esclusivamente sui latch.
 ##### Perché i latch non bastano
@@ -807,7 +807,7 @@ Prima della prima scrittura, l’uscita del DFF è indefinita.
 Il DFF, grazie alla sua sincronizzazione con il clock, è la base per registri, contatori, memorie e per l’intera logica sequenziale dei moderni processori.
 
 
-![[data_flipflop.png]]
+![[Media/data_flipflop.png]]
 ### Register
 Un **Register** è un componente sequenziale che permette di **memorizzare più bit contemporaneamente** e di recuperarli come un’unica parola.
 Dal punto di vista concettuale, un registro non è altro che **più Data Flip-Flop affiancati**, tutti sincronizzati dallo stesso segnale di clock.
@@ -860,7 +860,7 @@ Tutti i flip-flop condividono:
 * lo stesso **cl**
 e formano una parola unica.
 #### Circuito
-![[register.png]]
+![[Media/register.png]]
 ### Counter
 Il **Counter** è un componente sequenziale che produce in uscita un numero a 16 bit e lo aggiorna automaticamente a ogni ciclo di clock. È costruito sopra un registro (basato su flip-flop), ma con una logica aggiuntiva che permette di:
 * **caricare** un valore esterno X quando richiesto
@@ -903,7 +903,7 @@ Il Counter è la base per:
 * temporizzatori
 * dispositivi di sincronizzazione
 e rappresenta uno dei componenti fondamentali nei processori e nelle architetture digitali.
-![[counter.png]]
+![[Media/counter.png]]
 ### RAM
 Una **RAM** (Random Access Memory) è un’unità di memoria composta da più registri, ognuno dei quali è in grado di conservare un valore a 16 bit. La caratteristica principale della RAM è l’**accesso diretto**: ogni parola di memoria può essere letta o scritta conoscendone l’indirizzo, indipendentemente dalla sua posizione fisica nel circuito.
 Per comprendere il meccanismo di indirizzamento, costruiamo prima una memoria composta da **due registri** e la rendiamo selezionabile tramite un singolo bit di indirizzo.
@@ -954,7 +954,7 @@ Questa quantità viene espressa come:
 perché nel contesto delle memorie digitali:
 * 1 KB = 1024 byte
   e non 1000 come nelle unità di misura decimali.
-![[ram.png]]
+![[Media/ram.png]]
 ###   Combined Memory
 La **Combined Memory** rappresenta l’intero sistema di memoria del processore. È costituita da **due registri da 16 bit**, chiamati **A** e **D**, e da una **RAM**. Dal punto di vista architetturale, questo blocco raccoglie e coordina tutti i meccanismi di memorizzazione disponibili per il processore.
 Il processore può scrivere un valore a 16 bit **X** in uno o più elementi di memoria nello stesso ciclo di clock, utilizzando opportuni **flag di controllo**.
@@ -992,7 +992,7 @@ Un *flag* è un ingresso binario che abilita una specifica operazione. In questo
 ####   Considerazioni architetturali
 La Combined Memory mostra chiaramente come un processore utilizzi contemporaneamente *registri* e *RAM*, assegnando a ciascun tipo di memoria un ruolo preciso. Questa separazione tra memoria veloce e memoria capiente è una caratteristica fondamentale di tutti i computer reali e costituisce la base per l’esecuzione delle istruzioni e dei programmi.
 #### Circuito
-![[combined_memory.png]]
+![[Media/combined_memory.png]]
 ###   ALU Instruction
 Una **ALU Instruction** è una parola di controllo che specifica **che operazione deve eseguire l’ALU**, **dove deve andare il risultato** e **se devono essere verificate condizioni sul risultato**.
 In pratica, questa istruzione collega tre blocchi fondamentali del processore:
@@ -1051,7 +1051,7 @@ La ALU Instruction è il punto di incontro tra:
 * controllo del flusso di esecuzione
 Attraverso questa istruzione, il processore esegue operazioni, memorizza risultati e prende decisioni, rendendo possibile l’esecuzione di programmi complessi.
 #### Circuito
-![[instruction.png]]
+![[Media/instruction.png]]
 ###   Control Selector
 Il **Control Selector** è un componente di controllo che permette al processore di **scegliere tra due possibili insiemi di segnali di uscita**, in base al valore di un singolo flag di selezione.
 Non esegue calcoli né memorizza dati: il suo unico compito è **instradare correttamente i segnali di controllo**.
@@ -1089,7 +1089,7 @@ In questo modo:
 Il Control Selector è un componente semplice, ma svolge un ruolo cruciale:
 consente al processore di **comportarsi in modi diversi usando sempre gli stessi blocchi interni**, semplicemente cambiando quali segnali vengono effettivamente applicati.
 #### Circuito
-![[control_selector.png]]
+![[Media/control_selector.png]]
 ###   Control Unit
 La **Control Unit** è il componente che interpreta le istruzioni del programma e genera tutti i segnali di controllo necessari per far funzionare correttamente il processore.
 Il suo compito è decidere **che tipo di istruzione è stata ricevuta** e **quali segnali attivare** per eseguirla.
@@ -1147,7 +1147,7 @@ La Control Unit è il vero “direttore d’orchestra” della CPU:
 non calcola, non memorizza, ma **coordina** tutti gli altri componenti.
 Grazie a essa, una sequenza di bit diventa un programma eseguibile.
 #### Circuito
-![[control_unit.png]]
+![[Media/control_unit.png]]
 ###  Computer
 Il **Computer** è il risultato finale della composizione di tutti i componenti costruiti fino a questo punto. Non introduce nuovi concetti logici fondamentali, ma **coordina** elementi già noti per realizzare l’esecuzione automatica di un programma.
 Un computer, in questa architettura, è un sistema che:
@@ -1202,7 +1202,7 @@ L’insieme delle operazioni descritte costituisce il **ciclo di esecuzione del 
 * execute: esecuzione dell’operazione e aggiornamento dello stato,
 * update: aggiornamento del Program Counter.
 Questo ciclo è interamente governato dal clock e rappresenta il cuore del funzionamento di qualsiasi computer.
-![[computer.png]]
+![[Media/computer.png]]
 
 ###   Input and Output
 Per essere realmente utile, un computer deve poter **comunicare con il mondo esterno**. Questo avviene tramite dispositivi hardware come schermi, tastiere, pulsanti, sensori, interfacce di rete e così via.
@@ -1246,7 +1246,7 @@ Grazie al memory-mapped I/O:
 * non è necessaria alcuna logica speciale dedicata all’I/O.
 Questo modello è ampiamente utilizzato anche nei computer reali, specialmente nei sistemi embedded e nei microcontrollori, e rappresenta uno dei modi più semplici ed efficaci per collegare un processore al mondo esterno.
 Con l’integrazione di input e output, il computer non è più un sistema chiuso, ma diventa in grado di **percepire** e **agire** sull’ambiente che lo circonda.
-![[input_output.png]]
+![[Media/input_output.png]]
 ## Altri esempi di utilizzo dell'algebra booleana in contesti reali
 ###  Utilizzo dello XOR in crittografia
 ####  Introduzione
@@ -1307,23 +1307,23 @@ I protocolli moderni risolvono questi due problemi mantenendo una crittografia e
 La realizzazione di dispositivi numerici digitali si accompagna alla necessità di **visualizzare variabili e risultati**. Nel caso dei circuiti **sommatori e sottrattori**, si può ricorrere ai **display a 7 segmenti**, realizzati con **LED (Light Emitting Diode)** o **LCD (Liquid Crystal Display)**.  
 In entrambi i casi, i segmenti vengono identificati secondo lo schema seguente:
 
-![[bc24221097e172fd59d7fb8c5c30b814_MD5.jpeg]]
+![[Media/bc24221097e172fd59d7fb8c5c30b814_MD5.jpeg]]
 
 I display a 7 segmenti devono essere pilotati da un **decoder**, che effettua la conversione da **codice BCD (Binary Coded Decimal)** a rappresentazione decimale.  
 Il codice BCD è un **codice a 4 bit**, in cui le prime dieci combinazioni binarie rappresentano le cifre decimali da 0 a 9, secondo la seguente corrispondenza:
 
-![[2e20921723442222be6a205e83dd625e_MD5.jpeg]]
+![[Media/2e20921723442222be6a205e83dd625e_MD5.jpeg]]
 
 Nel codice BCD, le combinazioni 1010, 1011, 1100, 1101 e 1111 sono **inutilizzate o ridondanti**.
 
 Se indichiamo con **D** il bit più significativo (MSB – _Most Significant Bit_) e con **A** il meno significativo (LSB – _Least Significant Bit_), il collegamento ai segmenti risulta il seguente:
 
-![[54121a7c798a8787470c6df305956bc9_MD5.jpeg]]
+![[Media/54121a7c798a8787470c6df305956bc9_MD5.jpeg]]
 
 La struttura interna del **decoder BCD → 7 segmenti** può essere ricavata costruendo una **mappa di Karnaugh** per ciascuna delle sette variabili di uscita (_a, b, c, d, e, f, g_).  
 Da queste mappe si ottengono espressioni logiche semplificate, come mostrato in figura:
 
-![[c2ba2ff8c8817860fc64c4acf6a2acb6_MD5.jpeg]]
+![[Media/c2ba2ff8c8817860fc64c4acf6a2acb6_MD5.jpeg]]
 
 Durante la semplificazione, i cinque numeri inutilizzati del codice BCD possono essere considerati **condizioni di indifferenza** (_don’t care conditions_).
 
