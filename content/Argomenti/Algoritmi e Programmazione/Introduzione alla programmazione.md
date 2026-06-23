@@ -165,7 +165,10 @@ Un linguaggio di programmazione è un linguaggio formale che permette di **scriv
 - **Linguaggi ad alto livello di astrazione**:  
    - Più vicini al linguaggio naturale umano.
    - Tendenzialmente meno efficienti(meno controllo sulle risorse).
-   - Esempi: C++, Python, Java.
+   - Esempi: C, C++, Python, Java.
+
+> [!note] Percorso C
+> I concetti della dispensa — variabili numeriche, condizioni, cicli, array, `struct`, funzioni e puntatori — valgono anche in C. Gli esempi sono principalmente in C++, quindi nei riquadri dedicati al C sono riportate le differenze di sintassi e librerie. Per compilare gli esempi C usa `gcc`, salva i file con estensione `.c` e abilita gli avvisi: `gcc file.c -std=c17 -Wall -Wextra -o programma`.
 
 #### Paradigmi di Programmazione  
 Un **paradigma** definisce uno stile di programmazione. I principali paradigmi sono:  
@@ -180,7 +183,7 @@ Un **paradigma** definisce uno stile di programmazione. I principali paradigmi s
 Per trasformare un programma scritto in linguaggio ad alto livello in linguaggio macchina, si usano **compilatori** o **interpreti**.
 
 #### Compilatore  
-La **compilazione** in C++ è il processo che trasforma il codice sorgente scritto dall'utente in un programma eseguibile. Si compone di quattro fasi principali:
+La **compilazione** in C e C++ è il processo che trasforma il codice sorgente scritto dall'utente in un programma eseguibile. Si compone di quattro fasi principali. I comandi seguenti mostrano C++; in C si sostituisce `g++` con `gcc` e `.cpp` con `.c`.
 
 ##### 1. Preprocessing
 
@@ -244,6 +247,10 @@ Esempio:
    1. Scrivo il codice.  
    2. Compilo il programma con `g++` (es. `g++ hello.cpp -o hello`).  
    3. Eseguo il file eseguibile con `./hello`.  
+- **C (compilato)**:
+   1. Scrivo il codice in `hello.c`.
+   2. Compilo con `gcc hello.c -std=c17 -Wall -Wextra -o hello`.
+   3. Eseguo il file con `./hello`.
 - **Python (interpretato)**:  
    1. Scrivo il codice.  
    2. Il codice viene eseguito direttamente dall'interprete Python: `python hello.py`.
@@ -253,7 +260,7 @@ Esempio:
 ### Il nostro primo programma
 Vediamo il classico esempio **"Hello, World!"** sia in un linguaggio compilato (C++) che interpretato (Python).
 
-#### Esempio in C ++
+#### Esempio in C++
 ```cpp
 #include <iostream>
 using namespace std;
@@ -264,7 +271,7 @@ int main() {
 }
 ```
 1. Scriviamo il codice.  
-2. Compiliamo il programma con `g++` (es. `g++ hello.c -o hello`).  
+2. Compiliamo il programma con `g++` (es. `g++ hello.cpp -o hello`).  
 3. Eseguiamo il file eseguibile con `./hello`. 
 4. Se tutto è andato a buon fine, vedremo a schermo la scritta
 ```
@@ -308,6 +315,19 @@ int main() {
 ```
 
 Durante il nostro corso, dovremmo utilizzare sempre il namespace std.
+
+#### Lo stesso programma in C
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    printf("Hello, World!\n");
+    return 0;
+}
+```
+
+In C l'input/output da console è fornito da `<stdio.h>`: `printf` sostituisce `cout` e il carattere `\n` va normalmente inserito nella stringa per andare a capo. In C non esistono né `iostream`, né `std`, né `using namespace`.
 
 ---
 ### Esercizi
@@ -382,6 +402,9 @@ Le **variabili** sono  appunto contenitori per memorizzare dati. Ogni variabile 
 | `char`   | Carattere singolo                    | `char d = 'A';`         |
 | `string` | Sequenza di caratteri                | `string s = "Ciao";`    |
 | `bool`   | Valori booleani (vero/falso)         | `bool e = true;`        |
+
+> [!warning] Differenze in C
+> In C `string` non è un tipo: una stringa è un array di `char` terminato da `\0`. Per usare `bool`, `true` e `false` in C17 occorre includere `<stdbool.h>`. I tipi numerici, `char`, `const` e gli operatori di assegnazione/incremento presentati qui hanno invece la stessa sintassi in C e C++.
 #### Dichiarazione e assegnazione
 Una variabile deve essere dichiarata specificando il tipo e il nome. L'assegnazione consiste nell'attribuire un valore alla variabile:
 
@@ -541,6 +564,8 @@ int main() {
 ```
 Da questo esempio notiamo come posso anche "sommare" le stringhe. In verità questa operazione si chiama concatenazione, e unisce due stringhe in una stringa unica.
 
+In C questa concatenazione non si può scrivere con `+`: servono array di caratteri e funzioni di `<string.h>`, come `strcat`, avendo cura che l'array di destinazione abbia spazio sufficiente.
+
 ---
 
 ### Input e Output da console
@@ -562,6 +587,26 @@ int main() {
 ```
 
 Come vediamo nell'esempio, `cin` e `cout` utilizzano rispettivamente `>>` e `<<` come separatori. Posso concatenare con i separatori di output più stringhe e valori insieme. Posso anche concatenare più input: in tal caso il programma aspetterà più valori da inserire, separati da spazi o dalla pressione del tasto invio.
+
+#### Input e output da console in C
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int numero;
+
+    printf("Inserisci un numero: ");
+    if (scanf("%d", &numero) != 1) {
+        printf("Input non valido.\n");
+        return 1;
+    }
+    printf("Hai inserito: %d\n", numero);
+    return 0;
+}
+```
+
+In `scanf`, il simbolo `&` passa l'indirizzo della variabile in cui memorizzare il dato. I formati più comuni sono `%d` per `int`, `%f` per `float`, `%lf` per `double` e `%c` per `char`. Per leggere una riga di testo con spazi è preferibile `fgets`, come mostrato nel capitolo sulle stringhe.
 
 ---
 
@@ -948,6 +993,9 @@ Posso usare le parentesi come nelle espressioni matematiche per cambiare le prec
 
 #### Esempi pratici in C++
 
+> [!note] In C
+> Le strutture `if`, `else`, `switch`, `for`, `while` e `do ... while` usano la stessa sintassi. Per la massima portabilità in C usa gli operatori simbolici `&&`, `||` e `!`; le forme testuali `and`, `or` e `not` degli esempi sono proprie del C++ (in C richiederebbero `<iso646.h>`).
+
 1. **Condizione con AND (`&&` o `and`)**:
 
 ```cpp
@@ -1001,7 +1049,7 @@ int main() {
         cout << "Esco senza ombrello." << endl;
     } else {
         cout << "Porto l’ombrello." << endl;
-    }￼￼)￼￼:
+    }
     return 0;
 }
 ```
@@ -1423,13 +1471,13 @@ int main() {
 ## Capitolo 4: Strutture Dati di Base  
 
 ### Introduzione  
-Le **strutture dati** sono entità usate per organizzare **insiemi di dati** nella memoria in modo strutturato. Nel paradigma imperativo con **C++**, le strutture dati di base includono:  
+Le **strutture dati** sono entità usate per organizzare **insiemi di dati** nella memoria in modo strutturato. Nel paradigma imperativo in **C e C++**, le strutture dati di base includono:  
 1. **Array**  
 2. **Stringhe**  
 3. **Struct**  
 
 In questo capitolo analizzeremo ciascuna di queste strutture, mostrando esempi pratici di implementazione.
-### Array in C++
+### Array in C e C++
 
 Gli **array** sono una struttura dati fondamentale che permette di memorizzare una collezione di valori dello stesso tipo, organizzati in modo contiguo in memoria. Gli array sono utili quando è necessario lavorare con più dati correlati.
 
@@ -1437,7 +1485,7 @@ Gli **array** sono una struttura dati fondamentale che permette di memorizzare u
 
 #### Dichiarazione e inizializzazione
 
-Un array in C++ si dichiara specificando il tipo di dati, il nome e la dimensione. La dimensione deve essere un valore intero positivo.
+Un array in C e C++ si dichiara specificando il tipo di dati, il nome e la dimensione. La dimensione deve essere un valore intero positivo.
 
 **Sintassi**:
 
@@ -1504,7 +1552,7 @@ Gli array sono spesso utilizzati con i cicli per elaborare tutti gli elementi in
 using namespace std;
 
 int main() {
-	int d=5;
+    enum { d = 5 };
     int numeri[d] = {10, 20, 30, 40, 50};
     int somma = 0;
 
@@ -1522,7 +1570,7 @@ int main() {
 > [!exercise] Esercizio
 > Dato un array di numeri interi, ordinalo in ordine crescente. Hai appena creato un algoritmo di ordinamento, ne esistono vari standard, ognuno con le sue caratteristiche. L'algoritmo che hai inventato esiste già? Come si chiama? Prova a descrivere quali algoritmi di ordinamento esistono e come funzionano, poi prova ad implementarli tutti in un unico programma.
 
-#### Range based for (for-each)
+#### Range based for (for-each, solo C++)
 Il ciclo for **range-based** mi permette di scrivere velocemente un ciclo for per iterare la collezione senza preoccuparmi dei contatori.
 In questo esempio viene illustrata la differenza tra il ciclo **for tradizionale** e il **range-based for** (chiamato anche **for-each**) in C++. Utilizzeremo un array normale per mostrare come iterare sugli elementi. Il ciclo for tradizionale usa un contatore (di tipo int) per accedere agli elementi, mentre il range-based for semplifica l’iterazione eliminando la gestione manuale dell’indice.
 
@@ -1555,6 +1603,9 @@ int main() {
 
 Nel primo caso viene utilizzato un indice (di tipo int) per accedere agli elementi dell'array, permettendo un controllo dettagliato dell'iterazione. Nel secondo caso, il ciclo range-based for itera direttamente sugli elementi, semplificando il codice e riducendo il rischio di errori nella gestione dell'indice.
 Nelle versioni più recenti di C++, posso utilizzare il tipo di dato `auto` per inferire automaticamente il tipo di dato dell'elemento che itero dal tipo di dato della collezione.
+
+> [!note] In C
+> Il ciclo range-based e `auto` non esistono. Per scorrere un array si usa il primo ciclo `for`, con indice e dimensione espliciti; è anche il metodo più chiaro da usare negli esempi di questa dispensa.
 
 ---
 
@@ -1918,7 +1969,7 @@ Ogni algoritmo ha vantaggi e svantaggi in termini di complessità computazionale
 >     Scrivi un programma che calcola il prodotto scalare di due vettori di dimensione n, dove n è fornito dall'utente.
 ### Stringhe
 
-Una **stringa** in C è una sequenza di caratteri terminata dal carattere speciale `\0`. Esistono due modi principali per lavorare con le stringhe:
+Una **stringa** in C è una sequenza di caratteri terminata dal carattere speciale `\0`. In C++ esistono due modi principali per lavorare con le stringhe:
 
 1. **Array di caratteri**
 2. **Classe `string` della libreria standard**
@@ -1931,13 +1982,12 @@ Gli array di caratteri rappresentano una stringa in stile C. Ogni elemento è un
 
 **Esempio**:
 
-```cpp
-#include <iostream>
-using namespace std;
+```c
+#include <stdio.h>
 
-int main() {
+int main(void) {
     char saluto[6] = {'H', 'e', 'l', 'l', 'o', '\0'}; // Array di caratteri
-    cout << saluto << endl;
+    printf("%s\n", saluto);
 
     return 0;
 }
@@ -1946,11 +1996,11 @@ int main() {
 > [!warning] Nota
 > Senza il carattere `\0`, il programma potrebbe leggere dati al di fuori della stringa causando comportamenti imprevedibili.
 
-Tuttavia, lavorare con gli array di caratteri è meno intuitivo e richiede l'uso della libreria `<cstring>` per molte operazioni. Per questo motivo, in C++ moderno è preferibile utilizzare la classe **`string`**.
+In C le operazioni sulle stringhe usano `<string.h>` (`strlen`, `strcpy`, `strcat`, `strcmp`, ...). Bisogna sempre prevedere spazio per il terminatore `\0` e controllare che la destinazione sia abbastanza grande. In C++ moderno è invece spesso preferibile utilizzare la classe **`string`**.
 
 ---
 
-#### Classe `string`
+#### Classe `string` (solo C++)
 
 La classe **`string`** della libreria standard rende il lavoro con le stringhe molto più semplice e intuitivo rispetto agli array di caratteri. Non è necessario preoccuparsi del terminatore `\0`, e offre numerosi metodi per manipolare le stringhe.
 
@@ -2002,6 +2052,24 @@ getline(cin, frase);
 ```
 
 Questo legge **tutti i caratteri** fino al carattere di _a capo_ (`\n`), cioè quando l'utente preme Invio.
+
+##### In C: usare `fgets`
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    char frase[100];
+
+    printf("Inserisci una frase: ");
+    if (fgets(frase, sizeof frase, stdin) != NULL) {
+        printf("Hai scritto: %s", frase);
+    }
+    return 0;
+}
+```
+
+`fgets` legge al massimo `sizeof frase - 1` caratteri e aggiunge il terminatore `\0`; se c'è spazio, conserva anche il carattere di nuova riga.
 
 ---
 
@@ -2258,6 +2326,9 @@ Età: 20
 Altezza: 28.5
 ```
 
+> [!note] In C
+> La sintassi della definizione è la stessa, ma il nome del tipo è `struct Persona`: si dichiara quindi `struct Persona p1;`. Per poter scrivere soltanto `Persona p1;` occorre prima creare un alias con `typedef struct Persona Persona;`. I campi testuali vanno dichiarati come array, ad esempio `char nome[50];`, non come `string`.
+
 
 
 > [!warning] Nota
@@ -2451,7 +2522,7 @@ Altezza: 28.5
 
 Le **funzioni** sono uno strumento che permettono di **suddividere** un programma complesso in parti più piccole, gestibili e riutilizzabili (persino al di fuori del programma), migliorando la leggibilità, la manutenzione e il riutilizzo del codice.
 
-In **C++**, una funzione è un blocco di codice che esegue **un** compito specifico (una funzione che svolge più di un compito è un cosiddetto "code smell", puoi approfondire sulla dispensa sui code smells quando sarà il momento). Una funzione può ricevere dati in ingresso (**parametri**) e restituire un dato in uscita (**valore di ritorno**).
+In **C e C++**, una funzione è un blocco di codice che esegue **un** compito specifico (una funzione che svolge più di un compito è un cosiddetto "code smell", puoi approfondire sulla dispensa sui code smells quando sarà il momento). Una funzione può ricevere dati in ingresso (**parametri**) e restituire un dato in uscita (**valore di ritorno**).
 
 valori in ingresso -> elaborazione dei dati -> valore in uscita
 
@@ -2463,7 +2534,7 @@ Alcuni linguaggi di programmazione ad alto livello di astrazione possono anche r
 
 #### Sintassi
 
-Una funzione in C++ è definita nel seguente modo:
+Una funzione in C e C++ è definita nel seguente modo:
 
 ```cpp
 tipo_di_ritorno nome_funzione(parametro1, parametro2, ...) {
@@ -2479,6 +2550,9 @@ tipo_di_ritorno nome_funzione(parametro1, parametro2, ...) {
 
 > [!warning] Nota
 > Una funzione può ricevere in ingresso o restituire anche dei puntatori di memoria (più approfondimenti nel capitolo dedicato). Questo mi permette di utilizzare anche oggetti più complessi come gli array (in modo implicito grazie al livello di astrazione di C++).
+
+> [!note] In C
+> La sintassi di base delle funzioni e dei prototipi è la stessa. Il C non ha però riferimenti (`&` nei parametri C++): per modificare una variabile del chiamante o lavorare con un array si passa un puntatore, per esempio `void incrementa(int *n) { (*n)++; }` e si chiama con `incrementa(&numero);`.
 
 #### Esempio di Funzione con parametri
 
@@ -2996,6 +3070,9 @@ La **gestione dei file** in C++ è possibile grazie alla libreria `<fstream>`, c
 1. **`ifstream`**: per leggere dati da un file.  
 2. **`ofstream`**: per scrivere dati su un file.  
 3. **`fstream`**: per operazioni sia di lettura che di scrittura.
+
+> [!note] Gestione dei file in C
+> In C si include `<stdio.h>` e si usa un puntatore `FILE *`: `fopen("esempio.txt", "r")` per leggere, `fopen("esempio.txt", "w")` per scrivere e `fclose(file)` per chiudere. Per il testo si usano normalmente `fprintf`, `fscanf` e `fgets`.
 
 ---
 
@@ -3572,6 +3649,8 @@ fstream outputFile("dati.txt", ios::out | ios::app); // Scrive in append
 ### Introduzione
 A differenza di altri linguaggi ad alto livello, C++ permette il **controllo esplicito** della memoria, in quanto il programmatore può allocare e deallocare manualmente la memoria utilizzando strumenti dedicati come `new` e `delete`.
 
+In C il controllo è analogo, ma l'allocazione dinamica usa le funzioni `malloc`, `calloc`, `realloc` e `free` della libreria `<stdlib.h>`.
+
 ### Layout della memoria nei programmi C++
 ![[a10665c6635137898e9ade4075f8f7e8_MD5.jpeg]]
 La memoria di un programma C++ o C è organizzata in diversi segmenti, come raffigurato nell'immagine:
@@ -3664,6 +3743,27 @@ int main() {
 ```
 
 In questo caso, la variabile `heap_variable` è allocata nello heap e rimane disponibile fino a quando non viene esplicitamente liberata con `delete`.
+
+#### Allocazione dinamica in C
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    int *heap_variable = malloc(sizeof *heap_variable);
+    if (heap_variable == NULL) {
+        return 1;
+    }
+
+    *heap_variable = 42;
+    printf("Valore allocato: %d\n", *heap_variable);
+    free(heap_variable);
+    return 0;
+}
+```
+
+Ogni `malloc` riuscita deve avere una corrispondente chiamata a `free`. In C non si converte il valore restituito da `malloc` con un cast.
 ### Puntatori  
 Negli esempi abbiamo visto dei tipi di dato con l'asterisco. Questi si chiamano **puntatori**. Un **puntatore** è una variabile che memorizza l'**indirizzo di memoria** di un'altra variabile. I puntatori mi servono per creare strutture dati più complesse e dinamiche memorizzandole nell'**heap**.
 
@@ -3832,6 +3932,9 @@ int main() {
 Ora che sappiamo come funziona la gestione della memoria, possiamo provare a costruire due nuove strutture dati che servono come base a strutture più complesse, i **vector** e le **liste**. Dopo aver creato la nostra versione personale, vediamo come utilizzare direttamente le librerie di C++ che le implementano.
 ### Vector
 Ora che sappiamo come funziona la gestione della memoria e gli array dinamici, possiamo capire come funziona la classe vector in C++, e utilizzarla senza dover implementarne il codice.
+
+> [!warning] Solo C++
+> `std::vector` e `std::list` sono contenitori della libreria standard C++ e non sono disponibili in C. In C gli array dinamici si realizzano con `malloc`/`realloc`/`free`, mentre le liste si implementano esplicitamente con `struct` che contengono puntatori al nodo successivo.
 #### Introduzione
 
 In C++, il `vector` è una struttura dati della Standard Template Library (STL) che rappresenta un array dinamico. È progettato per offrire una gestione flessibile della memoria e funzionalità avanzate come la possibilità di ridimensionamento automatico, iterazione e accesso sicuro.
