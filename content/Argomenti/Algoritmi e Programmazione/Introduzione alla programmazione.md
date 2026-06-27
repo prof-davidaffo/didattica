@@ -1890,309 +1890,370 @@ int main() {
 ```
 
 #### Algoritmi di ordinamento e complessità asintotica (Big O)
-##### Big O
-La notazione Big O è uno strumento fondamentale per descrivere la complessità degli algoritmi, cioè come variano il tempo di esecuzione o l'uso della memoria in funzione della dimensione dell'input, soprattutto per valori grandi.
-Big O esprime il limite superiore della crescita di una funzione. In altre parole, indica l'ordine di grandezza del tempo (o spazio) necessario man mano che l'input n aumenta. Le costanti e i termini meno significativi vengono ignorati per concentrarsi sul comportamento asintotico.
 
-- **O(1):** Tempo costante. L'algoritmo esegue lo stesso numero di operazioni, indipendentemente dalla dimensione dell'input.
-- **O(n):** Tempo lineare. Il numero di operazioni cresce proporzionalmente a n, come in un ciclo che attraversa l'intero array.
-- **O(n²):** Tempo quadratico. Tipico di algoritmi con cicli annidati, dove il numero di operazioni è proporzionale al quadrato di n.
-- **O(log n):** Tempo logaritmico. L'algoritmo riduce il problema in maniera esponenziale ad ogni iterazione, tipico di ricerche in strutture ordinate (ad esempio, la ricerca binaria).
-- **O(n log n):** Complessità intermedia, comune in algoritmi di ordinamento efficienti come Merge Sort e Quick Sort nella media dei casi.
+Un **algoritmo di ordinamento** prende una sequenza di valori e li dispone secondo un criterio, ad esempio dal più piccolo al più grande.
+
+Esempio:
+
+```text
+Input:  64 34 25 12 22 11 90
+Output: 11 12 22 25 34 64 90
+```
+
+Per confrontare algoritmi diversi non basta chiedersi "funziona?". Bisogna anche chiedersi:
+
+- quanto tempo impiega quando l'array diventa grande;
+- quanta memoria aggiuntiva usa;
+- se modifica direttamente l'array originale;
+- se è semplice da capire e implementare.
+
+##### Big O
+
+La notazione **Big O** descrive come cresce il numero di operazioni quando cresce la dimensione dell'input, indicata di solito con `n`.
+
+Se un array contiene `n` elementi:
+
+- **O(1)** significa tempo costante: il lavoro non dipende da `n`.
+- **O(n)** significa tempo lineare: se raddoppiano gli elementi, circa raddoppia anche il lavoro.
+- **O(n²)** significa tempo quadratico: tipico di due cicli annidati sull'array.
+- **O(log n)** significa tempo logaritmico: a ogni passo il problema viene ridotto molto, come nella ricerca binaria.
+- **O(n log n)** è tipico degli algoritmi di ordinamento efficienti.
+
+> [!note] Idea importante
+> Big O non misura i secondi esatti di esecuzione. Serve a capire come si comporta un algoritmo quando l'input cresce molto.
+
+##### Confronto rapido
+
+| Algoritmo | Idea principale | Caso medio | Memoria extra | Difficoltà |
+|---|---|---:|---:|---|
+| Bubble Sort | scambia elementi adiacenti fuori ordine | O(n²) | O(1) | bassa |
+| Selection Sort | cerca ogni volta il minimo rimanente | O(n²) | O(1) | bassa |
+| Insertion Sort | inserisce ogni elemento nella parte già ordinata | O(n²) | O(1) | bassa |
+| Merge Sort | divide, ordina e fonde | O(n log n) | O(n) | media |
+| Quick Sort | sceglie un pivot e partiziona | O(n log n) | O(log n) circa | media |
+| Heap Sort | usa una struttura chiamata heap | O(n log n) | O(1) | alta |
+
+I primi tre algoritmi sono i più adatti per imparare, perché usano solo array, cicli e scambi. Gli ultimi tre sono più efficienti su grandi quantità di dati, ma introducono idee più avanzate.
+
 ##### Bubble Sort
-L'algoritmo ha complessità O(n²) nel caso medio e peggiore, mentre nel caso migliore (array già ordinato) si comporta in O(n).
+
+Bubble Sort confronta coppie di elementi vicini. Se sono nell'ordine sbagliato, li scambia.
+Ripetendo questi confronti, i valori più grandi finiscono verso la fine dell'array.
 
 ```cpp
 #include <iostream>
 using namespace std;
 
 int main() {
-    int arr[] = {64, 34, 25, 12, 22, 11, 90};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    
-    // Bubble Sort: iterazione esterna per n-1 passate
-    for (int i = 0; i < n - 1; i++) {
-        // Ogni passata posiziona l'elemento massimo al fondo
-        for (int j = 0; j < n - i - 1; j++) {
-            // Confronta elementi adiacenti e scambia se fuori ordine
-            if (arr[j] > arr[j + 1]) {
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
+    int numeri[] = {64, 34, 25, 12, 22, 11, 90};
+    int n = sizeof(numeri) / sizeof(numeri[0]);
+
+    bool ordinato = false;
+
+    while (!ordinato) {
+        ordinato = true;
+
+        for (int i = 0; i < n - 1; i++) {
+            if (numeri[i] > numeri[i + 1]) {
+                int appoggio = numeri[i];
+                numeri[i] = numeri[i + 1];
+                numeri[i + 1] = appoggio;
+                ordinato = false;
             }
         }
     }
-    
-    // Stampa dell'array ordinato
+
     for (int i = 0; i < n; i++) {
-        cout << arr[i] << " ";
+        cout << numeri[i] << " ";
     }
     cout << endl;
-    
+
     return 0;
 }
 ```
+
+Complessità:
+
+- caso migliore: **O(n)**, se l'array è già ordinato e si usa la variabile `ordinato`;
+- caso medio e peggiore: **O(n²)**.
 
 ##### Selection Sort
 
-L'algoritmo Selection Sort seleziona in ogni iterazione l'elemento minimo dalla parte non ordinata e lo scambia con il primo elemento non ordinato. La complessità è sempre O(n²).
+Selection Sort divide mentalmente l'array in due parti:
+
+- a sinistra, la parte già ordinata;
+- a destra, la parte ancora da ordinare.
+
+A ogni passaggio cerca il minimo nella parte non ordinata e lo mette nella prima posizione libera.
 
 ```cpp
 #include <iostream>
 using namespace std;
 
 int main() {
-    int arr[] = {29, 10, 14, 37, 13};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    
-    // Selection Sort: per ogni posizione, trova il minimo nell'intervallo non ordinato
-    for (int i = 0; i < n - 1; i++) {
-        int min_idx = i; // ipotizza che l'elemento corrente sia il minimo
-        // Cerca il minimo nell'array da i+1 a n-1
-        for (int j = i + 1; j < n; j++) {
-            if (arr[j] < arr[min_idx])
-                min_idx = j;
+    int numeri[] = {29, 10, 14, 37, 13};
+    int n = sizeof(numeri) / sizeof(numeri[0]);
+
+    for (int posizione = 0; posizione < n - 1; posizione++) {
+        int indiceMinimo = posizione;
+
+        // Cerca il valore piu' piccolo nella parte non ancora ordinata.
+        for (int i = posizione + 1; i < n; i++) {
+            if (numeri[i] < numeri[indiceMinimo]) {
+                indiceMinimo = i;
+            }
         }
-        // Scambia l'elemento corrente con il minimo trovato
-        int temp = arr[i];
-        arr[i] = arr[min_idx];
-        arr[min_idx] = temp;
+
+        // Porta il minimo nella posizione corretta.
+        int appoggio = numeri[posizione];
+        numeri[posizione] = numeri[indiceMinimo];
+        numeri[indiceMinimo] = appoggio;
     }
-    
-    // Stampa dell'array ordinato
+
     for (int i = 0; i < n; i++) {
-        cout << arr[i] << " ";
+        cout << numeri[i] << " ";
     }
     cout << endl;
-    
+
     return 0;
 }
 ```
+
+Complessità:
+
+- caso migliore, medio e peggiore: **O(n²)**.
+
+Selection Sort fa sempre molti confronti, anche se l'array è quasi ordinato. In compenso fa pochi scambi: al massimo uno per ogni posizione.
 
 ##### Insertion Sort
 
-Insertion Sort costruisce progressivamente una porzione ordinata dell'array, inserendo ogni nuovo elemento nella sua posizione corretta. Ha complessità O(n) nel caso migliore e O(n²) in quello medio/peggiore.
+Insertion Sort funziona in modo simile a quando ordiniamo delle carte in mano: prendiamo una carta alla volta e la inseriamo nel punto corretto tra quelle già ordinate.
+
+L'array viene diviso così:
+
+```text
+[parte ordinata] [elemento da inserire] [parte non ancora controllata]
+```
 
 ```cpp
 #include <iostream>
 using namespace std;
 
 int main() {
-    int arr[] = {12, 11, 13, 5, 6};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    
-    // Insertion Sort: a partire dal secondo elemento, inserisce ogni elemento nell'array ordinato a sinistra
+    int numeri[] = {12, 11, 13, 5, 6};
+    int n = sizeof(numeri) / sizeof(numeri[0]);
+
     for (int i = 1; i < n; i++) {
-        int key = arr[i]; // elemento da inserire
-        int j = i - 1;
-        // Sposta gli elementi maggiori di key verso destra per fare spazio
-        while (j >= 0 && arr[j] > key) {
-            arr[j + 1] = arr[j];
-            j--;
+        int valoreDaInserire = numeri[i];
+        int posizione = i - 1;
+
+        // Sposta a destra gli elementi piu' grandi del valore da inserire.
+        while (posizione >= 0 && numeri[posizione] > valoreDaInserire) {
+            numeri[posizione + 1] = numeri[posizione];
+            posizione--;
         }
-        // Inserisce key nella posizione corretta
-        arr[j + 1] = key;
+
+        numeri[posizione + 1] = valoreDaInserire;
     }
-    
-    // Stampa dell'array ordinato
+
     for (int i = 0; i < n; i++) {
-        cout << arr[i] << " ";
+        cout << numeri[i] << " ";
     }
     cout << endl;
-    
+
     return 0;
 }
 ```
 
-##### Merge Sort (Iterativo)
+Complessità:
 
-Merge Sort divide l'array in sottoarray più piccoli, li ordina e poi li fonde. L'implementazione qui proposta è iterativa e ha complessità O(n log n).
+- caso migliore: **O(n)**, se l'array è già ordinato;
+- caso medio e peggiore: **O(n²)**.
+
+Insertion Sort è spesso il migliore tra gli algoritmi semplici quando l'array è piccolo o quasi ordinato.
+
+##### Un programma unico con più ordinamenti
+
+Nei prossimi capitoli le funzioni verranno spiegate in modo più completo. Qui le usiamo solo per rendere il codice più leggibile: ogni algoritmo viene isolato in una funzione diversa, invece di scrivere tutto dentro `main`.
 
 ```cpp
 #include <iostream>
-#include <algorithm> // per std::min
 using namespace std;
 
-int main() {
-    int arr[] = {38, 27, 43, 3, 9, 82, 10};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int temp[100]; // Array temporaneo per la fusione, supponendo n <= 100
+const int N = 7;
 
-    // curr_size indica la dimensione corrente dei sottoarray da fondere
-    for (int curr_size = 1; curr_size < n; curr_size *= 2) {
-        // left_start indica l'inizio di ogni coppia di sottoarray da fondere
-        for (int left_start = 0; left_start < n; left_start += 2 * curr_size) {
-            // Calcola il punto medio e l'estremo destro, gestendo i casi in cui la dimensione non sia multipla di curr_size
-            int mid = min(left_start + curr_size, n);
-            int right_end = min(left_start + 2 * curr_size, n);
-            int i = left_start, j = mid, k = left_start;
-            
-            // Fusione dei due sottoarray ordinati in temp[]
-            while (i < mid && j < right_end) {
-                if (arr[i] <= arr[j])
-                    temp[k++] = arr[i++];
-                else
-                    temp[k++] = arr[j++];
+void copiaArray(int origine[], int destinazione[], int n) {
+    for (int i = 0; i < n; i++) {
+        destinazione[i] = origine[i];
+    }
+}
+
+void stampaArray(int numeri[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << numeri[i] << " ";
+    }
+    cout << endl;
+}
+
+void scambia(int numeri[], int primo, int secondo) {
+    int appoggio = numeri[primo];
+    numeri[primo] = numeri[secondo];
+    numeri[secondo] = appoggio;
+}
+
+void bubbleSort(int numeri[], int n) {
+    bool ordinato = false;
+
+    while (!ordinato) {
+        ordinato = true;
+
+        for (int i = 0; i < n - 1; i++) {
+            if (numeri[i] > numeri[i + 1]) {
+                scambia(numeri, i, i + 1);
+                ordinato = false;
             }
-            // Copia gli elementi rimanenti del sottoarray sinistro, se presenti
-            while (i < mid)
-                temp[k++] = arr[i++];
-            // Copia gli elementi rimanenti del sottoarray destro, se presenti
-            while (j < right_end)
-                temp[k++] = arr[j++];
-                
-            // Copia il risultato della fusione nell'array originale
-            for (int p = left_start; p < right_end; p++)
-                arr[p] = temp[p];
         }
     }
-    
-    // Stampa dell'array ordinato
-    for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
-    cout << endl;
-    
+}
+
+void selectionSort(int numeri[], int n) {
+    for (int posizione = 0; posizione < n - 1; posizione++) {
+        int indiceMinimo = posizione;
+
+        for (int i = posizione + 1; i < n; i++) {
+            if (numeri[i] < numeri[indiceMinimo]) {
+                indiceMinimo = i;
+            }
+        }
+
+        scambia(numeri, posizione, indiceMinimo);
+    }
+}
+
+void insertionSort(int numeri[], int n) {
+    for (int i = 1; i < n; i++) {
+        int valoreDaInserire = numeri[i];
+        int posizione = i - 1;
+
+        while (posizione >= 0 && numeri[posizione] > valoreDaInserire) {
+            numeri[posizione + 1] = numeri[posizione];
+            posizione--;
+        }
+
+        numeri[posizione + 1] = valoreDaInserire;
+    }
+}
+
+int main() {
+    int originale[N] = {64, 34, 25, 12, 22, 11, 90};
+    int lavoro[N];
+
+    cout << "Array originale: ";
+    stampaArray(originale, N);
+
+    copiaArray(originale, lavoro, N);
+    bubbleSort(lavoro, N);
+    cout << "Bubble Sort:    ";
+    stampaArray(lavoro, N);
+
+    copiaArray(originale, lavoro, N);
+    selectionSort(lavoro, N);
+    cout << "Selection Sort: ";
+    stampaArray(lavoro, N);
+
+    copiaArray(originale, lavoro, N);
+    insertionSort(lavoro, N);
+    cout << "Insertion Sort: ";
+    stampaArray(lavoro, N);
+
     return 0;
 }
 ```
 
-##### Quick Sort (Iterativo)
+Il punto importante è che tutti e tre producono lo stesso risultato, ma lo raggiungono con strategie diverse.
 
-Quick Sort utilizza il paradigma divide-et-impera scegliendo un pivot e partizionando l'array. La versione iterativa qui usa uno stack per gestire gli intervalli. La complessità media è O(n log n), mentre il caso peggiore è O(n²).
+##### Merge Sort
 
-```cpp
-#include <iostream>
-#include <stack>
-using namespace std;
+Merge Sort usa la tecnica **divide et impera**:
 
-int main() {
-    int arr[] = {10, 7, 8, 9, 1, 5};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    
-    // Stack per memorizzare coppie (inizio, fine) degli intervalli da ordinare
-    stack<pair<int, int>> s;
-    s.push({0, n - 1});
-    
-    while (!s.empty()) {
-        int l = s.top().first;
-        int h = s.top().second;
-        s.pop();
-        
-        // Partizione dell'intervallo corrente utilizzando lo schema di Lomuto
-        int pivot = arr[h]; // Si sceglie l'ultimo elemento come pivot
-        int i = l - 1;      // Indice dell'ultimo elemento minore del pivot
-        for (int j = l; j <= h - 1; j++) {
-            if (arr[j] < pivot) {
-                i++;
-                // Scambia arr[i] e arr[j]
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-        }
-        // Posiziona il pivot nella posizione corretta
-        int p = i + 1;
-        int temp = arr[p];
-        arr[p] = arr[h];
-        arr[h] = temp;
-        
-        // Se ci sono elementi a sinistra del pivot, li aggiunge allo stack
-        if (p - 1 > l)
-            s.push({l, p - 1});
-        // Se ci sono elementi a destra del pivot, li aggiunge allo stack
-        if (p + 1 < h)
-            s.push({p + 1, h});
-    }
-    
-    // Stampa dell'array ordinato
-    for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
-    cout << endl;
-    
-    return 0;
-}
+1. divide l'array in due metà;
+2. ordina ciascuna metà;
+3. fonde le due metà ordinate.
+
+La parte più importante è la **fusione**: se ho due sequenze già ordinate, posso unirle in una sequenza ordinata confrontando di volta in volta il primo elemento disponibile di ciascuna sequenza.
+
+```text
+Sinistra:  3  27  38  43
+Destra:    9  10  82
+Risultato: 3   9  10  27  38  43  82
 ```
+
+Complessità:
+
+- caso migliore, medio e peggiore: **O(n log n)**;
+- memoria extra: **O(n)**, perché serve un array temporaneo per fondere le parti.
+
+Merge Sort è molto regolare: ha buone prestazioni anche nel caso peggiore, ma usa più memoria rispetto agli algoritmi che lavorano direttamente sull'array originale.
+
+##### Quick Sort
+
+Quick Sort sceglie un elemento chiamato **pivot** e riordina l'array in modo che:
+
+- gli elementi minori del pivot vadano a sinistra;
+- gli elementi maggiori del pivot vadano a destra;
+- il pivot finisca nella sua posizione definitiva.
+
+Dopo questa operazione, l'algoritmo ripete lo stesso ragionamento sulla parte sinistra e sulla parte destra.
+
+```text
+Array:  10 7 8 9 1 5
+Pivot:  5
+
+Dopo la partizione:
+1 5 8 9 10 7
+  ^
+  il pivot e' nella posizione corretta
+```
+
+Complessità:
+
+- caso medio: **O(n log n)**;
+- caso peggiore: **O(n²)**, ad esempio se la scelta del pivot divide male l'array;
+- memoria extra: circa **O(log n)** nel caso medio della versione ricorsiva.
+
+Quick Sort è spesso molto veloce nella pratica, ma richiede attenzione nella scelta del pivot.
 
 ##### Heap Sort
-Heap Sort sfrutta un max heap per ordinare l'array. Dopo aver costruito il max heap (complessità O(n)), estrae ripetutamente il massimo e ricostruisce il heap, ottenendo una complessità complessiva O(n log n).
 
-```cpp
-#include <iostream>
-using namespace std;
+Heap Sort usa una struttura chiamata **heap**, cioè un array organizzato come se fosse un albero.
+Nel **max heap**, ogni padre è maggiore o uguale ai suoi figli. Per questo motivo, il massimo si trova sempre all'inizio dell'array.
 
-int main() {
-    int arr[] = {12, 11, 13, 5, 6, 7};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    
-    // Costruzione del max heap:
-    // Partiamo dall'ultimo nodo non foglia: n/2 - 1 e andiamo a ritroso
-    for (int i = n / 2 - 1; i >= 0; i--) {
-        int root = i;
-        // Heapify: corregge la struttura del heap per il nodo corrente
-        while (true) {
-            int left = 2 * root + 1;   // indice del figlio sinistro
-            int right = 2 * root + 2;  // indice del figlio destro
-            int largest = root;
-            if (left < n && arr[left] > arr[largest])
-                largest = left;
-            if (right < n && arr[right] > arr[largest])
-                largest = right;
-            // Se il nodo corrente non è il più grande, scambia e continua l'heapify
-            if (largest != root) {
-                int temp = arr[root];
-                arr[root] = arr[largest];
-                arr[largest] = temp;
-                root = largest;
-            } else {
-                break;
-            }
-        }
-    }
-    
-    // Ordinamento: estrae ripetutamente il massimo e ricostruisce il max heap
-    for (int i = n - 1; i > 0; i--) {
-        // Scambia la radice (massimo) con l'ultimo elemento dell'heap
-        int temp = arr[0];
-        arr[0] = arr[i];
-        arr[i] = temp;
-        int heap_size = i; // Riduce la dimensione del heap
-        int root = 0;
-        // Heapify per ripristinare il max heap nella parte rimanente
-        while (true) {
-            int left = 2 * root + 1;
-            int right = 2 * root + 2;
-            int largest = root;
-            if (left < heap_size && arr[left] > arr[largest])
-                largest = left;
-            if (right < heap_size && arr[right] > arr[largest])
-                largest = right;
-            if (largest != root) {
-                int temp = arr[root];
-                arr[root] = arr[largest];
-                arr[largest] = temp;
-                root = largest;
-            } else {
-                break;
-            }
-        }
-    }
-    
-    // Stampa dell'array ordinato
-    for (int i = 0; i < n; i++)
-        cout << arr[i] << " ";
-    cout << endl;
-    
-    return 0;
-}
-```
+L'idea è:
 
-##### Considerazioni Finali
+1. trasformare l'array in un max heap;
+2. scambiare il massimo, cioè l'elemento in posizione `0`, con l'ultimo elemento dell'heap;
+3. ridurre la dimensione dell'heap;
+4. ripristinare la proprietà del max heap;
+5. ripetere finché l'array è ordinato.
 
-Ogni algoritmo ha vantaggi e svantaggi in termini di complessità computazionale e utilizzo della memoria.
+Complessità:
 
-- **Bubble, Selection e Insertion Sort:** Semplici da implementare ma inefficienti per grandi dataset (O(n²)).
-- **Merge, Quick e Heap Sort:** Offrono prestazioni migliori (O(n log n) in media), anche se possono richiedere maggiore gestione della memoria o attenzioni particolari (come la scelta del pivot in Quick Sort).  
-    La scelta dell'algoritmo dipende dalle specifiche esigenze e dai vincoli dell'applicazione.
+- caso migliore, medio e peggiore: **O(n log n)**;
+- memoria extra: **O(1)**.
+
+Heap Sort è efficiente e non richiede memoria aggiuntiva significativa, ma è meno immediato da capire rispetto a Bubble, Selection e Insertion Sort.
+
+##### Considerazioni finali
+
+Per imparare gli ordinamenti conviene partire da questa progressione:
+
+1. **Selection Sort**, perché l'idea è molto diretta: cerca il minimo e mettilo al posto giusto.
+2. **Bubble Sort**, perché mostra bene il concetto di scambio tra elementi vicini.
+3. **Insertion Sort**, perché introduce l'idea di mantenere una parte già ordinata.
+4. **Merge Sort** e **Quick Sort**, quando si è più sicuri con funzioni, ricorsione e divisione del problema.
+5. **Heap Sort**, quando si studiano strutture dati più avanzate.
+
+Nella pratica quotidiana, in C++ non si riscrive quasi mai un algoritmo di ordinamento da zero: si usa `sort()` della libreria standard. Studiare questi algoritmi serve però a capire come ragiona un programma e perché due soluzioni corrette possono avere prestazioni molto diverse.
 
 
 ---
