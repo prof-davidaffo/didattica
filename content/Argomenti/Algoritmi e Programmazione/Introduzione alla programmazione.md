@@ -168,7 +168,10 @@ Un linguaggio di programmazione è un linguaggio formale che permette di **scriv
    - Esempi: C, C++, Python, Java.
 
 > [!note] Percorso C
-> I concetti della dispensa — variabili numeriche, condizioni, cicli, array, `struct`, funzioni e puntatori — valgono anche in C. Gli esempi sono principalmente in C++, quindi nei riquadri dedicati al C sono riportate le differenze di sintassi e librerie. Per compilare gli esempi C usa `gcc`, salva i file con estensione `.c` e abilita gli avvisi: `gcc file.c -std=c17 -Wall -Wextra -o programma`.
+> I concetti della dispensa — variabili numeriche, condizioni, cicli, array, `struct`, funzioni e puntatori — valgono anche in C. Ogni esempio che usa librerie o costrutti diversi presenta qui sotto una versione C equivalente. Gli snippet dichiarati **Sintassi comune C/C++** sono già validi in entrambi i linguaggi e perciò non sono duplicati. Per compilare gli esempi C usa `gcc`, salva i file con estensione `.c` e abilita gli avvisi: `gcc file.c -std=c17 -Wall -Wextra -Wpedantic -o programma`.
+
+> [!tip] Come leggere gli esempi bilingui
+> I blocchi `cpp` mostrano l'idioma C++ e i blocchi `c` quello C. Quando il codice è segnato **Sintassi comune C/C++**, lo stesso snippet compila in entrambi. `std::string`, stream, `vector`, `list`, riferimenti e `new`/`delete` non esistono in C: accanto a essi vengono presentati rispettivamente buffer di `char`, `<stdio.h>`, array dinamici/lista manuale, puntatori e `malloc`/`free`.
 
 #### Paradigmi di Programmazione  
 Un **paradigma** definisce uno stile di programmazione. I principali paradigmi sono:  
@@ -364,6 +367,19 @@ int main() {
 }
 ```
 
+Lo stesso programma in **C**:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int a = 5;
+    a = a + 3;
+    printf("%d\n", a);
+    return 0;
+}
+```
+
 --- 
 ### Commenti
 Come abbiamo già visto nell'esempio prima, nel codice posso inserire dei "commenti". I commenti sono cose che io posso scrivere nel codice senza che queste vengano considerate dal compilatore. Posso quindi usarli per annotare cose, descrivere il funzionamento di parti di codice (senza esagerare), o per disabilitare temporaneamente parti di codice che non voglio che siano eseguite per debugging (il **debugging** è quella fase in cui testo il programma per cercare errori all'interno del codice e correggerli).
@@ -387,7 +403,7 @@ int main() {
 
 ---
 
-### Variabili e tipi di dati in C++
+### Variabili e tipi di dati in C e C++
 Immagina di avere un **cassetto** in cui puoi mettere un oggetto. Quel cassetto ha un’etichetta con un nome, che mi deve dare idea di quale oggetto ci possa trovare dentro.
 Puoi aprire il cassetto, mettere un oggetto dentro, cambiarlo ecc...
 
@@ -406,6 +422,9 @@ Le **variabili** sono  appunto contenitori per memorizzare dati. Ogni variabile 
 > [!warning] Differenze in C
 > In C `string` non è un tipo: una stringa è un array di `char` terminato da `\0`. Per usare `bool`, `true` e `false` in C17 occorre includere `<stdbool.h>`. I tipi numerici, `char`, `const` e gli operatori di assegnazione/incremento presentati qui hanno invece la stessa sintassi in C e C++.
 #### Dichiarazione e assegnazione
+
+> [!note] Sintassi comune C/C++
+> Le dichiarazioni numeriche e gli esempi seguenti con `int`, `double`, `char` e `const` sono validi sia in C sia in C++. Gli esempi che usano `string` sono invece specifici del C++ e sono accompagnati dalla variante C.
 Una variabile deve essere dichiarata specificando il tipo e il nome. L'assegnazione consiste nell'attribuire un valore alla variabile:
 
 ```cpp
@@ -439,6 +458,15 @@ Metti un oggetto dentro il cassetto.
 
 ```cpp
 string cassetto = "maglietta";  // Il cassetto ora contiene una maglietta
+```
+
+In C una stringa deve occupare un array di caratteri; per modificarla si usa una funzione di `<string.h>`:
+
+```c
+#include <string.h>
+
+char cassetto[20] = "maglietta";
+strcpy(cassetto, "pantaloni");
 ```
 
 🔹 **Esempio pratico:** Apri il cassetto e metti dentro una **maglietta**.
@@ -523,6 +551,20 @@ bicchiere1 = bicchiere2;    // Versiamo la cola dal bicchiere 1 al bicchiere 2
 bicchiere2 = bicchiere3;         // Versiamo l'acqua dal bicchiere 3 al bicchiere 2
 ```
 
+In C non si assegnano direttamente gli array di caratteri. Una versione sicura usa `strcpy` con array abbastanza grandi:
+
+```c
+#include <string.h>
+
+char bicchiere1[10] = "acqua";
+char bicchiere2[10] = "cola";
+char bicchiere3[10];
+
+strcpy(bicchiere3, bicchiere1);
+strcpy(bicchiere1, bicchiere2);
+strcpy(bicchiere2, bicchiere3);
+```
+
 🔹 **Hai preso l'acqua, e l'hai versata in un terzo bicchiere. Ora puoi versare la cola nel primo bicchiere, e a questo punto prendere l'acqua del terzo bicchiere e metterla nel secondo**
 (In realtà, se ci pensi, non è esattamente quello che accade quando lavori con le variabili, cosa succede in realtà nel programma?)
 
@@ -565,6 +607,27 @@ int main() {
 Da questo esempio notiamo come posso anche "sommare" le stringhe. In verità questa operazione si chiama concatenazione, e unisce due stringhe in una stringa unica.
 
 In C questa concatenazione non si può scrivere con `+`: servono array di caratteri e funzioni di `<string.h>`, come `strcat`, avendo cura che l'array di destinazione abbia spazio sufficiente.
+
+Versione completa in C:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    int a = 8, b = 3;
+    int somma = a + b;
+    int prodotto = a * b;
+    char nome[] = "Mario";
+    char saluto[30] = "Ciao, ";
+
+    a += 2;
+    strcat(saluto, nome);
+    printf("Somma: %d\nProdotto: %d\nNuovo valore di a: %d\n%s\n",
+           somma, prodotto, a, saluto);
+    return 0;
+}
+```
 
 ---
 
@@ -705,6 +768,23 @@ int main() {
 
 In questo esempio notiamo come posso anche inserire direttamente delle espressioni nell'output di `cout`.
 
+Versione C:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int a = 10, b = 3;
+
+    printf("Addizione: %d\n", a + b);
+    printf("Sottrazione: %d\n", a - b);
+    printf("Moltiplicazione: %d\n", a * b);
+    printf("Divisione: %d\n", a / b);
+    printf("Modulo: %d\n", a % b);
+    return 0;
+}
+```
+
 ---
 
 ### Esempio completo: somma di due numeri
@@ -734,6 +814,24 @@ int main() {
 }
 ```
 
+Versione C:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int num1, num2;
+
+    printf("Inserisci il primo numero: ");
+    if (scanf("%d", &num1) != 1) return 1;
+    printf("Inserisci il secondo numero: ");
+    if (scanf("%d", &num2) != 1) return 1;
+
+    printf("La somma è: %d\n", num1 + num2);
+    return 0;
+}
+```
+
 ---
 
 ### Esercizi
@@ -753,6 +851,9 @@ In un programma imperativo, le **strutture di controllo del flusso** sono fondam
 ---
 
 ### Strutture Condizionali  
+
+> [!note] Sintassi comune C/C++
+> Le forme di `if`, `else if`, `else`, `switch`, l'operatore ternario e le parentesi graffe sono identiche in C e C++. Negli esempi completi sotto cambiano soprattutto input/output (`scanf`/`printf` in C) e, per i booleani, l'header `<stdbool.h>`.
 
 #### L'istruzione `if`  
 La struttura `if` consente di eseguire un blocco di codice solo se una condizione è **vera**.  
@@ -776,6 +877,23 @@ int main() {
 
     if (numero > 0) { // Condizione
         cout << "Il numero è positivo." << endl; // blocco di codice eseguito solo se la condizione è soddisfatta
+    }
+    return 0;
+}
+```
+
+Versione C dello stesso controllo:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int numero;
+    printf("Inserisci un numero: ");
+    if (scanf("%d", &numero) != 1) return 1;
+
+    if (numero > 0) {
+        printf("Il numero è positivo.\n");
     }
     return 0;
 }
@@ -923,6 +1041,30 @@ int main() {
 
 Il `break` (che posso anche usare per interrompere manualmente un ciclo) è necessario ad ogni istruzione in questo caso, poiché lo switch esegue l'istruzione corrispondente al valore, ma poi esegue anche tutte quelle sottostanti. In rari casi posso omettere il `break` se questo comportamento è voluto.
 
+La versione C dello `switch` ha la stessa struttura; cambia soltanto l'I/O:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int giorno;
+    printf("Inserisci un numero (1-7): ");
+    if (scanf("%d", &giorno) != 1) return 1;
+
+    switch (giorno) {
+        case 1: printf("Lunedì\n"); break;
+        case 2: printf("Martedì\n"); break;
+        case 3: printf("Mercoledì\n"); break;
+        case 4: printf("Giovedì\n"); break;
+        case 5: printf("Venerdì\n"); break;
+        case 6: printf("Sabato\n"); break;
+        case 7: printf("Domenica\n"); break;
+        default: printf("Numero non valido!\n");
+    }
+    return 0;
+}
+```
+
 > [!exercise] Esercizio
 > Nel codice precedente, prova a rimuovere i break e guarda cosa succede.
 
@@ -1049,6 +1191,24 @@ int main() {
         cout << "Esco senza ombrello." << endl;
     } else {
         cout << "Porto l’ombrello." << endl;
+    }
+    return 0;
+}
+```
+
+In C usa i simboli e includi `<stdbool.h>`:
+
+```c
+#include <stdbool.h>
+#include <stdio.h>
+
+int main(void) {
+    bool piove = true;
+
+    if (!piove) {
+        printf("Esco senza ombrello.\n");
+    } else {
+        printf("Porto l'ombrello.\n");
     }
     return 0;
 }
@@ -1224,6 +1384,9 @@ Per evitare questi problemi, i linguaggi moderni mettono a disposizione **strutt
 #### Cicli Determinati
 Un ciclo è detto **determinato** quando **il numero di ripetizioni è noto prima dell'inizio dell’esecuzione del ciclo**. In questi casi si usa tipicamente il **ciclo `for`**, che consente di specificare esplicitamente tutte le informazioni necessarie al controllo del ciclo: inizializzazione, condizione, e aggiornamento.
 ##### Sintassi del ciclo `for`
+
+> [!note] Sintassi comune C/C++
+> I cicli `for`, `while`, `do ... while`, e le istruzioni `break` e `continue` hanno la stessa sintassi in C e C++. I tre blocchi di sola sintassi che seguono sono quindi già utilizzabili in C.
 ```cpp
 for (inizializzazione; condizione; aggiornamento) {
     // Blocco di codice da ripetere
@@ -1241,6 +1404,20 @@ int main() {
         cout << i << " ";
     }
     cout << endl;
+    return 0;
+}
+```
+
+Versione C:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    for (int i = 0; i <= 5; i++) {
+        printf("%d ", i);
+    }
+    printf("\n");
     return 0;
 }
 ```
@@ -1353,6 +1530,22 @@ int main() {
     return 0;
 }
 ```
+
+Versione C del ciclo `while`:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int numero = 3;
+    while (numero != 5) {
+        printf("Inserisci il numero 5: ");
+        if (scanf("%d", &numero) != 1) return 1;
+    }
+    printf("Finalmente!\n");
+    return 0;
+}
+```
 > [!warning] Nota
 > In questo esempio ho inizializzato la variabile numero a 3 per essere sicuro di entrare nel ciclo (poiché alla prima iterazione `3 != 5` è vero). Se non inizializzo la variabile, alcuni linguaggi di programmazione la inizializzano automaticamente a 0, altri a 1, altri con numeri completamente casuali a seconda dell'indirizzo di memoria. Prova con diversi linguaggi di programmazione e prova a stampare una variabile non inizializzata per vedere cosa succede!
 #### Il ciclo `do-while` (ciclo post-condizionale)
@@ -1374,6 +1567,22 @@ int main() {
         cin >> numero;
     } while (numero != 5);
     cout << "Finalmente!" << endl;
+    return 0;
+}
+```
+
+Versione C del ciclo `do ... while`:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int numero;
+    do {
+        printf("Inserisci il numero 5: ");
+        if (scanf("%d", &numero) != 1) return 1;
+    } while (numero != 5);
+    printf("Finalmente!\n");
     return 0;
 }
 ```
@@ -1489,6 +1698,9 @@ Un array in C e C++ si dichiara specificando il tipo di dati, il nome e la dimen
 
 **Sintassi**:
 
+> [!note] Sintassi comune C/C++
+> Le dichiarazioni di array, l'indicizzazione con `[]`, `sizeof`, le matrici e i cicli indicizzati di questa sezione sono validi in entrambi i linguaggi. Le versioni complete differiscono soltanto nelle funzioni di input/output.
+
 ```cpp
 tipo nome_array[dimensione];
 ```
@@ -1534,6 +1746,22 @@ int main() {
 }
 ```
 
+Versione C:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int numeri[5] = {10, 20, 30, 40, 50};
+
+    printf("Il primo elemento è: %d\n", numeri[0]);
+    printf("Il terzo elemento è: %d\n", numeri[2]);
+    numeri[1] = 25;
+    printf("Il secondo elemento modificato è: %d\n", numeri[1]);
+    return 0;
+}
+```
+
 
 > [!warning] Nota
 > Accedere a un indice fuori dai limiti dell'array può causare comportamenti imprevedibili, perché il compilatore non esegue controlli automatici sui limiti.
@@ -1562,6 +1790,24 @@ int main() {
 
     cout << "La somma degli elementi è: " << somma << endl; // 150
 
+    return 0;
+}
+```
+
+Versione C (l'algoritmo è identico):
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    enum { d = 5 };
+    int numeri[d] = {10, 20, 30, 40, 50};
+    int somma = 0;
+
+    for (int i = 0; i < d; i++) {
+        somma += numeri[i];
+    }
+    printf("La somma degli elementi è: %d\n", somma);
     return 0;
 }
 ```
@@ -2022,6 +2268,20 @@ int main() {
 }
 ```
 
+In C l'equivalente della lunghezza è `strlen`, che non include il terminatore `\0`:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char saluto[] = "Ciao, mondo!";
+    printf("Stringa: %s\n", saluto);
+    printf("Lunghezza: %zu\n", strlen(saluto));
+    return 0;
+}
+```
+
 ---
 #### Inserire una stringa con spazi in input
 
@@ -2089,6 +2349,20 @@ int main() {
     string risultato = s1 + s2; // Restituisce una nuova stringa
     cout << risultato << endl; // Output: Ciao, mondo!
 
+    return 0;
+}
+```
+
+In C la destinazione deve avere capacità sufficiente; `strcat` modifica il primo array:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char risultato[30] = "Ciao";
+    strcat(risultato, ", mondo!");
+    printf("%s\n", risultato);
     return 0;
 }
 ```
@@ -2256,6 +2530,9 @@ int main() {
 > [!exercise] Esercizio
 > Impara ad usare la documentazione. Cerca online la documentazione C++ sulle stringhe, guarda quali funzioni trovi, quali sono le loro signature (combinazione di nome e argomenti). Le hai trovate tutte? Hai trovato altre funzioni utili che vuoi aggiungere? (Continuo a chiamarle funzioni, ma ricorda che in realtà questi sono metodi).
 
+> [!note] Equivalenti C per le operazioni sulle stringhe
+> In C non esiste un oggetto `string`: `s[i]` resta valido per leggere o modificare un carattere, `strlen(s)` sostituisce `s.length()`, `strstr(testo, cerca)` cerca una sottostringa e restituisce un puntatore oppure `NULL`, `strcpy`/`strncpy` copiano e `strcat`/`strncat` concatenano. Non esistono equivalenti diretti e sicuri di `substr`, `replace` ed `erase`: si costruisce un nuovo array o si spostano i caratteri, controllando sempre dimensione e terminatore `\0`.
+
 
 ---
 
@@ -2328,6 +2605,30 @@ Altezza: 28.5
 
 > [!note] In C
 > La sintassi della definizione è la stessa, ma il nome del tipo è `struct Persona`: si dichiara quindi `struct Persona p1;`. Per poter scrivere soltanto `Persona p1;` occorre prima creare un alias con `typedef struct Persona Persona;`. I campi testuali vanno dichiarati come array, ad esempio `char nome[50];`, non come `string`.
+
+Versione C completa:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char nome[50];
+    int eta;
+    float altezza;
+} Persona;
+
+int main(void) {
+    Persona p1;
+    strcpy(p1.nome, "Mario Rossi");
+    p1.eta = 20;
+    p1.altezza = 1.85f;
+
+    printf("Nome: %s\nEtà: %d\nAltezza: %.2f\n",
+           p1.nome, p1.eta, p1.altezza);
+    return 0;
+}
+```
 
 
 
@@ -2582,6 +2883,25 @@ int main() {
 > [!warning] Nota
 > Come mai in questo esempio non ho usato `else`?
 
+Versione C:
+
+```c
+#include <stdio.h>
+
+int massimo(int a, int b) {
+    if (a > b) return a;
+    return b;
+}
+
+int main(void) {
+    int x, y;
+    printf("Inserisci i due numeri: ");
+    if (scanf("%d%d", &x, &y) != 2) return 1;
+    printf("Il numero più grande è: %d\n", massimo(x, y));
+    return 0;
+}
+```
+
 Posso anche passare un array (devo ricordarmi di passare anche le dimensioni):
 
 ```cpp
@@ -2682,6 +3002,25 @@ int main() {
 	incrementa(numero);
 	cout << numero << endl;
 	return 0;
+}
+```
+
+In C il passaggio per riferimento si ottiene soltanto con un puntatore:
+
+```c
+#include <stdio.h>
+
+void incrementa(int *n) {
+    (*n)++;
+}
+
+int main(void) {
+    int numero = 5;
+    incrementa(&numero);
+    incrementa(&numero);
+    incrementa(&numero);
+    printf("%d\n", numero);
+    return 0;
 }
 ```
 
@@ -2859,7 +3198,7 @@ La **modularizzazione** è una tecnica che suddivide un programma in **funzioni*
 Aggiungo qui un estratto della mia dispensa sul refactoring (scrivere il codice in modo migliore) per mostrare quanto siano utili le funzioni. Per riassumere possiamo darci questa semplice regola d'oro: **se mi metto a fare copia e incolla di una parte del codice, dovrei creare una funzione.**
 
 #### Estratto da "Code smells e refactoring"
-![[Code smells e refactoring#Codice Duplicato]]
+![[Fattorizzazione del codice e makefile/Code smells e refactoring#Codice Duplicato]]
 
 ---
 
@@ -2952,6 +3291,9 @@ Anche questo metodo va bene per progetti piccoli o medi.
 In questo caso l’ordine **non importa più**, perché dichiari anticipatamente le firme delle funzioni. Il compilatore sa che quella funzione esiste e potrà trovarla dopo.
 
 #### 3. Separazione in header e file `.cpp`
+
+> [!note] Equivalente C
+> La modularizzazione con header esiste anche in C: si usano gli stessi include guard, ma i file di implementazione hanno estensione `.c`, non `.cpp`; non ci sono `std::string` né riferimenti. Per il progetto qui sotto una versione C può usare `char name[50]` nella struct e `void updateScore(Player *p, int delta)`. Si compila con `gcc main.c player.c -std=c17 -Wall -Wextra -o main`.
 
 **player.h**:
 
@@ -3100,6 +3442,26 @@ int main() {
 }
 ```
 
+Versione C:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    FILE *file_output = fopen("esempio.txt", "w");
+    if (file_output == NULL) {
+        perror("Errore nell'apertura del file");
+        return 1;
+    }
+
+    fprintf(file_output, "Ciao, questo è un esempio di scrittura su file.\n");
+    fprintf(file_output, "Questa è la seconda riga.\n");
+    fclose(file_output);
+    printf("Scrittura completata!\n");
+    return 0;
+}
+```
+
 ---
 
 ### Lettura da un File  
@@ -3123,6 +3485,27 @@ int main() {
         cout << "Errore nell'apertura del file." << endl;
     }
 
+    return 0;
+}
+```
+
+Versione C con `fgets`:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    char riga[256];
+    FILE *file_input = fopen("esempio.txt", "r");
+    if (file_input == NULL) {
+        perror("Errore nell'apertura del file");
+        return 1;
+    }
+
+    while (fgets(riga, sizeof riga, file_input) != NULL) {
+        fputs(riga, stdout);
+    }
+    fclose(file_input);
     return 0;
 }
 ```
@@ -4014,6 +4397,43 @@ int main() {
 }
 ```
 
+#### Equivalente C: array dinamico con capacità esplicita
+
+In C il programmatore conserva puntatore, dimensione e capacità. Questa è la versione equivalente delle operazioni essenziali dell'esempio precedente:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int *dati;
+    size_t dimensione;
+    size_t capacita;
+} Vettore;
+
+int aggiungi(Vettore *v, int valore) {
+    if (v->dimensione == v->capacita) {
+        size_t nuova_capacita = v->capacita == 0 ? 4 : v->capacita * 2;
+        int *nuovi_dati = realloc(v->dati, nuova_capacita * sizeof *nuovi_dati);
+        if (nuovi_dati == NULL) return 0;
+        v->dati = nuovi_dati;
+        v->capacita = nuova_capacita;
+    }
+    v->dati[v->dimensione++] = valore;
+    return 1;
+}
+
+int main(void) {
+    Vettore v = {NULL, 0, 0};
+    aggiungi(&v, 10); aggiungi(&v, 20); aggiungi(&v, 30);
+    v.dati[1] = 50;
+    v.dimensione--; /* equivalente di pop_back, se non vuoto */
+    printf("Dimensione: %zu, capacità: %zu\n", v.dimensione, v.capacita);
+    free(v.dati);
+    return 0;
+}
+```
+
 ---
 
 #### Esempio di Riallocazione
@@ -4152,6 +4572,47 @@ Grazie a questa struttura, le liste mi permettono di allocare un singolo nodo e 
 
 - Inserire o rimuovere elementi frequentemente.
 - Evitare la riallocazione e il ridimensionamento automatico come nei vector, essendo un'operazione particolarmente pesante.
+
+In C il nodo si dichiara riferendosi esplicitamente a `struct cell`; questa è anche una prima implementazione completa di inserimento e liberazione:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+struct cell {
+    int valore;
+    struct cell *next;
+};
+
+int inserisci_testa(struct cell **testa, int valore) {
+    struct cell *nuovo = malloc(sizeof *nuovo);
+    if (nuovo == NULL) return 0;
+    nuovo->valore = valore;
+    nuovo->next = *testa;
+    *testa = nuovo;
+    return 1;
+}
+
+void stampa_e_libera(struct cell *testa) {
+    while (testa != NULL) {
+        struct cell *successivo = testa->next;
+        printf("%d ", testa->valore);
+        free(testa);
+        testa = successivo;
+    }
+    printf("\n");
+}
+
+int main(void) {
+    struct cell *testa = NULL;
+    if (!inserisci_testa(&testa, 20) || !inserisci_testa(&testa, 10)) {
+        stampa_e_libera(testa);
+        return 1;
+    }
+    stampa_e_libera(testa);
+    return 0;
+}
+```
 
 ---
 
