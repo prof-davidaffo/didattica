@@ -1940,6 +1940,8 @@ I primi tre algoritmi sono i più adatti per imparare, perché usano solo array,
 Bubble Sort confronta coppie di elementi vicini. Se sono nell'ordine sbagliato, li scambia.
 Ripetendo questi confronti, i valori più grandi finiscono verso la fine dell'array.
 
+Il nome "bubble" deriva proprio da questa idea: a ogni passaggio un valore grande "risale" verso il fondo dell'array, come una bolla. Dopo il primo giro l'ultimo elemento è sicuramente quello corretto, dopo il secondo giro sono corretti gli ultimi due, e così via.
+
 ```cpp
 #include <iostream>
 using namespace std;
@@ -1950,14 +1952,20 @@ int main() {
 
     bool ordinato = false;
 
+    // Continua a fare passaggi sull'array finche' in un giro non avviene
+    // nessuno scambio. Se non ci sono scambi, l'array e' gia' ordinato.
     while (!ordinato) {
         ordinato = true;
 
+        // Confronta ogni elemento con quello subito dopo.
         for (int i = 0; i < n - 1; i++) {
             if (numeri[i] > numeri[i + 1]) {
+                // I due elementi sono nell'ordine sbagliato: li scambiamo.
                 int appoggio = numeri[i];
                 numeri[i] = numeri[i + 1];
                 numeri[i + 1] = appoggio;
+
+                // Segna che questo giro ha modificato l'array.
                 ordinato = false;
             }
         }
@@ -1977,6 +1985,8 @@ Complessità:
 - caso migliore: **O(n)**, se l'array è già ordinato e si usa la variabile `ordinato`;
 - caso medio e peggiore: **O(n²)**.
 
+Bubble Sort è utile per imparare il concetto di confronto e scambio, ma raramente viene scelto in programmi reali: quando gli elementi sono molti, ripetere confronti tra vicini diventa rapidamente costoso.
+
 ##### Selection Sort
 
 Selection Sort divide mentalmente l'array in due parti:
@@ -1986,6 +1996,8 @@ Selection Sort divide mentalmente l'array in due parti:
 
 A ogni passaggio cerca il minimo nella parte non ordinata e lo mette nella prima posizione libera.
 
+La differenza rispetto a Bubble Sort è che Selection Sort non sposta gradualmente un valore con tanti piccoli scambi. Prima cerca il minimo, poi lo scambia una sola volta con l'elemento nella posizione da riempire.
+
 ```cpp
 #include <iostream>
 using namespace std;
@@ -1994,6 +2006,7 @@ int main() {
     int numeri[] = {29, 10, 14, 37, 13};
     int n = sizeof(numeri) / sizeof(numeri[0]);
 
+    // "posizione" indica la prima cella non ancora ordinata.
     for (int posizione = 0; posizione < n - 1; posizione++) {
         int indiceMinimo = posizione;
 
@@ -2005,9 +2018,12 @@ int main() {
         }
 
         // Porta il minimo nella posizione corretta.
-        int appoggio = numeri[posizione];
-        numeri[posizione] = numeri[indiceMinimo];
-        numeri[indiceMinimo] = appoggio;
+        // Se il minimo e' gia' li', lo scambio non cambia nulla.
+        if (indiceMinimo != posizione) {
+            int appoggio = numeri[posizione];
+            numeri[posizione] = numeri[indiceMinimo];
+            numeri[indiceMinimo] = appoggio;
+        }
     }
 
     for (int i = 0; i < n; i++) {
@@ -2035,6 +2051,8 @@ L'array viene diviso così:
 [parte ordinata] [elemento da inserire] [parte non ancora controllata]
 ```
 
+All'inizio consideriamo ordinata la parte formata dal solo primo elemento. Poi prendiamo il secondo elemento, lo inseriamo nel punto giusto tra quelli precedenti, e continuiamo così fino alla fine.
+
 ```cpp
 #include <iostream>
 using namespace std;
@@ -2044,15 +2062,18 @@ int main() {
     int n = sizeof(numeri) / sizeof(numeri[0]);
 
     for (int i = 1; i < n; i++) {
+        // Questo e' l'elemento che vogliamo inserire nella parte ordinata.
         int valoreDaInserire = numeri[i];
         int posizione = i - 1;
 
         // Sposta a destra gli elementi piu' grandi del valore da inserire.
+        // In questo modo si libera una cella nella posizione corretta.
         while (posizione >= 0 && numeri[posizione] > valoreDaInserire) {
             numeri[posizione + 1] = numeri[posizione];
             posizione--;
         }
 
+        // Inserisce il valore nella cella rimasta libera.
         numeri[posizione + 1] = valoreDaInserire;
     }
 
@@ -2072,106 +2093,6 @@ Complessità:
 
 Insertion Sort è spesso il migliore tra gli algoritmi semplici quando l'array è piccolo o quasi ordinato.
 
-##### Un programma unico con più ordinamenti
-
-Nei prossimi capitoli le funzioni verranno spiegate in modo più completo. Qui le usiamo solo per rendere il codice più leggibile: ogni algoritmo viene isolato in una funzione diversa, invece di scrivere tutto dentro `main`.
-
-```cpp
-#include <iostream>
-using namespace std;
-
-const int N = 7;
-
-void copiaArray(int origine[], int destinazione[], int n) {
-    for (int i = 0; i < n; i++) {
-        destinazione[i] = origine[i];
-    }
-}
-
-void stampaArray(int numeri[], int n) {
-    for (int i = 0; i < n; i++) {
-        cout << numeri[i] << " ";
-    }
-    cout << endl;
-}
-
-void scambia(int numeri[], int primo, int secondo) {
-    int appoggio = numeri[primo];
-    numeri[primo] = numeri[secondo];
-    numeri[secondo] = appoggio;
-}
-
-void bubbleSort(int numeri[], int n) {
-    bool ordinato = false;
-
-    while (!ordinato) {
-        ordinato = true;
-
-        for (int i = 0; i < n - 1; i++) {
-            if (numeri[i] > numeri[i + 1]) {
-                scambia(numeri, i, i + 1);
-                ordinato = false;
-            }
-        }
-    }
-}
-
-void selectionSort(int numeri[], int n) {
-    for (int posizione = 0; posizione < n - 1; posizione++) {
-        int indiceMinimo = posizione;
-
-        for (int i = posizione + 1; i < n; i++) {
-            if (numeri[i] < numeri[indiceMinimo]) {
-                indiceMinimo = i;
-            }
-        }
-
-        scambia(numeri, posizione, indiceMinimo);
-    }
-}
-
-void insertionSort(int numeri[], int n) {
-    for (int i = 1; i < n; i++) {
-        int valoreDaInserire = numeri[i];
-        int posizione = i - 1;
-
-        while (posizione >= 0 && numeri[posizione] > valoreDaInserire) {
-            numeri[posizione + 1] = numeri[posizione];
-            posizione--;
-        }
-
-        numeri[posizione + 1] = valoreDaInserire;
-    }
-}
-
-int main() {
-    int originale[N] = {64, 34, 25, 12, 22, 11, 90};
-    int lavoro[N];
-
-    cout << "Array originale: ";
-    stampaArray(originale, N);
-
-    copiaArray(originale, lavoro, N);
-    bubbleSort(lavoro, N);
-    cout << "Bubble Sort:    ";
-    stampaArray(lavoro, N);
-
-    copiaArray(originale, lavoro, N);
-    selectionSort(lavoro, N);
-    cout << "Selection Sort: ";
-    stampaArray(lavoro, N);
-
-    copiaArray(originale, lavoro, N);
-    insertionSort(lavoro, N);
-    cout << "Insertion Sort: ";
-    stampaArray(lavoro, N);
-
-    return 0;
-}
-```
-
-Il punto importante è che tutti e tre producono lo stesso risultato, ma lo raggiungono con strategie diverse.
-
 ##### Merge Sort
 
 Merge Sort usa la tecnica **divide et impera**:
@@ -2186,6 +2107,78 @@ La parte più importante è la **fusione**: se ho due sequenze già ordinate, po
 Sinistra:  3  27  38  43
 Destra:    9  10  82
 Risultato: 3   9  10  27  38  43  82
+```
+
+Merge Sort è naturalmente ricorsivo: per ordinare un array grande, ordina due array più piccoli. La ricorsione si ferma quando la porzione da ordinare contiene zero o un elemento, perché una sequenza con un solo elemento è già ordinata.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+#define DIMENSIONE 7
+
+void fondi(int numeri[], int temporaneo[], int sinistra, int centro, int destra) {
+    int i = sinistra;      // indice nella meta' sinistra
+    int j = centro + 1;    // indice nella meta' destra
+    int k = sinistra;      // indice nell'array temporaneo
+
+    // Prende ogni volta il piu' piccolo tra i due primi elementi disponibili.
+    while (i <= centro && j <= destra) {
+        if (numeri[i] <= numeri[j]) {
+            temporaneo[k] = numeri[i];
+            i++;
+        } else {
+            temporaneo[k] = numeri[j];
+            j++;
+        }
+        k++;
+    }
+
+    // Copia eventuali elementi rimasti nella parte sinistra.
+    while (i <= centro) {
+        temporaneo[k] = numeri[i];
+        i++;
+        k++;
+    }
+
+    // Copia eventuali elementi rimasti nella parte destra.
+    while (j <= destra) {
+        temporaneo[k] = numeri[j];
+        j++;
+        k++;
+    }
+
+    // Riporta nell'array originale la porzione appena fusa.
+    for (int posizione = sinistra; posizione <= destra; posizione++) {
+        numeri[posizione] = temporaneo[posizione];
+    }
+}
+
+void mergeSort(int numeri[], int temporaneo[], int sinistra, int destra) {
+    if (sinistra >= destra) {
+        return; // caso base: zero o un elemento sono gia' ordinati
+    }
+
+    int centro = sinistra + (destra - sinistra) / 2;
+
+    mergeSort(numeri, temporaneo, sinistra, centro);
+    mergeSort(numeri, temporaneo, centro + 1, destra);
+    fondi(numeri, temporaneo, sinistra, centro, destra);
+}
+
+int main() {
+    int numeri[DIMENSIONE] = {38, 27, 43, 3, 9, 82, 10};
+    int temporaneo[DIMENSIONE];
+
+    mergeSort(numeri, temporaneo, 0, DIMENSIONE - 1);
+
+    for (int i = 0; i < DIMENSIONE; i++) {
+        cout << numeri[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
 ```
 
 Complessità:
@@ -2215,6 +2208,62 @@ Dopo la partizione:
   il pivot e' nella posizione corretta
 ```
 
+L'operazione centrale si chiama **partizione**. In questa versione scegliamo come pivot l'ultimo elemento della porzione considerata. Scorriamo la porzione e teniamo un indice che indica dove mettere il prossimo elemento minore o uguale al pivot.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int partiziona(int numeri[], int inizio, int fine) {
+    int pivot = numeri[fine];
+    int posizionePiccoli = inizio - 1;
+
+    // Sposta nella parte sinistra tutti gli elementi minori o uguali al pivot.
+    for (int i = inizio; i < fine; i++) {
+        if (numeri[i] <= pivot) {
+            posizionePiccoli++;
+
+            int appoggio = numeri[posizionePiccoli];
+            numeri[posizionePiccoli] = numeri[i];
+            numeri[i] = appoggio;
+        }
+    }
+
+    // Mette il pivot subito dopo gli elementi piccoli.
+    int posizionePivot = posizionePiccoli + 1;
+    int appoggio = numeri[posizionePivot];
+    numeri[posizionePivot] = numeri[fine];
+    numeri[fine] = appoggio;
+
+    return posizionePivot;
+}
+
+void quickSort(int numeri[], int inizio, int fine) {
+    if (inizio >= fine) {
+        return; // caso base: la porzione contiene zero o un elemento
+    }
+
+    int posizionePivot = partiziona(numeri, inizio, fine);
+
+    quickSort(numeri, inizio, posizionePivot - 1);
+    quickSort(numeri, posizionePivot + 1, fine);
+}
+
+int main() {
+    int numeri[] = {10, 7, 8, 9, 1, 5};
+    int n = sizeof(numeri) / sizeof(numeri[0]);
+
+    quickSort(numeri, 0, n - 1);
+
+    for (int i = 0; i < n; i++) {
+        cout << numeri[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+```
+
 Complessità:
 
 - caso medio: **O(n log n)**;
@@ -2235,6 +2284,75 @@ L'idea è:
 3. ridurre la dimensione dell'heap;
 4. ripristinare la proprietà del max heap;
 5. ripetere finché l'array è ordinato.
+
+Per rappresentare un albero dentro un array si usano queste relazioni:
+
+- il figlio sinistro dell'indice `i` si trova in `2 * i + 1`;
+- il figlio destro dell'indice `i` si trova in `2 * i + 2`.
+
+La funzione più importante è `sistemaHeap`: prende un elemento e lo fa "scendere" finché la proprietà del max heap torna vera.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+void sistemaHeap(int numeri[], int dimensioneHeap, int radice) {
+    int maggiore = radice;
+    int figlioSinistro = 2 * radice + 1;
+    int figlioDestro = 2 * radice + 2;
+
+    // Controlla se il figlio sinistro e' piu' grande della radice.
+    if (figlioSinistro < dimensioneHeap && numeri[figlioSinistro] > numeri[maggiore]) {
+        maggiore = figlioSinistro;
+    }
+
+    // Controlla se il figlio destro e' piu' grande del valore maggiore trovato.
+    if (figlioDestro < dimensioneHeap && numeri[figlioDestro] > numeri[maggiore]) {
+        maggiore = figlioDestro;
+    }
+
+    // Se la radice non e' il valore maggiore, la scambiamo con il figlio maggiore.
+    if (maggiore != radice) {
+        int appoggio = numeri[radice];
+        numeri[radice] = numeri[maggiore];
+        numeri[maggiore] = appoggio;
+
+        // Dopo lo scambio, il sottoalbero modificato potrebbe non essere piu' un heap.
+        sistemaHeap(numeri, dimensioneHeap, maggiore);
+    }
+}
+
+void heapSort(int numeri[], int n) {
+    // Costruisce il max heap partendo dagli ultimi nodi che hanno figli.
+    for (int i = n / 2 - 1; i >= 0; i--) {
+        sistemaHeap(numeri, n, i);
+    }
+
+    // Estrae il massimo una volta per ogni posizione finale dell'array.
+    for (int fine = n - 1; fine > 0; fine--) {
+        int appoggio = numeri[0];
+        numeri[0] = numeri[fine];
+        numeri[fine] = appoggio;
+
+        // Ora l'ultimo elemento e' ordinato: lo escludiamo dall'heap.
+        sistemaHeap(numeri, fine, 0);
+    }
+}
+
+int main() {
+    int numeri[] = {12, 11, 13, 5, 6, 7};
+    int n = sizeof(numeri) / sizeof(numeri[0]);
+
+    heapSort(numeri, n);
+
+    for (int i = 0; i < n; i++) {
+        cout << numeri[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+```
 
 Complessità:
 
@@ -2276,16 +2394,24 @@ Nella pratica quotidiana, in C++ non si riscrive quasi mai un algoritmo di ordin
 >     Scrivi un programma che calcola il prodotto scalare di due vettori di dimensione n, dove n è fornito dall'utente.
 ### Stringhe
 
-Una **stringa** in C è una sequenza di caratteri terminata dal carattere speciale `\0`. In C++ esistono due modi principali per lavorare con le stringhe:
+Una **stringa** è una sequenza di caratteri, cioè un testo. In C le stringhe non sono un tipo di dato autonomo: sono **array di `char`** terminati dal carattere speciale `\0`, chiamato anche **terminatore nullo**.
 
-1. **Array di caratteri**
-2. **Classe `string` della libreria standard**
+In C++ esiste anche la classe `string`, più comoda e sicura, ma per capire davvero come vengono memorizzati i testi conviene partire dal C.
 
 ---
 
-#### Array di Caratteri
+#### Stringhe in C: array di caratteri
 
-Gli array di caratteri rappresentano una stringa in stile C. Ogni elemento è un carattere e l'ultimo carattere deve essere il terminatore `\0`.
+Una stringa C occupa una cella dell'array per ogni carattere più una cella finale per `\0`.
+
+```text
+"Ciao"
+
+Indice:    0    1    2    3    4
+Valore:   'C'  'i'  'a'  'o' '\0'
+```
+
+Per questo motivo, se voglio salvare la parola `"Ciao"`, che ha 4 lettere, mi serve un array lungo almeno 5.
 
 **Esempio**:
 
@@ -2293,7 +2419,20 @@ Gli array di caratteri rappresentano una stringa in stile C. Ogni elemento è un
 #include <stdio.h>
 
 int main(void) {
-    char saluto[6] = {'H', 'e', 'l', 'l', 'o', '\0'}; // Array di caratteri
+    char saluto[5] = {'C', 'i', 'a', 'o', '\0'};
+    printf("%s\n", saluto);
+
+    return 0;
+}
+```
+
+Lo stesso array può essere inizializzato in modo più compatto con una stringa letterale:
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    char saluto[] = "Ciao"; // Il compilatore aggiunge automaticamente '\0'
     printf("%s\n", saluto);
 
     return 0;
@@ -2301,13 +2440,493 @@ int main(void) {
 ```
 
 > [!warning] Nota
-> Senza il carattere `\0`, il programma potrebbe leggere dati al di fuori della stringa causando comportamenti imprevedibili.
-
-In C le operazioni sulle stringhe usano `<string.h>` (`strlen`, `strcpy`, `strcat`, `strcmp`, ...). Bisogna sempre prevedere spazio per il terminatore `\0` e controllare che la destinazione sia abbastanza grande. In C++ moderno è invece spesso preferibile utilizzare la classe **`string`**.
+> Senza il carattere `\0`, le funzioni che lavorano sulle stringhe non sanno dove fermarsi. Il programma potrebbe continuare a leggere memoria oltre la fine dell'array, producendo risultati imprevedibili.
 
 ---
 
-#### Classe `string` (solo C++)
+#### Dichiarare stringhe modificabili e non modificabili in C
+
+Queste due dichiarazioni sembrano simili, ma non sono equivalenti:
+
+```text
+char nome1[] = "Mario";
+char *nome2 = "Mario";
+```
+
+`nome1` è un array modificabile: i caratteri sono copiati dentro l'array.
+
+```text
+nome1[0] = 'D'; // ok: nome1 diventa "Dario"
+```
+
+`nome2` punta invece a una stringa letterale. Le stringhe letterali non vanno modificate.
+
+```text
+nome2[0] = 'D'; // errore logico: comportamento non definito
+```
+
+Quando vuoi modificare una stringa in C, usa un array di `char` abbastanza grande.
+
+---
+
+#### Leggere e stampare stringhe in C
+
+Per stampare una stringa si usa `%s` con `printf`.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    char nome[] = "Luca";
+    printf("Nome: %s\n", nome);
+
+    return 0;
+}
+```
+
+Per leggere una singola parola si può usare `scanf` con `%s`, ma bisogna indicare una larghezza massima per evitare di scrivere oltre la dimensione dell'array.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    char nome[20];
+
+    printf("Inserisci il nome: ");
+    scanf("%19s", nome); // legge al massimo 19 caratteri + '\0'
+
+    printf("Ciao, %s\n", nome);
+    return 0;
+}
+```
+
+`scanf("%s", ...)` si ferma al primo spazio. Per leggere una frase intera è meglio usare `fgets`.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    char frase[100];
+
+    printf("Inserisci una frase: ");
+    if (fgets(frase, sizeof frase, stdin) != NULL) {
+        printf("Hai scritto: %s", frase);
+    }
+
+    return 0;
+}
+```
+
+`fgets` legge al massimo `sizeof frase - 1` caratteri e aggiunge sempre `\0` se la lettura riesce. Se c'è spazio, conserva anche il carattere di invio `\n`.
+
+Per togliere il `\n` finale si può cercarlo e sostituirlo con `\0`:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char frase[100];
+
+    printf("Inserisci una frase: ");
+    if (fgets(frase, sizeof frase, stdin) != NULL) {
+        size_t lunghezza = strlen(frase);
+
+        if (lunghezza > 0 && frase[lunghezza - 1] == '\n') {
+            frase[lunghezza - 1] = '\0';
+        }
+
+        printf("Frase senza a capo finale: %s\n", frase);
+    }
+
+    return 0;
+}
+```
+
+---
+
+#### Funzioni principali di `<string.h>`
+
+Le operazioni più comuni sulle stringhe C sono nella libreria `<string.h>`.
+
+| Funzione                  | Cosa fa                                   | Nota importante                              |
+| ------------------------- | ----------------------------------------- | -------------------------------------------- |
+| `strlen(s)`               | calcola la lunghezza della stringa        | non conta `\0`                               |
+| `strcpy(dest, src)`       | copia `src` dentro `dest`                 | `dest` deve essere abbastanza grande         |
+| `strncpy(dest, src, n)`   | copia al massimo `n` caratteri            | può non aggiungere `\0` se lo spazio finisce |
+| `strcat(dest, src)`       | concatena `src` alla fine di `dest`       | `dest` deve avere spazio libero              |
+| `strncat(dest, src, n)`   | concatena al massimo `n` caratteri        | più controllabile di `strcat`                |
+| `strcmp(a, b)`            | confronta due stringhe                    | restituisce `0` se sono uguali               |
+| `strncmp(a, b, n)`        | confronta al massimo `n` caratteri        | utile per prefissi                           |
+| `strchr(s, c)`            | cerca un carattere                        | restituisce un puntatore o `NULL`            |
+| `strrchr(s, c)`           | cerca l'ultima occorrenza di un carattere | restituisce un puntatore o `NULL`            |
+| `strstr(s, cerca)`        | cerca una sottostringa                    | restituisce un puntatore o `NULL`            |
+| `strtok(s, delimitatori)` | spezza una stringa in parti               | modifica la stringa originale                |
+
+##### Lunghezza con `strlen`
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char saluto[] = "Ciao";
+
+    printf("Lunghezza: %zu\n", strlen(saluto));
+    return 0;
+}
+```
+
+`strlen` conta i caratteri prima di `\0`. In `"Ciao"` restituisce `4`, non `5`.
+
+##### Copia con `strcpy`
+
+In C non puoi assegnare direttamente una stringa a un array dopo averlo dichiarato:
+
+```text
+char nome[20];
+nome = "Mario"; // errore: gli array non si assegnano cosi'
+```
+
+Devi copiare i caratteri:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char nome[20];
+
+    strcpy(nome, "Mario");
+
+    printf("%s\n", nome);
+    return 0;
+}
+```
+
+`strcpy` non controlla la dimensione dell'array di destinazione. Se la destinazione è troppo piccola, il programma scrive fuori dall'array.
+
+##### Copia controllata con `strncpy`
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char nome[10];
+
+    strncpy(nome, "Alessandro", sizeof nome - 1);
+    nome[sizeof nome - 1] = '\0';
+
+    printf("%s\n", nome);
+    return 0;
+}
+```
+
+Qui copiamo al massimo `sizeof nome - 1` caratteri e lasciamo una cella per `\0`. L'assegnazione finale del terminatore è importante perché `strncpy` non garantisce sempre di aggiungerlo.
+
+##### Concatenazione con `strcat`
+
+Concatenare significa mettere una stringa dopo un'altra.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char messaggio[30] = "Ciao";
+
+    strcat(messaggio, ", mondo!");
+
+    printf("%s\n", messaggio);
+    return 0;
+}
+```
+
+`messaggio` deve avere spazio per contenere sia il testo iniziale, sia quello aggiunto, sia `\0`.
+
+Con `strncat` possiamo indicare quanti caratteri aggiungere al massimo.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char messaggio[20] = "Ciao";
+
+    strncat(messaggio, ", mondo enorme", sizeof messaggio - strlen(messaggio) - 1);
+
+    printf("%s\n", messaggio);
+    return 0;
+}
+```
+
+##### Confronto con `strcmp`
+
+In C le stringhe non si confrontano con `==`.
+
+```text
+char a[] = "ciao";
+char b[] = "ciao";
+
+if (a == b) { /* sbagliato */ }
+```
+
+`a == b` confronta gli indirizzi degli array, non il loro contenuto. Per confrontare il testo si usa `strcmp`.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char password[20];
+
+    printf("Password: ");
+    scanf("%19s", password);
+
+    if (strcmp(password, "segreta") == 0) {
+        printf("Accesso consentito\n");
+    } else {
+        printf("Accesso negato\n");
+    }
+
+    return 0;
+}
+```
+
+`strcmp(a, b)` restituisce:
+
+- `0` se le stringhe sono uguali;
+- un valore minore di `0` se `a` viene prima di `b` in ordine lessicografico;
+- un valore maggiore di `0` se `a` viene dopo `b`.
+
+Con `strncmp` posso confrontare solo i primi caratteri. È utile, ad esempio, per controllare se una stringa inizia con un certo prefisso.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char comando[] = "stampa nome";
+
+    if (strncmp(comando, "stampa", 6) == 0) {
+        printf("Comando di stampa riconosciuto\n");
+    }
+
+    return 0;
+}
+```
+
+##### Ricerca di un carattere con `strchr`
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char email[] = "mario@example.com";
+    char *chiocciola = strchr(email, '@');
+
+    if (chiocciola != NULL) {
+        printf("Trovata @ in posizione %td\n", chiocciola - email);
+    } else {
+        printf("Indirizzo non valido\n");
+    }
+
+    return 0;
+}
+```
+
+`strchr` restituisce un puntatore al primo carattere trovato. Sottraendo l'indirizzo iniziale della stringa otteniamo l'indice.
+
+Con `strrchr` si cerca invece l'ultima occorrenza.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char percorso[] = "cartella/sottocartella/file.txt";
+    char *ultimoSlash = strrchr(percorso, '/');
+
+    if (ultimoSlash != NULL) {
+        printf("Nome file: %s\n", ultimoSlash + 1);
+    }
+
+    return 0;
+}
+```
+
+##### Ricerca di una sottostringa con `strstr`
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char testo[] = "Benvenuto al mondo della programmazione";
+    char *posizione = strstr(testo, "mondo");
+
+    if (posizione != NULL) {
+        printf("Trovato in posizione %td\n", posizione - testo);
+    } else {
+        printf("Non trovato\n");
+    }
+	
+	// posizione è a tutti gli effetti un array di char
+	printf("%s", posizione); // mondo della programmazione
+	
+    return 0;
+}
+```
+
+##### Dividere una stringa con `strtok`
+
+`strtok` divide una stringa in parti, dette **token**, usando uno o più delimitatori. È utile per separare parole o campi, ma modifica la stringa originale inserendo dei `\0` al posto dei delimitatori.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char riga[] = "Mario;Rossi;18";
+    char *token = strtok(riga, ";");
+
+    while (token != NULL) {
+        printf("%s\n", token);
+        token = strtok(NULL, ";");
+    }
+
+    return 0;
+}
+```
+
+La prima chiamata riceve la stringa da dividere. Le chiamate successive ricevono `NULL`, perché `strtok` continua dalla posizione in cui si era fermata.
+
+---
+
+#### Scorrere e modificare una stringa C manualmente
+
+Poiché una stringa C è un array, possiamo attraversarla con un ciclo finché non incontriamo `\0`.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    char parola[] = "programmare";
+    int contatore = 0;
+
+    for (int i = 0; parola[i] != '\0'; i++) {
+        if (parola[i] == 'm') {
+            contatore++;
+        }
+    }
+
+    printf("La lettera m appare %d volte\n", contatore);
+    return 0;
+}
+```
+
+Esempio di conversione manuale da minuscolo a maiuscolo:
+
+```c
+#include <stdio.h>
+#include <ctype.h>
+
+int main(void) {
+    char parola[] = "Ciao";
+
+    for (int i = 0; parola[i] != '\0'; i++) {
+        parola[i] = toupper(parola[i]);
+    }
+
+    printf("%s\n", parola);
+    return 0;
+}
+```
+
+---
+
+#### Sottostringhe, cancellazione e sostituzione in C
+
+In C non esistono metodi come `substr`, `erase` o `replace`. Bisogna costruire manualmente il risultato oppure spostare i caratteri nell'array.
+
+Esempio: copiare una sottostringa.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char testo[] = "Ciao, mondo!";
+    char parte[10];
+    int inizio = 6;
+    int lunghezza = 5;
+
+    strncpy(parte, testo + inizio, lunghezza);
+    parte[lunghezza] = '\0';
+
+    printf("%s\n", parte);
+    return 0;
+}
+```
+
+Esempio: cancellare una parte spostando a sinistra i caratteri successivi.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char testo[30] = "Ciao, mondo!";
+    int inizio = 5;
+    int quanti = 6;
+    int lunghezza = strlen(testo);
+
+    for (int i = inizio; i <= lunghezza - quanti; i++) {
+        testo[i] = testo[i + quanti];
+    }
+
+    printf("%s\n", testo);
+    return 0;
+}
+```
+
+Esempio: sostituire una parola costruendo una nuova stringa.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char testo[] = "Ciao, universo!";
+    char risultato[40];
+    char cerca[] = "universo";
+    char sostituisci[] = "mondo";
+
+    char *posizione = strstr(testo, cerca);
+
+    if (posizione != NULL) {
+        int primaParte = posizione - testo;
+
+        strncpy(risultato, testo, primaParte);
+        risultato[primaParte] = '\0';
+
+        strcat(risultato, sostituisci);
+        strcat(risultato, posizione + strlen(cerca));
+
+        printf("%s\n", risultato);
+    }
+
+    return 0;
+}
+```
+
+Questo esempio funziona perché `risultato` è abbastanza grande. Quando si lavora in C, la dimensione degli array è sempre una responsabilità del programmatore.
+
+---
+
+#### Classe `string` in C++ come astrazione più comoda
 
 La classe **`string`** della libreria standard rende il lavoro con le stringhe molto più semplice e intuitivo rispetto agli array di caratteri. Non è necessario preoccuparsi del terminatore `\0`, e offre numerosi metodi per manipolare le stringhe.
 
@@ -2329,28 +2948,15 @@ int main() {
 }
 ```
 
-In C l'equivalente della lunghezza è `strlen`, che non include il terminatore `\0`:
-
-```c
-#include <stdio.h>
-#include <string.h>
-
-int main(void) {
-    char saluto[] = "Ciao, mondo!";
-    printf("Stringa: %s\n", saluto);
-    printf("Lunghezza: %zu\n", strlen(saluto));
-    return 0;
-}
-```
-
 ---
-#### Inserire una stringa con spazi in input
+
+#### Leggere una stringa con spazi in C++
 
 In C++, per leggere da input una **stringa che contiene spazi** (come ad esempio `"ciao come stai"`), non si può usare il classico `std::cin >> variabile`, perché questo metodo **si ferma al primo spazio**.
 
 Se utilizzo:
 
-```cpp
+```text
 string frase;
 cin >> frase;
 ```
@@ -2367,34 +2973,16 @@ Il comportamento di `cin >> variabile` è progettato per leggere **una parola al
 
 Per leggere **l'intera riga**, inclusi gli spazi, si usa:
 
-```cpp
+```text
 string frase;
 getline(cin, frase);
 ```
 
 Questo legge **tutti i caratteri** fino al carattere di _a capo_ (`\n`), cioè quando l'utente preme Invio.
 
-##### In C: usare `fgets`
-
-```c
-#include <stdio.h>
-
-int main(void) {
-    char frase[100];
-
-    printf("Inserisci una frase: ");
-    if (fgets(frase, sizeof frase, stdin) != NULL) {
-        printf("Hai scritto: %s", frase);
-    }
-    return 0;
-}
-```
-
-`fgets` legge al massimo `sizeof frase - 1` caratteri e aggiunge il terminatore `\0`; se c'è spazio, conserva anche il carattere di nuova riga.
-
 ---
 
-#### Operazioni di Base con la Classe `string`
+#### Operazioni di base con la classe `string`
 
 1. **Concatenazione di stringhe**  
     Puoi concatenare due stringhe utilizzando l'operatore `+` o `+=`. L'operatore `+` restituisce una nuova stringa concatenata, mentre `+=` modifica la stringa a sinistra aggiungendo quella a destra.
@@ -2414,23 +3002,9 @@ int main() {
 }
 ```
 
-In C la destinazione deve avere capacità sufficiente; `strcat` modifica il primo array:
-
-```c
-#include <stdio.h>
-#include <string.h>
-
-int main(void) {
-    char risultato[30] = "Ciao";
-    strcat(risultato, ", mondo!");
-    printf("%s\n", risultato);
-    return 0;
-}
-```
-
 ---
 > [!warning] Nota
-> Per la prima volta nei prossimi esempi, vedrai in azione quella che si chiama chiamata di funzione (se vogliamo essere più pignoli, in questo caso si chiamano metodi dato che `string` è una classe... ma non trattiamo di programmazione orientata agli oggetti in questa dispensa). In uno dei capitoli vedremo cosa sono le funzioni, a cosa servono e come si implementano. Per ora prendile per buone, come se magicamente facessero quello che desideri chiamandole come vedi nel codice e mettendo gli argomenti nell'ordine richiesto.
+> Nei prossimi esempi vedrai metodi come `.length()`, `.substr()` e `.find()`. Si chiamano metodi perché appartengono alla classe `string`. Per ora puoi leggerli come funzioni applicate alla variabile scritta prima del punto.
 
 
 1. **Accesso ai caratteri**  
@@ -2454,7 +3028,7 @@ int main() {
 
 
 > [!warning] Nota
-> Con la classe string, in realtà anche l'accesso diretto all'indice si comporta come at, ovvero controlla i limiti. Nei casi invece si usi una cstring classica (array di carattery) allora at e l'accesso diretto si comportano in modo diverso.
+> Con `string`, `at()` controlla i limiti e segnala un errore se l'indice non esiste. L'operatore `[]` è più simile agli array: è comodo, ma non va usato con indici fuori dalla stringa.
 
 ---
 
@@ -2591,8 +3165,8 @@ int main() {
 > [!exercise] Esercizio
 > Impara ad usare la documentazione. Cerca online la documentazione C++ sulle stringhe, guarda quali funzioni trovi, quali sono le loro signature (combinazione di nome e argomenti). Le hai trovate tutte? Hai trovato altre funzioni utili che vuoi aggiungere? (Continuo a chiamarle funzioni, ma ricorda che in realtà questi sono metodi).
 
-> [!note] Equivalenti C per le operazioni sulle stringhe
-> In C non esiste un oggetto `string`: `s[i]` resta valido per leggere o modificare un carattere, `strlen(s)` sostituisce `s.length()`, `strstr(testo, cerca)` cerca una sottostringa e restituisce un puntatore oppure `NULL`, `strcpy`/`strncpy` copiano e `strcat`/`strncat` concatenano. Non esistono equivalenti diretti e sicuri di `substr`, `replace` ed `erase`: si costruisce un nuovo array o si spostano i caratteri, controllando sempre dimensione e terminatore `\0`.
+> [!note] Collegamento tra C e C++
+> La classe `string` nasconde molti dettagli visti nella parte C: gestisce automaticamente la memoria necessaria, conosce la propria lunghezza e offre metodi pronti per copia, concatenazione, ricerca, sottostringhe, sostituzione e cancellazione. Le stringhe C restano però importanti perché compaiono spesso nelle librerie di sistema, negli array di caratteri e nell'interoperabilità tra C e C++.
 
 
 ---
