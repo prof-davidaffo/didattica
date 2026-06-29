@@ -2860,13 +2860,19 @@ Esempio: copiare una sottostringa.
 int main(void) {
     char testo[] = "Ciao, mondo!";
     char parte[10];
-    int inizio = 6;
-    int lunghezza = 5;
+    char cerca[] = "mondo";
 
-    strncpy(parte, testo + inizio, lunghezza);
-    parte[lunghezza] = '\0';
+    char *posizione = strstr(testo, cerca);
 
-    printf("%s\n", parte);
+    if (posizione != NULL) {
+        size_t lunghezza = strlen(cerca);
+
+        strncpy(parte, posizione, lunghezza);
+        parte[lunghezza] = '\0';
+
+        printf("%s\n", parte);
+    }
+
     return 0;
 }
 ```
@@ -2879,15 +2885,18 @@ Esempio: cancellare una parte spostando a sinistra i caratteri successivi.
 
 int main(void) {
     char testo[30] = "Ciao, mondo!";
-    int inizio = 5;
-    int quanti = 6;
-    int lunghezza = strlen(testo);
+    char cerca[] = ", mondo";
 
-    for (int i = inizio; i <= lunghezza - quanti; i++) {
-        testo[i] = testo[i + quanti];
+    char *posizione = strstr(testo, cerca);
+
+    if (posizione != NULL) {
+        size_t quanti = strlen(cerca);
+
+        memmove(posizione, posizione + quanti, strlen(posizione + quanti) + 1);
+
+        printf("%s\n", testo);
     }
 
-    printf("%s\n", testo);
     return 0;
 }
 ```
@@ -2907,7 +2916,7 @@ int main(void) {
     char *posizione = strstr(testo, cerca);
 
     if (posizione != NULL) {
-        int primaParte = posizione - testo;
+        size_t primaParte = posizione - testo;
 
         strncpy(risultato, testo, primaParte);
         risultato[primaParte] = '\0';
