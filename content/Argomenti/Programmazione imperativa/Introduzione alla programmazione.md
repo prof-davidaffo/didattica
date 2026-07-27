@@ -469,6 +469,8 @@ char cassetto[20] = "maglietta";
 strcpy(cassetto, "pantaloni");
 ```
 
+Questo succede perché in C le stringhe non sono oggetti autonomi come `std::string` in C++: sono array di `char`. Il nome dell'array identifica la zona di memoria che contiene i caratteri, e molte funzioni come `strcpy` ricevono l'indirizzo del primo carattere e da lì scrivono i caratteri successivi.
+
 🔹 **Esempio pratico:** Apri il cassetto e metti dentro una **maglietta**.
 
 Se poi vuoi cambiarlo:
@@ -1722,6 +1724,60 @@ int numeri[5] = {1, 2}; // Array: {1, 2, 0, 0, 0}
 
 ---
 
+#### Come un array è rappresentato in memoria
+
+Un array non è una scatola che contiene tante variabili separate sparse nella memoria: è un unico blocco contiguo. Se dichiaro:
+
+```cpp
+int numeri[5] = {10, 20, 30, 40, 50};
+```
+
+il programma riserva spazio per 5 interi consecutivi:
+
+```text
+indirizzo:  1000   1004   1008   1012   1016
+valore:      10     20     30     40     50
+indice:       0      1      2      3      4
+```
+
+Gli indirizzi dell'esempio sono inventati, ma l'idea è reale: se un `int` occupa 4 byte, l'elemento successivo si trova 4 byte dopo il precedente.
+
+In molte espressioni il nome dell'array viene automaticamente interpretato come l'indirizzo del suo primo elemento. Quindi:
+
+```cpp
+numeri
+```
+
+si comporta come:
+
+```cpp
+&numeri[0]
+```
+
+cioè come un puntatore al primo elemento dell'array. Per questo motivo l'espressione:
+
+```cpp
+numeri[i]
+```
+
+può essere pensata come:
+
+```cpp
+*(numeri + i)
+```
+
+Il significato è: parti dall'indirizzo del primo elemento, spostati di `i` elementi, poi leggi il valore che trovi lì. Lo spostamento tiene conto automaticamente della dimensione del tipo: con un array di `int`, `numeri + 1` avanza di un intero, non di un singolo byte.
+
+> [!warning] Attenzione
+> Dire che "l'array è un puntatore" è una semplificazione utile ma non perfetta. L'array vero e proprio è il blocco di memoria contiguo; il suo nome, in molti contesti, viene convertito in un puntatore al primo elemento. Per esempio `sizeof(numeri)` restituisce la dimensione dell'intero array, mentre `sizeof(p)` su un puntatore restituisce solo la dimensione del puntatore.
+
+Questa rappresentazione spiega due conseguenze importanti:
+
+- l'accesso per indice è molto veloce, perché il computer calcola direttamente l'indirizzo dell'elemento richiesto;
+- se accedo fuori dai limiti, per esempio `numeri[10]`, il programma prova comunque a leggere una zona di memoria vicina ma non appartenente all'array.
+
+---
+
 #### Accesso agli elementi
 
 Gli elementi di un array sono indicizzati a partire da **0**. È possibile accedervi utilizzando il nome dell'array e un **indice** tra parentesi quadre.
@@ -2413,6 +2469,8 @@ Valore:   'C'  'i'  'a'  'o' '\0'
 
 Per questo motivo, se voglio salvare la parola `"Ciao"`, che ha 4 lettere, mi serve un array lungo almeno 5.
 
+Il ragionamento è lo stesso visto per gli array numerici: il nome della stringa è il nome di un array, e quando lo passo a una funzione come `printf`, `strlen` o `strcpy`, viene passato l'indirizzo del primo carattere. La funzione poi avanza in memoria carattere per carattere finché trova `\0`.
+
 **Esempio**:
 
 ```c
@@ -2459,13 +2517,13 @@ char *nome2 = "Mario";
 nome1[0] = 'D'; // ok: nome1 diventa "Dario"
 ```
 
-`nome2` punta invece a una stringa letterale. Le stringhe letterali non vanno modificate.
+`nome2` è invece una variabile puntatore: contiene l'indirizzo del primo carattere di una stringa letterale. Le stringhe letterali non vanno modificate.
 
 ```text
 nome2[0] = 'D'; // errore logico: comportamento non definito
 ```
 
-Quando vuoi modificare una stringa in C, usa un array di `char` abbastanza grande.
+Quindi `nome1` è il blocco di memoria che contiene i caratteri, mentre `nome2` è una variabile che contiene un indirizzo. Quando vuoi modificare una stringa in C, usa un array di `char` abbastanza grande.
 
 ---
 
@@ -3673,7 +3731,16 @@ int main(void) {
 > Prova ad eseguire entrambi i programmi. Cosa succede? Per quale motivo?
 
 #### Passaggio di array
-Come detto prima, passare un array o un oggetto complesso equivale sempre a passarlo come riferimento (senza la `&` prima del parametro, metterla da errore).
+Quando passo un array a una funzione, non viene copiato tutto il blocco di memoria. Il parametro riceve l'indirizzo del primo elemento dell'array, quindi dentro la funzione `arr` si comporta come un puntatore. Per questo motivo le modifiche agli elementi hanno effetto sull'array originale.
+
+In pratica queste due intestazioni sono equivalenti:
+
+```cpp
+void modifyArray(int arr[], int size)
+void modifyArray(int *arr, int size)
+```
+
+La funzione però non conosce più automaticamente la dimensione dell'array: riceve solo l'indirizzo iniziale. Per questo motivo bisogna passare anche `size`.
 
 Puoi verificarlo con questa versione modificata del precedente programma:
 ```cpp
@@ -3681,7 +3748,7 @@ Puoi verificarlo con questa versione modificata del precedente programma:
 using namespace std;
 
 // Funzione per stampare gli elementi di un array
-void printArray(const int arr[], int &size) {
+void printArray(const int arr[], int size) {
     for (int i = 0; i < size; i++) {
         cout << arr[i] << " ";
     }

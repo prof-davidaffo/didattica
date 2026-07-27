@@ -6,7 +6,7 @@ Le matrici hanno dimensioni operative `m × n`, con un massimo di 15 righe e 8 c
 
 La trasformazione deve:
 
-- diminuire tutti i valori minori di zero;
+- dimezzare tutti i valori minori di zero;
 - sottrarre 20 ai valori positivi, senza scendere sotto lo zero.
 
 Usare funzioni adeguate e il passaggio di parametri per favorire il riuso del codice. Le funzioni non devono effettuare stampe con `printf`, salvo quando richiesto esplicitamente.
