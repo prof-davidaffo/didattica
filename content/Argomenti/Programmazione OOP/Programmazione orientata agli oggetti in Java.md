@@ -2,7 +2,7 @@
 
 Questa dispensa parte dalle classi più semplici e arriva, un passaggio alla volta, alla costruzione di programmi formati da più oggetti. Gli argomenti vengono introdotti quando diventano utili negli esempi.
 
-Prima di affrontare gli oggetti, la dispensa riprende le conoscenze di Java necessarie per seguire gli esempi. Non si tratta di un corso completo sul linguaggio, ma di un breve ripasso. Gli esempi usano Java 17 o una versione successiva.
+Prima di affrontare gli oggetti, la dispensa riprende le conoscenze di Java necessarie per seguire gli esempi. Non si tratta di un corso completo sul linguaggio, ma di un breve ripasso. Gli esempi usano la sintassi moderna del linguaggio; conviene quindi lavorare con un JDK recente.
 
 Le classi pubbliche sono mostrate senza `package` per non appesantire il codice. In un progetto Java, ciascuna va salvata in un file con lo stesso nome della classe.
 
@@ -10,7 +10,7 @@ Le classi pubbliche sono mostrate senza `package` per non appesantire il codice.
 
 # Basi di Java
 
-Questo capitolo raccoglie la sintassi che verrà usata fin dall'inizio: variabili, condizioni, scelte, cicli e metodi. Chi conosce già questi argomenti può usarlo come ripasso.
+Questo capitolo raccoglie la sintassi che verrà usata fin dall'inizio: variabili, input e output, condizioni, scelte, cicli e metodi. Chi conosce già questi argomenti può usarlo come ripasso.
 
 ## Un programma minimo
 
@@ -66,6 +66,55 @@ balance = 70;
 ```
 
 Il simbolo `=` esegue un'assegnazione. Non esprime un'uguaglianza matematica.
+
+## Leggere dati da tastiera
+
+`System.out.println()` scrive un risultato sul terminale. Per leggere ciò che l'utente digita si può usare la classe `Scanner` della libreria standard:
+
+```java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Come ti chiami? ");
+        String name = input.nextLine();
+
+        System.out.println("Ciao, " + name);
+    }
+}
+```
+
+La prima riga rende disponibile `Scanner`, che appartiene al package `java.util`. Il significato generale di `import` e dei package verrà approfondito più avanti; per ora basta collocare l'istruzione prima della dichiarazione della classe.
+
+L'espressione `new Scanner(System.in)` prepara la lettura dall'**input standard**, che durante l'esecuzione nel terminale corrisponde normalmente alla tastiera. `input` è il nome scelto per la variabile che permette di effettuare le letture. La creazione degli oggetti con `new` verrà spiegata nel capitolo successivo.
+
+`System.out.print()` mostra il messaggio senza andare a capo, così l'utente può scrivere sulla stessa riga. `input.nextLine()` attende che l'utente inserisca del testo e prema Invio, poi restituisce l'intera riga come `String`.
+
+### Convertire l'input in un numero
+
+Anche quando l'utente digita delle cifre, `nextLine()` restituisce una stringa. Per ottenere un valore numerico bisogna convertirla:
+
+```java
+System.out.print("Quanti anni hai? ");
+String ageText = input.nextLine();
+int age = Integer.parseInt(ageText);
+
+System.out.println("L'anno prossimo avrai "
+        + (age + 1) + " anni");
+```
+
+`Integer.parseInt()` converte una stringa in un valore di tipo `int`. Per un numero decimale si può usare `Double.parseDouble()`:
+
+```java
+System.out.print("Inserisci il prezzo: ");
+double price = Double.parseDouble(input.nextLine());
+```
+
+In questi primi esempi supponiamo che l'utente inserisca un valore valido. Se la stringa non rappresenta il tipo di numero richiesto, la conversione fallisce; la gestione di questo caso verrà affrontata nel capitolo sulle eccezioni.
+
+`Scanner` offre anche metodi come `nextInt()` e `nextDouble()`. Tuttavia, alternarli con `nextLine()` richiede attenzione perché il carattere di fine riga può rimanere da leggere. Usare `nextLine()` per ogni dato e convertire esplicitamente i numeri rende il flusso iniziale più uniforme.
 
 ## Espressioni e operatori
 
@@ -310,6 +359,8 @@ In questi esempi i metodi sono `static`, quindi possono essere chiamati da `main
 ## In sintesi
 
 - Una variabile ha un nome, un tipo e un valore.
+- `Scanner` permette di leggere l'input; `nextLine()` restituisce la riga inserita come stringa.
+- `Integer.parseInt()` e `Double.parseDouble()` convertono una stringa rispettivamente in un intero e in un numero decimale.
 - Gli operatori permettono di costruire espressioni e condizioni.
 - `if`, `else if` ed `else` permettono di scegliere tra condizioni diverse.
 - `switch` confronta uno stesso valore con più alternative precise.
@@ -321,15 +372,11 @@ In questi esempi i metodi sono `static`, quindi possono essere chiamati da `main
 
 ## Esercizi
 
-1. Dichiara due variabili intere e stampa la loro somma, differenza e prodotto.
-2. Usa `if`, `else if` ed `else` per stabilire se un numero è positivo, negativo oppure uguale a zero.
-3. Usa `switch` per associare ai numeri da 1 a 7 i nomi dei giorni della settimana e gestisci gli altri numeri come non validi.
-4. Usa un ciclo `for` per stampare i numeri da 1 a 10.
-5. Data una stringa, usa un ciclo `for`, `length()` e `charAt()` per stampare un carattere alla volta.
-6. Usa un ciclo `do-while` per stampare i numeri da 5 a 1.
-7. Scrivi un ciclo che esamini i numeri da 1 a 20, salti i multipli di 3 con `continue` e termini con `break` quando raggiunge 17.
-8. Scrivi un metodo `isEven(int number)` che restituisca `true` se il numero è pari.
-9. Scrivi un metodo `absoluteValue(int number)` che restituisca il valore assoluto del parametro.
+1. Scrivi un programma per calcolare il costo di un parcheggio. L'utente inserisce le ore intere di sosta: la prima ora costa 2 euro, le successive 1 euro ciascuna, fino a un massimo giornaliero di 10 euro. Un valore minore o uguale a zero è rifiutato. Sposta il calcolo in `parkingCost(int hours)` e verifica almeno i casi `1`, `3`, `12` e `0`.
+2. Leggi una sequenza di temperature intere terminata dal valore sentinella `999`. Senza usare array, stampa quante temperature sono state inserite, il minimo, il massimo e la media. Se `999` è il primo valore, stampa un messaggio specifico invece di calcolare la media.
+3. Realizza un piccolo menu che continui a essere mostrato finché l'utente non sceglie **Esci**. Le altre scelte permettono di convertire Celsius in Fahrenheit, Fahrenheit in Celsius oppure visualizzare il numero di conversioni eseguite. Usa `switch` per il comando e metodi separati per le due formule; un comando sconosciuto non deve terminare il programma.
+4. Scrivi `countOccurrences(String text, char searched)`, che attraversa la stringa e conta quante volte compare il carattere richiesto. Usa poi il metodo per stabilire quale fra due caratteri inseriti dall'utente compare più spesso, gestendo anche il pareggio.
+5. Un distributore accetta soltanto importi da 1 o 2 euro e deve raggiungere un prezzo scelto dall'utente. Continua a leggere monete finché il totale non raggiunge il prezzo; ignora con `continue` i tagli non validi e interrompi con `break` se viene inserito `0`. Al termine comunica se l'acquisto è riuscito e l'eventuale resto.
 
 ---
 
@@ -623,10 +670,10 @@ In questo primo esempio `Main` decide quali operazioni eseguire e stampa i risul
 
 ### Esercizi
 
-1. Crea una classe `Rectangle` con i campi `width` e `height`. Il costruttore riceve entrambe le misure; i metodi `area()` e `perimeter()` restituiscono area e perimetro.
-2. Crea una classe `Counter` con i metodi `increment()`, `decrement()` e `getValue()`. Il contatore non deve scendere sotto zero.
-3. Crea una classe `Book` con titolo, autore e numero di pagine. Aggiungi un costruttore, i metodi che restituiscono i tre campi e un metodo `description()`.
-4. Scrivi una classe `Main` che crei due contatori. Incrementa il primo e verifica, stampando entrambi i valori, che il secondo non sia cambiato.
+1. Modella una lampada con nome e stato acceso/spento. Il costruttore riceve il nome e la lampada nasce spenta; `turnOn()`, `turnOff()`, `isOn()` e `description()` costituiscono le operazioni disponibili. Crea due lampade, azionale in modo diverso e mostra che ogni oggetto conserva il proprio stato.
+2. Crea `FuelTank` con capacità, quantità iniziale e metodi `add(double liters)`, `consume(double liters)` e `getLevel()`. I primi due restituiscono `false` senza modificare l'oggetto se l'operazione non è possibile. Scrivi un programma che provi rifornimento valido, rifornimento eccessivo, consumo valido e consumo oltre la quantità disponibile.
+3. Progetta una classe `QuizQuestion` che conservi domanda, risposta corretta e punteggio. Il metodo `checkAnswer(String answer)` restituisce l'esito, mentre `pointsFor(String answer)` restituisce il punteggio oppure zero. Crea tre domande e calcola il punteggio di un partecipante senza inserire la logica delle risposte nel `main()`.
+4. Ti viene consegnata una classe `Thermostat` nella quale `increase()` modifica una variabile locale invece del campo. Scrivi un esempio minimo che renda visibile il difetto, correggilo usando `this` dove serve e spiega come hai verificato che due termostati rimangano indipendenti.
 
 ---
 
@@ -744,22 +791,10 @@ Il procedimento inverso permette di ricavare lo scheletro di una classe da un di
 
 ### Esercizi
 
-1. Disegna il diagramma della classe `Rectangle` realizzata nel capitolo precedente.
-2. Disegna un diagramma degli oggetti con due rettangoli di dimensioni diverse.
-3. Trasforma in un diagramma UML la classe `Counter`.
-4. Scrivi lo scheletro Java della classe rappresentata dal diagramma seguente:
-
-```text
-+-----------------------------------+
-| Temperature                       |
-+-----------------------------------+
-| - celsius: double                 |
-+-----------------------------------+
-| + Temperature(celsius: double)    |
-| + getCelsius(): double            |
-| + getFahrenheit(): double         |
-+-----------------------------------+
-```
+1. Dal seguente requisito ricava prima una classe e poi il suo diagramma UML: «Un biglietto ferroviario conserva stazione di partenza, destinazione e prezzo; può restituire una descrizione e calcolare il prezzo dopo uno sconto percentuale». Indica tipi, visibilità, parametri e valori restituiti. Infine scrivi lo scheletro Java e controlla che corrisponda al diagramma.
+2. Disegna due diagrammi degli oggetti relativi allo stesso `FuelTank`: uno prima di un consumo di 15 litri e uno dopo. Affianca un secondo serbatoio che non viene modificato. I diagrammi devono rendere riconoscibili identità diverse e valori diversi nel tempo.
+3. Esamina questo diagramma e individua almeno quattro informazioni mancanti o ambigue: `Student` contiene `name` e `credits` e offre `addCredits` e `description`, ma il diagramma non riporta visibilità, tipi, parametri né valore restituito. Produci una versione completa e coerente, poi scrivi la corrispondente classe Java.
+4. Disegna il diagramma di classe e un diagramma degli oggetti per un distributore che conserva nome del prodotto, prezzo e quantità disponibile. Nel diagramma degli oggetti rappresenta due distributori con prodotti diversi e scegli valori che permettano di controllare visivamente il risultato di una vendita.
 
 ---
 
@@ -988,11 +1023,11 @@ Il campo `balance` rimane sempre maggiore o uguale a zero, anche quando il progr
 
 ### Esercizi
 
-1. Scrivi una classe `Counter` con un campo privato `value`, inizializzato a zero. `increment()` aumenta il valore; `decrement()` restituisce `false` se il contatore è già a zero.
-2. Crea una classe `VolumeControl` il cui valore iniziale è 50. I metodi `increase()` e `decrease()` devono mantenere il volume tra 0 e 100. Aggiungi un getter, ma non un setter generico.
-3. Aggiungi a `BankAccount` un metodo `canWithdraw(int amount)` che restituisca `true` quando il prelievo è possibile senza modificare il saldo. Usa poi questo metodo all'interno di `withdraw`.
-4. Spiega perché un campo privato accompagnato da un setter senza controlli non protegge davvero lo stato dell'oggetto.
-5. Indica quali classi possono accedere a un campo `private`, package-private, `protected` e `public`.
+1. Realizza `Elevator`, costruito con il numero massimo di piani e inizialmente fermo al piano zero. Espone `goUp()`, `goDown()`, `getCurrentFloor()` e `isAtTop()`, ma nessun metodo per assegnare direttamente il piano. Le operazioni oltre i limiti restituiscono `false`. Verifica con una sequenza di chiamate che l'oggetto non possa mai trovarsi sotto zero o sopra il piano massimo.
+2. Una `GiftCard` conserva codice e credito. Può essere ricaricata con un importo positivo e può pagare soltanto importi positivi non superiori al credito. Progetta l'interfaccia pubblica minima, implementala e prova almeno un pagamento valido, uno troppo elevato e una ricarica non valida, controllando che gli errori non alterino il saldo.
+3. Rifattorizza una classe `Exam` con campi pubblici `student`, `grade` e `passed`. Elimina gli stati incoerenti, come `grade = 3` insieme a `passed = true`: decidi quale informazione debba essere conservata e quale possa essere calcolata. Motiva ogni getter presente e l'assenza di setter generici.
+4. Confronta due versioni di `VolumeControl`: una con `setVolume(int)` pubblico senza controlli e una con `increase()`, `decrease()` e un eventuale setter con validazione. Scrivi una breve sequenza di chiamate che rende invalida la prima versione e non la seconda, poi formula esplicitamente l'invariante.
+5. Per una classe `UserAccount`, classifica `password`, `isPasswordCorrect()`, `changePassword()` e `description()` come dettagli privati o operazioni pubbliche. Se ritieni utile un membro package-private o `protected`, indica un caso concreto che lo giustifichi; non usarli soltanto per evitare `private`.
 
 ---
 
@@ -1027,8 +1062,6 @@ BankAccount first = new BankAccount("Ada");
 BankAccount second = first;
 ```
 
-Anche `String` è una classe, non un tipo primitivo: una variabile `String` contiene quindi un riferimento.
-
 Dopo l'assegnazione, entrambe le variabili indicano lo stesso conto:
 
 ```text
@@ -1046,6 +1079,55 @@ System.out.println(first.getBalance()); // 100
 
 La presenza di più riferimenti allo stesso oggetto si chiama **aliasing**. `first` e `second` sono alias.
 
+### Modificare un oggetto e riassegnare una variabile
+
+Un'assegnazione copia il valore presente nella variabile in quel momento; non crea un legame permanente fra le due variabili. Due variabili possono quindi indicare lo stesso oggetto e poi essere riassegnate separatamente. Consideriamo questo programma:
+
+```java
+public class StringReferences {
+    public static void main(String[] args) {
+        String a = "Ciao";
+        String b = a;
+
+        a = "Buongiorno";
+
+        System.out.println(a + " " + b);
+    }
+}
+```
+
+Subito dopo `b = a`, entrambe le variabili indicano la stringa `"Ciao"`:
+
+```text
+a ──┐
+    ├──> "Ciao"
+b ──┘
+```
+
+L'istruzione successiva non modifica quella stringa. Assegna ad `a` il riferimento a un'altra stringa:
+
+```text
+a ─────> "Buongiorno"
+
+b ─────> "Ciao"
+```
+
+Il programma stampa quindi:
+
+```text
+Buongiorno Ciao
+```
+
+`b = a` aveva copiato il riferimento alla stessa stringa, ma le due variabili rimangono indipendenti: riassegnare `a` non riassegna automaticamente anche `b`. Inoltre le stringhe sono immutabili, quindi `"Ciao"` non può essere trasformata in `"Buongiorno"`; viene usato un altro oggetto `String`.
+
+È diverso da quanto accade con:
+
+```java
+second.deposit(100);
+```
+
+Qui `second` non viene riassegnata. Il metodo modifica il `BankAccount` raggiunto sia da `first` sia da `second`, perciò il nuovo saldo è visibile attraverso entrambe le variabili.
+
 ### Identità degli oggetti
 
 L'operatore `==`, applicato ai riferimenti, controlla se due variabili indicano lo stesso oggetto:
@@ -1060,6 +1142,181 @@ System.out.println(first == another); // false
 ```
 
 `first` e `another` indicano due oggetti distinti, anche se sono stati costruiti con gli stessi dati. Il confronto del contenuto degli oggetti verrà affrontato più avanti.
+
+### Copia superficiale e copia profonda
+
+Quando una variabile indica un oggetto, ci sono tre operazioni diverse da non confondere:
+
+1. copiare soltanto il riferimento;
+2. creare una copia superficiale dell'oggetto;
+3. creare una copia profonda dell'oggetto.
+
+Il primo caso è quello già incontrato con `BankAccount`. Per distinguere copia superficiale e profonda introdurremo poi un oggetto che contiene un altro oggetto modificabile.
+
+#### 1. Copiare il riferimento
+
+L'assegnazione copia il riferimento contenuto nella variabile, non l'oggetto:
+
+```text
+first  ──┐
+         ├──> BankAccount { balance = 0 }
+second ──┘
+```
+
+Il primo esempio richiede soltanto queste istruzioni:
+
+```java
+BankAccount first = new BankAccount("Ada");
+BankAccount second = first;
+
+second.deposit(100);
+
+System.out.println(first == second);
+System.out.println(first.getBalance());
+```
+
+L'output è:
+
+```text
+true
+100
+```
+
+Esiste un solo `BankAccount`. `first` e `second` sono due riferimenti allo stesso oggetto, cioè due alias: per questo `first == second` restituisce `true`. Questa non è una copia superficiale, perché non è stato creato alcun nuovo oggetto.
+
+#### 2. Creare una copia superficiale
+
+Per osservare una vera copia superficiale serve un oggetto che ne contenga un altro modificabile. Supponiamo che `Person` abbia un campo `address` di tipo `Address`. Il solo metodo che ci interessa in questo momento è:
+
+```java
+Person shallowCopy() {
+    return new Person(address);
+}
+```
+
+Il costruttore crea una nuova `Person`, ma riceve lo stesso oggetto `Address` contenuto nell'originale.
+
+Una **copia superficiale**, o *shallow copy*, crea un secondo oggetto `Person`, ma gli assegna lo stesso riferimento `address` dell'originale:
+
+```text
+original  ──> Person ──┐
+                       ├──> Address { city = "Genova" }
+shallow   ──> Person ──┘
+```
+
+Il secondo esempio usa `shallowCopy()`:
+
+```java
+Person original = new Person(new Address("Genova"));
+Person shallow = original.shallowCopy();
+
+shallow.moveTo("Milano");
+
+System.out.println(original.getCity()); // Milano
+```
+
+`original` e `shallow` sono due persone distinte, come mostra il diagramma, ma contengono lo stesso indirizzo. Per questo la modifica eseguita attraverso `shallow` viene letta come `"Milano"` anche attraverso `original`.
+
+#### 3. Creare una copia profonda
+
+Per la copia profonda, `Person` deve invece costruire anche un nuovo indirizzo:
+
+```java
+Person deepCopy() {
+    return new Person(
+            new Address(address.getCity()));
+}
+```
+
+Una **copia profonda**, o *deep copy*, crea un secondo oggetto `Person` e anche un secondo oggetto `Address`:
+
+```text
+original  ──> Person ──> Address { city = "Genova" }
+
+deep      ──> Person ──> Address { city = "Genova" }
+```
+
+Il terzo esempio usa `deepCopy()`:
+
+```java
+Person original = new Person(new Address("Genova"));
+Person deep = original.deepCopy();
+
+deep.moveTo("Roma");
+
+System.out.println(original == deep);
+System.out.println(original.getCity());
+System.out.println(deep.getCity());
+```
+
+L'output è:
+
+```text
+false
+Genova
+Roma
+```
+
+Anche in questo caso le persone sono due oggetti distinti. Questa volta, però, possiedono indirizzi indipendenti: modificare quello raggiunto da `deep` non modifica quello raggiunto da `original`.
+
+Una copia profonda non deve duplicare indiscriminatamente ogni oggetto. Gli oggetti immutabili, come `String`, possono essere condivisi; vanno copiati gli oggetti mutabili che devono cambiare in modo indipendente.
+
+#### Il metodo `clone()`
+
+La classe `Object`, dalla quale derivano tutte le classi, dichiara il metodo `clone()`. La sua implementazione crea un nuovo oggetto e copia il valore di ciascun campo come farebbe un'assegnazione:
+
+- i valori primitivi vengono copiati;
+- i riferimenti vengono copiati, ma gli oggetti ai quali rimandano non vengono copiati.
+
+`Object.clone()` produce quindi una **copia superficiale**. Più precisamente, è la chiamata a `super.clone()` senza altre operazioni a lasciare condivisi gli oggetti interni.
+
+Per usare questo meccanismo, una classe deve implementare l'interfaccia `Cloneable` e rendere pubblico `clone()`, che in `Object` è `protected`:
+
+```java
+final class Person implements Cloneable {
+    private Address address;
+
+    @Override
+    public Person clone()
+            throws CloneNotSupportedException {
+        return (Person) super.clone();
+    }
+}
+```
+
+Sono omessi il costruttore e gli altri metodi, che qui non servono. `Cloneable` non dichiara metodi: segnala a `Object.clone()` che la copia è consentita. Il cast serve perché `super.clone()` restituisce un riferimento di tipo `Object`. La dichiarazione `throws CloneNotSupportedException` riguarda le eccezioni controllate e verrà spiegata nel capitolo dedicato.
+
+Questo non limita `clone()` alle copie superficiali. La classe può partire dalla copia prodotta da `super.clone()` e sostituire i riferimenti agli oggetti mutabili con riferimenti a loro copie.
+
+Supponiamo che anche `Address` implementi `Cloneable`. Poiché il suo unico campo è una `String` immutabile, per copiarlo basta:
+
+```java
+@Override
+public Address clone()
+        throws CloneNotSupportedException {
+    return (Address) super.clone();
+}
+```
+
+`Person` può allora ridefinire `clone()` in questo modo:
+
+```java
+@Override
+public Person clone()
+        throws CloneNotSupportedException {
+    Person copy = (Person) super.clone();
+    copy.address = address.clone();
+    return copy;
+}
+```
+
+La prima istruzione crea la nuova `Person`, inizialmente con lo stesso riferimento `address`. La seconda clona l'indirizzo e sostituisce quel riferimento nella copia. Il risultato è una **deep copy**: persona e indirizzo sono entrambi distinti.
+
+In questa implementazione `address` non è `final`, perché dopo `super.clone()` il riferimento contenuto nella copia deve essere sostituito.
+
+Se `Address` contenesse a sua volta altri oggetti mutabili, il suo `clone()` potrebbe copiarli nello stesso modo. In un oggetto composto da molte parti, la copia profonda può quindi restare breve: ogni classe si occupa di clonare direttamente i propri campi mutabili.
+
+Quando in un progetto una semplice chiamata a `clone()` produce una deep copy, significa che quel comportamento è già stato implementato nelle classi coinvolte o in una libreria. Java non può stabilirlo automaticamente per qualsiasi oggetto, perché alcuni riferimenti devono essere copiati mentre altri possono essere condivisi intenzionalmente.
 
 ### Assegnare un nuovo riferimento
 
@@ -1101,6 +1358,8 @@ account = new BankAccount("Grace");
 Il conto di Ada può quindi essere rimosso dalla memoria. Non è possibile stabilire il momento esatto in cui avverrà: il garbage collector entra in funzione quando la JVM lo ritiene necessario.
 
 Questo meccanismo evita i puntatori pendenti perché un oggetto raggiungibile non viene eliminato. Evita inoltre che il programmatore debba decidere manualmente quando liberare la memoria.
+
+Java non possiede un distruttore che venga eseguito in un momento prevedibile. Il garbage collector recupera la memoria, ma non va usato per decidere quando chiudere un file, una connessione o un'altra risorsa esterna. Queste risorse devono essere chiuse esplicitamente; più avanti useremo il try-with-resources per farlo anche quando si verifica un'eccezione.
 
 ### Passaggio dei parametri
 
@@ -1225,25 +1484,32 @@ Il controllo è utile quando l'assenza dell'oggetto ha un significato previsto d
 - Assegnare un riferimento a un'altra variabile non copia l'oggetto.
 - Due riferimenti allo stesso oggetto sono alias.
 - Sui riferimenti, `==` verifica l'identità degli oggetti.
+- Una copia superficiale crea un nuovo oggetto ma può condividere gli oggetti interni; una copia profonda duplica anche le parti mutabili che devono essere indipendenti.
+- `super.clone()` produce inizialmente una copia superficiale; un metodo `clone()` ridefinito può renderla profonda clonando a sua volta i campi mutabili.
 - Il garbage collector recupera la memoria degli oggetti non più raggiungibili ed evita i puntatori pendenti nel normale codice Java.
+- Il garbage collector non sostituisce la chiusura esplicita di file, connessioni e altre risorse esterne.
 - Java passa sempre i parametri per valore, anche quando il valore copiato è un riferimento.
 - `null` indica l'assenza di un oggetto.
 
 ### Esercizi
 
-1. Disegna i riferimenti creati da queste istruzioni e indica quanti oggetti esistono:
+1. Traccia su carta l'esecuzione seguente. Dopo ogni riga indica a quale oggetto punta ciascuna variabile e quali oggetti sono ancora raggiungibili; soltanto dopo esegui il codice e confronta la previsione.
 
 ```java
-BankAccount first = new BankAccount("Ada");
-BankAccount second = first;
-BankAccount third = new BankAccount("Grace");
-second = third;
+Counter a = new Counter();
+Counter b = a;
+a.increment();
+a = new Counter();
+b.increment();
+Counter c = b;
+b = null;
 ```
 
-2. Prevedi l'output di un programma in cui due variabili indicano lo stesso `Counter` e il valore viene incrementato attraverso una sola delle due.
-3. Scrivi un metodo `addBonus(BankAccount account, int amount)` che provi a depositare l'importo ricevuto. Verifica che il saldo osservato dal chiamante cambi.
-4. Scrivi un metodo `reset(BankAccount account)` che assegni al parametro un nuovo conto. Verifica che la variabile del chiamante non venga sostituita e spiega il risultato.
-5. Spiega la differenza tra un riferimento che contiene `null` e un riferimento a un oggetto i cui campi valgono zero.
+2. Un metodo `rename(Player player)` modifica il nome dell'oggetto ricevuto; un metodo `replace(Player player)` assegna invece al parametro un nuovo `Player`. Scrivi entrambi, chiamali sulla stessa variabile e spiega, con un disegno dei riferimenti, perché soltanto una delle due operazioni è visibile al chiamante.
+3. Modella `Route` con nome e un oggetto mutabile `Destination`, che conserva città e distanza. Implementa un costruttore di copia superficiale e uno di copia profonda. Prepara due verifiche distinte: cambiare la città attraverso la copia superficiale deve modificare anche l'originale; cambiarla attraverso la copia profonda non deve farlo.
+4. Una `Playlist` contiene un oggetto mutabile `PlaybackSettings`, ma il nome del proprietario è una `String`. Decidi quali dati vadano duplicati in una deep copy e quali possano essere condivisi senza rischio. Implementa la copia e giustifica la decisione facendo riferimento a mutabilità e identità, non soltanto al tipo dei campi.
+5. Correggi un metodo che può restituire `null` per indicare che un prodotto non è stato trovato. Scrivi il chiamante in modo che non provochi `NullPointerException` e distingui nel testo il riferimento assente da un prodotto esistente con quantità uguale a zero.
+6. Valuta questa affermazione: «Quando un oggetto che rappresenta un file non è più raggiungibile, il file viene chiuso immediatamente». Spiega separatamente che cosa può recuperare il garbage collector, che cosa non garantisce e quale responsabilità rimane al programma.
 
 ---
 
@@ -1537,11 +1803,11 @@ L'output è:
 
 ### Esercizi
 
-1. Aggiungi a una classe `MessagePrinter` i metodi overloaded `print(String text)` e `print(String text, int times)`. La seconda versione deve stampare il testo più volte.
-2. Aggiungi a `Rectangle` un costruttore che riceva un solo parametro `side` e richiami il costruttore con larghezza e altezza.
-3. Crea una classe `Student` con un campo statico che conti quanti studenti sono stati creati e un metodo statico che restituisca il conteggio.
-4. Dichiara una variabile `final` che contiene un riferimento a `Counter`. Verifica quali operazioni compilano quando incrementi il contatore e quando provi ad assegnare un nuovo oggetto alla variabile.
-5. Aggiungi a `BankAccount` la query overloaded `canWithdraw(int amount)`, che deve richiamare `canWithdraw(int amount, int fee)` usando una commissione uguale a zero.
+1. Progetta `Duration` con un solo stato interno espresso in secondi e tre costruttori: secondi; minuti e secondi; ore, minuti e secondi. Tutti devono delegare a un unico punto che effettua il calcolo. Aggiungi `format()` e verifica che durate costruite in modi equivalenti producano la stessa descrizione.
+2. Una classe `ShippingCost` deve offrire `calculate(double weight)`, `calculate(double weight, boolean express)` e `calculate(double weight, boolean express, int insuredValue)`. Definisci una regola di calcolo semplice e fai delegare gli overload più brevi a quello completo. Prepara casi che dimostrino quale versione viene scelta dal compilatore.
+3. Crea `SupportTicket` con un numero progressivo assegnato automaticamente a ogni nuova richiesta. Il contatore è condiviso, mentre numero, oggetto della richiesta e stato appartengono alla singola istanza. Aggiungi una costante `MAX_SUBJECT_LENGTH` e un metodo statico `isSubjectValid(String subject)`; il programma deve consultarlo prima di costruire il ticket e mostrare che una richiesta rifiutata non incrementa il contatore.
+4. Scrivi un piccolo esperimento con un riferimento `final` a `FuelTank`: consuma carburante e poi prova a riassegnare la variabile. Prima di compilare, indica quale istruzione è valida e quale no; spiega la differenza fra rendere stabile il riferimento e rendere immutabile l'oggetto.
+5. Esamina una classe che usa lo stesso nome `calculate(int)`, `calculate(double)` e `calculate(int, int)`. Scrivi chiamate con argomenti interi, decimali e con due valori e indica, prima di compilare, quale firma verrà selezionata. Inserisci anche una chiamata con un tipo non compatibile, osserva l'errore e spiega come il compilatore usa numero e tipi degli argomenti.
 
 ---
 
@@ -1796,11 +2062,10 @@ Il confronto `removedCar == car` conferma che il garage ha restituito lo stesso 
 
 ### Esercizi
 
-1. Crea una classe `Processor` con i metodi `turnOn()`, `turnOff()` e `isOn()`. Crea poi `Computer`, che costruisce un processore nel proprio costruttore e gli delega le tre operazioni.
-2. Scrivi una classe `ParkingSpot` che possa conservare al massimo una `Car`. I metodi `park`, `removeCar` e `isEmpty` devono mantenere questo invariante.
-3. Crea una classe `Inspector` con un metodo `inspect(Car car)` che usa l'automobile senza conservarla. Spiega perché la relazione è una dipendenza.
-4. Disegna in UML le relazioni tra `Computer` e `Processor`, tra `ParkingSpot` e `Car` e tra `Inspector` e `Car`.
-5. Disegna il diagramma di sequenza di una chiamata a `computer.turnOn()`.
+1. Modella una camera d'albergo con `Room`, `Door` e `KeyCard`. La camera possiede la porta per tutta la propria vita; una tessera, creata altrove, viene usata per tentare l'apertura ma non diventa parte della porta. Assegna le responsabilità, implementa una sequenza riuscita e una rifiutata e classifica le relazioni presenti.
+2. Progetta `CoffeeMachine` composta da un `WaterTank`. Il chiamante chiede un caffè alla macchina, non estrae il serbatoio per consumarne direttamente l'acqua. Implementa la delega e garantisci che un'erogazione impossibile non modifichi il livello. Disegna poi il diagramma di sequenza della richiesta.
+3. Un `ParkingSpot` può essere vuoto oppure associato a una sola `Car`, che continua a esistere quando lascia il posto. Definisci `park()`, `removeCar()` e `isEmpty()`, stabilisci che cosa restituiscono nei casi non validi e disegna la molteplicità UML corretta.
+4. Analizza una classe `Order` che crea internamente `Printer`, `EmailSender` e `PaymentTerminal` e usa tutti e tre in un unico metodo. Separa oggetti posseduti stabilmente, collaboratori ricevuti come parametri e semplici dipendenze temporanee. Non basta disegnare le frecce: per ogni relazione spiega chi crea l'oggetto e per quanto tempo lo conserva.
 
 ---
 
@@ -2066,11 +2331,11 @@ Questi modificatori permettono alla superclasse di dichiarare esplicitamente qua
 
 ### Esercizi
 
-1. Crea una sottoclasse `Smartwatch` di `Device`. Aggiungi il tipo di cinturino e ridefinisci `description()`.
-2. Aggiungi a `Device` un metodo protetto `powerStatus()` che restituisca `"acceso"` oppure `"spento"`. Usalo nelle descrizioni delle sottoclassi.
-3. Scrivi una superclasse `Appliance` e una sottoclasse `WashingMachine`. Verifica quali metodi pubblici vengono ereditati e quali campi privati non sono accessibili direttamente.
-4. Disegna il diagramma UML delle gerarchie create negli esercizi precedenti.
-5. Spiega perché `Smartphone extends Battery` e `Computer extends Processor` rappresentano male i rispettivi domini.
+1. Crea una superclasse `Ticket` con codice, prezzo base e `description()`. Aggiungi `ReducedTicket`, che conserva la percentuale di riduzione, usa `super` nel costruttore e ridefinisce il prezzo restituito e la descrizione. Verifica costruzione, metodi ereditati e override con almeno due oggetti.
+2. Una superclasse `Employee` conserva nome e ore settimanali; `RemoteEmployee` aggiunge il paese dal quale lavora. Progetta costruttori coerenti e un metodo protetto che produca la parte comune della descrizione, evitando sia campi pubblici sia duplicazione nelle sottoclassi.
+3. Parti da `ElectricCar extends Battery`. Elenca almeno tre operazioni o proprietà della batteria che non descrivono un'automobile, poi rifattorizza il modello usando composizione. Disegna prima e dopo in UML e indica quale versione esprime correttamente «è un» e «ha un».
+4. Valuta se `PremiumUser extends User`, `ElectricScooter extends Vehicle` e `Printer extends UsbPort` siano relazioni di ereditarietà plausibili. Per ciascuna scrivi una frase sostituendo `extends` con «è un» e controlla se stato e operazioni ereditati hanno senso per la sottoclasse. Implementa soltanto uno dei casi che ritieni corretti.
+5. Progetta una classe base che non debba poter essere estesa oppure un metodo il cui comportamento non debba essere ridefinito. Usa `final` nel punto appropriato e spiega quale rischio concreto stai impedendo, invece di aggiungerlo senza motivo.
 
 ---
 
@@ -2197,11 +2462,10 @@ Speaker Mini
 
 ### Esercizi
 
-1. Crea una `ArrayList<String>` con tre modelli di dispositivo, poi stampa il primo elemento e il numero di elementi.
-2. Sostituisci il secondo modello, rimuovi il primo e stampa gli elementi rimasti con un for-each.
-3. Crea tre oggetti `Smartphone`, inseriscili in una `ArrayList<Smartphone>` e accendili tutti con un for-each.
-4. Scrivi un metodo `printModels(ArrayList<Smartphone> phones)` che stampi il modello di ogni telefono.
-5. Spiega perché `phones.add("Phone X")` non compila se `phones` è una `ArrayList<Smartphone>`.
+1. Realizza `ContactList`, che conserva una `ArrayList<Contact>`. Deve aggiungere contatti, cercarne uno per numero di telefono e rimuoverlo soltanto se esiste. Il `main()` inserisce almeno quattro contatti e verifica ricerca presente, ricerca assente e rimozione senza accedere direttamente alla lista interna.
+2. Una classe `Playlist` conserva brani con titolo e durata in secondi. Implementa il calcolo della durata totale, la ricerca del primo brano con un certo titolo e la stampa dei soli brani più lunghi di una durata ricevuta. Usa un unico attraversamento per ciascuna operazione e gestisci la playlist vuota.
+3. Crea `Classroom`, che mantiene un elenco di studenti e una capienza massima. `enroll()` deve rifiutare l'iscrizione quando l'aula è piena; `findByName()` restituisce lo studente trovato oppure `null`. Verifica che un tentativo rifiutato non aumenti la dimensione della collezione.
+4. Scrivi `availableProducts(ArrayList<Product> products)`, che costruisce e restituisce una nuova lista contenente soltanto i prodotti disponibili. La lista ricevuta non deve essere modificata. Verifica lista vuota, nessun prodotto disponibile e una combinazione di prodotti disponibili ed esauriti.
 
 ---
 
@@ -2362,11 +2626,10 @@ Se in futuro viene aggiunta un'altra sottoclasse di `Device` che ridefinisce `de
 
 ### Esercizi
 
-1. Crea una sottoclasse `SmartSpeaker` di `Device`, ridefinisci `description()` e aggiungine un oggetto alla collezione del programma completo.
-2. Aggiungi un secondo `Smartphone` e verifica che il ciclo funzioni senza altre modifiche.
-3. Per la variabile `device` indica il tipo dichiarato e il tipo effettivo in ciascuna iterazione.
-4. Verifica che nel corpo del ciclo non sia possibile chiamare `canMakeCall()`. Spiega perché `description()` viene invece accettato.
-5. Crea una gerarchia `Document`, `Invoice` e `Letter`. Inserisci oggetti delle due sottoclassi in una `ArrayList<Document>` e stampane la descrizione con un unico ciclo.
+1. Costruisci una gerarchia `Notification`, `EmailNotification` e `SmsNotification`. Ogni classe ridefinisce `send()`. Inserisci oggetti diversi in una `ArrayList<Notification>` e inviali con un unico ciclo; aggiungi poi `PushNotification` senza modificare il ciclo. Per ogni iterazione annota tipo dichiarato, tipo effettivo e metodo eseguito.
+2. Un programma conserva in `Delivery` una stringa che indica il mezzo e calcola il costo con uno `switch`. Sostituisci questa soluzione con `Delivery`, `BikeDelivery` e `VanDelivery`, ognuna responsabile del proprio calcolo, quindi confronta il codice prima e dopo: quale parte non deve più conoscere tutte le varianti?
+3. Prevedi l'output di una sequenza che assegna prima un `Smartphone` e poi uno `Smartwatch` alla stessa variabile `Device`. Inserisci una chiamata valida a un metodo comune e una chiamata che il compilatore rifiuta perché appartiene soltanto a una sottoclasse. Verifica la previsione e spiega separatamente controllo del compilatore e dispatch dinamico.
+4. Progetta `Report`, `SalesReport` e `InventoryReport` affinché un metodo `printAll(ArrayList<Report>)` possa elaborare entrambi i tipi. I dati specifici devono comparire grazie all'override, senza `instanceof` nel ciclo. Aggiungi un terzo report per verificare che il metodo resti invariato.
 
 ---
 
@@ -2669,14 +2932,11 @@ Le interfacce dovrebbero rimanere concentrate su un ruolo preciso. Separare `Fly
 
 ### Esercizi
 
-1. Verifica che non sia possibile creare direttamente un oggetto `Animal`. Crea invece una variabile di tipo `Animal` che faccia riferimento a un oggetto `Dog`.
-2. Crea `Cat` come sottoclasse concreta di `Animal` e implementa `makeSound()`.
-3. Crea `Penguin` come sottoclasse di `Animal` che implementa `Swimmable`, ma non `Flyable`.
-4. Crea `Bird` come sottoclasse di `Animal` che implementa `Flyable` e aggiungila sia alla collezione di animali sia a quella degli oggetti volanti.
-5. Crea `Helicopter` come classe indipendente che implementa `Flyable`. Aggiungine un oggetto alla `ArrayList<Flyable>` senza modificare il ciclo.
-6. Aggiungi a `Swimmable` un metodo `default` chiamato `leaveWater()` e provalo con `Duck` e `Penguin`.
-7. Definisci un'interfaccia `Walkable` e falla implementare sia da `Dog` sia da `Duck`. Verifica che `Duck` possa implementare tre interfacce.
-8. Disegna il diagramma UML di `Animal`, `Dog`, `Duck`, `Airplane`, `Flyable` e `Swimmable`, distinguendo generalizzazione e realizzazione.
+1. Modella un sistema di trasporto con una classe astratta `TransportPass`, che conserva l'identificativo e dichiara `canEnter()`. `DailyPass` conserva se la giornata è ancora valida; `RidePass` conserva il numero di corse rimaste. Scrivi un programma che controlli una collezione mista senza conoscere le sottoclassi concrete.
+2. Definisci le capacità `Rechargeable` e `Scannable`. Una tessera ricaricabile implementa entrambe, un biglietto cartaceo soltanto `Scannable` e un portafoglio digitale soltanto `Rechargeable`. Costruisci due collezioni basate sulle capacità e dimostra che lo stesso oggetto può partecipare a entrambe senza creare una gerarchia artificiale.
+3. Progetta un'interfaccia `Exportable` con `export()` e un metodo `default` che restituisca un nome di file predefinito. Implementala in due classi non correlate; una usa il comportamento predefinito, l'altra lo ridefinisce. Verifica il dispatch attraverso variabili di tipo `Exportable`.
+4. Per ciascun requisito scegli classe concreta, classe astratta o interfaccia e motiva la scelta: stato e codice condivisi fra conti bancari; capacità di essere stampato per documenti non correlati; oggetto completamente istanziabile senza varianti; base incompleta con un algoritmo comune e un passaggio variabile.
+5. Disegna il diagramma UML dell'esercizio 2 distinguendo generalizzazione e realizzazione. Controlla poi che ogni freccia corrisponda davvero a `extends` oppure `implements` nel codice.
 
 ---
 
@@ -2831,7 +3091,7 @@ Il secondo deve stabilire se `other` indica effettivamente un libro. Il suo tipo
 other.isbn // non compila: Object non dichiara il campo isbn
 ```
 
-Java 17 permette di controllare il tipo e dichiarare nello stesso momento un riferimento più specifico:
+Java permette di controllare il tipo e dichiarare nello stesso momento un riferimento più specifico:
 
 ```java
 if (other instanceof Book book) {
@@ -3044,12 +3304,11 @@ Uguaglianza e ordinamento rispondono infine a domande diverse. `equals()` stabil
 
 ### Esercizi
 
-1. Crea una classe `Product` con codice e nome e ridefinisci soltanto `toString()`. Confronta l'output prima e dopo l'override.
-2. Aggiungi un terzo `Book` con ISBN `"978-1"` e verifica riflessività, simmetria e transitività di `equals()`.
-3. Crea una classe `StudentCard` dichiarata `final`. Considera uguali due tessere con lo stesso numero e ridefinisci coerentemente `toString()`, `equals()` e `hashCode()`.
-4. Spiega perché `equals(Book other)` è un overload e non un override di `equals(Object other)`.
-5. Per una classe `Point` con coordinate `x` e `y`, stabilisci quali campi devono partecipare a `equals()` e `hashCode()`, poi implementa entrambi i metodi.
-6. Modifica temporaneamente `Book.equals()` affinché confronti anche il titolo senza modificare `hashCode()`. Spiega perché il contratto continua a essere rispettato, anche se più oggetti diversi possono produrre lo stesso hash code.
+1. Progetta una classe finale `TrainSeat` identificata da numero del treno, carrozza e posto. Due oggetti con gli stessi tre valori devono essere logicamente uguali anche se creati separatamente. Implementa `toString()`, `equals()` e `hashCode()`, poi verifica riflessività, simmetria, transitività, confronto con `null` e confronto con un tipo diverso.
+2. In una classe `Product`, `equals(Product other)` sembra funzionare quando le variabili sono dichiarate `Product`, ma fallisce quando una viene assegnata a `Object`. Riproduci il difetto, correggi la firma con `@Override` e spiega perché il primo metodo era soltanto un overload.
+3. Una classe `UserProfile` contiene username e descrizione modificabile. Decidi se l'uguaglianza debba dipendere da entrambi o soltanto dallo username. Scrivi due scenari nei quali la scelta produce conseguenze diverse, poi implementa coerentemente `equals()` e `hashCode()`.
+4. Ti viene fornita una classe in cui `equals()` confronta codice e categoria, mentre `hashCode()` usa soltanto la descrizione. Costruisci due oggetti che rendano visibile la violazione del contratto, correggi il metodo e spiega perché oggetti non uguali possono comunque avere lo stesso hash code.
+5. Confronta la rappresentazione prodotta da `Object.toString()` con una ridefinizione utile per il debug di `TrainSeat`. La nuova stringa deve permettere di riconoscere tutti i dati identificativi, ma non deve essere usata per stabilire l'uguaglianza.
 
 ---
 
@@ -3437,12 +3696,11 @@ Il nome del tipo permette al chiamante di gestire separatamente i due casi. L'ec
 
 ### Esercizi
 
-1. Modifica `BankAccount` affinché `deposit()` rifiuti con `IllegalArgumentException` gli importi minori o uguali a zero. Verifica che il saldo non cambi quando viene lanciata l'eccezione.
-2. Completa `withdraw()` usando `InsufficientFundsException`, poi scrivi un programma che gestisca separatamente importo non valido e fondi insufficienti.
-3. Scrivi `parseGrade(String text)`: deve usare `Integer.parseInt()`, accettare soltanto valori da 1 a 10 e lanciare `IllegalArgumentException` per i valori fuori intervallo. Gestisci separatamente testo non numerico e valore non valido.
-4. Modifica `BookFileReader.read()` affinché rifiuti un file che contiene una terza riga non vuota. Scegli un tipo di eccezione già studiato e motiva la scelta.
-5. Scrivi un metodo `countLines(Path path)` che restituisca il numero di righe di un file. Usa un `BufferedReader`, dichiara l'eventuale `IOException` e garantisci la chiusura con try-with-resources.
-6. Spiega che cosa accade in `addBook()` quando il costruttore di `Book` lancia un'eccezione e perché l'elenco rimane invariato.
+1. Implementa `transfer(BankAccount source, BankAccount destination, int amount)`. Importo non positivo e fondi insufficienti devono produrre eccezioni distinguibili; se il trasferimento non riesce, nessuno dei due saldi deve cambiare. Prepara casi per successo e per ogni errore e controlla lo stato dopo la chiamata.
+2. Scrivi `parseReservation(String guestsText, String nightsText)`: converte due stringhe, accetta da 1 a 8 ospiti e da 1 a 30 notti e costruisce una prenotazione soltanto quando entrambi i dati sono validi. Il chiamante deve distinguere testo non numerico, valore fuori intervallo e prenotazione riuscita senza usare un unico `catch` generico.
+3. Realizza un lettore di configurazione che legga da un file esattamente due righe: nome dell'applicazione e numero massimo di tentativi. Usa try-with-resources, propaga `IOException` e lancia un'eccezione appropriata se manca una riga, ne esiste una terza non vuota oppure il numero non è valido. Scrivi il punto in cui questi casi vengono comunicati all'utente.
+4. Introduci `SeatAlreadyBookedException` in un semplice sistema di prenotazione. Spiega perché il chiamante può voler distinguere questo caso da un argomento sintatticamente non valido, quindi mostra due gestioni diverse. Una prenotazione rifiutata non deve occupare altri posti.
+5. Ti viene dato un metodo con `BufferedReader` chiuso soltanto alla fine del blocco `try`. Mostra un percorso eccezionale che salta la chiusura, riscrivilo con try-with-resources e spiega perché affidarsi al garbage collector non è una soluzione.
 
 ---
 
@@ -4023,14 +4281,12 @@ La **notazione O** descrive come cresce il lavoro al crescere del numero `n` di 
 
 ### Esercizi
 
-1. Per ciascun caso scegli fra `List`, `Set`, `Map` e `Deque` e motiva la risposta: tappe di un viaggio; codici degli studenti presenti; studente associato alla matricola; richieste in attesa di elaborazione.
-2. Crea una `List<String>` con tre titoli, inserisci un titolo in posizione 1, sostituisci l'ultimo e attraversa il risultato con un ciclo for-each.
-3. Realizza un registro di voti con `List<Integer>` e calcola media, minimo e massimo senza usare stream. Verifica anche la differenza fra `remove(0)` e `remove(Integer.valueOf(8))`.
-4. Definisci una classe `Student` la cui uguaglianza dipenda dalla matricola. Inserisci in un `Set<Student>` due studenti con la stessa matricola e controlla il valore restituito da `add()` e la dimensione finale.
-5. Confronta `HashSet` e `LinkedHashSet` inserendo gli stessi tag. Indica quale proprietà dell'ordine è garantita da ciascuna implementazione.
-6. Crea una `Map<String, String>` che associ a cinque codici di prodotto i rispettivi nomi. Stampa tutte le coppie con `entrySet()`, cerca un codice presente e uno assente, rimuovi un prodotto e stampa di nuovo la mappa. Infine usa `put()` con una chiave già presente e controlla sia il nuovo valore sia quello precedente restituito dal metodo.
-7. Modifica `BookCatalog` affinché `getAll()` restituisca i libri nell'ordine di inserimento. Scegli l'implementazione interna adatta.
-8. Modella con `ArrayDeque<String>` una coda di tre richieste. Elaborale in ordine FIFO e gestisci esplicitamente il caso di coda vuota prima con `pollFirst()` e poi con `removeFirst()`.
+1. Progetta le collezioni di un sistema per una conferenza: programma ordinato degli interventi, badge unici dei presenti, partecipante associato al codice del badge, richieste di assistenza elaborate in ordine di arrivo. Per ogni dato scegli interfaccia e implementazione, motiva se duplicati e ordine contano e indica le operazioni più frequenti.
+2. Realizza un analizzatore di parole che riceva una `List<String>` e costruisca: l'insieme delle parole distinte nell'ordine della prima comparsa e una mappa parola-numero di occorrenze. Stampa infine soltanto le parole ripetute, con il relativo conteggio. L'algoritmo deve funzionare anche con lista vuota.
+3. Implementa `CourseRegistry`, che associa ogni matricola a uno `Student` e impedisce registrazioni duplicate. `register()` deve comunicare se ha inserito davvero lo studente; `find()` e `remove()` devono gestire una matricola assente senza eccezioni impreviste. Restituisci all'esterno una vista o una copia che non permetta di modificare direttamente il registro.
+4. Usa un solo `ArrayDeque<Command>` per realizzare prima una coda FIFO di lavori da eseguire e poi una cronologia LIFO di comandi da annullare. Scrivi due sequenze di operazioni che rendano evidente la diversa estremità usata e gestisci esplicitamente la struttura vuota.
+5. Un registro di presenze deve conservare una sola occorrenza per studente e ricordare l'ordine di ingresso. Definisci l'uguaglianza dello studente, scegli l'implementazione del `Set` e verifica inserimento duplicato, rimozione e iterazione. Spiega che cosa cambierebbe usando `HashSet`.
+6. Completa `BookCatalog` con ricerca per ISBN, sostituzione controllata e restituzione di tutti i libri in ordine di inserimento. Valuta se una `List` o una `Map` sia la rappresentazione più adatta alle operazioni richieste e giustifica la scelta anche in termini di costo.
 
 ---
 
@@ -4611,14 +4867,13 @@ I generics, infine, non accettano tipi primitivi: `List<int>` è illegale e si u
 
 ### Esercizi
 
-1. Scrivi prima `ObjectBox`, conserva una stringa e mostra il cast necessario per leggerla. Trasforma poi la classe in `Box<T>` e verifica quali errori vengono anticipati alla compilazione.
-2. Crea una classe `Result<V, E>` che conservi un valore oppure un errore. Per questo esercizio non occorre impedire che entrambi siano presenti: concentra l'attenzione sui due parametri di tipo.
-3. Scrivi un metodo generico `last(List<T> items)` che restituisca l'ultimo elemento e lanci `NoSuchElementException` per una lista vuota.
-4. Crea `Statistics<T extends Number>` con metodi per somma e media. Verifica che accetti `Integer` e `Double` ma non `String`.
-5. Mostra con riferimenti alla stessa lista quale inserimento scorretto diventerebbe possibile se `List<Smartphone>` fosse un sottotipo di `List<Device>`.
-6. Scrivi tre metodi: `printAll(List<?>)`, `turnOnAll(List<? extends Device>)` e `addDemoPhone(List<? super Smartphone>)`. Per ciascuno indica che cosa si può leggere e che cosa si può aggiungere.
-7. Implementa `copyAll(List<? extends T> source, List<? super T> destination)` e prova a copiare una lista di smartphone prima in una lista di dispositivi e poi in una lista di oggetti.
-8. Rendi `Product` confrontabile per codice e ordina una lista. Aggiungi poi un `Comparator<Product>` separato per prezzo e verifica il caso di due prodotti con lo stesso prezzo.
+1. Una vecchia classe `ObjectCache` conserva coppie chiave-valore come `Object` e richiede cast al momento della lettura. Scrivi un programma che inserisca accidentalmente un valore del tipo sbagliato e fallisca a runtime; trasforma poi la classe in `Cache<K, V>` e mostra quale errore viene anticipato dal compilatore.
+2. Progetta `Pair<A, B>` e usala per rappresentare sia coordinate `Pair<Integer, Integer>` sia traduzioni `Pair<String, String>`. Aggiungi un metodo generico `swap(Pair<A, B>)` che restituisca `Pair<B, A>` e verifica che i tipi risultanti siano dedotti correttamente.
+3. Implementa `max(List<T>)` con il limite necessario affinché gli elementi siano confrontabili. Gestisci la lista vuota e provalo con interi e con una classe del capitolo che implementa `Comparable`; spiega perché una lista di oggetti non confrontabili viene rifiutata.
+4. Devi scrivere `activateAll`, che legge dispositivi da una lista, e `addDefaultSmartphone`, che inserisce smartphone in una lista fornita dal chiamante. Scegli per ciascun parametro fra `List<Device>`, `List<?>`, `List<? extends Device>` e `List<? super Smartphone>`. Giustifica la firma indicando concretamente che cosa il metodo legge e che cosa aggiunge.
+5. Implementa `copyAll(List<? extends T> source, List<? super T> destination)` e costruisci una matrice di prove: smartphone verso dispositivi, smartphone verso oggetti, dispositivi verso smartphone e oggetti verso dispositivi. Prima di compilare indica quali chiamate devono essere accettate e confronta il risultato.
+6. Ricevi queste due richieste: «stampa elementi di qualunque tipo» e «restituisci due elementi dello stesso tipo scambiandone l'ordine». Decidi dove basta una wildcard e dove serve dichiarare un parametro di tipo. Spiega quale relazione fra tipi deve essere ricordata dalla firma.
+7. Ordina una lista di `Product` secondo l'ordine naturale per codice e, separatamente, con `Comparator` per prezzo e poi nome. Inserisci prodotti con lo stesso prezzo per verificare il secondo criterio e controlla che l'ordinamento naturale non sia stato modificato.
 
 ---
 
@@ -5349,14 +5604,13 @@ Ricerca e inserimento costano O(h), dove `h` è l'altezza. In un albero bilancia
 
 ### Esercizi
 
-1. Completa `SimpleLinkedList<E>` con `removeLast`, `set`, `contains`, `clear` e `insert(index, element)`. Prova ogni operazione su una lista vuota, con un elemento e con più elementi.
-2. Implementa una lista di contatti con ricerca e rimozione per indirizzo email e inversione. Poi generalizzala separando la struttura dai dati `Contact`.
-3. Implementa una pila con nodo sentinella circolare e confrontane gli invarianti con `LinkedStack`.
-4. Usa una pila per convertire un intero positivo in rappresentazione binaria.
-5. Simula un pronto soccorso con quattro code usando una sequenza di arrivi stabilita nel programma; separa la politica di priorità dalla simulazione.
-6. Aggiungi al BST `min`, `max`, visita pre-order, visita post-order e altezza.
-7. Disegna in UML le autoassociazioni di nodo e albero e indica la molteplicità dei figli.
-8. Spiega perché `Stack extends ArrayList` violerebbe il contratto astratto della pila.
+1. Completa `SimpleLinkedList<E>` con `insert(index, element)` e `removeLast()`. Prima di scrivere il codice, descrivi come cambiano `head`, `tail` e `size` nei casi lista vuota, un solo nodo, inserimento in testa, inserimento in coda e posizione interna. Verifica ogni transizione e controlla che gli invarianti restino veri.
+2. Implementa `contains()`, `set()` e `clear()` senza duplicare la logica di attraversamento più del necessario. Prepara una tabella di prove per indici negativi, indice uguale a `size`, elemento assente, lista vuota e lista con più elementi; indica per ogni caso risultato o eccezione attesa.
+3. Usa `LinkedStack<Character>` per controllare se in una stringa le parentesi `()`, `[]` e `{}` sono bilanciate e correttamente annidate. Il metodo deve rifiutare `([)]`, accettare testo senza parentesi e spiegare quale informazione viene conservata nella pila.
+4. Modella una stampante condivisa con `LinkedQueue<PrintJob>`. Ogni lavoro ha nome e numero di pagine; la stampante elabora in FIFO e deve gestire la coda vuota senza perdere lo stato. Simula una sequenza nella quale nuovi lavori arrivano fra due elaborazioni.
+5. Estendi il BST con `min()`, `max()`, `height()` e visite pre-order e post-order. Costruisci tre alberi con gli stessi valori inseriti in ordini diversi e confronta altezza e sequenze di visita; collega il risultato al costo della ricerca.
+6. Stabilisci una politica esplicita per i duplicati nel BST: rifiuto, conteggio oppure collocazione sempre dallo stesso lato. Implementala e mostra come influisce su `add()`, `contains()` e visita ordinata. L'invariante deve essere formulato in modo coerente con la scelta.
+7. Confronta una struttura costruita nel capitolo con la corrispondente collezione standard. Indica che cosa hai imparato implementandola, quali garanzie mancano nella versione didattica e quale useresti in un'applicazione reale motivando la risposta.
 
 ---
 
@@ -5570,12 +5824,12 @@ Java permette anche classi locali, dichiarate dentro un metodo, e classi anonime
 
 ### Esercizi
 
-1. Sostituisci lo stato testuale di un ordine con `OrderStatus` e usa uno `switch` esaustivo per produrne la descrizione.
-2. Crea un enum `TrafficLight` con durata in secondi e un metodo che restituisca la luce successiva.
-3. Crea i record `EmailAddress` e `Money`. In `EmailAddress` rifiuta valori vuoti o privi di `@`; in `Money` rifiuta importi negativi e conserva anche il codice della valuta.
-4. Crea un record `Course(String name, List<String> students)` che protegga la lista con una copia difensiva.
-5. Spiega perché `Node<E>` è preferibile come classe annidata statica e privata dentro `SimpleLinkedList<E>`.
-6. Modifica l'esempio `Counter` affinché due comandi appartenenti a due contatori diversi incrementino soltanto la propria istanza esterna.
+1. Sostituisci lo stato testuale di una richiesta di assistenza con `TicketStatus`. Definisci nell'enum quali transizioni sono ammesse e fai in modo che `SupportTicket` deleghi questa decisione invece di usare stringhe e confronti sparsi. Verifica almeno una sequenza valida e due transizioni rifiutate.
+2. Crea `TrafficLight` con durata e luce successiva. Simula due cicli completi senza scrivere una catena di `if`; aggiungi poi una modalità lampeggiante e valuta se appartenga allo stesso insieme di stati o richieda un concetto separato.
+3. Progetta i record `EmailAddress` e `Money`. Valida i componenti nel costruttore compatto e usa questi tipi dentro un record `Payment`. Mostra quali errori vengono fermati al momento della costruzione e perché i record sono adatti a questi valori.
+4. Crea `Course(String name, List<String> students)` proteggendo la lista con una copia difensiva. Verifica entrambe le direzioni del problema: modificare la lista originale dopo la costruzione e tentare di modificare quella restituita dall'accessor.
+5. Inserisci una classe privata annidata statica `Entry<K, V>` dentro una piccola `SimpleMap<K, V>`. Spiega perché l'entry non deve conoscere un'istanza esterna e perché non fa parte dell'API pubblica. Disegna la relazione UML fra contenitore ed entry.
+6. Crea `Counter` con una inner class `IncrementCommand`. Costruisci comandi appartenenti a due contatori diversi, eseguili in ordine alternato e verifica che ciascuno modifichi soltanto l'istanza esterna che lo ha creato.
 
 ---
 
@@ -6003,261 +6257,20 @@ Stream e cicli non sono livelli di qualità diversi. Si sceglie la forma che ren
 
 ### Esercizi
 
-1. Estendi `Range` con un passo positivo ricevuto dal costruttore e adegua l'iteratore.
-2. Completa `SimpleLinkedList<E>` affinché implementi `Iterable<E>` e verifica che due iteratori avanzino indipendentemente.
-3. Implementa e testa `OddPositionIterator<E>` su sequenze vuote, pari e dispari.
-4. Usa `FilterIterator<Integer>` con una lambda per attraversare soltanto i numeri pari di una lista.
-5. Implementa `MapIterator<S, T>` usando `Function<? super S, ? extends T>`.
-6. Ricava con uno stream i nomi di città più lunghi di cinque caratteri, senza duplicati e in ordine alfabetico. Riscrivi la stessa operazione con un ciclo e confronta la leggibilità.
-7. Calcola con uno stream la media di una lista di voti e scegli esplicitamente che cosa fare quando la lista è vuota.
+1. Estendi `Range` con un passo positivo e rendi esplicito che cosa accade quando il passo non porta esattamente al limite. Verifica intervallo vuoto, passo uno, passo maggiore dell'ampiezza e due iteratori usati in modo alternato sulla stessa sequenza.
+2. Completa `SimpleLinkedList<E>` affinché implementi `Iterable<E>`. Scrivi un programma che avanzi due iteratori indipendenti e un ciclo for-each che calcoli il numero di elementi senza accedere ai nodi. Spiega quale stato appartiene alla lista e quale al singolo iteratore.
+3. Implementa `FilterIterator<E>` con `Predicate<? super E>` e usalo prima per numeri pari e poi per stringhe non vuote. Prepara casi nei quali nessun elemento, il primo elemento o più elementi soddisfano il predicato.
+4. Implementa `MapIterator<S, T>` con `Function<? super S, ? extends T>` e componilo con `FilterIterator`: da una sequenza di prodotti seleziona quelli disponibili e attraversa soltanto i loro nomi. Nessuno dei due iteratori deve conoscere la classe `Product`.
+5. Da una lista di ordini ricava con uno stream i codici dei clienti con almeno un ordine sopra una soglia, senza duplicati e in ordine alfabetico. Riscrivi la stessa elaborazione con un ciclo; confronta le due versioni indicando trasformazioni, stato temporaneo e leggibilità.
+6. Calcola media e totale di una lista di misurazioni con una riduzione. Decidi esplicitamente che cosa restituire per la lista vuota e giustifica perché quella decisione appartiene al requisito, non allo stream.
 
 ---
 
 # Progettare e verificare
 
-## Alberi sintattici e Visitor
-
-Questo è un approfondimento facoltativo. Può essere saltato durante un primo percorso e ripreso dopo i capitoli su organizzazione, progettazione, test e pattern. Unisce interfacce, composizione ricorsiva, generics e polimorfismo in un'applicazione coerente. Un **albero sintattico astratto**, abbreviato **AST** (*Abstract Syntax Tree*), rappresenta la struttura di un'espressione tralasciando dettagli sintattici ormai inutili, come le parentesi che servivano soltanto a stabilire la precedenza.
-
-### Un albero di espressioni
-
-L'espressione `(1 + 2) * 3` può essere rappresentata senza ambiguità:
-
-```text
-          Mul
-         /   \
-       Add    3
-      /   \
-     1     2
-```
-
-Ogni nodo è un oggetto. Un primo modello polimorfico mette il comportamento nei nodi:
-
-```java
-public interface Expression {
-    int evaluate();
-    String format();
-}
-
-public record IntLiteral(int value) implements Expression {
-    @Override public int evaluate() { return value; }
-    @Override public String format() { return Integer.toString(value); }
-}
-
-public record Add(Expression left, Expression right) implements Expression {
-    public Add {
-        Objects.requireNonNull(left);
-        Objects.requireNonNull(right);
-    }
-
-    @Override public int evaluate() {
-        return left.evaluate() + right.evaluate();
-    }
-
-    @Override public String format() {
-        return "(" + left.format() + " + " + right.format() + ")";
-    }
-}
-```
-
-Questa soluzione è semplice quando i tipi di operazione sono stabili. Aggiungere una nuova operazione, per esempio conteggio dei nodi, richiede però di modificare ogni classe.
-
-Nei costruttori compatti, `Objects.requireNonNull()` protegge l'invariante che entrambi i figli devono esistere. Il metodo è quello già usato nell'albero binario: lancia `NullPointerException` se riceve `null`.
-
-### Separare struttura e operazioni
-
-Nel primo modello ogni nodo conosce tutte le operazioni: `IntLiteral`, `Add` e gli altri tipi contengono sia `evaluate()` sia `format()`. Se la gerarchia dei nodi rimane stabile ma continuano ad aggiungersi operazioni, ogni nuova operazione obbliga a riaprire tutte quelle classi.
-
-Visitor capovolge l'organizzazione. I nodi conservano la struttura dell'albero; oggetti separati conservano le operazioni. Per ottenere questo risultato servono due contratti:
-
-- ogni espressione deve poter accettare un visitor;
-- il visitor deve dichiarare un metodo per ogni tipo concreto di nodo.
-
-```java
-public sealed interface Expression
-        permits IntLiteral, Add, Multiply {
-    <R> R accept(ExpressionVisitor<R> visitor);
-}
-
-public interface ExpressionVisitor<R> {
-    R visit(IntLiteral expression);
-    R visit(Add expression);
-    R visit(Multiply expression);
-}
-
-public record IntLiteral(int value) implements Expression {
-    @Override
-    public <R> R accept(ExpressionVisitor<R> visitor) {
-        return visitor.visit(this);
-    }
-}
-
-public record Add(Expression left, Expression right) implements Expression {
-    public Add {
-        Objects.requireNonNull(left);
-        Objects.requireNonNull(right);
-    }
-
-    @Override
-    public <R> R accept(ExpressionVisitor<R> visitor) {
-        return visitor.visit(this);
-    }
-}
-
-public record Multiply(Expression left, Expression right) implements Expression {
-    public Multiply {
-        Objects.requireNonNull(left);
-        Objects.requireNonNull(right);
-    }
-
-    @Override
-    public <R> R accept(ExpressionVisitor<R> visitor) {
-        return visitor.visit(this);
-    }
-}
-```
-
-`sealed` dichiara una gerarchia chiusa: soltanto i tipi elencati dopo `permits` possono implementare direttamente `Expression`. Questa scelta è adatta a un piccolo linguaggio nel quale l'insieme dei nodi è controllato. I tipi permessi devono essere `final`, `sealed` o `non-sealed`; i record sono già implicitamente finali.
-
-Una normale interfaccia non `sealed` definisce invece una gerarchia aperta: qualunque classe che possa accedervi può aggiungere una nuova implementazione. `non-sealed` riapre esplicitamente un ramo appartenente a una gerarchia sigillata.
-
-Ogni tipo pubblico del frammento appartiene al proprio file e i record composti richiedono `import java.util.Objects;`.
-
-`ExpressionVisitor<R>` è generica perché visite diverse possono produrre risultati diversi. Un visitor di valutazione sceglierà `Integer`; uno di rappresentazione sceglierà `String`. Di conseguenza anche `accept()` è un metodo generico: riceve un `ExpressionVisitor<R>` e restituisce lo stesso `R`.
-
-La parte insolita è che ogni implementazione di `accept()` sembra limitarsi a passare se stessa:
-
-```java
-return visitor.visit(this);
-```
-
-Questa istruzione conserva però un'informazione che il chiamante non possiede. Dentro `Add.accept()`, `this` ha tipo dichiarato `Add`; dentro `IntLiteral.accept()`, ha tipo dichiarato `IntLiteral`. L'overloading può quindi scegliere il corrispondente metodo `visit(Add)` o `visit(IntLiteral)`.
-
-### Visitor di valutazione
-
-```java
-public final class Evaluator implements ExpressionVisitor<Integer> {
-    @Override
-    public Integer visit(IntLiteral expression) {
-        return expression.value();
-    }
-
-    @Override
-    public Integer visit(Add expression) {
-        return expression.left().accept(this)
-                + expression.right().accept(this);
-    }
-
-    @Override
-    public Integer visit(Multiply expression) {
-        return expression.left().accept(this)
-                * expression.right().accept(this);
-    }
-}
-```
-
-### Visitor di rappresentazione
-
-```java
-public final class PostfixFormatter implements ExpressionVisitor<String> {
-    @Override
-    public String visit(IntLiteral expression) {
-        return Integer.toString(expression.value());
-    }
-
-    @Override
-    public String visit(Add expression) {
-        return expression.left().accept(this)
-                + " "
-                + expression.right().accept(this)
-                + " +";
-    }
-
-    @Override
-    public String visit(Multiply expression) {
-        return expression.left().accept(this)
-                + " "
-                + expression.right().accept(this)
-                + " *";
-    }
-}
-```
-
-```java
-Expression expression = new Multiply(
-        new Add(new IntLiteral(1), new IntLiteral(2)),
-        new IntLiteral(3));
-Evaluator evaluator = new Evaluator();
-
-int value = expression.accept(evaluator);
-String text = expression.accept(new PostfixFormatter());
-
-System.out.println(value); // 9
-System.out.println(text);  // 1 2 + 3 *
-```
-
-Seguiamo la prima valutazione. La variabile `expression` ha tipo dichiarato `Expression`, ma indica un oggetto `Multiply`.
-
-1. `expression.accept(evaluator)` usa il dispatch dinamico e sceglie `Multiply.accept()`.
-2. Dentro quel metodo, `this` è un `Multiply`; la chiamata `visitor.visit(this)` seleziona quindi l'overload `visit(Multiply)`.
-3. `Evaluator.visit(Multiply)` chiede ai due figli di accettare lo stesso visitor.
-4. Il figlio sinistro è un `Add`: il suo `accept()` porta a `visit(Add)`.
-5. La visita continua ricorsivamente fino ai letterali, poi combina i risultati tornando verso la radice.
-
-Il primo passaggio sceglie il tipo concreto del nodo tramite override; il secondo sceglie l'overload del visitor grazie al tipo di `this`. Per questo la tecnica viene chiamata **double dispatch**.
-
-Se al posto di `Evaluator` passiamo `PostfixFormatter`, i nodi e il percorso restano gli stessi, ma il tipo concreto del visitor determina un'altra operazione. Il parametro `R` fa sì che il compilatore conosca anche il risultato: `Integer` nel primo caso, `String` nel secondo.
-
-### Vantaggi e costo di Visitor
-
-Visitor è adatto quando:
-
-- la gerarchia dei nodi è abbastanza stabile;
-- vengono aggiunte spesso nuove operazioni;
-- le operazioni attraversano una struttura ricorsiva;
-- si vogliono mantenere separati valutazione, stampa, controllo dei tipi e trasformazioni.
-
-È meno adatto quando si aggiungono spesso nuovi tipi di nodo: ogni nuovo nodo richiede un nuovo metodo in tutti i visitor.
-
-### Dall'AST a un interprete
-
-Un piccolo interprete può essere organizzato in componenti:
-
-```text
-testo -> Scanner -> Tokenizer -> Parser -> AST -> TypeChecker -> Evaluator
-```
-
-- lo scanner legge caratteri;
-- il tokenizer riconosce categorie lessicali;
-- il parser costruisce oggetti AST rispettando la precedenza degli operatori e l'associatività, cioè il modo in cui operatori della stessa priorità vengono raggruppati;
-- il type checker visita l'albero e segnala combinazioni non valide;
-- l'evaluator visita lo stesso albero e produce un valore.
-
-Questa architettura, presente nei laboratori, è un esempio maturo di interfacce piccole, separazione delle responsabilità, composizione e polimorfismo.
-
-### In sintesi
-
-- Un AST rappresenta la struttura di un'espressione tramite oggetti composti ricorsivamente.
-- Una gerarchia sealed rende esplicito un insieme chiuso di nodi.
-- Visitor separa le operazioni dalla struttura dei nodi e può restituire risultati di tipi diversi.
-- Aggiungere un visitor è semplice; aggiungere un nodo richiede invece di aggiornare tutti i visitor.
-- Il pattern è adatto a strutture stabili con molte operazioni, non a ogni gerarchia.
-
-### Esercizi
-
-1. Completa l'AST aritmetico con sottrazione e negazione unaria e aggiorna i visitor.
-2. Crea un visitor che conti i nodi e uno che calcoli l'altezza dell'albero.
-3. Rappresenta espressioni booleane con `BoolLiteral`, `And` e `Not`; implementa valutazione con short-circuit e formato postfisso.
-4. Crea un visitor che semplifichi `x + 0`, `x * 1` e `x * 0` costruendo un nuovo AST immutabile.
-5. Confronta Visitor con metodi `evaluate` e `format` direttamente nei nodi. Indica quale dimensione del sistema è più facile estendere in ciascun caso.
-
----
-
 ## Organizzazione del codice
 
 Finché un programma contiene pochi file, possiamo tenere tutte le classi nella stessa cartella. Quando i file aumentano, diventa difficile trovare una classe e capire a quale parte del programma appartiene. I package servono prima di tutto a risolvere questo problema: raggruppano tipi correlati e assegnano loro un nome completo.
-
-I nomi dei package non sono imposti da Java. Inizieremo con nomi legati direttamente al contenuto, così la struttura nascerà dalle classi che il programma possiede davvero.
 
 ### Dichiarare un package
 
@@ -6353,6 +6366,162 @@ Questa organizzazione segue gli argomenti del programma. Non è l'unica possibil
 
 `Main` gestisce l'interazione con l'utente e avvia le operazioni. `Book` rappresenta un libro; non dovrebbe quindi mostrare menu o leggere input. La divisione in package rende visibile questa separazione, ma non la impone: è ancora responsabilità del programmatore assegnare correttamente i compiti alle classi.
 
+### Un progetto con Gradle
+
+Finora gli esempi hanno usato soltanto classi fornite dal JDK. Quando scriviamo:
+
+```java
+import java.util.ArrayList;
+```
+
+il compilatore trova `ArrayList` perché fa parte della libreria standard di Java. JavaFX, JUnit e le librerie per leggere JSON non sono invece comprese nel JDK: sono **librerie esterne**, cioè codice scritto e distribuito separatamente da Java.
+
+Una libreria Java viene normalmente distribuita in uno o più file **JAR**, archivi che contengono classi già compilate e altre risorse. Per usarla manualmente dovremmo scaricare i JAR corretti e indicare al compilatore e alla JVM dove trovarli. L'insieme dei percorsi nei quali Java cerca queste classi si chiama **classpath**. Questa configurazione deve essere corretta sia durante la compilazione sia durante l'esecuzione e diventa presto scomoda quando il progetto usa più librerie.
+
+**Gradle** automatizza questo lavoro. È uno strumento di build: legge la configurazione del progetto, scarica le librerie richieste e svolge operazioni come compilazione, esecuzione dei test e creazione del JAR dell'applicazione.
+
+#### I file di configurazione
+
+La configurazione principale si trova in `build.gradle`, nella cartella iniziale del progetto. Il file non contiene il programma Java: descrive come costruirlo. In questa dispensa useremo la sintassi Groovy di Gradle, più breve della corrispondente configurazione XML. Non è necessario conoscere Groovy per leggere le poche istruzioni che ci servono.
+
+Accanto a `build.gradle` si trova normalmente `settings.gradle`, che assegna un nome al progetto:
+
+```groovy
+rootProject.name = 'library-project'
+```
+
+Quando chiediamo a Gradle di compilare, lo strumento:
+
+1. legge i file di configurazione;
+2. controlla quale versione di Java e quali librerie servono;
+3. scarica ciò che manca e lo conserva sul computer per gli usi successivi;
+4. costruisce il classpath e compila i sorgenti nelle cartelle previste.
+
+Le librerie vengono cercate in un **repository remoto**, cioè un archivio disponibile in rete. Negli esempi useremo Maven Central. Il nome può trarre in inganno: Maven Central è un archivio di librerie e può essere usato anche da Gradle; non significa che il progetto sia costruito con Maven. Gradle conserva inoltre una copia dei file scaricati nella propria cache, normalmente sotto `.gradle/caches` nella cartella dell'utente. Per questo la prima build può richiedere una connessione e impiegare più tempo, mentre le successive possono riutilizzare i file già presenti.
+
+#### La struttura delle cartelle
+
+Il plugin Java di Gradle adotta una struttura standard, così non è necessario indicare ogni volta dove si trovano sorgenti e test:
+
+```text
+library-project/
+├── build.gradle
+├── settings.gradle
+├── gradlew
+├── gradlew.bat
+├── gradle/
+│   └── wrapper/
+└── src/
+    ├── main/
+    │   └── java/
+    │       └── school/library/
+    │           ├── app/
+    │           └── books/
+    └── test/
+        └── java/
+```
+
+`src/main/java` contiene il codice dell'applicazione; `src/test/java` contiene i test. Sotto queste due radici, le cartelle continuano a seguire i nomi dei package.
+
+Durante la build Gradle crea la cartella `build`, che contiene i file generati. Le classi compilate si trovano in `build/classes/java/main`, mentre il JAR viene creato in `build/libs`. Non si scrive codice sorgente dentro `build`: la cartella può essere eliminata e ricreata eseguendo nuovamente la build.
+
+I file `gradlew`, `gradlew.bat` e la cartella `gradle/wrapper` formano il **Gradle Wrapper**. Il wrapper registra la versione di Gradle scelta dal progetto e la scarica se manca. Chi apre il progetto può quindi usare la stessa versione senza installare Gradle globalmente.
+
+#### Leggere un `build.gradle` minimo
+
+Un `build.gradle` minimo per gli esempi della dispensa è:
+
+```groovy
+plugins {
+    id 'java'
+}
+
+group = 'school'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+```
+
+Il blocco `plugins` attiva il supporto per i progetti Java. `group` e `version` identificano il progetto insieme al nome scritto in `settings.gradle`. Il blocco `repositories` indica dove cercare le librerie esterne. Non fissiamo una toolchain: Gradle usa il JDK configurato per il progetto.
+
+#### Dichiarare una dipendenza
+
+Gradle non decide quali package Java possiamo usare e non sostituisce gli `import`. I concetti coinvolti sono distinti:
+
+- una **libreria** è un insieme di classi distribuite insieme, normalmente in uno o più JAR;
+- un **package** organizza le classi attraverso nomi come `tools.jackson.databind`;
+- una **dipendenza Gradle** rende una libreria disponibile nel classpath del progetto;
+- un **import** permette di usare nel sorgente il nome breve di una classe già disponibile.
+
+Una stessa libreria può contenere molti package. Dichiararla in `build.gradle` non obbliga il programma a usarli tutti: rende semplicemente disponibili le classi che contiene. Saranno poi gli import e il codice a stabilire quali classi vengono effettivamente usate.
+
+Supponiamo di voler usare Jackson, la libreria che verrà impiegata più avanti per leggere e scrivere JSON. Aggiungiamo a `build.gradle` questo blocco:
+
+```groovy
+dependencies {
+    implementation 'tools.jackson.core:jackson-databind:3.1.5'
+}
+```
+
+Una **dipendenza** è una libreria della quale il progetto ha bisogno. La notazione contiene, nell'ordine, il gruppo, il componente e la versione. I tre valori identificano esattamente che cosa scaricare: non basta scrivere soltanto “Jackson”, perché possono esistere componenti e versioni diversi.
+
+I numeri di versione compaiono nei file di build perché Gradle deve scaricare artefatti precisi. Non rappresentano una versione richiesta dall'intera dispensa: quando si prepara il progetto vanno controllati e, se necessario, aggiornati insieme agli import e alle istruzioni di configurazione collegate.
+
+`implementation` indica che il codice dell'applicazione usa quella libreria sia per essere compilato sia durante l'esecuzione. Gradle offre altre configurazioni per esigenze diverse; per esempio `testImplementation` contiene librerie necessarie soltanto ai test.
+
+Alla compilazione Gradle scarica il JAR di `jackson-databind` e anche le eventuali librerie dalle quali esso dipende. Queste ultime sono chiamate **dipendenze transitive**. Gradle le inserisce nel classpath senza costringerci a cercare e configurare a mano ogni file.
+
+Il percorso è quindi questo:
+
+```text
+dipendenza in build.gradle
+        ↓
+Gradle scarica e conserva i JAR
+        ↓
+le classi della libreria entrano nel classpath
+        ↓
+il progetto può importarle e usarle
+```
+
+Soltanto a questo punto un sorgente può importare una classe della libreria:
+
+```java
+import tools.jackson.databind.ObjectMapper;
+```
+
+Scrivere questo import senza aver prima aggiunto la dipendenza non scaricherebbe Jackson: il compilatore segnalerebbe che il package non esiste.
+
+#### Compilare, verificare e creare il JAR
+
+Le operazioni offerte da Gradle si chiamano **task**. I comandi si eseguono dalla cartella che contiene `build.gradle`, usando il wrapper del progetto:
+
+```text
+./gradlew classes
+./gradlew test
+./gradlew build
+./gradlew clean
+```
+
+Su Windows si scrive `gradlew.bat` al posto di `./gradlew`.
+
+- `classes` compila il codice in `src/main/java`;
+- `test` compila ed esegue i test presenti in `src/test/java`;
+- `build` esegue le verifiche necessarie e crea il JAR in `build/libs`;
+- `clean` elimina i file generati nella cartella `build`.
+
+I task possono dipendere da altri task. Quando eseguiamo `build`, Gradle avvia automaticamente anche la compilazione e le verifiche da cui la build dipende: non occorre eseguire prima `classes` e poi `test`.
+
+Il progetto rimane lo stesso qualunque sia l'editor usato: cartelle, dipendenze e operazioni sono descritte dai file di Gradle, non dall'IDE.
+
+> [!info] IntelliJ IDEA
+> Quando crei il progetto, scegli **Gradle** come sistema di build, **Groovy** come DSL e un JDK recente. Aprendo un progetto esistente, seleziona la cartella che contiene `settings.gradle` e `build.gradle`. Dopo una modifica a `build.gradle`, usa **Load Gradle Changes** se IntelliJ non sincronizza automaticamente il progetto. I task si possono eseguire dalla finestra **Gradle** oppure dal terminale tramite il wrapper.
+
+> [!info] Visual Studio Code
+> Installa **Extension Pack for Java** e **Gradle for Java**, quindi apri la cartella che contiene `settings.gradle` e `build.gradle`. Il progetto viene normalmente importato in automatico. Gli stessi comandi `./gradlew` possono essere eseguiti dal terminale integrato.
+
 ### Quando un'operazione coinvolge più gruppi di classi
 
 Con i soli libri, `Main` può usare direttamente `BookCatalog`. Aggiungendo i prestiti compare però un'operazione più articolata: bisogna trovare il libro, controllare il registro dei prestiti e registrare il nuovo prestito. Né `Book` né il catalogo possiedono da soli tutte queste informazioni.
@@ -6446,6 +6615,9 @@ I nomi dei tipi sono normalmente sostantivi; quelli dei metodi esprimono azioni 
 - Il package raggruppa tipi e partecipa al controllo dell'accessibilità.
 - Il percorso dei sorgenti riflette il nome completo del package.
 - Gli import permettono di usare nomi brevi, ma non modificano la visibilità.
+- Gradle legge `build.gradle`, scarica le dipendenze e prepara il classpath necessario alla build.
+- `classes`, `test`, `build` e `clean` sono task; Gradle esegue automaticamente i task dai quali dipende quello richiesto.
+- Il Gradle Wrapper permette di usare la versione prevista dal progetto senza installare Gradle globalmente.
 - I nomi dei package devono descrivere gruppi di classi realmente presenti.
 - `domain`, `service` e `repository` sono convenzioni organizzative, non elementi speciali di Java.
 - Un service coordina un caso d'uso; un repository conserva e ritrova oggetti; nei programmi piccoli possono non servire.
@@ -6454,11 +6626,12 @@ I nomi dei tipi sono normalmente sostantivi; quelli dei metodi esprimono azioni 
 
 ### Esercizi
 
-1. Sposta `Book` e `BookCatalog` nel package `school.library.books` e `Main` in `school.library.app`, aggiornando percorsi e import.
-2. Crea `IsbnValidator` come classe package-private nel package `books` e verifica quali classi possono usarla.
-3. Disegna con frecce le dipendenze di un programma in cui `Book` gestisce direttamente l'input dell'utente; poi sposta l'interazione in `Main`.
-4. Modifica `LibraryService` affinché riceva `BookCatalog` e `LoanRegistry` dal costruttore invece di crearli internamente.
-5. Per ciascuno dei nomi `Book`, `LibraryService`, `BookRepository` e `Main`, indica il ruolo svolto e chi dovrebbe usarlo. Spiega anche perché un piccolo catalogo in memoria potrebbe non aver bisogno né di un service né di un repository.
+1. Ricevi un programma scolastico con tutte le classi nel package predefinito: `Student`, `Course`, `EnrollmentService`, `ConsoleMenu` e `Main`. Proponi una divisione minima in package basata sulle dipendenze reali, sposta i file e compila il progetto. Ogni package deve avere uno scopo descrivibile senza usare automaticamente nomi come `service` o `domain`.
+2. Nel progetto dell'esercizio 1, `Student` legge dati con `Scanner` e stampa messaggi. Disegna le dipendenze prima della modifica, sposta l'interazione in `ConsoleMenu` e controlla che le classi che rappresentano i dati non dipendano più dalla console.
+3. Crea un validatore package-private usato da due classi dello stesso package. Prova ad accedervi da `Main`, osserva l'errore del compilatore e decidi se risolverlo spostando il chiamante, esponendo un'operazione pubblica diversa o rendendo pubblico il validatore. Motiva la scelta in base all'API desiderata.
+4. Ti viene dato un progetto con dipendenze circolari fra package `courses` e `students`. Individua i campi e i metodi che generano il ciclo, quindi proponi una terza collocazione oppure inverti una dipendenza. Mostra il grafo prima e dopo e verifica che il comportamento non cambi.
+5. Trasforma il programma in un progetto Gradle completo con wrapper. Esegui `classes`, `test` e `build`; per ogni task indica quali file produce o quali verifiche esegue. Individua nel JAR le classi compilate e spiega perché la cartella `build` non contiene sorgenti da modificare.
+6. Aggiungi la dipendenza esterna mostrata nel capitolo e descrivi il percorso completo che la rende utilizzabile: coordinate nel `build.gradle`, repository, download, classpath e infine `import`. Rimuovi temporaneamente prima la dipendenza e poi il repository e confronta i due errori ottenuti.
 
 ---
 
@@ -7158,44 +7331,44 @@ Per procedere con controllo:
 
 ### Esercizi
 
-1. Descrivi la sequenza di messaggi necessaria per restituire un libro e assegna ogni controllo al componente che possiede l'informazione.
-2. Applica SRP a una classe che legge input, calcola penali, salva file e stampa ricevute. Indica per ogni nuova classe quale motivo potrebbe farla cambiare.
-3. Trasforma un campo `String status` in un enum e sposta nell'oggetto le transizioni ammesse, evitando che il chiamante modifichi direttamente lo stato.
-4. Aggiungi `Trapezoid` al modello delle figure senza modificare `AreaCalculator`. Spiega quale variazione è stata isolata e quale codice deve comunque conoscere il nuovo tipo.
-5. Esegui mentalmente `RectangleClient.resizeAndMeasure()` con `MutableRectangle` e `MutableSquare`. Scrivi il contratto violato e proponi una gerarchia che rispetti LSP.
-6. Aggiungi un dispositivo che sappia stampare e acquisire, ma non inviare fax. Scegli le interfacce necessarie e mostra un client che dipenda soltanto da `DocumentScanner`.
-7. Modifica l'esempio degli ordini introducendo una seconda implementazione di `OrderRepository`. Mostra dove viene scelta l'implementazione e spiega separatamente dove vengono applicati DIP e dependency injection.
-8. Analizza `SimpleLinkedList` e `LinkedStack` rispetto a LSP: spiega perché la composizione evita di presentare la pila come una lista modificabile in qualunque posizione.
-9. Individua tre code smell in un programma già scritto e proponi un refactoring piccolo per ciascuno, specificando quali verifiche ripetibili ne proteggono il comportamento.
+1. Analizza una classe `OrderManager` che legge comandi dalla console, calcola il totale, applica sconti, salva gli ordini e stampa ricevute. Elenca i diversi motivi di cambiamento, assegna responsabilità a oggetti distinti e disegna le dipendenze risultanti. Non creare una classe per ogni metodo: ogni separazione deve corrispondere a una ragione concreta di cambiamento.
+2. Un calcolatore di spedizione usa uno `switch` sul tipo testuale `STANDARD`, `EXPRESS` o `PICKUP`. Rifattorizzalo con politiche sostituibili e aggiungi la consegna in giornata. Indica quale codice rimane necessariamente responsabile di scegliere la politica e spiega perché OCP non significa che nessun file verrà mai modificato.
+3. Progetta il contratto di un conto prelevabile, poi valuta due sottotipi: uno vieta prelievi sotto 20 euro, l'altro consente soltanto un prelievo al giorno. Per ciascuno stabilisci se rafforza le precondizioni attese dal client e quindi viola LSP. Correggi il modello senza nascondere i rifiuti dietro comportamenti sorprendenti.
+4. Una grande interfaccia `OfficeMachine` contiene stampa, scansione, fax e rilegatura. Definisci tre client con esigenze diverse, separa le interfacce in base a ciò che ciascun client usa e costruisci due dispositivi concreti. Valuta la soluzione dal punto di vista delle dipendenze dei client, non dal semplice numero di metodi.
+5. `ReportService` crea direttamente `FileReportRepository` e `EmailSender`. Introduci le astrazioni necessarie, ricevi le implementazioni dall'esterno e mostra una configurazione con repository in memoria e sender che stampa su console. Indica separatamente dove si applica DIP e dove avviene dependency injection.
+6. Scegli una classe già realizzata nella dispensa e individua un problema concreto di coesione, accoppiamento o incapsulamento. Proponi un solo refactoring alla volta, specifica quale comportamento deve restare invariato e confronta il costo della modifica con il beneficio: è ammesso concludere che non conviene applicare un principio.
 
 ---
 
 ## Testing e debugging
 
-Un test esegue il codice con dati scelti e verifica automaticamente un risultato. Non dimostra che il programma sia corretto per ogni ingresso, ma rende ripetibili esempi significativi e permette di scoprire quando una modifica rompe un comportamento già richiesto.
+Durante lo sviluppo proviamo continuamente il programma: creiamo un libro, eseguiamo un prestito, cerchiamo un ISBN che non esiste. Se queste prove rimangono operazioni fatte a mano, però, bisogna ricordarsi di ripeterle dopo ogni modifica e controllare ogni volta il risultato.
+
+Un test automatizza proprio questo lavoro. Prepara una situazione, esegue un'operazione e confronta il risultato ottenuto con quello atteso. Non può provare che il programma funzioni per qualunque dato possibile, ma può avvertirci subito quando una modifica rompe un caso che avevamo già verificato.
 
 ### Scegliere i casi
 
-Per il costruttore di `Book` non basta verificare un ISBN normale. Il contratto comprende anche dati non validi:
+Partiamo dal costruttore di `Book`. Una prova con ISBN e titolo validi controlla soltanto il caso più semplice. Il costruttore promette anche di rifiutare certi dati, quindi dobbiamo provare almeno:
 
 - ISBN e titolo validi;
 - ISBN `null`, vuoto o composto da spazi;
 - titolo `null`, vuoto o composto da spazi.
 
-Per un oggetto con stato vanno considerate anche le sequenze. Un prestito può essere restituito una volta, ma non due; una lista può passare da vuota a un elemento e poi tornare vuota. I casi limite derivano dal contratto e dagli invarianti, non da una percentuale arbitraria di righe eseguite.
+Con gli oggetti che cambiano stato conta anche l'ordine delle operazioni. Un prestito può essere restituito una volta, ma non due. Una lista può passare da vuota a un elemento e poi tornare vuota. Provare soltanto le singole operazioni non basta: bisogna controllare anche le sequenze ammesse e quelle vietate.
 
-Per ogni comportamento significativo conviene cercare:
+Quando scegliamo i casi, conviene quindi chiederci:
 
-- un caso normale;
-- i valori al confine;
-- argomenti non validi;
-- transizioni ammesse e vietate;
-- invarianti dopo un'operazione;
-- collaborazioni esterne importanti.
+- qual è il caso normale?
+- quali valori si trovano al confine?
+- che cosa deve accadere con un argomento non valido?
+- quali cambiamenti di stato sono ammessi e quali no?
+- dopo l'operazione, quali invarianti devono essere ancora veri?
+
+Non serve inseguire un numero arbitrario di righe eseguite. I casi utili vengono prima di tutto dalle promesse fatte dalla classe.
 
 ### Asserzioni del linguaggio
 
-Java possiede l'istruzione `assert`:
+Java mette a disposizione l'istruzione `assert`, con la quale possiamo scrivere direttamente una condizione che deve risultare vera:
 
 ```java
 Book first = new Book("978-1", "Titolo");
@@ -7205,19 +7378,19 @@ assert first.equals(second);
 assert first.hashCode() == second.hashCode();
 ```
 
-Se la condizione è falsa, viene lanciato `AssertionError`. Le asserzioni sono disabilitate normalmente e si attivano con:
+Se una condizione è falsa, Java lancia `AssertionError`. C'è però un dettaglio importante: normalmente le asserzioni sono disabilitate. Per attivarle bisogna eseguire il programma con l'opzione `-ea`:
 
 ```text
 java -ea Main
 ```
 
-Per questo non devono validare argomenti pubblici, input dell'utente o regole che devono essere sempre applicate. Il costruttore di `Book` deve continuare a lanciare `IllegalArgumentException` anche quando le asserzioni sono disabilitate.
+Di conseguenza, `assert` non va usato per controllare argomenti pubblici, input dell'utente o altre regole che devono valere sempre. Il costruttore di `Book`, per esempio, deve continuare a lanciare `IllegalArgumentException` anche quando le asserzioni non sono attive.
 
-`assert` è utile per semplici controlli interni ed esercizi, ma un insieme organizzato, o **suite**, di test beneficia di strumenti che scoprono i test, li eseguono separatamente e mostrano con precisione i fallimenti.
+Per un esercizio o un controllo interno, `assert` può bastare. Quando i test aumentano, diventa invece utile una libreria che li trovi, li esegua uno alla volta e indichi con precisione quale è fallito. Prima di introdurla, osserviamo come è costruito un singolo test.
 
 ### Arrange, Act, Assert
 
-Un test leggibile distingue spesso tre momenti:
+Nel test seguente si riconoscono tre passaggi:
 
 ```java
 // Arrange: prepara oggetti e dati
@@ -7232,13 +7405,26 @@ assert catalog.size() == 1;
 assert catalog.findByIsbn("978-1").equals(book);
 ```
 
-Questa struttura, chiamata **Arrange-Act-Assert**, non richiede commenti in ogni test. Serve a mantenere chiaro quale comportamento viene esercitato e quali effetti vengono verificati.
+Prima vengono preparati il catalogo e il libro, poi viene chiamato `add()`, infine si controllano dimensione e risultato della ricerca. Questa struttura viene chiamata **Arrange-Act-Assert**: *arrange* prepara i dati, *act* esegue l'operazione e *assert* ne verifica gli effetti. I commenti non sono obbligatori; quando il test è breve, le tre parti dovrebbero risultare chiare anche dalla disposizione del codice.
 
-### Test con JUnit 5
+### Test con JUnit Jupiter
 
-JUnit è una libreria esterna dedicata ai test. Deve essere aggiunta al progetto tramite l'ambiente di sviluppo, spesso chiamato **IDE** (*Integrated Development Environment*), oppure tramite uno strumento di build, che automatizza compilazione e gestione delle dipendenze; non fa parte della libreria standard Java.
+Per organizzare i test useremo **JUnit Jupiter**, la parte di JUnit dedicata alla scrittura dei test. JUnit non fa parte della libreria standard e deve quindi essere aggiunto alle dipendenze del progetto. Nel `build.gradle` inseriamo:
 
-L'esempio usa due forme già incontrate in contesti più semplici. Un `import static` importa un membro statico e permette di chiamarlo senza anteporre il nome della classe: grazie all'import possiamo scrivere `assertEquals(...)` invece di `Assertions.assertEquals(...)`. `@Test` è invece un'annotazione, simile per forma a `@Override`, con la quale indichiamo a JUnit che il metodo seguente è un test da eseguire.
+```groovy
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.14.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+```
+
+`testImplementation` rende JUnit disponibile soltanto per compilare ed eseguire i test, senza inserirlo fra le librerie dell'applicazione. `testRuntimeOnly` aggiunge il componente usato per avviare i test. `useJUnitPlatform()` comunica al task `test` che deve cercare ed eseguire i test di JUnit Jupiter. Dopo questa configurazione possiamo eseguirli dall'IDE oppure con `./gradlew test`.
+
+Nel prossimo esempio compaiono due forme sintattiche da chiarire. Gli `import static` permettono di scrivere `assertEquals(...)` invece del nome completo `Assertions.assertEquals(...)`. `@Test` è invece un'annotazione, simile per forma a `@Override`: segnala a JUnit che il metodo seguente contiene un test da eseguire.
 
 Il file `BookCatalogTest.java` può contenere:
 
@@ -7292,21 +7478,25 @@ class BookCatalogTest {
 }
 ```
 
-Ogni metodo annotato con `@Test` verifica un comportamento. `assertSame()` controlla l'identità dei riferimenti, mentre `assertEquals()` usa `equals()`. `assertThrows()` riceve il tipo di eccezione atteso e una lambda con l'operazione che deve fallire. Espressioni come `IllegalArgumentException.class` sono **letterali di classe**: rappresentano un tipo come oggetto, così JUnit può confrontarlo con il tipo dell'eccezione lanciata. `assertThrows()` restituisce poi l'eccezione intercettata, rendendo possibile verificarne il messaggio.
+I tre metodi controllano tre promesse diverse di `BookCatalog`: un libro aggiunto può essere ritrovato, un ISBN duplicato viene rifiutato e la ricerca di un ISBN sconosciuto fallisce.
 
-In JUnit 5 né la classe di test né i suoi metodi devono essere necessariamente `public`: la visibilità package-private usata nell'esempio è sufficiente.
+`assertSame()` controlla che due riferimenti indichino proprio lo stesso oggetto; `assertEquals()` confronta invece i valori attraverso `equals()`. `assertThrows()` esegue l'operazione scritta nella lambda e verifica che venga lanciata l'eccezione indicata. L'espressione `IllegalArgumentException.class` rappresenta il tipo dell'eccezione che JUnit deve aspettarsi. Poiché `assertThrows()` restituisce l'eccezione intercettata, nel secondo test possiamo controllarne anche il messaggio.
 
-Il test del duplicato controlla anche che la dimensione resti uno: non basta osservare l'eccezione, bisogna verificare che l'operazione fallita non abbia modificato lo stato.
+In JUnit Jupiter né la classe di test né i suoi metodi devono essere necessariamente `public`: la visibilità package-private usata nell'esempio è sufficiente.
+
+Nel test dell'ISBN duplicato controlliamo infine che la dimensione sia rimasta uno. Lanciare l'eccezione giusta non sarebbe sufficiente se, prima di fallire, `add()` inserisse comunque il secondo libro.
 
 ### Test unitari e test di integrazione
 
-Un **test unitario** esercita un componente piccolo controllandone direttamente i collaboratori. È veloce e localizza bene i difetti. Un **test di integrazione** verifica che più componenti o una tecnologia esterna collaborino davvero, per esempio il repository con un file o un database.
+Non tutti i test lavorano alla stessa scala. Un **test unitario** concentra l'attenzione su una classe o su un piccolo gruppo di oggetti. Se fallisce, di solito è abbastanza semplice capire dove cercare il problema.
 
-I due livelli rispondono a domande differenti. Sostituire sempre il database con un oggetto finto non verifica la persistenza reale; usare il database in ogni test rende invece la suite più lenta e rende meno chiara la causa dei fallimenti.
+Un **test di integrazione** controlla invece che più parti del programma lavorino davvero insieme. Per esempio, può verificare che un repository scriva e rilegga correttamente un file oppure comunichi con il database configurato per il test.
 
-### Controllare i collaboratori con un fake
+I due tipi di test rispondono a domande diverse. Se sostituiamo sempre il database, non controlleremo mai se la persistenza reale funziona. Se coinvolgiamo il database in ogni test, però, l'esecuzione diventa più lenta e un fallimento può avere molte più cause. In un progetto servono quindi entrambi, scelti in base a ciò che vogliamo verificare.
 
-Supponiamo che un servizio debba inviare un promemoria:
+### Sostituire un collaboratore durante il test
+
+Supponiamo che `ReminderService` debba inviare un promemoria. Il componente che si occupa materialmente dell'invio è descritto da questa interfaccia:
 
 ```java
 public interface MessageSender {
@@ -7314,7 +7504,7 @@ public interface MessageSender {
 }
 ```
 
-Il servizio dipende dall'interfaccia:
+Il servizio riceve un `MessageSender` dal costruttore e lo usa senza conoscerne l'implementazione concreta:
 
 ```java
 public final class ReminderService {
@@ -7336,7 +7526,7 @@ public final class ReminderService {
 }
 ```
 
-Durante il test non vogliamo inviare un messaggio reale. Una piccola implementazione può registrare la chiamata:
+Durante il test non vogliamo spedire davvero email o SMS. Ci interessa sapere se il servizio ha richiesto l'invio al destinatario giusto e con il testo giusto. Possiamo quindi usare una piccola implementazione che, invece di spedire, conserva i valori ricevuti:
 
 ```java
 final class FakeMessageSender implements MessageSender {
@@ -7359,15 +7549,15 @@ final class FakeMessageSender implements MessageSender {
 }
 ```
 
-Questa implementazione è un **fake**, cioè un sostituto semplificato ma funzionante del collaboratore reale. Il test costruisce `ReminderService` con il fake e verifica i valori registrati. La dependency injection rende il controllo possibile senza aggiungere condizioni speciali al codice di produzione.
+`FakeMessageSender` è un **fake**: un sostituto semplice ma funzionante del componente reale. Il test lo passa a `ReminderService`, chiama `remind()` e confronta `getRecipient()` e `getMessage()` con i valori attesi. Non serve modificare `ReminderService` né aggiungergli una modalità speciale per i test; basta che il collaboratore venga ricevuto dall'esterno tramite dependency injection.
 
 ### Test deterministici
 
-Un test dovrebbe produrre lo stesso risultato a ogni esecuzione. Tempo corrente, numeri casuali, rete, file condivisi e ordine non garantito delle collezioni possono renderlo instabile.
+Se un test passa al mattino e fallisce la sera senza che il codice sia cambiato, non è affidabile. Il risultato deve dipendere dai dati preparati dal test, non dall'ora, dalla connessione di rete, da un file condiviso con altri programmi o da un numero casuale diverso a ogni esecuzione.
 
-`LocalDate`, appartenente al package `java.time`, rappresenta una data di calendario senza orario. La chiamata `LocalDate.now()` legge la data corrente dall'orologio del sistema; un test eseguito in giorni diversi otterrebbe quindi risultati diversi.
+Il problema si vede bene con le date. `LocalDate`, appartenente al package `java.time`, rappresenta una data senza l'orario. La chiamata `LocalDate.now()` legge la data corrente dal computer. Un test sul ritardo di un prestito otterrebbe quindi risultati diversi a seconda del giorno in cui viene eseguito.
 
-Un `Clock` rappresenta la sorgente dalla quale il programma ricava il tempo. Il codice di produzione può ricevere l'orologio del sistema, mentre il test può fornire un orologio fermo su un istante noto:
+Per evitare che il servizio legga direttamente l'orologio del computer, possiamo fargli ricevere un `Clock`. Nel programma reale useremo l'orologio di sistema; nel test ne useremo uno fermo su un istante scelto:
 
 ```java
 import java.time.Clock;
@@ -7383,42 +7573,44 @@ LocalDate today = LocalDate.now(fixedClock);
 System.out.println(today); // 2026-03-10
 ```
 
-`Instant` identifica un momento preciso; nella stringa passata a `parse()`, la `Z` finale indica il tempo coordinato universale. `ZoneOffset.UTC` usa lo stesso riferimento per ricavarne la data. Ricevendo `Clock` come dipendenza, il servizio usa `LocalDate.now(clock)` e il test può controllare il risultato. Lo stesso principio vale per generatori casuali e servizi esterni: rendere esplicita la dipendenza permette di sostituire una sorgente variabile con una nota.
+`Instant` identifica un momento preciso. La `Z` finale nella stringa indica il tempo coordinato universale e `ZoneOffset.UTC` usa lo stesso fuso per ricavare la data. Il valore di `today` sarà quindi sempre il 10 marzo 2026, qualunque sia il giorno in cui eseguiamo il test.
+
+Un servizio che riceve questo oggetto può chiamare `LocalDate.now(clock)` invece di `LocalDate.now()`. Lo stesso accorgimento si può usare con numeri casuali e servizi esterni: se la sorgente variabile è una dipendenza esplicita, durante il test possiamo sostituirla con una sorgente prevedibile.
 
 ### Debugging guidato dalle prove
 
-Un **debugger** permette di sospendere il programma e osservare istruzioni e variabili durante l'esecuzione. Un **breakpoint** indica una riga nella quale il debugger deve fermarsi; un **log** è invece un messaggio diagnostico registrato dal programma mentre continua a funzionare.
+I test segnalano che qualcosa non funziona, ma non indicano automaticamente la causa. Per trovarla possiamo usare il **debugger**, che sospende il programma durante l'esecuzione e permette di osservare le variabili. Un **breakpoint** è il punto nel quale chiediamo al debugger di fermarsi. Un **log** è invece un messaggio diagnostico scritto mentre il programma continua a funzionare.
 
-Quando un test o il programma fallisce:
+Quando compare un errore, partire subito con molti breakpoint o molte stampe raramente aiuta. Conviene procedere in quest'ordine:
 
-1. riprodurre il difetto con il caso più piccolo;
-2. leggere tipo, messaggio e prima riga rilevante dello stack trace;
-3. distinguere il punto in cui il problema si manifesta da quello in cui nasce;
-4. formulare un'ipotesi verificabile;
-5. osservare valori e flusso con debugger o log mirati;
-6. correggere la causa;
-7. aggiungere o conservare un test che riproduceva il difetto.
+1. trovare il caso più piccolo che riproduce il problema;
+2. leggere il tipo dell'errore, il messaggio e la prima riga utile dello stack trace;
+3. capire se quella riga è la causa oppure soltanto il punto in cui il problema diventa visibile;
+4. formulare un'ipotesi precisa;
+5. usare un breakpoint o un log per controllare quell'ipotesi;
+6. correggere la causa e rieseguire il test.
 
-Stampare molte variabili senza un'ipotesi produce rumore. Un breakpoint prima dell'invariante violato o un log al confine fra due componenti forniscono informazioni più utili.
+Il test che ha riprodotto il difetto va conservato: da quel momento controllerà che lo stesso errore non venga introdotto di nuovo. Stampare molte variabili senza sapere che cosa stiamo cercando produce soltanto rumore. Un breakpoint collocato subito prima della regola violata, invece, permette di confrontare i valori reali con quelli che ci aspettavamo.
 
 ### In sintesi
 
-- I casi di test derivano dal contratto, dai confini e dalle transizioni di stato.
-- Le asserzioni Java possono essere disabilitate e non sostituiscono la validazione.
-- Arrange-Act-Assert separa preparazione, comportamento e verifica.
-- JUnit esegue test indipendenti e offre asserzioni specifiche.
-- Un fake controlla una collaborazione senza eseguire un effetto esterno reale.
-- Test unitari e di integrazione coprono rischi differenti.
-- Un difetto va prima riprodotto e poi corretto nella sua causa.
+- Un test prepara una situazione, esegue un'operazione e controlla il risultato.
+- I casi vanno scelti partendo dalle promesse della classe, dai valori limite e dai cambiamenti di stato.
+- Le asserzioni Java possono essere disabilitate, quindi non sostituiscono i controlli che devono essere sempre eseguiti.
+- JUnit permette di organizzare ed eseguire separatamente i test.
+- I test unitari controllano una parte piccola; quelli di integrazione verificano collaborazioni e tecnologie reali.
+- Un fake sostituisce un collaboratore reale quando il test non deve produrre effetti esterni.
+- Tempo, rete e casualità devono essere controllati per ottenere risultati ripetibili.
+- Per correggere un difetto bisogna prima riprodurlo e formulare un'ipotesi sulla sua causa.
 
 ### Esercizi
 
-1. Completa i test di `Book` per ISBN e titoli nulli, vuoti e composti da spazi.
-2. Testa `BookCatalog.getAll()` verificando che modificare la lista restituita non modifichi il catalogo.
-3. Testa `SimpleLinkedList` nelle transizioni vuota, un elemento e più elementi, includendo la rimozione di testa e coda.
-4. Scrivi i test di `ReminderService` usando `FakeMessageSender` e verifica destinatario e testo.
-5. Progetta un test deterministico per un prestito scaduto senza dipendere dalla data del computer.
-6. Parti da un difetto già incontrato, scrivi un test che lo riproduca e documenta l'ipotesi che conduce alla correzione.
+1. Scrivi la suite di test di `GiftCard`. Parti da una tabella che raggruppi casi validi, casi non validi e valori di confine per ricarica e pagamento; includi saldo esatto, un'unità oltre il saldo, zero e valore negativo. Ogni test deve verificare sia il risultato sia il saldo finale.
+2. Verifica il contratto di `BookCatalog`: salvataggio, ISBN duplicato, ricerca assente e protezione della collezione restituita. Organizza ogni test in Arrange, Act e Assert e usa nomi che descrivano condizione ed esito, non numeri progressivi.
+3. Per `SimpleLinkedList`, costruisci test sulle transizioni vuota → un elemento → più elementi → un elemento → vuota. Quando un'operazione deve fallire, verifica tipo di eccezione e stato rimasto invariato; evita di concentrare l'intera sequenza in un solo test difficile da diagnosticare.
+4. Aggiungi a `ReminderService` un'operazione che invia il messaggio soltanto quando il prestito è scaduto. Testala con un `FakeMessageSender` che registra destinatario, testo e numero di chiamate. Verifica sia l'invio corretto sia il caso non scaduto nel quale il fake non deve ricevere alcuna chiamata.
+5. Un servizio considera scaduta una prenotazione dopo sette giorni. Scrivi prima un test fragile basato sulla data corrente, poi rendilo deterministico iniettando `Clock`. Verifica il giorno prima, il giorno esatto e quello successivo alla scadenza.
+6. Scegli un difetto riproducibile in un esercizio precedente. Scrivi un test che fallisce, formula un'ipotesi, usa il debugger per controllare il punto in cui stato e previsione divergono, applica la correzione minima e conserva il test come protezione contro regressioni.
 
 ---
 
@@ -7673,12 +7865,1803 @@ Possono comparire nello stesso progetto, ma non formano una struttura obbligator
 
 ### Esercizi
 
-1. Implementa tre `LoanDurationPolicy` e verifica il servizio con una strategia fornita tramite lambda.
-2. Crea una factory semplice per costruire politiche di notifica da un valore validato; distinguila per iscritto dal Factory Method.
-3. Aggiungi a `LoanEvents` la rimozione di un listener e stabilisci che cosa accade se lo stesso oggetto viene registrato due volte.
-4. Completa `InMemoryBookRepository` con controlli sugli argomenti nulli e test per salvataggio, duplicato, ricerca e rimozione.
-5. Sostituisci il repository in memoria con un fake che registra le chiamate di `LibraryService`.
-6. Prendi un programma piccolo privo di varianti e spiega perché introdurre tutti e quattro i pattern ne peggiorerebbe la leggibilità.
+1. Un negozio calcola la spedizione con tre politiche: tariffa fissa, gratuita sopra una soglia e proporzionale al peso. Implementale come Strategy, passa la politica al servizio e verifica la stessa vendita con strategie diverse. Aggiungi una quarta politica tramite lambda senza modificare il servizio.
+2. Da un valore di configurazione `"email"`, `"sms"` o `"console"`, costruisci il notificatore corretto con una factory. Definisci che cosa accade per valori nulli o sconosciuti e testa ogni ramo. Spiega perché concentrare qui la scelta è utile e perché questa semplice factory non è il pattern Factory Method.
+3. Implementa un Observer per lo stato di una consegna. Devono potersi registrare e rimuovere osservatori; stabilisci esplicitamente se una doppia registrazione produca una o due notifiche e verifica ordine, rimozione durante l'uso normale e assenza di osservatori.
+4. Definisci un `ProductRepository` e due implementazioni in memoria, una basata su `List` e una su `Map`, con lo stesso comportamento previsto per salvataggio, duplicati, ricerca e rimozione. Il servizio deve lavorare con entrambe senza conoscere la classe concreta. Scrivi test di contratto riutilizzabili che entrambe le implementazioni devono superare.
+5. Combina Strategy e Repository in un servizio di preventivi: il repository recupera i dati del prodotto, la strategia calcola lo sconto. Disegna la sequenza delle chiamate e verifica con fake separati quale collaboratore riceve quali dati.
+6. Esamina un programma che ha una sola politica, una sola costruzione, nessun osservatore e dati conservati in una lista locale. Per ciascuno dei quattro pattern stabilisci quale variazione futura ne giustificherebbe l'introduzione; finché quella variazione non esiste, confronta il costo del pattern con la soluzione diretta.
+
+---
+
+# Persistenza dei dati
+
+## Salvare dati in JSON
+
+Gli oggetti creati durante l'esecuzione vivono in memoria. Quando il programma termina, quello stato scompare. Se vogliamo ritrovarlo al prossimo avvio dobbiamo trasformarlo in dati che possano essere scritti in un file e letti in seguito.
+
+**JSON** (*JavaScript Object Notation*) è un formato testuale usato per rappresentare dati strutturati. Non è legato a Java: lo stesso documento può essere prodotto e letto da programmi scritti in linguaggi diversi.
+
+### Leggere un documento JSON
+
+Questo documento rappresenta il piano di studio di una studentessa:
+
+```json
+{
+  "student": "Ada",
+  "active": true,
+  "subjects": [
+    {
+      "name": "Informatica",
+      "weeklyHours": 6
+    },
+    {
+      "name": "Matematica",
+      "weeklyHours": 4
+    }
+  ]
+}
+```
+
+Le parentesi graffe delimitano un **oggetto JSON**. Al suo interno troviamo proprietà formate da un nome e da un valore, separati dai due punti. Per esempio, `"student": "Ada"` associa il nome `student` alla stringa `Ada`.
+
+Le parentesi quadre delimitano invece un **array JSON**, cioè una sequenza ordinata di valori. In questo caso `subjects` contiene due oggetti, uno per ogni materia.
+
+Un valore JSON può essere:
+
+- una stringa racchiusa tra virgolette doppie;
+- un numero;
+- il valore booleano `true` oppure `false`;
+- `null`;
+- un oggetto;
+- un array.
+
+Gli oggetti JSON e gli oggetti Java non sono la stessa cosa. Nel documento non esistono classi, costruttori o metodi: `student`, `active` e `subjects` sono soltanto nomi di proprietà. Anche i tipi non coincidono perfettamente con quelli di Java: JSON distingue numeri, stringhe e booleani, ma non possiede tipi come `int`, `double` o `LocalDate`.
+
+L'ordine degli elementi di un array è significativo; l'ordine delle proprietà di un oggetto, invece, non dovrebbe essere usato per attribuire loro un significato. Il formato standard non ammette commenti e non permette una virgola dopo l'ultimo elemento.
+
+### Dati Java e dati JSON
+
+Per usare questi dati nel programma servono classi Java che ne rappresentino la struttura. Il file `SubjectData.java` descrive una materia:
+
+```java
+public record SubjectData(
+        String name,
+        int weeklyHours) {
+
+    public SubjectData {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Nome della materia obbligatorio");
+        }
+        if (weeklyHours <= 0) {
+            throw new IllegalArgumentException(
+                    "Ore settimanali non valide");
+        }
+    }
+}
+```
+
+Il file `StudyPlanData.java` rappresenta l'oggetto JSON più esterno:
+
+```java
+import java.util.List;
+
+public record StudyPlanData(
+        String student,
+        boolean active,
+        List<SubjectData> subjects) {
+
+    public StudyPlanData {
+        if (student == null || student.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Nome dello studente obbligatorio");
+        }
+        if (subjects == null) {
+            throw new IllegalArgumentException(
+                    "Elenco delle materie obbligatorio");
+        }
+        subjects = List.copyOf(subjects);
+    }
+}
+```
+
+Nel nostro esempio i dati corrispondono così:
+
+| JSON | Java |
+|---|---|
+| proprietà `student` | componente `String student` |
+| proprietà `active` | componente `boolean active` |
+| array `subjects` | `List<SubjectData>` |
+| oggetto dentro l'array | un oggetto `SubjectData` |
+
+Nel documento e nei record abbiamo usato gli stessi nomi. I costruttori compatti continuano a convalidare gli oggetti Java anche quando i valori provengono da un file.
+
+### Perché serve una libreria
+
+Un file JSON è un file di testo. Con gli strumenti del JDK possiamo leggerne il contenuto in una stringa:
+
+```java
+String text = Files.readString(
+        Path.of("data", "study-plan.json"));
+```
+
+A questo punto `text` è soltanto una `String`. Il JDK non interpreta le parentesi graffe, non cerca la proprietà `student` e non costruisce una `List<SubjectData>` a partire dall'array `subjects`.
+
+Per ottenere quegli oggetti servirebbe un parser: codice capace di riconoscere oggetti, array e valori JSON e di controllare che la sintassi sia valida. Scriverlo non è lo scopo del nostro programma.
+
+Affidiamo questo lavoro a **Jackson**, una libreria Java per la lettura e la scrittura di JSON. In lettura analizza il testo e costruisce gli oggetti richiesti dal programma; in scrittura osserva un oggetto e produce il testo JSON corrispondente.
+
+La libreria è divisa in componenti. Useremo **`jackson-databind`**, che associa le proprietà JSON ai campi o ai componenti degli oggetti Java. Le operazioni di conversione vengono chiamate attraverso la classe **`ObjectMapper`**.
+
+### Aggiungere Jackson al progetto
+
+Jackson è una dipendenza esterna. Dichiariamo il componente `jackson-databind` in `build.gradle`:
+
+```groovy
+dependencies {
+    implementation 'tools.jackson.core:jackson-databind:3.1.5'
+}
+```
+
+Il blocco va aggiunto alla configurazione Gradle già mostrata nel capitolo sull'organizzazione del codice. `implementation` rende Jackson disponibile durante la compilazione e l'esecuzione dell'applicazione. Gradle scarica anche le dipendenze usate internamente da `jackson-databind`.
+
+> [!info] IntelliJ IDEA
+> Apri `build.gradle`, aggiungi la riga nel blocco `dependencies` e usa **Load Gradle Changes** se la sincronizzazione non parte automaticamente.
+
+> [!info] Visual Studio Code
+> Apri la cartella che contiene `build.gradle`. Se la dipendenza non viene importata automaticamente, aggiorna il progetto dalla vista **Gradle**.
+
+Gli esempi seguono l'API della dipendenza indicata in `build.gradle`. Usando una sua versione appartenente a un'altra generazione possono cambiare anche i package degli import; versione della dipendenza, import ed esempi devono quindi rimanere coerenti.
+
+### Trasformare un oggetto in una stringa JSON
+
+La trasformazione di un oggetto in dati si chiama **serializzazione**. Creiamo un `ObjectMapper` configurato per produrre JSON rientrato:
+
+```java
+ObjectMapper mapper = JsonMapper.builder()
+        .enable(SerializationFeature.INDENT_OUTPUT)
+        .build();
+```
+
+`INDENT_OUTPUT` chiede di inserire righe e rientri per rendere il risultato leggibile. Non modifica i dati rappresentati.
+
+Costruiamo il piano:
+
+```java
+StudyPlanData plan = new StudyPlanData(
+        "Ada",
+        true,
+        List.of(
+                new SubjectData("Informatica", 6),
+                new SubjectData("Matematica", 4)));
+```
+
+Poi lo convertiamo in una stringa:
+
+```java
+String json = mapper.writeValueAsString(plan);
+System.out.println(json);
+```
+
+`writeValueAsString()` osserva i componenti dei record, costruisce le proprietà corrispondenti e restituisce una normale `String`.
+
+### Ricostruire un oggetto da una stringa JSON
+
+La costruzione di un oggetto a partire dai dati si chiama **deserializzazione**:
+
+```java
+StudyPlanData loaded = mapper.readValue(
+        json,
+        StudyPlanData.class);
+```
+
+La stringa `json` non contiene il nome della classe Java da creare. Per questo `readValue()` riceve anche `StudyPlanData.class`: Jackson usa quel tipo per capire che l'oggetto esterno è uno `StudyPlanData` e che gli elementi di `subjects` sono `SubjectData`.
+
+`loaded` non è lo stesso oggetto riferito da `plan`. È un nuovo oggetto costruito a partire dagli stessi dati. Durante la costruzione vengono eseguiti anche i costruttori compatti dei record, quindi un nome vuoto o un numero di ore non positivo continua a essere rifiutato.
+
+### Scrivere e leggere un file
+
+`ObjectMapper` può scrivere il risultato direttamente in un file. `writeValue()` serializza l'oggetto e usa il percorso indicato:
+
+```java
+Path file = Path.of("data", "study-plan.json");
+Files.createDirectories(file.getParent());
+mapper.writeValue(file.toFile(), plan);
+```
+
+Il percorso è relativo alla cartella dalla quale viene avviato il programma. `Files.createDirectories()` crea la cartella `data` se manca e non produce errori se esiste già.
+
+Per leggere il file usiamo ancora `readValue()`, sostituendo la stringa con il file sorgente:
+
+```java
+StudyPlanData loaded = mapper.readValue(
+        file.toFile(),
+        StudyPlanData.class);
+```
+
+Il file `JsonDemo.java` riunisce i passaggi in un programma completo:
+
+```java
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.SerializationFeature;
+import tools.jackson.databind.json.JsonMapper;
+
+public final class JsonDemo {
+    public static void main(String[] args) {
+        ObjectMapper mapper = JsonMapper.builder()
+                .enable(SerializationFeature.INDENT_OUTPUT)
+                .build();
+
+        StudyPlanData plan = new StudyPlanData(
+                "Ada",
+                true,
+                List.of(
+                        new SubjectData("Informatica", 6),
+                        new SubjectData("Matematica", 4)));
+
+        Path file = Path.of("data", "study-plan.json");
+
+        try {
+            Files.createDirectories(file.getParent());
+            mapper.writeValue(file.toFile(), plan);
+
+            StudyPlanData loaded = mapper.readValue(
+                    file.toFile(),
+                    StudyPlanData.class);
+
+            System.out.println(loaded.student());
+            for (SubjectData subject : loaded.subjects()) {
+                System.out.println(
+                        subject.name()
+                                + ": "
+                                + subject.weeklyHours());
+            }
+        } catch (IOException exception) {
+            System.err.println(
+                    "Impossibile leggere o scrivere i dati: "
+                            + exception.getMessage());
+        }
+    }
+}
+```
+
+`ObjectMapper` viene costruito una volta e riutilizzato per scrittura e lettura. Il programma produce questo output dopo aver riletto il file:
+
+```text
+Ada
+Informatica: 6
+Matematica: 4
+```
+
+### Quando la lettura non riesce
+
+La lettura può fallire per motivi diversi:
+
+- il file non esiste o non è accessibile;
+- il testo non rispetta la sintassi JSON;
+- la struttura non corrisponde ai tipi Java richiesti;
+- i valori violano le regole dei costruttori.
+
+Per esempio, la proprietà seguente contiene una stringa dove `SubjectData` richiede un numero:
+
+```json
+"weeklyHours": "sei"
+```
+
+Jackson non può costruire correttamente l'oggetto e segnala l'errore. Le eccezioni di lettura e scrittura arrivano al `catch` di `IOException` mostrato nel programma completo. Il messaggio tecnico può essere utile durante il debugging; in un'applicazione destinata a un utente andrà trasformato in una spiegazione più semplice.
+
+La classe dei dati non dovrebbe decidere come mostrare l'errore. Il componente che legge il file segnala il problema; il terminale o, più avanti, l'interfaccia grafica decide come comunicarlo.
+
+### Quale oggetto viene salvato
+
+Jackson scrive i dati dell'oggetto che riceve. Nel nostro programma gli passiamo `plan`, che è uno `StudyPlanData`:
+
+```java
+mapper.writeValue(file.toFile(), plan);
+```
+
+`StudyPlanData` contiene `student`, `active` e `subjects`, quindi il file conterrà queste tre proprietà. In questo esempio usiamo lo stesso tipo sia nel resto del programma sia per il salvataggio. Non serve creare un'altra classe.
+
+In un programma più grande potremmo avere una classe `StudyPlan` con informazioni utili soltanto mentre l'applicazione è aperta, per esempio il percorso del file e un campo che indica se ci sono modifiche non ancora salvate. Se non vogliamo inserire queste informazioni nel JSON, costruiamo uno `StudyPlanData` con i soli dati da conservare e passiamo quello a Jackson.
+
+Questa separazione è facoltativa. Nell'esempio del capitolo continuiamo a usare direttamente `StudyPlanData`.
+
+### Limiti di un file JSON
+
+Salvare dati in JSON significa scrivere e rileggere un file di testo. Questo metodo funziona bene per configurazioni e raccolte di dimensioni contenute, ma non offre ricerche indicizzate, transazioni o gestione di più accessi contemporanei. Quando il programma deve cercare spesso fra molti dati o coordinare più operazioni, può essere necessario usare un database.
+
+### In sintesi
+
+- Un oggetto JSON contiene proprietà; un array JSON contiene valori in sequenza.
+- JSON rappresenta dati e non contiene classi o metodi Java.
+- Serializzare significa trasformare un oggetto in dati JSON; deserializzare significa costruire un nuovo oggetto da quei dati.
+- Jackson usa `ObjectMapper` per lavorare sia con stringhe sia con file.
+- La dipendenza Jackson viene dichiarata nel blocco `dependencies` di `build.gradle`.
+- I costruttori continuano a proteggere gli invarianti durante la deserializzazione.
+- Jackson salva i dati dell'oggetto che gli passiamo; nell'esempio usiamo direttamente `StudyPlanData`.
+
+### Esercizi
+
+1. Progetta il documento JSON di una rubrica con proprietario e contatti. Ogni contatto contiene nome, email, numero facoltativo e indicazione di preferito. Prima scrivi un esempio valido con almeno tre contatti, poi definisci i record Java corrispondenti e motiva la corrispondenza fra oggetto, array, proprietà e tipi.
+2. Verifica il **round trip** della rubrica: costruisci l'oggetto Java, serializzalo in una stringa, ricostruiscilo con `readValue()` e controlla che i dati significativi coincidano. Inserisci caratteri accentati e una stringa contenente virgolette per verificare che sia Jackson, non il tuo codice, a gestire l'escape JSON.
+3. Salva la rubrica in un file e rileggila attraverso una classe `ContactFile` che riceve `ObjectMapper` e `Path` dal costruttore. Il resto del programma non deve chiamare direttamente `readValue()` o `writeValue()`. Gestisci separatamente file assente, JSON malformato e dati validi.
+4. Prepara tre file non validi: un numero al posto dell'array dei contatti, una proprietà numerica scritta come testo e una parentesi mancante. Per ciascuno annota se il problema appartiene alla sintassi JSON o alla conversione verso i record Java e controlla quale eccezione arriva al punto di gestione.
+5. Decidi la politica per un documento privo di `contacts`: errore oppure rubrica vuota. Implementa la scelta in un unico punto e scrivi due verifiche, una per proprietà assente e una per array esplicitamente vuoto. Spiega perché i due casi possono avere oppure non avere lo stesso significato nel requisito scelto.
+6. Salva più rubriche in un record contenitore `AddressBooksData`, poi rileggile senza deserializzare direttamente in una `List` generica. Aggiungi una versione numerica del formato e rifiuta esplicitamente una versione non supportata.
+
+---
+
+# Interfacce grafiche
+
+## Applicazioni grafiche con JavaFX
+
+**JavaFX** è una libreria Java per creare interfacce grafiche desktop. Fornisce finestre, pulsanti, campi di testo, etichette e classi per disporre questi elementi sullo schermo.
+
+### Un solo progetto per gli esempi
+
+Tutti gli esempi JavaFX autonomi della dispensa usano la stessa classe principale, chiamata `Main`, e lo stesso progetto Gradle. Ogni blocco indicato come programma completo può quindi essere provato in questo modo:
+
+1. si apre `src/main/java/Main.java`;
+2. si sostituisce tutto il suo contenuto con il programma dell'esempio;
+3. si esegue `./gradlew run`, oppure il task `run` dall'IDE.
+
+Non bisogna rinominare il file, cambiare `mainClass` nel `build.gradle` o creare un progetto per ogni esempio. Quando un programma autonomo richiede una piccola classe di supporto, anche quella classe viene inclusa nello stesso blocco da copiare.
+
+I capitoli su FXML e CSS costituiscono eccezioni dichiarate. FXML serve proprio a dividere l'applicazione fra classe principale, controller e file della vista; il CSS deve essere conservato in un foglio di stile separato. In entrambi i casi il codice della classe da avviare continua a chiamarsi `Main`, ma l'esempio completo richiede anche le risorse indicate nel relativo capitolo.
+
+### La classe principale
+
+La classe principale di un'applicazione JavaFX deve estendere `Application`. Negli esempi della dispensa la dichiarazione sarà `public final class Main extends Application`.
+
+`Application` è una classe astratta di JavaFX. Dichiara il metodo `start(Stage stage)`, quindi `Main` deve ridefinirlo con `@Override`.
+
+Il metodo `main()` chiama `launch(args)`. Questa chiamata avvia JavaFX. Quando l'ambiente grafico è pronto, JavaFX chiama `start()` e gli passa lo `Stage` principale. Il programma non chiama direttamente `start()`.
+
+Il file `Main.java` può già mostrare una finestra con una scritta:
+
+```java
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+public final class Main extends Application {
+    @Override
+    public void start(Stage stage) {
+        Label message = new Label(
+                "Convertitore di temperatura");
+        Scene scene = new Scene(message, 320, 120);
+
+        stage.setTitle("Convertitore di temperatura");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+```
+
+JavaFX crea lo `Stage` e lo passa a `start()`. Lo `Stage` è la finestra principale. Il programma crea una `Label`, la inserisce in una `Scene` e assegna la scena allo `Stage`. La chiamata a `show()` rende visibile la finestra.
+
+### Il ciclo di vita di `Application`
+
+`start()` è il metodo centrale, ma non è l'unico momento previsto dal ciclo di vita di un'applicazione JavaFX. La sequenza è:
+
+1. JavaFX costruisce un oggetto della classe che estende `Application`;
+2. chiama `init()` per l'inizializzazione che non riguarda l'interfaccia;
+3. prepara il JavaFX Application Thread e chiama `start(Stage)`;
+4. quando l'applicazione termina, chiama `stop()`.
+
+`init()` e `stop()` esistono già in `Application` con un'implementazione vuota, quindi vanno ridefiniti soltanto quando servono:
+
+```java
+@Override
+public void init() {
+    // Carica configurazioni che non richiedono JavaFX
+}
+
+@Override
+public void stop() {
+    // Chiude risorse o servizi avviati dall'applicazione
+}
+```
+
+`init()` non viene eseguito sul JavaFX Application Thread e non deve creare `Stage`, `Scene` o controlli. La costruzione del scene graph appartiene a `start()`. `stop()` è invece il punto in cui interrompere servizi in background o chiudere risorse ancora aperte.
+
+La maggior parte dei programmi piccoli ha bisogno soltanto di `start()`. Per chiudere esplicitamente un'applicazione è preferibile `Platform.exit()`, che permette a JavaFX di completare il ciclo di vita e chiamare `stop()`.
+
+### Configurare il progetto
+
+JavaFX non è inclusa nel JDK. Il progetto usa Gradle per scaricarla e avviare l'applicazione. Il `build.gradle` completo è:
+
+```groovy
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = '21.0.12'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+application {
+    mainClass = 'Main'
+}
+```
+
+Il plugin `application` aggiunge il task `run` e usa `mainClass` per sapere quale classe avviare. Il plugin di OpenJFX configura i moduli JavaFX richiesti e scarica i file adatti al sistema operativo. `javafx.controls` fornisce i controlli grafici; `javafx.fxml` verrà usato nel capitolo dedicato a FXML. Lo includiamo già adesso affinché lo stesso `build.gradle` rimanga valido per tutta la macrosezione.
+
+In `settings.gradle` assegniamo il nome al progetto:
+
+```groovy
+rootProject.name = 'javafx-examples'
+```
+
+Il progetto non usa `module-info.java`. La struttura iniziale è:
+
+```text
+javafx-examples/
+├── build.gradle
+├── settings.gradle
+├── gradlew
+├── gradlew.bat
+├── gradle/
+│   └── wrapper/
+└── src/main/java/
+    └── Main.java
+```
+
+L'applicazione si avvia con:
+
+```text
+./gradlew run
+```
+
+Su Windows il comando equivalente è `gradlew.bat run`.
+
+Il programma va avviato attraverso questo task. Eseguire direttamente `Main.main()` con una configurazione Java che non usa Gradle può escludere JavaFX dal runtime: la classe dell'applicazione viene trovata, ma il caricamento fallisce con un errore come `NoClassDefFoundError: javafx/stage/Stage`.
+
+> [!info] IntelliJ IDEA
+> Crea un progetto Java con Gradle, DSL Groovy e un JDK recente. Sostituisci `build.gradle` con quello mostrato sopra e usa **Load Gradle Changes**. Avvia l'applicazione dal task **application → run** nella finestra Gradle oppure esegui `./gradlew run` nel terminale. Il normale pulsante di esecuzione della classe può usare una configurazione Java priva delle librerie JavaFX.
+
+> [!info] Visual Studio Code
+> Apri la cartella che contiene `build.gradle` con Extension Pack for Java e Gradle for Java installati, quindi esegui `./gradlew run` dal terminale.
+
+### Controlli e layout
+
+La prima finestra contiene una sola `Label`. Per eseguire una conversione servono almeno quattro elementi: un testo che spieghi che cosa inserire, un campo nel quale scrivere la temperatura, un pulsante che avvii l'operazione e un'altra etichetta nella quale mostrare il risultato.
+
+Li creiamo dentro `start()`:
+
+```java
+Label instruction = new Label(
+        "Temperatura in gradi Celsius");
+
+TextField input = new TextField();
+input.setPromptText("Per esempio: 20");
+
+Button convertButton = new Button("Converti");
+Label output = new Label();
+```
+
+`Label`, `TextField` e `Button` sono **controlli**. Un controllo è un nodo grafico già predisposto per un compito comune. La `Label` mostra del testo, il `TextField` permette di inserire una riga e il `Button` può ricevere un clic. `setPromptText()` non inserisce un valore nel campo: mostra soltanto un suggerimento finché il campo è vuoto.
+
+Creare i controlli non basta a mostrarli. Devono entrare nella scena attraverso un contenitore. Usiamo `VBox`, un **layout** che dispone i propri figli in verticale nell'ordine in cui li riceve:
+
+```java
+VBox root = new VBox(
+        10,
+        instruction,
+        input,
+        convertButton,
+        output);
+root.setPadding(new Insets(20));
+```
+
+Il valore `10` è la distanza fra un controllo e il successivo. `Insets(20)` aggiunge spazio fra i controlli e i bordi del contenitore.
+
+Ogni elemento grafico è un **nodo**. Anche `VBox` è un nodo, ma contiene a sua volta altri nodi. Si forma quindi questa struttura:
+
+```text
+VBox
+├── Label       istruzione
+├── TextField   input
+├── Button      convertButton
+└── Label       output
+```
+
+La struttura ad albero dei nodi si chiama **scene graph**. `VBox` ne è la radice: passando `root` alla `Scene`, rendiamo raggiungibili dalla scena anche tutti i controlli contenuti nel layout.
+
+```java
+Scene scene = new Scene(root, 360, 220);
+stage.setScene(scene);
+```
+
+### Gestire il clic
+
+Finora il pulsante viene mostrato, ma premerlo non produce alcun effetto. Il metodo `setOnAction()` associa al pulsante il codice da eseguire quando riceve l'evento di azione:
+
+```java
+convertButton.setOnAction(event -> {
+    String text = input.getText();
+    output.setText("Hai scritto: " + text);
+});
+```
+
+Il parametro `event` rappresenta l'evento ricevuto e contiene informazioni sulla sua origine. In questo esempio non abbiamo bisogno di consultarlo, perché sappiamo già che l'handler è stato registrato sul pulsante `convertButton`.
+
+La chiamata a `setOnAction()` viene eseguita durante la costruzione della finestra. In quel momento la lambda non legge ancora il campo e non modifica la `Label`: JavaFX conserva il codice per usarlo in seguito.
+
+Dopo che la finestra è stata mostrata, il flusso è questo:
+
+1. l'utente preme il pulsante;
+2. JavaFX produce un evento di azione;
+3. JavaFX esegue la lambda registrata;
+4. la lambda legge in quel momento il contenuto di `input`;
+5. la scritta di `output` viene aggiornata.
+
+Il codice registrato per reagire a un evento si chiama **handler**. Un'applicazione grafica non legge le azioni dell'utente con un ciclo scritto nel `main()`: prepara i controlli e gli handler, poi lascia che sia JavaFX a chiamare il codice corretto quando arriva un evento. Questo modello viene chiamato **programmazione a eventi (Event Driven Programming)**.
+
+### Separare il calcolo dall'interfaccia
+
+Per completare il programma potremmo scrivere l'intera conversione direttamente nell'handler:
+
+```java
+convertButton.setOnAction(event -> {
+    double celsius = Double.parseDouble(input.getText());
+    double fahrenheit = celsius * 9 / 5 + 32;
+    output.setText("Risultato: " + fahrenheit + " °F");
+});
+```
+
+Il frammento funziona, ma nello stesso blocco sono mescolate operazioni diverse. `input.getText()` e `output.setText()` riguardano i controlli JavaFX. La formula, invece, non ha bisogno di conoscere finestre, campi di testo o etichette: dati i gradi Celsius, deve soltanto calcolare i gradi Fahrenheit.
+
+Se lasciassimo la formula nell'handler, per verificarla dovremmo cercarla in mezzo al codice grafico. Se aggiungessimo una seconda interfaccia, per esempio un programma da terminale, rischieremmo inoltre di riscrivere la stessa formula. Separare il calcolo significa collocare in una classe indipendente soltanto la parte che non dipende dall'interfaccia.
+
+Una classe `TemperatureConverter` contiene la formula. Nel programma completo la collocheremo nello stesso `Main.java`, dopo la classe principale:
+
+```java
+final class TemperatureConverter {
+    public double toFahrenheit(double celsius) {
+        return celsius * 9 / 5 + 32;
+    }
+}
+```
+
+Questa classe non importa JavaFX e non lavora con stringhe. Riceve un `double` e restituisce un `double`. Può quindi essere usata da un'interfaccia grafica, da un programma nel terminale o da un test senza subire modifiche.
+
+Anche `Double.parseDouble()` rimane in `Main`, perché trasforma il testo proveniente dall'interfaccia nel numero richiesto dal convertitore. Allo stesso modo, la formattazione `"%.1f °F"` appartiene all'interfaccia: stabilisce come presentare il risultato, non come calcolarlo.
+
+Ora la formula può essere verificata senza creare uno `Stage` e senza avviare JavaFX:
+
+```java
+TemperatureConverter converter =
+        new TemperatureConverter();
+
+assert converter.toFahrenheit(0) == 32;
+assert converter.toFahrenheit(100) == 212;
+```
+
+Questi controlli riguardano soltanto il calcolo. I test con JUnit possono essere scritti nello stesso modo usando `assertEquals()`.
+
+### Il programma completo
+
+Il programma completo contiene due classi nello stesso file. Soltanto `Main` è pubblica; `TemperatureConverter` può essere dichiarata dopo di essa:
+
+```text
+src/main/java/
+└── Main.java
+```
+
+Per provarlo si sostituisce l'intero contenuto di `Main.java` con il codice seguente.
+
+```java
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public final class Main extends Application {
+    private final TemperatureConverter converter =
+            new TemperatureConverter();
+
+    @Override
+    public void start(Stage stage) {
+        Label instruction = new Label(
+                "Temperatura in gradi Celsius");
+
+        TextField input = new TextField();
+        input.setPromptText("Per esempio: 20");
+
+        Button convertButton = new Button("Converti");
+        Label output = new Label();
+
+        convertButton.setOnAction(
+                event -> convert(input, output));
+
+        VBox root = new VBox(
+                10,
+                instruction,
+                input,
+                convertButton,
+                output);
+        root.setPadding(new Insets(20));
+
+        Scene scene = new Scene(root, 360, 220);
+        stage.setTitle("Convertitore di temperatura");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void convert(
+            TextField input,
+            Label output) {
+        try {
+            double celsius = Double.parseDouble(
+                    input.getText());
+            double fahrenheit =
+                    converter.toFahrenheit(celsius);
+
+            output.setText(
+                    "Risultato: %.1f °F".formatted(fahrenheit));
+        } catch (NumberFormatException exception) {
+            output.setText("Inserisci un numero valido");
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+
+final class TemperatureConverter {
+    public double toFahrenheit(double celsius) {
+        return celsius * 9 / 5 + 32;
+    }
+}
+```
+
+All'avvio, `start()` crea i controlli e registra questa lambda:
+
+```java
+event -> convert(input, output)
+```
+
+La lambda conserva i riferimenti al campo di testo e alla `Label`, ma non esegue ancora `convert()`. Solo dopo il clic JavaFX chiama la lambda e i due controlli vengono passati al metodo privato.
+
+`convert()` realizza il collegamento fra l'interfaccia e il calcolo. Prima legge una stringa dal `TextField`, poi la converte in `double` e passa il numero a `TemperatureConverter`. Infine formatta il numero restituito e lo mostra nella `Label`. La formula non torna quindi dentro la classe grafica: `Main` coordina i passaggi, mentre `TemperatureConverter` continua a occuparsi soltanto della conversione numerica.
+
+Se il campo non contiene un numero, `Double.parseDouble()` lancia `NumberFormatException`. Il `catch` intercetta l'eccezione e mostra `Inserisci un numero valido` nella `Label`. Questa gestione rimane nell'interfaccia perché decide come comunicare all'utente un dato non valido; il convertitore continua a ricevere soltanto numeri già ottenuti correttamente.
+
+### Elementi comuni dell'interfaccia
+
+Il convertitore usa soltanto `Label`, `TextField` e `Button`. La tabella seguente raccoglie gli altri elementi più comuni e indica quale dato o interazione rappresentano.
+
+| Elemento | A che cosa serve | Operazioni e osservazioni principali |
+|---|---|---|
+| `Label` | mostra un testo non modificabile dall'utente | `setText()` cambia il contenuto; `getText()` lo legge |
+| `Button` | avvia un'azione | l'handler viene registrato con `setOnAction()` |
+| `TextField` | riceve una sola riga di testo | `getText()` legge il contenuto; `setPromptText()` mostra un suggerimento quando il campo è vuoto |
+| `PasswordField` | riceve una riga nascondendo visivamente i caratteri | `getText()` restituisce comunque una normale stringa: il controllo non cifra la password |
+| `TextArea` | riceve o mostra un testo su più righe | può andare a capo e avere barre di scorrimento |
+| `CheckBox` | rappresenta un'opzione indipendente | `isSelected()` indica se l'opzione è attiva |
+| `RadioButton` e `ToggleGroup` | permettono una sola scelta fra poche alternative tutte visibili | i `RadioButton` inseriti nello stesso gruppo si escludono a vicenda |
+| `ComboBox<T>` | permette di scegliere un valore da un elenco compatto | gli elementi si aggiungono con `getItems()`; `getValue()` restituisce la scelta corrente |
+| `ListView<T>` | mostra una raccolta selezionabile | `getSelectionModel().getSelectedItem()` restituisce l'elemento scelto |
+| `TableView<T>` | mostra oggetti in righe e colonne | ogni `TableColumn` stabilisce quale proprietà visualizzare |
+| `DatePicker` | permette di scegliere una data | `getValue()` restituisce un `LocalDate` |
+| `Slider` | sceglie un numero entro un intervallo | `getValue()` restituisce la posizione corrente |
+| `ProgressBar` | mostra l'avanzamento di un'operazione | il progresso va da `0.0` a `1.0`; un valore negativo indica che non è determinabile |
+| `MenuBar`, `Menu`, `MenuItem` | organizzano i comandi nei menu dell'applicazione | gli eventi vengono registrati sui singoli `MenuItem` |
+| `ToolBar` | mantiene visibili i comandi usati più spesso | può contenere pulsanti e altri controlli |
+| `Alert` | mostra avvisi, errori, conferme o richieste semplici | `showAndWait()` apre la finestra e attende la risposta |
+| `ImageView` | mostra un'immagine | visualizza un oggetto `Image` e può adattarne le dimensioni |
+| `ScrollPane` | rende scorrevole un contenuto più grande dello spazio disponibile | contiene un solo nodo, che può essere a sua volta un layout |
+| `TabPane` | divide l'interfaccia in schede | ogni `Tab` possiede un titolo e un contenuto |
+| `SplitPane` | separa zone ridimensionabili dall'utente | i divisori possono essere trascinati |
+
+Il parametro `T` di `ComboBox<T>`, `ListView<T>` e `TableView<T>` indica il tipo degli elementi gestiti. Per esempio, una `ComboBox<String>` contiene stringhe, mentre una `TableView<Book>` contiene oggetti `Book`.
+
+### Layout principali
+
+Un layout è un nodo che contiene altri nodi e ne calcola posizione e dimensione. Cambiare layout non modifica il comportamento dei controlli né i loro handler: cambia la struttura con cui vengono disposti nella scena.
+
+| Layout | Come dispone i figli | Quando è adatto |
+|---|---|---|
+| `VBox` | in una colonna, dall'alto verso il basso | moduli semplici, gruppi verticali e pannelli laterali |
+| `HBox` | in una riga, da sinistra verso destra | barre di pulsanti e controlli che devono stare sulla stessa riga |
+| `GridPane` | in una griglia identificata da colonne e righe | moduli con etichette e campi allineati |
+| `BorderPane` | nelle zone `top`, `bottom`, `left`, `right` e `center` | struttura generale di una finestra con contenuto centrale |
+| `StackPane` | sovrapposti nello stesso spazio | indicatori sopra il contenuto, sfondi e livelli grafici |
+| `FlowPane` | in sequenza, andando a capo quando termina lo spazio | gruppi di elementi che devono adattarsi alla larghezza disponibile |
+| `TilePane` | in celle tutte della stessa dimensione | gallerie, tastiere e raccolte di riquadri uniformi |
+| `AnchorPane` | vincolati a una o più distanze dai bordi | elementi che devono restare ancorati ai lati mentre la finestra cambia dimensione |
+| `Pane` | non applica una disposizione automatica specifica | disegni o posizionamenti personalizzati; è poco adatto ai normali moduli |
+
+I layout possono essere annidati. Per esempio, un `HBox` può tenere il campo e il pulsante sulla stessa riga, mentre il `VBox` principale dispone verticalmente quella riga insieme alle etichette:
+
+```java
+HBox inputRow = new HBox(10, input, convertButton);
+
+VBox root = new VBox(
+        10,
+        instruction,
+        inputRow,
+        output);
+```
+
+Nel scene graph, `inputRow` è un figlio di `root`, mentre `input` e `convertButton` sono figli di `inputRow`.
+
+Per costruire un modulo allineato possiamo invece usare `GridPane`. Il metodo `add()` riceve il nodo, l'indice della colonna e l'indice della riga:
+
+```java
+GridPane form = new GridPane();
+form.setHgap(10);
+form.setVgap(10);
+
+form.add(new Label("Temperatura:"), 0, 0);
+form.add(input,                       1, 0);
+form.add(new Label("Unità:"),        0, 1);
+form.add(unit,                        1, 1);
+form.add(convertButton,               1, 2);
+```
+
+Le coordinate di `GridPane` non sono pixel. Identificano celle logiche: il layout calcola le dimensioni delle righe e delle colonne in base ai nodi che contengono.
+
+Il modulo può diventare il contenuto centrale di un `BorderPane`, lasciando il titolo in alto e il risultato in basso:
+
+```java
+BorderPane page = new BorderPane();
+page.setTop(instruction);
+page.setCenter(form);
+page.setBottom(output);
+```
+
+Non è obbligatorio riempire tutte le zone. Il nodo centrale usa lo spazio che rimane dopo aver disposto gli altri.
+
+Per interfacce ridimensionabili conviene affidare posizione e dimensioni ai layout. Impostare manualmente le coordinate di ogni nodo può funzionare per una finestra immobile, ma appena cambiano dimensione, font o lunghezza dei testi gli elementi rischiano di sovrapporsi o lasciare spazi errati.
+
+### In sintesi
+
+- La classe principale estende `Application` e ridefinisce `start(Stage)`.
+- `main()` chiama `launch()`; JavaFX chiama `start()` e fornisce lo `Stage` principale.
+- `init()` prepara dati non grafici; `stop()` libera le risorse quando l'applicazione termina.
+- Lo `Stage` rappresenta la finestra; la `Scene` contiene il scene graph.
+- I controlli ricevono input, permettono scelte o mostrano dati.
+- I layout dispongono i nodi e possono essere annidati per costruire strutture più articolate.
+- `setOnAction()` registra un handler che JavaFX esegue quando viene premuto il pulsante.
+- Il calcolo rimane in una classe indipendente dall'interfaccia grafica.
+
+### Esercizi
+
+1. Realizza un calcolatore di preventivo per una tipografia. L'interfaccia riceve numero di copie e prezzo per copia, permette di scegliere con una `CheckBox` se applicare la rilegatura e mostra totale oppure un errore preciso. Separa il calcolo in una classe indipendente da JavaFX e scrivine i test; usa un layout che renda riconoscibili input, azione e risultato.
+2. Costruisci un convertitore con una `ComboBox` che scelga fra chilometri–miglia e chilogrammi–libbre. Un solo pulsante avvia la conversione; l'handler legge la scelta corrente e delega le formule a una classe non grafica. Gestisci scelta mancante, campo vuoto e testo non numerico come casi distinti.
+3. Progetta una schermata di registrazione con nome, email, fascia d'età scelta tramite `RadioButton`, accettazione delle condizioni e pulsante **Registra**. Al clic, valida l'intero modulo e mostra un riepilogo soltanto se tutti i dati sono validi. Disegna prima il layout scelto e spiega perché `GridPane`, `VBox`, `HBox` o il loro annidamento sono adatti alle diverse zone.
+4. Aggiungi al programma dell'esercizio 1 un pulsante **Azzera** e una gestione significativa di `stop()`, per esempio la stampa del numero di preventivi calcolati durante la sessione. Elenca ciò che viene eseguito alla costruzione della finestra, al clic dei due pulsanti e alla chiusura, verificando l'ordine con messaggi temporanei.
+
+## Proprietà osservabili e binding
+
+Un normale campo Java conserva un valore, ma gli altri oggetti non vengono avvisati automaticamente quando quel valore cambia. In un'interfaccia grafica questo aggiornamento è necessario di continuo: un'etichetta può dipendere dal testo digitato, un pulsante può essere disabilitato finché il campo è vuoto e una barra deve seguire l'avanzamento di un'operazione.
+
+JavaFX rappresenta molti valori mediante **proprietà osservabili**. Una proprietà conserva un valore e permette ad altri oggetti di osservare le sue modifiche.
+
+I programmi completi delle sezioni seguenti sono indipendenti. Per provarne uno basta copiarlo in `Main.java` al posto dell'esempio precedente: il nome della classe e la configurazione Gradle rimangono invariati.
+
+### Leggere il valore o ottenere la proprietà
+
+Consideriamo un `TextField` chiamato `input`. I due metodi seguenti non restituiscono la stessa cosa:
+
+```java
+String text = input.getText();
+StringProperty property = input.textProperty();
+```
+
+`getText()` restituisce la stringa presente in quel preciso momento. Se l'utente scrive altro, la variabile `text` non cambia. `textProperty()` restituisce invece l'oggetto che rappresenta il contenuto osservabile del campo. Lo stesso oggetto può essere interrogato anche in seguito, collegato a un listener oppure associato a un'altra proprietà.
+
+I controlli espongono proprietà di tipi diversi:
+
+| Valore | Esempio di proprietà | Tipo restituito |
+|---|---|---|
+| testo di un controllo | `label.textProperty()` | `StringProperty` |
+| stato di un pulsante | `button.disableProperty()` | `BooleanProperty` |
+| valore di uno slider | `slider.valueProperty()` | `DoubleProperty` |
+| elemento selezionato | `combo.valueProperty()` | `ObjectProperty<T>` |
+| avanzamento | `progress.progressProperty()` | `DoubleProperty` |
+
+I normali metodi `get...()` e `set...()` rimangono il modo più semplice per leggere o assegnare direttamente un valore. Il metodo che termina con `Property()` serve quando dobbiamo osservare o collegare quel valore.
+
+### Reagire a una modifica con un listener
+
+Un **listener** è codice chiamato ogni volta che una proprietà cambia. Il programma seguente mostra sia il valore precedente sia quello nuovo e aggiorna un contatore mentre l'utente scrive.
+
+```java
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public final class Main extends Application {
+    @Override
+    public void start(Stage stage) {
+        TextField input = new TextField();
+        input.setPromptText("Scrivi qualcosa");
+
+        Label count = new Label("Caratteri: 0");
+        Label change = new Label("Nessuna modifica");
+
+        input.textProperty().addListener(
+                (observable, oldText, newText) -> {
+                    count.setText(
+                            "Caratteri: " + newText.length());
+                    change.setText(
+                            "Prima: \"" + oldText
+                                    + "\" - Adesso: \""
+                                    + newText + "\"");
+                });
+
+        VBox root = new VBox(10, input, count, change);
+        root.setPadding(new Insets(20));
+
+        stage.setScene(new Scene(root, 360, 150));
+        stage.setTitle("Listener");
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+```
+
+La lambda passata ad `addListener()` riceve tre argomenti. `observable` è la proprietà che ha segnalato la modifica, `oldText` è il testo precedente e `newText` quello nuovo. Provando il programma si vede che il listener viene eseguito a ogni variazione, non soltanto quando l'utente preme Invio.
+
+Un listener è adatto quando al cambiamento deve corrispondere un'azione: convalidare un dato, registrare una modifica o aggiornare più parti dello stato. Se invece un valore deve semplicemente rimanere sincronizzato con un altro, è spesso più diretto un binding.
+
+### Binding unidirezionale
+
+Un **binding** esprime una dipendenza stabile fra proprietà. Nel programma seguente il testo digitato è la sorgente di tre collegamenti:
+
+- `preview` mostra lo stesso testo;
+- `count` ne mostra la lunghezza;
+- `confirmButton` rimane disabilitato quando il campo è vuoto.
+
+```java
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public final class Main extends Application {
+    @Override
+    public void start(Stage stage) {
+        TextField input = new TextField();
+        input.setPromptText("Scrivi qualcosa");
+
+        Label preview = new Label();
+        Label count = new Label();
+        Button confirmButton = new Button("Conferma");
+        Button disconnectButton =
+                new Button("Scollega l'anteprima");
+
+        preview.textProperty().bind(
+                input.textProperty());
+
+        count.textProperty().bind(
+                input.textProperty()
+                        .length()
+                        .asString("Caratteri: %d"));
+
+        confirmButton.disableProperty().bind(
+                input.textProperty().isEmpty());
+
+        disconnectButton.setOnAction(event -> {
+            preview.textProperty().unbind();
+            preview.setText("Anteprima scollegata");
+            disconnectButton.setDisable(true);
+        });
+
+        VBox root = new VBox(
+                10,
+                input,
+                preview,
+                count,
+                confirmButton,
+                disconnectButton);
+        root.setPadding(new Insets(20));
+
+        stage.setScene(new Scene(root, 360, 220));
+        stage.setTitle("Binding unidirezionale");
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+```
+
+Il collegamento è unidirezionale perché le modifiche procedono da `input` verso gli altri controlli, non al contrario. `isEmpty()` e `length()` costruiscono valori calcolati a partire dal testo; JavaFX li ricalcola quando la sorgente cambia.
+
+Finché `preview.textProperty()` è vincolata, non le si deve assegnare direttamente un testo con `setText()`. Il pulsante **Scollega l'anteprima** chiama prima `unbind()` e può quindi assegnare alla `Label` un valore indipendente. Gli altri due binding rimangono attivi.
+
+### Binding bidirezionale
+
+Talvolta due proprietà devono potersi modificare a vicenda. Nel programma seguente i due campi rappresentano lo stesso testo: finché sono collegati, si può scrivere in uno qualunque dei due e l'altro viene aggiornato.
+
+```java
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public final class Main extends Application {
+    @Override
+    public void start(Stage stage) {
+        TextField first = new TextField();
+        first.setPromptText("Primo campo");
+
+        TextField second = new TextField();
+        second.setPromptText("Secondo campo");
+
+        Label status = new Label("I campi sono collegati");
+        Button disconnectButton =
+                new Button("Scollega i campi");
+
+        first.textProperty().bindBidirectional(
+                second.textProperty());
+
+        disconnectButton.setOnAction(event -> {
+            first.textProperty().unbindBidirectional(
+                    second.textProperty());
+            status.setText("I campi sono indipendenti");
+            disconnectButton.setDisable(true);
+        });
+
+        VBox root = new VBox(
+                10,
+                first,
+                second,
+                status,
+                disconnectButton);
+        root.setPadding(new Insets(20));
+
+        stage.setScene(new Scene(root, 360, 190));
+        stage.setTitle("Binding bidirezionale");
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+```
+
+Il pulsante chiama `unbindBidirectional()`: da quel momento i campi conservano ciascuno il proprio valore e possono cambiare separatamente. Il binding bidirezionale va usato soltanto quando entrambe le proprietà rappresentano davvero lo stesso dato. Se una è il risultato calcolato dall'altra, il collegamento deve rimanere unidirezionale.
+
+### Raccolte osservabili
+
+Controlli come `ComboBox`, `ListView` e `TableView` devono accorgersi quando vengono aggiunti o rimossi elementi. Per questo usano `ObservableList<T>`, una lista che segnala le modifiche alla propria struttura.
+
+```java
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public final class Main extends Application {
+    @Override
+    public void start(Stage stage) {
+        ObservableList<String> items =
+                FXCollections.observableArrayList(
+                        "Primo elemento",
+                        "Secondo elemento");
+
+        ListView<String> view = new ListView<>(items);
+        TextField input = new TextField();
+        input.setPromptText("Nuovo elemento");
+
+        Button addButton = new Button("Aggiungi");
+        addButton.setOnAction(event -> {
+            String text = input.getText();
+            if (!text.isBlank()) {
+                items.add(text);
+                input.clear();
+            }
+        });
+
+        Button removeButton = new Button("Rimuovi selezionato");
+        removeButton.setOnAction(event -> {
+            String selected =
+                    view.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                items.remove(selected);
+            }
+        });
+
+        HBox buttons = new HBox(10, addButton, removeButton);
+        VBox root = new VBox(10, view, input, buttons);
+        root.setPadding(new Insets(20));
+
+        stage.setScene(new Scene(root, 420, 300));
+        stage.setTitle("ObservableList");
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+```
+
+I pulsanti modificano `items`, non la `ListView`. Non serve ricreare il controllo né assegnargli nuovamente la lista: `view` osserva `items` e si aggiorna dopo ogni aggiunta o rimozione. `ObservableList` offre le normali operazioni di una `List`, ma in più notifica inserimenti, rimozioni e sostituzioni.
+
+La notifica riguarda la struttura della lista. Se un oggetto mutabile già presente cambia internamente, il controllo può aggiornarsi automaticamente soltanto quando la colonna o la cella osserva a sua volta una proprietà di quell'oggetto.
+
+### Esempio completo con `TableView`
+
+`TableView<T>` visualizza una `ObservableList<T>` dividendone i dati in colonne. Ogni `TableColumn<T, V>` deve sapere come ottenere da un oggetto di tipo `T` il valore di tipo `V` da mostrare.
+
+Il programma seguente visualizza una piccola raccolta di libri. `BookRow` è un record annidato e immutabile; le colonne avvolgono i suoi valori in proprietà di sola lettura richieste dalla tabella.
+
+```java
+import javafx.application.Application;
+import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.stage.Stage;
+
+public final class Main extends Application {
+    private record BookRow(
+            String title,
+            String author,
+            int copies) {
+    }
+
+    @Override
+    public void start(Stage stage) {
+        ObservableList<BookRow> books =
+                FXCollections.observableArrayList(
+                        new BookRow(
+                                "Il barone rampante",
+                                "Italo Calvino",
+                                3),
+                        new BookRow(
+                                "Se questo è un uomo",
+                                "Primo Levi",
+                                2));
+
+        TableColumn<BookRow, String> titleColumn =
+                new TableColumn<>("Titolo");
+        titleColumn.setCellValueFactory(cell ->
+                new ReadOnlyStringWrapper(
+                        cell.getValue().title()));
+
+        TableColumn<BookRow, String> authorColumn =
+                new TableColumn<>("Autore");
+        authorColumn.setCellValueFactory(cell ->
+                new ReadOnlyStringWrapper(
+                        cell.getValue().author()));
+
+        TableColumn<BookRow, Number> copiesColumn =
+                new TableColumn<>("Copie");
+        copiesColumn.setCellValueFactory(cell ->
+                new ReadOnlyIntegerWrapper(
+                        cell.getValue().copies()));
+
+        TableView<BookRow> table = new TableView<>(books);
+        table.getColumns().addAll(
+                titleColumn,
+                authorColumn,
+                copiesColumn);
+
+        stage.setTitle("Catalogo");
+        stage.setScene(new Scene(table, 520, 260));
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+```
+
+La **cell value factory** non costruisce la riga: stabilisce quale valore deve essere osservato in una determinata colonna. Per la colonna `Titolo`, `cell.getValue()` restituisce il `BookRow` corrente e `title()` ne estrae il testo.
+
+Poiché il record è immutabile, per cambiare un libro sostituiamo l'elemento nella lista. In un modello JavaFX mutabile, i campi potrebbero invece essere `StringProperty` e `IntegerProperty`; la tabella osserverebbe direttamente quelle proprietà e aggiornerebbe le celle quando cambiano.
+
+Anche questo esempio si prova sostituendo il contenuto di `Main.java`; il `build.gradle` non cambia.
+
+### In sintesi
+
+- Una proprietà osservabile conserva un valore e segnala le sue modifiche.
+- Un listener esegue codice quando il valore cambia.
+- Un binding mantiene sincronizzate una proprietà sorgente e una destinazione.
+- Un binding bidirezionale permette modifiche in entrambe le direzioni.
+- `ObservableList<T>` notifica ai controlli i cambiamenti della raccolta.
+- `TableView<T>` usa le colonne per estrarre valori osservabili dagli oggetti di ogni riga.
+
+### Esercizi
+
+1. Costruisci un modulo per scegliere una password. Un listener mostra in tempo reale lunghezza e presenza di almeno una cifra; un binding disabilita **Conferma** quando uno dei due campi è vuoto. L'handler finale controlla che password e conferma coincidano. Spiega perché il calcolo dei requisiti usa un listener, mentre l'abilitazione semplice usa un binding.
+2. Realizza un pannello con `Slider` del volume, `Label` numerica e pulsante **Muto**. La label deve seguire lo slider senza handler di clic; un listener deve invece registrare soltanto il passaggio attraverso una soglia scelta. Prepara una sequenza di interazioni che distingua chiaramente i due meccanismi.
+3. Crea un editor di attività con `ObservableList<TaskRow>` e `ListView`. Deve aggiungere dati validi, rimuovere l'elemento selezionato e impedire duplicati secondo una regola dichiarata. Mostra che il controllo si aggiorna modificando la lista e gestisci selezione assente e input vuoto.
+4. Estendi la tabella dei libri con inserimento di una nuova riga, rimozione della riga selezionata e modifica del numero di copie tramite sostituzione del record immutabile nella `ObservableList`. Verifica che non sia necessario ricostruire la `TableView` e spiega perché la sostituzione rende visibile la modifica.
+5. Progetta una schermata di impostazioni con due campi che rappresentano davvero lo stesso nome visualizzato e collegali bidirezionalmente. Aggiungi poi un'anteprima derivata in maiuscolo usando un collegamento unidirezionale o un listener motivato. Dimostra perché rendere bidirezionale anche l'anteprima sarebbe concettualmente sbagliato.
+
+## Operazioni lunghe e thread in JavaFX
+
+Il convertitore risponde immediatamente perché il suo handler esegue poche operazioni. Un'applicazione grafica può però dover leggere un file grande, interrogare un servizio remoto o elaborare molti dati. Inserire direttamente una di queste operazioni nell'handler rende la finestra incapace di rispondere fino al termine del lavoro.
+
+### Il JavaFX Application Thread
+
+JavaFX usa un thread dedicato, chiamato **JavaFX Application Thread**, per gestire gli eventi e modificare il scene graph. `start()` viene eseguito su questo thread; anche gli handler registrati con `setOnAction()` vengono eseguiti sullo stesso thread.
+
+Gli eventi vengono gestiti uno alla volta. Se un handler impiega cinque secondi, in quei cinque secondi JavaFX non può eseguire l'handler di un altro pulsante e non può completare i normali aggiornamenti grafici. La finestra può apparire bloccata anche se il programma sta ancora lavorando.
+
+Questo problema non riguarda le operazioni brevi. Spostare su un altro thread una semplice formula aggiungerebbe complessità senza alcun vantaggio. Bisogna farlo quando il tempo necessario è abbastanza lungo da essere percepito dall'utente o non è prevedibile, come nel caso di rete e file.
+
+### Esempio senza `Task`: l'interfaccia si blocca
+
+Prima di introdurre la soluzione, osserviamo il problema in un programma completo. `Thread.sleep(500)` simula un passaggio che richiede mezzo secondo; il ciclo lo ripete dieci volte e tenta di aggiornare una barra di avanzamento.
+
+Il codice si trova direttamente nell'handler del pulsante **Avvia**, quindi viene eseguito sul JavaFX Application Thread. Il pulsante **Annulla** imposta `cancelRequested` a `true`, ma anche il suo handler dovrebbe essere eseguito dallo stesso thread.
+
+```java
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public final class Main extends Application {
+    private boolean cancelRequested;
+
+    @Override
+    public void start(Stage stage) {
+        Label status = new Label("Operazione non avviata");
+        ProgressBar progress = new ProgressBar(0);
+        progress.setPrefWidth(280);
+
+        TextField testInput = new TextField();
+        testInput.setPromptText(
+                "Prova a scrivere durante l'operazione");
+
+        Button startButton = new Button("Avvia");
+        Button cancelButton = new Button("Annulla");
+        cancelButton.setDisable(true);
+
+        startButton.setOnAction(event -> runOperation(
+                status,
+                progress,
+                startButton,
+                cancelButton));
+
+        cancelButton.setOnAction(event ->
+                cancelRequested = true);
+
+        HBox buttons = new HBox(
+                10, startButton, cancelButton);
+        VBox root = new VBox(
+                15, status, progress, testInput, buttons);
+        root.setPadding(new Insets(20));
+
+        stage.setTitle("Operazione bloccante");
+        stage.setScene(new Scene(root, 380, 200));
+        stage.show();
+    }
+
+    private void runOperation(
+            Label status,
+            ProgressBar progress,
+            Button startButton,
+            Button cancelButton) {
+
+        cancelRequested = false;
+        progress.setProgress(0);
+        status.setText("Operazione in corso...");
+        startButton.setDisable(true);
+        cancelButton.setDisable(false);
+
+        int totalSteps = 10;
+
+        try {
+            for (int step = 1;
+                    step <= totalSteps;
+                    step++) {
+                if (cancelRequested) {
+                    status.setText("Operazione annullata");
+                    return;
+                }
+
+                Thread.sleep(500);
+                progress.setProgress(
+                        (double) step / totalSteps);
+                status.setText(
+                        "Passaggio " + step + " di " + totalSteps);
+            }
+
+            status.setText("Operazione completata");
+        } catch (InterruptedException exception) {
+            Thread.currentThread().interrupt();
+            status.setText("Operazione interrotta");
+        } finally {
+            startButton.setDisable(false);
+            cancelButton.setDisable(true);
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+```
+
+Dopo il clic su **Avvia**, proviamo a scrivere nel campo di testo. `runOperation()` deve terminare prima che il JavaFX Application Thread possa occuparsi dei tasti premuti: per circa cinque secondi il campo e il resto della finestra non rispondono. Anche se il ciclo chiama `setProgress()` e `setText()` a ogni passaggio, JavaFX non ha il tempo di ridisegnare i controlli fra una chiamata e la successiva: normalmente si vede soltanto lo stato finale.
+
+Il controllo di `cancelRequested` non risolve il problema. Per assegnare `true` alla variabile dovrebbe prima essere eseguito l'handler di **Annulla**, ma il thread incaricato di eseguirlo è ancora occupato nel ciclo. Non è `Thread.sleep()` in sé a rendere sbagliato il programma: il problema è che l'attesa avviene sul thread dell'interfaccia.
+
+### Eseguire il lavoro con `Task`
+
+La classe `Task<T>`, importata da `javafx.concurrent.Task`, rappresenta un'operazione eseguita in background che, al termine, produce un valore di tipo `T`. Il metodo `call()` contiene il lavoro lungo e non deve leggere o modificare direttamente i controlli JavaFX.
+
+Per correggere il programma precedente, spostiamo anzitutto il ciclo dentro `call()`. `Task<String>` indica che al termine verrà prodotta una stringa:
+
+```java
+Task<String> task = new Task<>() {
+    @Override
+    protected String call() throws Exception {
+        int totalSteps = 10;
+
+        for (int step = 1;
+                step <= totalSteps;
+                step++) {
+            Thread.sleep(500);
+        }
+
+        return "Operazione completata";
+    }
+};
+```
+
+Creare il `Task` non avvia ancora l'operazione. Prima registriamo ciò che deve accadere quando termina:
+
+```java
+startButton.setDisable(true);
+status.setText("Operazione in corso...");
+
+task.setOnSucceeded(event -> {
+    status.setText(task.getValue());
+    startButton.setDisable(false);
+});
+
+task.setOnFailed(event -> {
+    status.setText("Operazione non riuscita");
+    startButton.setDisable(false);
+});
+```
+
+`getValue()` restituisce il risultato prodotto da `call()`. Se `call()` termina lanciando un'eccezione, viene eseguito l'handler registrato con `setOnFailed()` invece di quello registrato con `setOnSucceeded()`. Questi handler vengono eseguiti sul JavaFX Application Thread, quindi possono aggiornare `status` e `startButton`.
+
+Infine affidiamo il task a un nuovo thread e lo avviamo:
+
+```java
+Thread worker = new Thread(task);
+worker.setDaemon(true);
+worker.start();
+```
+
+Un thread daemon non impedisce la chiusura dell'applicazione quando tutte le finestre sono state chiuse. In un programma che avvia molti lavori non si crea necessariamente un nuovo `Thread` ogni volta: si può usare un executor che riutilizza un gruppo di thread. Il principio rimane lo stesso: il lavoro lento viene eseguito fuori dal thread grafico, mentre i controlli vengono aggiornati sul JavaFX Application Thread.
+
+### Comunicare avanzamento e annullamento
+
+Durante `call()`, un `Task` può comunicare il proprio avanzamento con `updateProgress(completed, total)`. Una `ProgressBar` può osservare quella proprietà:
+
+```java
+ProgressBar progress = new ProgressBar();
+progress.progressProperty().bind(
+        task.progressProperty());
+```
+
+Il binding mantiene sincronizzata la barra senza dover chiamare ripetutamente `setProgress()`. Un task può anche controllare `isCancelled()` durante il lavoro e interrompersi quando viene richiesto `cancel()`; l'annullamento funziona soltanto se il codice di `call()` collabora e verifica periodicamente quella condizione.
+
+### Lo stesso esempio con `Task`
+
+Riprendiamo la stessa operazione: dieci passaggi, mezzo secondo di attesa per ciascuno, una barra di avanzamento e il pulsante **Annulla**. Questa volta il ciclo viene spostato nel metodo `call()` di un `Task`.
+
+`Thread.sleep()` viene chiamato dentro `call()`, quindi non sospende il JavaFX Application Thread. Durante l'attesa la finestra continua a rispondere e il pulsante **Annulla** può ancora ricevere il clic.
+
+Il programma completo seguente può essere copiato direttamente in `Main.java`:
+
+```java
+import javafx.application.Application;
+import javafx.concurrent.Task;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public final class Main extends Application {
+    private Task<String> currentTask;
+
+    @Override
+    public void start(Stage stage) {
+        Label status = new Label("Operazione non avviata");
+        ProgressBar progress = new ProgressBar(0);
+        progress.setPrefWidth(280);
+
+        TextField testInput = new TextField();
+        testInput.setPromptText(
+                "Prova a scrivere durante l'operazione");
+
+        Button startButton = new Button("Avvia");
+        Button cancelButton = new Button("Annulla");
+        cancelButton.setDisable(true);
+
+        startButton.setOnAction(event -> startOperation(
+                status,
+                progress,
+                startButton,
+                cancelButton));
+
+        cancelButton.setOnAction(event -> {
+            if (currentTask != null) {
+                currentTask.cancel();
+            }
+        });
+
+        HBox buttons = new HBox(
+                10, startButton, cancelButton);
+        VBox root = new VBox(
+                15, status, progress, testInput, buttons);
+        root.setPadding(new Insets(20));
+
+        stage.setTitle("Operazione in background");
+        stage.setScene(new Scene(root, 380, 200));
+        stage.show();
+    }
+
+    private void startOperation(
+            Label status,
+            ProgressBar progress,
+            Button startButton,
+            Button cancelButton) {
+
+        Task<String> task = new Task<>() {
+            @Override
+            protected String call() throws Exception {
+                int totalSteps = 10;
+
+                for (int step = 1;
+                        step <= totalSteps;
+                        step++) {
+                    if (isCancelled()) {
+                        return null;
+                    }
+
+                    Thread.sleep(500);
+                    updateProgress(step, totalSteps);
+                }
+
+                return "Operazione completata";
+            }
+        };
+
+        currentTask = task;
+        progress.progressProperty().unbind();
+        progress.progressProperty().bind(
+                task.progressProperty());
+
+        status.setText("Operazione in corso...");
+        startButton.setDisable(true);
+        cancelButton.setDisable(false);
+
+        task.setOnSucceeded(event -> {
+            status.setText(task.getValue());
+            finishOperation(startButton, cancelButton);
+        });
+
+        task.setOnCancelled(event -> {
+            status.setText("Operazione annullata");
+            finishOperation(startButton, cancelButton);
+        });
+
+        task.setOnFailed(event -> {
+            status.setText("Errore: "
+                    + task.getException().getMessage());
+            finishOperation(startButton, cancelButton);
+        });
+
+        Thread worker = new Thread(task);
+        worker.setDaemon(true);
+        worker.start();
+    }
+
+    private void finishOperation(
+            Button startButton,
+            Button cancelButton) {
+        startButton.setDisable(false);
+        cancelButton.setDisable(true);
+        currentTask = null;
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+```
+
+Il `build.gradle` rimane quello preparato all'inizio del capitolo. Dopo aver eseguito `./gradlew run` e premuto **Avvia**, la barra avanza ogni mezzo secondo. Poiché soltanto il thread di lavoro viene sospeso, durante i cinque secondi è possibile scrivere normalmente nel campo di testo, spostare la finestra o premere **Annulla**.
+
+La chiamata `cancel()` cambia lo stato del task e prova a interrompere il thread che lo esegue. Il controllo con `isCancelled()` permette inoltre al ciclo di accorgersi della richiesta fra un passaggio e il successivo. Al termine viene eseguito uno solo fra gli handler di successo, annullamento ed errore; ciascuno aggiorna il messaggio e ripristina i pulsanti.
+
+> [!note] Aggiornamenti provenienti da altri thread
+> Se un thread creato altrove deve effettuare un singolo aggiornamento dell'interfaccia, può accodarlo sul JavaFX Application Thread con `Platform.runLater(() -> output.setText(result))`. Il lavoro lungo deve rimanere fuori dalla lambda. Per le operazioni descritte in questo capitolo si usa invece `Task`, che gestisce già risultato, errori, avanzamento e annullamento.
+
+### In sintesi
+
+- Eventi e modifiche al scene graph vengono gestiti dal JavaFX Application Thread.
+- Un handler lungo impedisce temporaneamente alla finestra di rispondere.
+- `Task<T>` esegue il lavoro in background e produce un risultato.
+- `setOnSucceeded()`, `setOnFailed()` e `setOnCancelled()` gestiscono i possibili esiti sul thread grafico.
+- Un aggiornamento occasionale proveniente da un altro thread può essere accodato con `Platform.runLater()`; le operazioni strutturate usano `Task`.
+- Le operazioni brevi non devono essere spostate inutilmente su un altro thread.
+
+### Esercizi
+
+1. Esegui i due programmi completi del capitolo e compila una tabella osservativa: aggiornamento della barra, testo digitato durante il lavoro, risposta del pulsante **Annulla**, possibilità di spostare la finestra e thread sul quale gira il ciclo. Ogni differenza deve essere collegata a una specifica parte del codice.
+2. Realizza una ricerca di numeri primi fino a un limite inserito dall'utente usando `Task<Integer>`. Mostra quanti valori sono stati esaminati con `updateProgress()`, restituisci il numero di primi trovati e mantieni utilizzabile un campo di testo indipendente durante il calcolo.
+3. Aggiungi all'esercizio 2 annullamento cooperativo e gestione completa degli stati. **Avvia** deve essere disabilitato durante il lavoro e ripristinato dopo successo, annullamento o errore; **Annulla** deve funzionare soltanto mentre esiste un task corrente. Verifica anche un limite non valido che faccia fallire il task.
+4. Simula il caricamento di cinque file, uno per passaggio. Fai fallire deliberatamente il terzo e controlla che `setOnFailed()` mostri l'eccezione senza visualizzare il messaggio di successo. Correggi poi la causa e verifica avanzamento completo e valore restituito.
+5. Classifica queste operazioni come adatte al JavaFX Application Thread o a un `Task`, motivando la soglia scelta: cambiare il testo di una label; ordinare dieci elementi; leggere un file di dimensione ignota; attendere una risposta di rete; calcolare una formula; generare l'anteprima di migliaia di immagini.
+
+## Costruire l'interfaccia con FXML
+
+Nel primo capitolo abbiamo costruito l'interfaccia con istruzioni Java. Questo metodo è sufficiente per finestre piccole, ma in una schermata con molti controlli la classe può riempirsi di codice dedicato alla loro creazione e disposizione.
+
+**FXML** è un formato XML che descrive il scene graph. I controlli rimangono oggetti JavaFX: cambia il modo in cui vengono creati. Invece di istanziarli uno alla volta dentro `start()`, scriviamo la loro struttura in un file `.fxml` e chiediamo a `FXMLLoader` di leggerlo.
+
+Da questo punto non è più possibile rappresentare l'intero esempio con il solo `Main.java`: la separazione in più file è precisamente l'argomento del capitolo. `Main.java` rimane nella stessa posizione e continua a essere la classe avviata da Gradle; aggiungiamo il controller, la classe di calcolo e la risorsa FXML indicati nella struttura seguente.
+
+### Il file FXML
+
+Riorganizziamo il convertitore in questo progetto:
+
+```text
+src/
+├── main/java/
+│   ├── Main.java
+│   └── school/temperature/
+│       ├── TemperatureController.java
+│       └── TemperatureConverter.java
+└── main/resources/
+    └── temperature-view.fxml
+```
+
+Qui il package è utile perché il file FXML deve indicare con il nome completo quale classe svolge il ruolo di controller. Anche `TemperatureConverter.java` viene spostato in `school/temperature` e inizia con `package school.temperature;`; il resto della classe non cambia.
+
+Il file `temperature-view.fxml` descrive il `VBox` e i suoi controlli:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="school.temperature.TemperatureController"
+      spacing="10">
+    <padding>
+        <Insets top="20" right="20"
+                bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Temperatura in gradi Celsius"/>
+    <TextField fx:id="input"
+               promptText="Per esempio: 20"/>
+    <Button text="Converti" onAction="#convert"/>
+    <Label fx:id="output"/>
+</VBox>
+```
+
+I tag come `<VBox>` e `<Label>` creano oggetti delle classi importate all'inizio del file. Gli attributi `spacing`, `text` e `promptText` impostano le rispettive proprietà. `fx:controller` collega la vista alla classe `TemperatureController`.
+
+Gli attributi `fx:id` assegnano un identificatore ai controlli che il controller deve usare. `onAction="#convert"` indica invece che il clic sul pulsante deve chiamare il metodo `convert()` del controller.
+
+### Il controller
+
+Il controller riceve dal loader i controlli identificati nel file e contiene l'handler:
+
+```java
+package school.temperature;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+
+public final class TemperatureController {
+    @FXML
+    private TextField input;
+
+    @FXML
+    private Label output;
+
+    private final TemperatureConverter converter =
+            new TemperatureConverter();
+
+    @FXML
+    private void convert() {
+        try {
+            double celsius = Double.parseDouble(
+                    input.getText());
+            double fahrenheit =
+                    converter.toFahrenheit(celsius);
+
+            output.setText(
+                    "Risultato: %.1f °F".formatted(fahrenheit));
+        } catch (NumberFormatException exception) {
+            output.setText("Inserisci un numero valido");
+        }
+    }
+}
+```
+
+L'annotazione `@FXML` permette a `FXMLLoader` di collegare gli elementi del file anche a campi e metodi privati. Il nome del campo deve corrispondere al relativo `fx:id`; il nome del metodo deve corrispondere a quello scritto dopo `#` in `onAction`.
+
+Il controller non contiene la formula. Come nella versione precedente, legge e presenta i dati, mentre `TemperatureConverter` rimane una classe indipendente da JavaFX.
+
+### Caricare la vista
+
+La classe principale non costruisce più i singoli controlli. Carica la radice del scene graph dal file FXML:
+
+```java
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public final class Main extends Application {
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(
+                Main.class.getResource(
+                        "/temperature-view.fxml"));
+
+        stage.setTitle("Convertitore di temperatura");
+        stage.setScene(new Scene(root, 360, 220));
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+```
+
+Il percorso inizia con `/` perché il loader cerca il file dalla radice delle risorse. Gradle copia automaticamente ciò che si trova in `src/main/resources` nel classpath dell'applicazione. `FXMLLoader` legge il documento, crea il `VBox` e i controlli, costruisce il controller indicato da `fx:controller` e realizza i collegamenti descritti da `fx:id` e `onAction`.
+
+Il `build.gradle` preparato all'inizio include già `javafx.fxml` e continua ad avviare `Main`, quindi non deve essere modificato. In questo esempio cambiano soltanto il contenuto di `Main.java` e i file aggiuntivi mostrati nella struttura.
+
+### Il ruolo di Scene Builder
+
+**Scene Builder** è un editor visuale per file FXML. Permette di trascinare controlli e layout, modificare proprietà come testo e spaziatura e impostare `fx:id` e handler. Quando salviamo, Scene Builder modifica il file `.fxml`; non sostituisce il controller e non scrive la formula del programma.
+
+Si può quindi usare Scene Builder per preparare la struttura visiva e poi aprire il file come testo per controllare che i nomi corrispondano al controller. Se `fx:id="input"` non trova un campo compatibile oppure `onAction="#convert"` non trova il metodo, il caricamento della vista fallisce all'avvio.
+
+> [!info] IntelliJ IDEA
+> IntelliJ può aprire un file FXML come testo oppure inviarlo a Scene Builder se il percorso del programma è configurato nelle impostazioni JavaFX. Dopo ogni modifica bisogna comunque salvare il file FXML nel progetto: è quel file, non il progetto interno di Scene Builder, a essere caricato dall'applicazione.
+
+FXML è utile quando la struttura dell'interfaccia è abbastanza estesa da meritare un file separato. Per finestre molto piccole, costruire i nodi direttamente in Java può essere più immediato. Le due tecniche possono anche convivere: una schermata può essere caricata da FXML e contenere parti create dinamicamente dal controller.
+
+### In sintesi
+
+- FXML descrive il scene graph in un file XML.
+- `FXMLLoader` trasforma il documento nei corrispondenti oggetti JavaFX.
+- `fx:controller` indica la classe che gestisce la vista.
+- `fx:id` collega un nodo a un campo annotato con `@FXML`.
+- `onAction="#nome"` collega un evento a un metodo del controller.
+- Scene Builder modifica visivamente il file FXML, ma non sostituisce il codice Java.
+
+### Esercizi
+
+1. Trasforma il calcolatore di preventivo del capitolo JavaFX in una vista FXML. Consegna struttura delle cartelle, file FXML, `Main`, controller e classe di calcolo. Il comportamento e i test della classe di calcolo devono rimanere invariati dopo lo spostamento dell'interfaccia.
+2. Estendi il convertitore FXML con una `ComboBox` per la direzione, un pulsante **Azzera** e una label per gli errori. Definisci `fx:id` soltanto per i nodi realmente usati dal controller e collega i due eventi dal file FXML.
+3. Prepara tre copie difettose della vista: `fx:id` non corrispondente, nome dell'handler errato e `fx:controller` inesistente. Per ciascuna prevedi in quale momento emergerà il problema, avvia il programma, individua nel messaggio la causa e correggi soltanto il file responsabile.
+4. Ricostruisci la stessa vista prima con `VBox` e poi con `GridPane`, senza cambiare firme dei campi e degli handler del controller. Confronta i due file e spiega che cosa dimostra la possibilità di sostituire la disposizione senza toccare il calcolo.
+5. Apri uno degli FXML con Scene Builder, aggiungi un controllo e salva. Esamina il testo generato, elimina proprietà puramente predefinite se non servono e verifica che `fx:id` e `onAction` corrispondano ancora al controller: l'esercizio è concluso soltanto quando il progetto si avvia anche fuori da Scene Builder.
+
+## Stilizzare l'interfaccia con CSS
+
+Finora colori, font e spaziature sono rimasti quelli predefiniti di JavaFX oppure sono stati impostati direttamente nel codice, come nel caso di `root.setPadding()`. Per un'interfaccia più estesa conviene separare le regole grafiche dalla costruzione e dal comportamento dei controlli.
+
+JavaFX permette di applicare fogli di stile **CSS** ai nodi del scene graph. La sintassi ricorda quella usata nelle pagine web, ma le proprietà JavaFX iniziano normalmente con il prefisso `-fx-` e non tutte le proprietà del CSS per HTML esistono in JavaFX.
+
+### Un foglio di stile
+
+Aggiungiamo il file `temperature.css` alle risorse del progetto:
+
+```text
+src/main/resources/
+├── temperature-view.fxml
+└── temperature.css
+```
+
+Il file può contenere:
+
+```css
+.root {
+    -fx-font-family: "System";
+    -fx-background-color: #f4f6f8;
+}
+
+.title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.button.primary {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+}
+
+.button.primary:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+#result {
+    -fx-padding: 8px;
+    -fx-font-weight: bold;
+}
+
+.error {
+    -fx-text-fill: #b91c1c;
+}
+```
+
+`.root` è la classe di stile assegnata alla radice della scena. `.title` ed `.error` sono classi scelte dal programmatore. `.button.primary` seleziona i nodi che possiedono sia la classe predefinita `button` sia la classe `primary`. `#result` seleziona invece il nodo il cui identificatore CSS è `result`.
+
+`:hover` è una **pseudo-classe**: la regola viene applicata soltanto mentre il puntatore si trova sul pulsante. Altre pseudo-classi dipendono dal controllo, per esempio `:focused`, `:disabled` e `:selected`.
+
+### Collegare il CSS ai nodi
+
+Nel codice Java assegniamo classi e identificatori ai nodi:
+
+```java
+instruction.getStyleClass().add("title");
+convertButton.getStyleClass().add("primary");
+output.setId("result");
+```
+
+Una **style class** può appartenere a molti nodi e un nodo può avere più classi. Un `id` dovrebbe invece identificare un solo nodo nella scena. Le style class non hanno alcun rapporto con le classi Java: aggiungere `primary` a un `Button` non ne cambia il tipo.
+
+Dopo aver creato la `Scene`, carichiamo il foglio di stile dal classpath:
+
+```java
+Scene scene = new Scene(root, 360, 220);
+
+String stylesheet = Main.class
+        .getResource("/temperature.css")
+        .toExternalForm();
+scene.getStylesheets().add(stylesheet);
+```
+
+Il file si trova in `src/main/resources`, quindi il percorso inizia dalla radice con `/temperature.css`. Se il nome o il percorso sono errati, `getResource()` restituisce `null` e il foglio non può essere caricato.
+
+### Cambiare classe in base allo stato
+
+Il messaggio di errore del convertitore può ricevere la classe `error` soltanto quando l'input non è valido. Prima rimuoviamo la classe, così non rimane dopo una conversione riuscita:
+
+```java
+output.getStyleClass().remove("error");
+
+try {
+    double celsius = Double.parseDouble(input.getText());
+    double fahrenheit =
+            converter.toFahrenheit(celsius);
+    output.setText(
+            "Risultato: %.1f °F".formatted(fahrenheit));
+} catch (NumberFormatException exception) {
+    output.setText("Inserisci un numero valido");
+    output.getStyleClass().add("error");
+}
+```
+
+Il codice decide lo stato del programma; il CSS decide come rappresentarlo. In questo modo il colore dell'errore può cambiare senza modificare l'handler.
+
+### CSS e FXML
+
+Anche un nodo dichiarato in FXML può ricevere classi e identificatori CSS:
+
+```xml
+<Label text="Temperatura in gradi Celsius"
+       styleClass="title"/>
+
+<Label fx:id="output" id="result"/>
+```
+
+`fx:id` e `id` hanno scopi diversi. `fx:id="output"` collega il nodo al campo del controller; `id="result"` permette di selezionarlo nel CSS con `#result`. I due nomi possono coincidere, ma non sono la stessa proprietà.
+
+### Stile inline e layout
+
+Per una modifica isolata si può usare uno stile inline:
+
+```java
+output.setStyle("-fx-text-fill: red;");
+```
+
+Lo stile inline è rapido, ma sparge le decisioni grafiche nel codice Java e ha precedenza sulle normali regole del foglio. Per colori, font e aspetto generale è preferibile una classe CSS; `setStyle()` rimane utile per valori calcolati eccezionalmente durante l'esecuzione.
+
+Il CSS di JavaFX non sostituisce i layout. Può impostare proprietà grafiche, padding e alcune dimensioni, ma la disposizione strutturale dei nodi continua a essere affidata a `VBox`, `GridPane`, `BorderPane` e agli altri layout.
+
+### In sintesi
+
+- Un foglio CSS separa l'aspetto dalla costruzione e dal comportamento dell'interfaccia.
+- Le proprietà JavaFX CSS iniziano normalmente con `-fx-`.
+- `getStyleClass()` assegna classi riutilizzabili; `setId()` assegna un identificatore CSS.
+- Le pseudo-classi applicano regole in stati come `:hover`, `:focused` e `:disabled`.
+- `Scene.getStylesheets()` carica un foglio di stile dalle risorse.
+- `fx:id` collega FXML e controller; `id` serve ai selettori CSS.
+- I layout continuano a stabilire la disposizione strutturale dei nodi.
+
+### Esercizi
+
+1. Definisci un foglio di stile completo per il modulo di registrazione: titolo, campi, gruppo delle azioni, pulsante principale e area dei messaggi. Usa style class riutilizzabili e un solo ID per un elemento davvero unico; vietato ricorrere a `setStyle()` nel codice Java.
+2. Rappresenta con classi CSS gli stati normale, errore e successo del risultato. L'handler deve rimuovere lo stato precedente prima di applicare quello nuovo. Verifica la sequenza errore → successo → errore e controlla che le classi non si accumulino in modo incoerente.
+3. Aggiungi al pulsante principale gli stati `:hover`, `:focused` e `:disabled`. Produci una situazione reale nella quale il pulsante sia disabilitato e verifica che ogni regola sia osservabile senza modificare Java durante la prova.
+4. Ti vengono forniti selettori che confondono `.result`, `#result`, `.button.primary` e `#button.primary`. Associa a ciascuno i nodi selezionati, correggi quelli che non raggiungono l'elemento previsto e giustifica quando usare classe, ID o combinazione di classi.
+5. Prepara due fogli di stile, chiaro e scuro, applicabili alla stessa scena. Aggiungi un comando che sostituisca il foglio caricato senza ricostruire i controlli. Verifica che layout e comportamento rimangano identici e spiega quale separazione permette il cambio di tema.
 
 ---
 
@@ -8070,6 +10053,14 @@ La suite dovrebbe comprendere almeno:
 
 Il progetto riunisce così value object, entità, composizione, collezioni, eccezioni, repository, Strategy, dependency injection e test senza costringere ogni concetto in una gerarchia.
 
+### Estendere il progetto con JSON e JavaFX
+
+Il nucleo della biblioteca va completato e verificato prima di aggiungere l'interfaccia o il salvataggio su file. Quando le operazioni di prestito funzionano già attraverso `LibraryService`, i due capitoli precedenti permettono di estendere il progetto senza spostare le regole nelle nuove tecnologie.
+
+Una persistenza JSON può convertire libri, copie, membri e prestiti in record destinati al file. Le implementazioni dei repository leggono e scrivono quei dati, mentre `LibraryService` continua a dipendere dai contratti `BookRepository`, `CopyRepository` e `LoanRepository`.
+
+L'applicazione JavaFX costruisce invece finestre e controlli, raccoglie l'input e chiama i metodi del servizio. Gli errori di dominio vengono catturati al confine e trasformati in messaggi per l'utente. Le entità non devono importare classi JavaFX e non devono conoscere `ObjectMapper`: in questo modo modello, persistenza e interfaccia possono essere sviluppati e verificati separatamente.
+
 ---
 
 
@@ -8084,9 +10075,12 @@ Il progetto riunisce così value object, entità, composizione, collezioni, ecce
 5. `final` rende sempre immutabile un oggetto?
 6. Che cosa succede quando due variabili sono alias dello stesso oggetto?
 7. In che senso Java passa anche i riferimenti per valore?
-8. Qual è la differenza fra diagramma delle classi e diagramma degli oggetti?
-9. Che cosa esprime la molteplicità di un'associazione?
-10. In che modo un diagramma di sequenza aiuta ad assegnare le responsabilità?
+8. Qual è la differenza fra copia superficiale e copia profonda?
+9. Quale copia produce il solo `super.clone()` e come può un override di `clone()` trasformarla in una copia profonda?
+10. Perché il garbage collector non sostituisce la chiusura esplicita di un file?
+11. Qual è la differenza fra diagramma delle classi e diagramma degli oggetti?
+12. Che cosa esprime la molteplicità di un'associazione?
+13. In che modo un diagramma di sequenza aiuta ad assegnare le responsabilità?
 
 ### Gerarchie e contratti
 
@@ -8097,7 +10091,6 @@ Il progetto riunisce così value object, entità, composizione, collezioni, ecce
 5. Perché una classe può implementare più interfacce ma estendere una sola classe?
 6. Che cosa richiede il principio di sostituzione?
 7. Perché molto `instanceof` può indicare un modello debole?
-8. In che modo una gerarchia `sealed` differisce da una gerarchia aperta?
 
 ### Robustezza
 
@@ -8122,6 +10115,32 @@ Il progetto riunisce così value object, entità, composizione, collezioni, ecce
 10. Da che cosa dipende il costo di ricerca in un albero binario?
 11. Perché un iteratore condizionale può richiedere una cache e un booleano separato?
 
+### Progetti, interfacce e dati
+
+1. A che cosa servono `build.gradle` e il Gradle Wrapper? Che cosa descrive una dipendenza Gradle?
+2. Qual è la differenza fra un oggetto e un array JSON?
+3. Che cosa significano serializzazione e deserializzazione?
+4. Perché `readValue()` deve conoscere il tipo Java da costruire?
+5. Perché leggere un file JSON non deve aggirare gli invarianti degli oggetti?
+6. Perché un file JSON non sostituisce automaticamente un database?
+7. Qual è il rapporto fra `Stage`, `Scene`, layout e controlli in JavaFX?
+8. Quali ruoli svolgono `init()`, `start()` e `stop()` nel ciclo di vita di `Application`?
+9. Quando viene eseguito il codice registrato con `setOnAction()` e perché una lambda non parte al momento della registrazione?
+10. Perché il calcolo e le regole del programma non dovrebbero essere scritti direttamente negli handler JavaFX?
+11. Qual è la differenza fra `getText()` e `textProperty()`?
+12. Quando conviene usare un listener e quando un binding?
+13. Qual è la differenza fra binding unidirezionale e bidirezionale?
+14. Perché `ListView` e `TableView` usano una `ObservableList` e a che cosa serve la cell value factory?
+15. Perché un'operazione lunga non dovrebbe essere eseguita sul JavaFX Application Thread?
+16. Quale parte di un `Task` viene eseguita in background e quali handler possono aggiornare i controlli al termine?
+17. Che cosa fa `Platform.runLater()` e perché non deve contenere il lavoro lungo?
+18. Che rapporto esiste fra file FXML, `FXMLLoader`, controller e scene graph?
+19. Qual è la differenza fra `fx:id` e `onAction`?
+20. Che cosa modifica Scene Builder e quale codice deve invece rimanere nelle classi Java?
+21. Qual è la differenza fra style class, `id` CSS e `fx:id`?
+22. Perché il CSS non sostituisce i layout JavaFX?
+23. Come possono un'interfaccia JavaFX e una persistenza JSON usare lo stesso servizio senza entrare nelle classi di dominio?
+
 ### Progettazione
 
 1. Che cosa significano coesione e accoppiamento?
@@ -8134,10 +10153,8 @@ Il progetto riunisce così value object, entità, composizione, collezioni, ecce
 8. Dove devono essere gestite le eccezioni di dominio?
 9. Qual è la differenza tra entità e value object?
 10. Quando Strategy è preferibile a una catena di `if`?
-11. Quale problema risolve Visitor e quale dimensione rende più difficile estendere?
-12. Come collaborano scanner, tokenizer, parser, AST e visitor in un interprete?
-13. Quale differenza c'è fra test unitario e test di integrazione?
-14. Perché orologio, rete e casualità possono rendere un test non deterministico?
+11. Quale differenza c'è fra test unitario e test di integrazione?
+12. Perché orologio, rete e casualità possono rendere un test non deterministico?
 
 ---
 
@@ -8159,7 +10176,6 @@ Il progetto riunisce così value object, entità, composizione, collezioni, ecce
 | `static` | membro appartenente alla classe |
 | `instanceof` | verifica il tipo runtime |
 | `record` | dichiara un valore composto con componenti finali |
-| `sealed` | limita i sottotipi ammessi |
 | `throws` | dichiara possibili eccezioni |
 | `throw` | lancia un'eccezione |
 
@@ -8209,24 +10225,35 @@ Il progetto riunisce così value object, entità, composizione, collezioni, ecce
 |---|---|
 | API | interfaccia offerta da un modulo ai suoi utilizzatori |
 | aliasing | più riferimenti allo stesso oggetto |
+| binding | collegamento che mantiene una proprietà JavaFX sincronizzata con una o più sorgenti |
+| `Cloneable` | interfaccia che autorizza `Object.clone()` a eseguire la copia campo per campo di un oggetto |
 | contratto | promesse su input, output, stato ed eccezioni |
+| CSS | linguaggio usato per definire l'aspetto dei nodi JavaFX separatamente dal codice |
+| dipendenza esterna | libreria richiesta da un progetto e dichiarata nella configurazione della build |
+| deserializzazione | costruzione di oggetti a partire da dati letti |
 | dispatch dinamico | scelta runtime del metodo ridefinito |
 | entità | oggetto distinto tramite identità |
+| FXML | formato XML usato da JavaFX per descrivere un scene graph |
+| handler | codice registrato per reagire a un evento |
 | immutabile | oggetto il cui stato osservabile non cambia |
 | invariante | proprietà sempre vera per un oggetto valido |
 | istanza | oggetto concreto di una classe |
+| JavaFX | libreria per costruire applicazioni desktop grafiche in Java |
+| JSON | formato testuale per rappresentare dati strutturati |
+| layout | nodo JavaFX che dispone altri nodi nell'interfaccia |
+| listener | codice registrato per essere avvisato quando un valore osservabile cambia |
+| `ObservableList<T>` | lista che notifica inserimenti, rimozioni e sostituzioni ai propri osservatori |
+| `Platform.runLater()` | metodo che accoda un aggiornamento sul JavaFX Application Thread |
+| proprietà osservabile | oggetto JavaFX che conserva un valore e segnala le sue modifiche |
+| Gradle | strumento che esegue la build e gestisce le dipendenze dichiarate in `build.gradle` |
+| Gradle Wrapper | file del progetto che permettono di usare la versione di Gradle prevista senza installarla globalmente |
 | refactoring | miglioramento interno senza variazione funzionale |
 | responsabilità | parte del problema affidata a una classe |
+| scene graph | struttura ad albero degli elementi che compongono una scena JavaFX |
+| `Task<T>` | operazione JavaFX eseguibile in background che produce un risultato oppure segnala un errore |
+| serializzazione | trasformazione dello stato di oggetti in dati salvabili o trasmissibili |
 | value object | oggetto definito dai propri valori |
 | generic | tipo o metodo parametrizzato da altri tipi |
 | iteratore | oggetto con stato che controlla un attraversamento |
 | repository | contratto per conservare e ritrovare oggetti di dominio |
 | test double | sostituto controllato di un collaboratore durante un test |
-
----
-
-## Conclusione
-
-La sintassi di classi, `extends` e `implements` è soltanto il punto di partenza. La qualità di un programma orientato agli oggetti dipende soprattutto da come vengono assegnate le responsabilità, protetti gli invarianti e controllate le dipendenze.
-
-Un buon modello tende ad avere oggetti piccoli ma significativi, operazioni che esprimono il dominio, composizione come scelta predefinita, polimorfismo dove esistono variazioni reali e test che rendono sicura l'evoluzione del codice.
