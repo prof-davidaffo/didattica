@@ -1016,6 +1016,48 @@ GROUP BY m.regista;
 ```
 Calcola il totale degli incassi (domestici + internazionali) attribuibili a ciascun regista.
 ## Subquery (sottoquery)
+### Tabelle necessarie
+#### Tabella movies
+
+| id  | titolo                   | regista           | year | durata_minuti |
+| --- | ------------------------ | ----------------- | ---- | ------------- |
+| 1   | Inception                | Christopher Nolan | 2010 | 148           |
+| 2   | Interstellar             | Christopher Nolan | 2014 | 169           |
+| 3   | Pulp Fiction             | Quentin Tarantino | 1994 | 154           |
+| 4   | The Grand Budapest Hotel | Wes Anderson      | 2014 | 100           |
+| 5   | Parasite                 | Bong Joon-ho      | 2019 | 132           |
+| 6   | The Dark Knight          | Christopher Nolan | 2008 | 152           |
+
+#### Tabella boxoffice
+
+|movie_id|domestic_sales|international_sales|rating|
+|---|---|---|---|
+|1|292000000|535000000|8.8|
+|2|188000000|489000000|8.6|
+|3|107000000|106000000|8.9|
+|4|59000000|115000000|8.1|
+|5|53000000|205000000|8.5|
+|6|535000000|469000000|9.0|
+
+#### Tabella sales_associates
+
+| id  | nome    | department  | salary | revenue_generated |
+| --- | ------- | ----------- | ------ | ----------------- |
+| 1   | Alice   | Electronics | 30000  | 10000             |
+| 2   | Bob     | Electronics | 32000  | 35000             |
+| 3   | Charlie | Home        | 28000  | 20000             |
+| 4   | Diana   | Home        | 35000  | 15000             |
+| 5   | Eve     | Sports      | 29000  | 37000             |
+
+#### Tabella employees
+
+| id  | nome  | department | salary | revenue_generated |
+| --- | ----- | ---------- | ------ | ----------------- |
+| 1   | Marco | IT         | 40000  | 200000            |
+| 2   | Luca  | IT         | 38000  | 150000            |
+| 3   | Anna  | HR         | 35000  | 90000             |
+| 4   | Sara  | HR         | 36000  | 120000            |
+| 5   | Paolo | Finance    | 42000  | 300000            |
 ### Concetto di subquery
 Una **subquery** è una query SQL annidata all’interno di un’altra query.
 Viene utilizzata quando una singola interrogazione non è sufficiente a rispondere a una domanda e sarebbe altrimenti necessario un pre-processing o post-processing dei dati.
@@ -1031,7 +1073,7 @@ Esempio concettuale: selezionare gli elementi che superano una media calcolata d
 SELECT *
 FROM sales_associates
 WHERE salary >
-    (SELECT AVG(revenue_generated)
+    (SELECT AVG(salary)
      FROM sales_associates);
 ```
 La subquery interna calcola la media del fatturato, mentre la query esterna confronta ogni riga con quel valore.
@@ -1253,7 +1295,7 @@ Tabella: boxoffice
 * Inserimento del film *Toy Story 4* nella tabella `movies`:
 ```sql
 INSERT INTO movies
-(title, director, year, length_minutes)
+(titolo, regista, anno, durata_minuti)
 VALUES ('Toy Story 4', 'Josh Cooley', 2019, 100);
 ```
 * Inserimento dei dati di incasso e valutazione nella tabella `boxoffice`:
@@ -1417,7 +1459,7 @@ La disponibilità esatta dei tipi può variare leggermente a seconda del DBMS ut
 ### Esempio di schema
 ```sql
 CREATE TABLE movies (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT,
     director TEXT,
     year INTEGER,
@@ -1433,6 +1475,7 @@ CREATE TABLE Database (
     download_count INTEGER
 );
 ```
+
 ## Modifica delle tabelle (ALTER TABLE)
 ### Aggiornamento dello schema di una tabella
 Nel tempo, la struttura dei dati può cambiare. SQL consente di modificare lo **schema** di una tabella esistente tramite l’istruzione `ALTER TABLE`, che permette di:
@@ -1517,6 +1560,66 @@ Se una tabella è referenziata da un’altra (ad esempio tramite un `FOREIGN KEY
 * richiedere la rimozione preventiva delle tabelle dipendenti
 * richiedere l’eliminazione o la modifica dei vincoli
 Il comportamento dipende dal DBMS utilizzato e dalla configurazione dei vincoli.
+
+### CASCADE e RESTRICT
+Quando una tabella è collegata ad altre tabelle o ad altri oggetti del database, il comando `DROP TABLE` può richiedere regole aggiuntive per gestire le dipendenze.
+
+Molti DBMS supportano due modalità principali:
+
+* `CASCADE`, che consente di eliminare anche gli oggetti dipendenti dalla tabella
+* `RESTRICT`, che impedisce l’eliminazione se esistono dipendenze ancora attive
+
+Esempi:
+
+```sql
+DROP TABLE movies CASCADE;
+DROP TABLE movies RESTRICT;
+```
+
+Il supporto e il comportamento esatto di queste opzioni possono variare a seconda del DBMS utilizzato.
+
+### Clausola ON DELETE nelle chiavi esterne
+Questo comportamento lo posso anche definire di default sulle tabelle che hanno chiavi esterne, direttamente su `CREATE TABLE` o utilizzando `ALTER TABLE`.
+
+Questo comportamento viene definito tramite la clausola `ON DELETE`.
+
+Sintassi generale:
+
+```sql
+FOREIGN KEY (colonna_figlia)
+REFERENCES tabella_padre(colonna_padre)
+ON DELETE azione;
+```
+
+| Azione      | Comportamento                                           |
+| ----------- | ------------------------------------------------------- |
+| RESTRICT    | impedisce la cancellazione se esistono righe dipendenti |
+| CASCADE     | elimina automaticamente anche le righe collegate        |
+| SET NULL    | imposta a `NULL` il valore della chiave esterna         |
+| SET DEFAULT | imposta il valore di default definito nella colonna     |
+| NO ACTION   | comportamento simile a `RESTRICT` in molti DBMS         |
+```sql
+CREATE TABLE movies (
+    id INTEGER PRIMARY KEY,
+    title TEXT
+);
+
+CREATE TABLE boxoffice (
+    movie_id INTEGER,
+    domestic_sales INTEGER,
+    FOREIGN KEY (movie_id)
+        REFERENCES movies(id)
+        ON DELETE CASCADE
+);
+```
+
+Con questa definizione, se un film viene eliminato dalla tabella `movies`, anche le righe corrispondenti nella tabella `boxoffice` vengono eliminate automaticamente.
+### Differenza tra DROP, DELETE e TRUNCATE
+È importante distinguere `DROP TABLE` da altri comandi che rimuovono dati.
+
+* `DELETE` elimina una o più righe, ma lascia intatta la struttura della tabella
+* `TRUNCATE` svuota la tabella mantenendo lo schema
+* `DROP TABLE` elimina completamente sia i dati sia la struttura della tabella
 ### Tabelle di riferimento
 Tabella: movies
 
@@ -1564,3 +1667,5 @@ DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS boxoffice;
 ```
 Dopo l’esecuzione di questi comandi, le tabelle e tutti i dati in esse contenuti vengono rimossi definitivamente dal database.
+### Esercizi su DDL e DML
+[[Esercizi SQL su DDL e DML]]

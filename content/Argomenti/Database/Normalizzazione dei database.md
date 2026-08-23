@@ -223,92 +223,119 @@ Dopo la scomposizione:
 * non esistono dipendenze funzionali tra attributi non chiave;
 * ogni attributo non chiave dipende direttamente e solo dalla chiave primaria.
 Lo schema risultante rispetta la **Terza Forma Normale (3NF)**.
-## Boyce-Codd Normal Form (BCNF)
-### Definizione di Boyce-Codd Normal Form
-Una relazione si trova in **Boyce-Codd Normal Form (BCNF)** quando, per **ogni dipendenza funzionale non banale** $X \rightarrow Y$ che vale nella relazione, **$X$ è una superchiave**.
-In forma sintetica:
+---
+## Forma Normale di Boyce-Codd (BCNF)
+### Definizione
+Una relazione si trova in **Forma Normale di Boyce-Codd (BCNF)** quando:
+* è in **Prima Forma Normale (1FN)**;
+* **ogni determinante è una chiave candidata**.
+In altre parole, **ogni insieme di attributi dal quale dipendono altri attributi deve poter svolgere la funzione di chiave**.
+La BCNF può essere espressa formalmente come segue:
+
+Se in una relazione vale una dipendenza funzionale $A \rightarrow B$, allora l’insieme di attributi $A$ **deve contenere una chiave candidata**.
+
+---
+### Relazione tra BCNF, 2FN e 3FN
+Da questa definizione discende che:
+* una relazione in **BCNF** è automaticamente anche in **2FN** e in **3FN**;
+* la BCNF esclude:
+  * le dipendenze parziali (violazioni della 2FN);
+  * le dipendenze transitive esterne alla chiave (violazioni della 3FN).
+Tuttavia:
+> una relazione può essere in **3FN** ma **non** in **BCNF**.
+---
+###  Esempio: allocazione delle sale operatorie
+Si consideri una relazione che descrive l’allocazione delle sale operatorie di un ospedale.
+Le sale operatorie sono prenotate giorno per giorno, in orari prestabiliti, per effettuare interventi chirurgici su pazienti.
+Nel corso di una giornata:
+* una sala operatoria è occupata sempre dallo **stesso chirurgo**;
+* il chirurgo può effettuare **più interventi in orari diversi**.
+Noti **Paziente** e **DataIntervento**, sono noti:
+* l’ora dell’intervento;
+* il chirurgo;
+* la sala operatoria.
+---
+####  Schema della relazione
+**Interventi** $(Paziente, DataIntervento, OraIntervento, Chirurgo, Sala)$
+####  Dipendenze funzionali
+In base alla descrizione del dominio valgono le seguenti dipendenze:
+
+a. ${Paziente, DataIntervento} \rightarrow OraIntervento, Chirurgo, Sala$
+b. ${Chirurgo, DataIntervento, OraIntervento} \rightarrow Paziente, Sala$
+c. ${Sala, DataIntervento, OraIntervento} \rightarrow Paziente, Chirurgo$
+d. ${Chirurgo, DataIntervento} \rightarrow Sala$
+
+---
+####  Chiavi candidate
+Dalle dipendenze funzionali risultano tre insiemi di attributi che possono svolgere la funzione di chiave:
+* ${Paziente, DataIntervento}$
+* ${Chirurgo, DataIntervento, OraIntervento}$
+* ${Sala, DataIntervento, OraIntervento}$
+Si sceglie come **chiave primaria**:
 $$
-\forall, X \rightarrow Y \quad X \text{ è una superchiave}
+{Paziente, DataIntervento}
 $$
-La BCNF è una forma normale **più restrittiva della Terza Forma Normale (3NF)** e mira a eliminare **tutte** le anomalie dovute a dipendenze funzionali, anche in casi che la 3NF tollera.
-
-### Superchiave
-Una **superchiave** è **qualsiasi insieme di attributi che identifica univocamente ogni tupla** di una relazione.
-Formalmente, dato uno schema di relazione $R(A_1, \dots, A_n)$, un insieme di attributi $X \subseteq {A_1, \dots, A_n}$ è una **superchiave** se vale:
-
-$X→A1,A2,…,AnX \rightarrow A_1, A_2, \dots, A_nX→A1​,A2​,…,An​$
-
-cioè se i valori di $X$ determinano tutti gli attributi della relazione.
-Una superchiave **può contenere attributi ridondanti**.
-
 ---
-### Relazione tra 3NF e BCNF
-* ogni relazione in **BCNF** è anche in **3NF**;
-* non tutte le relazioni in **3NF** sono in **BCNF**.
-La differenza emerge in presenza di:
-* **più chiavi candidate**;
-* **dipendenze funzionali sovrapposte**;
-* attributi primi che mascherano anomalie in 3NF.
----
-### Esempio applicativo
-Si consideri la seguente relazione:
-#### Tabella Docenze
-| Docente | Corso        | Aula |
-| ------- | ------------ | ---- |
-| Rossi   | Basi di Dati | A1   |
-| Rossi   | Reti         | A2   |
-| Bianchi | Basi di Dati | A1   |
-Si assumano i seguenti vincoli semantici:
-* ogni **docente** tiene **un solo corso**;
-* ogni **corso** si svolge **in una sola aula**;
-* un’aula può ospitare più corsi in orari diversi.
----
-#### Dipendenze funzionali
-Dai vincoli si ricavano le seguenti dipendenze:
-* $Docente \rightarrow Corso$
-* $Corso \rightarrow Aula$
-Da queste segue:
-* $Docente \rightarrow Aula$
----
-### Chiavi candidate
-L’unico insieme di attributi che identifica univocamente una tupla è:
-* ${Docente}$
-Poiché:
-* $Docente \rightarrow Corso \rightarrow Aula$,
-  il docente determina tutti gli attributi della relazione.
----
-### Verifica della 3NF
-La relazione **è in 3NF** perché:
-* l’attributo `Aula` dipende transitivamente da `Docente`;
-* tuttavia `Corso` è un attributo **primo** (appartiene a una chiave candidata).
-Secondo la definizione di 3NF, questo tipo di dipendenza è ammesso.
----
-### Verifica della BCNF
-La relazione **non è in BCNF** perché:
-* esiste la dipendenza $Corso \rightarrow Aula$;
-* `Corso` **non è una superchiave**.
-Questo viola la definizione di Boyce-Codd Normal Form.
----
-### Scomposizione in BCNF
-Per portare la relazione in BCNF, si procede alla scomposizione.
-#### Tabella Corsi
-| Corso        | Aula |
-| ------------ | ---- |
-| Basi di Dati | A1   |
-| Reti         | A2   |
-#### Tabella Docenti
-| Docente | Corso        |
-| ------- | ------------ |
-| Rossi   | Basi di Dati |
-| Rossi   | Reti         |
-| Bianchi | Basi di Dati |
+####  Istanza della relazione
+| Paziente | DataIntervento | OraIntervento | Chirurgo | Sala  |
+| -------- | -------------- | ------------- | -------- | ----- |
+| Bianchi  | 25/10/2005     | 8.00          | De Bakey | Sala1 |
+| Rossi    | 25/10/2005     | 8.00          | Romano   | Sala2 |
+| Bianchi  | 26/10/2005     | 9.30          | Veronesi | Sala1 |
+| Viola    | 25/10/2005     | 10.30         | De Bakey | Sala1 |
+| Verdi    | 25/10/2005     | 11.30         | Romano   | Sala2 |
 
 ---
-### Verifica della BCNF dopo la scomposizione
-* nella tabella **Corsi** vale $Corso \rightarrow Aula$, e `Corso` è chiave primaria;
-* nella tabella **Docenti** vale $Docente \rightarrow Corso$, e `Docente` è chiave primaria.
-Entrambe le relazioni soddisfano la definizione di **Boyce-Codd Normal Form**.
+###  Verifica della BCNF
+I determinanti nelle dipendenze **a**, **b** e **c** sono insiemi di attributi che possono svolgere la funzione di chiave candidata.
+In questi casi la **BCNF non è violata**.
+La dipendenza:
+$$
+{Chirurgo, DataIntervento} \rightarrow Sala
+$$
+viola invece la BCNF perché:
+* il determinante ${Chirurgo, DataIntervento}$ **non è una chiave candidata**;
+* esiste quindi un attributo (`Sala`) che dipende da un insieme di attributi **non chiave**.
+Ne segue che:
+> la relazione **Interventi non è in BCNF**.
 ---
-### Nota
-La BCNF elimina tutte le anomalie dovute a dipendenze funzionali, ma può comportare la perdita della **dipendenza funzionale globale** se non progettata con attenzione. Per questo, nella pratica, la 3NF è talvolta preferita alla BCNF.
+###  Perché la relazione è comunque in 3FN
+La relazione **è in Terza Forma Normale**, perché:
+* nella dipendenza ${Chirurgo, DataIntervento} \rightarrow Sala$,
+* l’attributo `Sala` **appartiene a una chiave candidata** (${Sala, DataIntervento, OraIntervento}$),
+* quindi `Sala` **non è un attributo non-chiave**.
+La 3FN **ammette** questa situazione, la BCNF **no**.
+---
+###  Problema di ridondanza
+Pur essendo in 3FN, la relazione presenta ridondanza:
+* se si deve cambiare la sala assegnata a un chirurgo in una certa data,
+* è necessario aggiornare **più righe**.
+Ad esempio, per spostare Romano da Sala2 a Sala3 occorre modificare due tuple.
+---
+###  Normalizzazione in BCNF
+La relazione può essere scomposta nei seguenti schemi.
+####  OccupazioneSale
+$(Chirurgo, DataIntervento, Sala)$
 
+| Chirurgo | DataIntervento | Sala  |
+| -------- | -------------- | ----- |
+| De Bakey | 25/10/2005     | Sala1 |
+| Romano   | 25/10/2005     | Sala2 |
+| Veronesi | 26/10/2005     | Sala1 |
+
+---
+####  Interventi
+$(Paziente, DataIntervento, OraIntervento, Chirurgo)$
+
+| Paziente | DataIntervento | OraIntervento | Chirurgo |
+| -------- | -------------- | ------------- | -------- |
+| Bianchi  | 25/10/2005     | 8.00          | De Bakey |
+| Rossi    | 25/10/2005     | 8.00          | Romano   |
+| Negri    | 26/10/2005     | 9.30          | Veronesi |
+| Viola    | 25/10/2005     | 10.30         | De Bakey |
+| Verdi    | 25/10/2005     | 11.30         | Romano   |
+In questa nuova implementazione, la riassegnazione delle sale operatorie richiede la modifica di **una sola riga**.
+
+---
+###  Osservazione conclusiva
+La Boyce-Codd Normal Form è una forma di normalizzazione più forte della Terza Forma Normale. Essa richiede che ogni attributo, e non solo quelli non-chiave, dipenda da un insieme di attributi che possa svolgere la funzione di chiave. Tuttavia, la normalizzazione in BCNF può comportare la perdita di dipendenze funzionali, motivo per cui in alcuni casi si preferisce mantenere uno schema in 3FN.
